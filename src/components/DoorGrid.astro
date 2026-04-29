@@ -1,0 +1,67 @@
+---
+import doors from "../content/doors.json";
+import DoorCard from "./DoorCard.astro";
+
+const counts = doors.reduce(
+  (acc, door) => {
+    acc.all += 1;
+    acc[door.status] += 1;
+    return acc;
+  },
+  { all: 0, active: 0, solved: 0, drawer: 0 }
+);
+
+const filters = [
+  { key: "all", label: "All" },
+  { key: "active", label: "Active" },
+  { key: "solved", label: "Solved" },
+  { key: "drawer", label: "Drawer" }
+];
+---
+
+<section id="doors" class="border-y border-line bg-white py-14 sm:py-16">
+  <div class="shell">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Portfolio doors</p>
+        <h2 class="mt-3 text-3xl font-semibold sm:text-4xl">Thirteen public entry points</h2>
+        <p class="mt-4 text-stone-700">
+          Active builds, solved systems work, and older experiments grouped by status from one JSON source.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2" aria-label="Filter portfolio doors">
+        {filters.map((filter) => (
+          <button
+            class="door-filter focus-ring border border-line px-3 py-2 font-mono text-xs uppercase tracking-[0.16em] text-stone-600 data-[active=true]:border-accent data-[active=true]:bg-accent data-[active=true]:text-white"
+            type="button"
+            data-filter={filter.key}
+            data-active={filter.key === "all" ? "true" : "false"}
+          >
+            {filter.label} {counts[filter.key]}
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {doors.map((door) => <DoorCard door={door} />)}
+    </div>
+  </div>
+</section>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".door-filter");
+  const cards = document.querySelectorAll<HTMLElement>(".door-card");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const selected = button.dataset.filter ?? "all";
+      buttons.forEach((item) => {
+        item.dataset.active = String(item === button);
+      });
+      cards.forEach((card) => {
+        const visible = selected === "all" || card.dataset.status === selected;
+        card.toggleAttribute("hidden", !visible);
+      });
+    });
+  });
+</script>

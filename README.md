@@ -1,0 +1,22 @@
+# No. 11 | athena-site
+
+personal site + essays. central hub linking portfolio doors,
+hosts long-form writing, and embeds the chip-supply-chain-map
+as a flagship interactive demo.
+
+deployed at: <URL once live>
+
+## local dev
+
+    npm install
+    npm run dev
+
+## stack
+
+astro 4 | mdx | tailwind 3 | vercel
+
+## structure
+
+- `src/content/doors.json` - single source of truth for the portfolio grid
+- `src/pages/essays/` - long-form writing (MDX)
+- `src/components/` - page primitives

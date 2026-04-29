@@ -1,0 +1,29 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The chip supply chain"
+description: "The global chip supply chain is a graph of chokepoints, not a pipeline."
+date: "2026-04-29"
+readingTime: "6 min read"
+---
+
+The global chip supply chain is a graph of chokepoints, not a pipeline. The word "chain" is useful shorthand, but it hides the real structure: a directed network of foundries, equipment suppliers, materials vendors, OSATs, substrate makers, EDA tools, cloud buyers, device OEMs, and logistics paths, where a small number of nodes can constrain everything downstream.
+
+The pipeline metaphor makes the system feel linear. Design happens, wafers are fabricated, chips are packaged, boards are built, products ship. That sequence is not wrong, but it is incomplete. A modern semiconductor program depends on feedback loops and shared constraints. Design choices affect process eligibility. Process nodes affect mask costs and yield curves. Packaging choices affect substrate availability and thermal limits. Demand from a hyperscaler can move capacity away from another customer. A constraint in one corner of the graph can surface months later as a missed product launch.
+
+The mental model matters because pipelines invite single-point forecasts. If the work is linear, then the planning question becomes "when does each step finish?" If the work is a graph, the planning question becomes "which nodes can break the plan, and what alternate paths exist?" Those are very different questions. A graph model forces you to identify dependencies, shared bottlenecks, substitution limits, and the parts of the system that look redundant but are not.
+
+ASML and EUV lithography are the obvious example. Advanced logic depends on EUV scanners, and the supplier base for those systems is not easily replicated. The chokepoint is not just a company name. It is a stack of precision optics, light sources, motion control, metrology, service capacity, trained field engineers, and years of accumulated process knowledge. When people talk about leading-edge capacity, the bottleneck is not only fab square footage. It is access to an equipment ecosystem that has very few substitutes.
+
+Advanced packaging is another chokepoint, and it is becoming more important as AI systems push memory bandwidth, interconnect density, and thermal constraints. The interesting part is that packaging sits between traditional categories. It is not pure wafer fabrication, and it is not commodity assembly. Chiplets, high-bandwidth memory, interposers, and 2.5D or 3D integration make packaging a performance lever. That changes the risk picture. A product can have access to silicon capacity and still be blocked by packaging capacity, substrate availability, or test throughput.
+
+Substrates are a quieter example. They do not get the same attention as EUV, but advanced substrates can be hard constraints. They require specialized materials, tight process control, and enough qualified capacity to support high-end packages. When substrate supply is tight, allocation decisions ripple across end markets. A planner who only tracks wafer starts will miss the constraint until late. A graph view keeps substrate nodes visible before they become the reason a launch slips.
+
+Materials create a different kind of fragility. Photoresists, specialty gases, wafers, chemicals, and rare inputs may have supplier concentration, geographic exposure, or qualification friction. Even when alternate suppliers exist on paper, switching is not instantaneous. The material has to meet process requirements, pass qualification, and behave predictably at scale. In a graph, those edges matter. The path from "possible substitute" to "production-ready substitute" can be long enough that it should be modeled as a constraint, not a comfort.
+
+This is why scenario thinking beats single-point forecasts. A single forecast asks for the most likely future. A scenario map asks what happens if a node changes state. What if advanced packaging capacity tightens? What if a substrate supplier has a quality escape? What if export controls change the reachable market for a tool? What if a major cloud buyer pulls forward demand? What if a geopolitical event closes a logistics path? The answer is not one number. The answer is a set of paths, buffers, and decisions that can be prepared before the shock arrives.
+
+A useful map should make those questions visible. The [chip-supply-chain-map](https://github.com/AthenaTheOwl/chip-supply-chain-map) is a portfolio project built around that premise. The point is not to make a pretty diagram of the industry. The point is to represent the semiconductor supply chain as a dependency graph with scenario toggles. Foundries, OSATs, equipment, substrates, EDA, hyperscalers, and chokepoints belong in the same view because the risk is created by their interactions.
+
+The graph also changes how leaders should talk about resilience. Resilience is not the same as duplicating every node. Some nodes cannot be duplicated quickly. Some alternates are technically possible but commercially unrealistic. Some buffers protect one product while starving another. Resilience is the ability to know which constraints matter, which decisions have lead time, and which substitutions are real. It is more operational than rhetorical.
+
+The semiconductor industry is full of specialized excellence. That is its strength and its vulnerability. The same specialization that makes leading-edge chips possible also creates concentrated dependencies. Calling it a chain makes those dependencies sound orderly. Calling it a graph makes them inspectable. If you want to understand where the industry can bend, where it can break, and where a decision today shows up as capacity later, the graph is the better starting point.

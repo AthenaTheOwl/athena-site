@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+import ChipMapEmbed from "../components/ChipMapEmbed.astro";
+import DoorGrid from "../components/DoorGrid.astro";
+import EssayList from "../components/EssayList.astro";
+import Hero from "../components/Hero.astro";
+---
+
+<Base>
+  <Hero />
+  <DoorGrid />
+  <ChipMapEmbed />
+  <section class="border-t border-line bg-white py-14 sm:py-16">
+    <div class="shell">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="eyebrow">Essays</p>
+          <h2 class="mt-3 text-3xl font-semibold sm:text-4xl">Current notes</h2>
+        </div>
+        <a class="focus-ring text-sm font-semibold no-underline" href="/essays/">Read all essays</a>
+      </div>
+      <div class="mt-8">
+        <EssayList />
+      </div>
+    </div>
+  </section>
+</Base>

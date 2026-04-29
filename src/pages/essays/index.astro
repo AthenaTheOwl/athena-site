@@ -1,0 +1,22 @@
+---
+import EssayList from "../../components/EssayList.astro";
+import Base from "../../layouts/Base.astro";
+---
+
+<Base
+  title="Essays | Vignesh Gopalakrishnan"
+  description="Essays from Vignesh Gopalakrishnan on AI trust, semiconductor supply chains, and TPM work at the AI hardware boundary."
+>
+  <section class="shell py-14 sm:py-16">
+    <p class="eyebrow">Essays</p>
+    <h1 class="mt-4 max-w-3xl text-4xl font-semibold leading-tight sm:text-6xl">
+      Long-form notes on trust, chips, and operating cadence
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
+      Drafts for sharper thinking. The site keeps them close to the portfolio doors they came from.
+    </p>
+    <div class="mt-10">
+      <EssayList />
+    </div>
+  </section>
+</Base>

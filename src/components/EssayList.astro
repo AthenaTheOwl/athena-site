@@ -1,0 +1,39 @@
+---
+const essays = [
+  {
+    title: "AI copilots and trust",
+    href: "/essays/ai-copilots-and-trust/",
+    description: "Capability is table stakes. Deployment depends on grounding, refusal, and an audit trail.",
+    date: "2026-04-29",
+    readingTime: "6 min read"
+  },
+  {
+    title: "The chip supply chain",
+    href: "/essays/the-chip-supply-chain/",
+    description: "The global chip supply chain is a graph of chokepoints, not a pipeline.",
+    date: "2026-04-29",
+    readingTime: "6 min read"
+  },
+  {
+    title: "TPM at the AI hardware seam",
+    href: "/essays/tpm-at-the-ai-hardware-seam/",
+    description: "Shipping AI products inside hardware companies is its own discipline.",
+    date: "2026-04-29",
+    readingTime: "6 min read"
+  }
+];
+---
+
+<div class="grid gap-4">
+  {essays.map((essay) => (
+    <article class="border border-line bg-white p-5">
+      <p class="font-mono text-xs uppercase tracking-[0.16em] text-stone-500">
+        {essay.date} | {essay.readingTime}
+      </p>
+      <h2 class="mt-4 text-2xl font-semibold">
+        <a class="focus-ring no-underline" href={essay.href}>{essay.title}</a>
+      </h2>
+      <p class="mt-3 max-w-2xl text-stone-700">{essay.description}</p>
+    </article>
+  ))}
+</div>

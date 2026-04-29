@@ -1,0 +1,93 @@
+[
+  {
+    "n": "01",
+    "name": "dispatch-optimizer",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/dispatch-optimizer",
+    "hook": "vehicle dispatch optimization with operational constraints. python, OR-tools."
+  },
+  {
+    "n": "02",
+    "name": "LLM-evaluation-framework",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/LLM-evaluation-framework",
+    "hook": "LLM eval framework that treats quality as more than one score: deterministic rules, stakeholder personas, LLM-as-judge. YAML suites, HTML reports, regression checks, CI gating."
+  },
+  {
+    "n": "03",
+    "name": "MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin",
+    "status": "solved",
+    "url": "https://github.com/AthenaTheOwl/MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin",
+    "hook": "MIT SDM thesis. system-dynamics model of bitcoin adoption, mining economics, and feedback loops."
+  },
+  {
+    "n": "04",
+    "name": "world-food-program-robust-simulator",
+    "status": "solved",
+    "url": "https://github.com/AthenaTheOwl/world-food-program-robust-simulator",
+    "hook": "robust optimization simulator for WFP food-aid distribution under demand and access uncertainty."
+  },
+  {
+    "n": "05",
+    "name": "semiconductor-e2e-manufacturing-optimization",
+    "status": "solved",
+    "url": "https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization",
+    "hook": "interactive streamlit app comparing nominal, static-robust, and two-stage adaptive wafer supply-chain models with monte carlo analysis."
+  },
+  {
+    "n": "06",
+    "name": "Robust-Facility-Location",
+    "status": "solved",
+    "url": "https://github.com/AthenaTheOwl/Robust-Facility-Location",
+    "hook": "robust facility-location under demand uncertainty. python + cvxpy."
+  },
+  {
+    "n": "07",
+    "name": "News-Bias-Multi-Agent-Pipeline",
+    "status": "drawer",
+    "url": "https://github.com/AthenaTheOwl/News-Bias-Multi-Agent-Pipeline",
+    "hook": "for-fun multi-agent pipeline: pull articles, summarize, detect bias, critique, summarize again. early experiment."
+  },
+  {
+    "n": "08",
+    "name": "MIT-AI-Fall20",
+    "status": "drawer",
+    "url": "https://github.com/AthenaTheOwl/MIT-AI-Fall20",
+    "hook": "MIT 6.034 fall 2020 coursework."
+  },
+  {
+    "n": "09",
+    "name": "leetcode",
+    "status": "drawer",
+    "url": "https://github.com/AthenaTheOwl/leetcode",
+    "hook": "algorithm practice."
+  },
+  {
+    "n": "10",
+    "name": "ai-supply-chain-copilot-prd",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/ai-supply-chain-copilot-prd",
+    "hook": "PRD for an AI copilot that triages supply-chain exceptions. workflow tool with explicit trust boundaries, not a chatbot."
+  },
+  {
+    "n": "11",
+    "name": "athena-site",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/athena-site",
+    "hook": "this site. portfolio doors, essays, and a flagship semiconductor supply-chain map embed."
+  },
+  {
+    "n": "12",
+    "name": "chip-supply-chain-map",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/chip-supply-chain-map",
+    "hook": "the global semiconductor supply chain as a dependency graph. foundries, OSATs, equipment, substrates, EDA, hyperscalers, and chokepoints - with scenario toggles."
+  },
+  {
+    "n": "13",
+    "name": "supplier-risk-rag-agent",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/supplier-risk-rag-agent",
+    "hook": "supplier-risk RAG agent with receipts. SEC filings in, cited answers out. retrieval, citation faithfulness, abstention, and regression evals wired into CI."
+  }
+]

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Static chip supply chain map preview">
+  <rect width="1200" height="675" fill="#fbfaf7"/>
+  <rect x="70" y="70" width="1060" height="535" fill="#ffffff" stroke="#ded8cc" stroke-width="3"/>
+  <g fill="none" stroke="#8f8778" stroke-width="4">
+    <path d="M240 210 C370 150 450 165 560 230"/>
+    <path d="M560 230 C690 310 760 300 900 240"/>
+    <path d="M260 450 C420 390 535 380 650 450"/>
+    <path d="M650 450 C760 510 860 470 960 385"/>
+    <path d="M560 230 C590 300 610 365 650 450"/>
+    <path d="M900 240 C930 290 950 330 960 385"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">
+    <circle cx="240" cy="210" r="70" fill="#e7f5f2" stroke="#0f766e" stroke-width="4"/>
+    <text x="240" y="220" fill="#141414">EDA</text>
+    <circle cx="560" cy="230" r="82" fill="#f3f0e8" stroke="#8f8778" stroke-width="4"/>
+    <text x="560" y="224" fill="#141414">Foundry</text>
+    <text x="560" y="260" fill="#141414" font-size="22">EUV</text>
+    <circle cx="900" cy="240" r="72" fill="#fff7df" stroke="#b08c2f" stroke-width="4"/>
+    <text x="900" y="250" fill="#141414">OSAT</text>
+    <circle cx="260" cy="450" r="70" fill="#f7eded" stroke="#a75d5d" stroke-width="4"/>
+    <text x="260" y="460" fill="#141414">Materials</text>
+    <circle cx="650" cy="450" r="78" fill="#eef1f7" stroke="#566987" stroke-width="4"/>
+    <text x="650" y="442" fill="#141414">Substrate</text>
+    <text x="650" y="476" fill="#141414" font-size="22">Packaging</text>
+    <circle cx="960" cy="385" r="78" fill="#edf3ec" stroke="#6b835f" stroke-width="4"/>
+    <text x="960" y="378" fill="#141414">Cloud</text>
+    <text x="960" y="412" fill="#141414" font-size="22">Demand</text>
+  </g>
+  <text x="90" y="116" fill="#141414" font-family="Arial, sans-serif" font-size="34" font-weight="700">Chip supply-chain map preview</text>
+  <text x="90" y="560" fill="#5f5a51" font-family="Arial, sans-serif" font-size="24">Fallback image shown when the live embed is not available.</text>
+</svg>
