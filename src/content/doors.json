@@ -95,20 +95,20 @@
     "name": "starforge-narrative-tools",
     "status": "workshop",
     "url": "https://github.com/AthenaTheOwl/starforge-narrative-tools",
-    "hook": "Act 1-safe public exhibit from Starforge: a published Royal Road serial plus in-progress hobby game adaptation. released prose/spec slice, Python conversion tooling, validation gates."
+    "hook": "the python toolkit behind starforge canticles. prose-to-game schemas, conversion pipeline, validation gates."
   },
   {
     "n": "15",
     "name": "starforge-renpy-demo",
     "status": "workshop",
     "url": "https://github.com/AthenaTheOwl/starforge-renpy-demo",
-    "hook": "Act 1 Ren'Py adaptation slice from Starforge. released scenes, dialogue, combat vignettes, state systems, UI, lint/static validation, and no runtime junk."
+    "hook": "act 1 of starforge canticles, rendered in ren'py. dialogue, combat vignettes, state systems."
   },
   {
     "n": "16",
     "name": "starforge-rpg-prototype",
     "status": "workshop",
     "url": "https://github.com/AthenaTheOwl/starforge-rpg-prototype",
-    "hook": "Act 1 Godot RPG prototype for the Starforge hobby adaptation. party data, combat systems, branching dialogue, quests, scenes, and validation gates."
+    "hook": "act 1 of starforge canticles, prototyped as a godot 4 RPG. party data, combat, branching dialogue, scene tooling."
   }
 ]
