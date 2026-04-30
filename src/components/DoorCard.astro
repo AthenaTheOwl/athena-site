@@ -2,7 +2,7 @@
 interface Door {
   n: string;
   name: string;
-  status: "active" | "solved" | "drawer";
+  status: "active" | "workshop" | "solved" | "drawer";
   url: string;
   hook: string;
 }
@@ -11,6 +11,7 @@ const { door } = Astro.props as { door: Door };
 
 const statusStyles = {
   active: "border-accent text-accent",
+  workshop: "border-amber-700 text-amber-800",
   solved: "border-stone-500 text-stone-700",
   drawer: "border-stone-300 text-stone-500"
 };
