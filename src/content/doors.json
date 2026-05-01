@@ -11,7 +11,7 @@
     "name": "LLM-evaluation-framework",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/LLM-evaluation-framework",
-    "hook": "LLM eval framework that treats quality as more than one score: deterministic rules, stakeholder personas, LLM-as-judge. YAML suites, HTML reports, regression checks, CI gating."
+    "hook": "an LLM eval framework where quality isn't one number. deterministic rules, stakeholder personas, LLM-as-judge. yaml in, html out, CI gates the whole thing."
   },
   {
     "n": "03",
@@ -32,7 +32,7 @@
     "name": "semiconductor-e2e-manufacturing-optimization",
     "status": "solved",
     "url": "https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization",
-    "hook": "interactive streamlit app comparing nominal, static-robust, and two-stage adaptive wafer supply-chain models with monte carlo analysis."
+    "hook": "wafer supply-chain optimization in streamlit. nominal, static-robust, and two-stage adaptive — compared under monte carlo."
   },
   {
     "n": "06",
@@ -74,7 +74,7 @@
     "name": "athena-site",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/athena-site",
-    "hook": "this site. portfolio doors, essays, and a flagship semiconductor supply-chain map embed."
+    "hook": "this site. doors, essays, and the chip map embedded as the flagship."
   },
   {
     "n": "12",
