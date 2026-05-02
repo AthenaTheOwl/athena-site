@@ -1,0 +1,65 @@
+# Portfolio manifest — source of truth for the audit script.
+# scripts/portfolio_audit.py reads this; .github/workflows/portfolio-audit.yml runs it weekly.
+
+royal_road:
+  url: https://www.royalroad.com/fiction/149065/starforge-canticles
+
+anthropic:
+  # Auto-check skipped: api.anthropic.com/v1/models requires auth.
+  # Note manually or via quarterly review at:
+  # https://docs.anthropic.com/en/docs/about-claude/model-deprecations
+  required_models: [claude-sonnet-4-6]
+  manual_check_only: true
+
+stale_active_threshold_days: 90
+
+repos:
+  - name: athena-site
+    door: "11"
+    status: active
+    deploy_url: "<TBD>"
+
+  - name: chip-supply-chain-map
+    door: "12"
+    status: active
+    deploy_url: "<TBD>"
+    file_freshness:
+      path: src/data/nodes.csv
+      threshold_days: 180
+
+  - name: supplier-risk-rag-agent
+    door: "13"
+    status: active
+    deploy_url: "<TBD>"
+    file_freshness:
+      path: reports/baseline_eval_report.html
+      threshold_days: 90
+
+  - name: ai-supply-chain-copilot-prd
+    door: "10"
+    status: active
+
+  - name: starforge-narrative-tools
+    door: "14"
+    status: workshop
+    fork_check: true
+
+  - name: starforge-renpy-demo
+    door: "15"
+    status: workshop
+    fork_check: true
+
+  - name: starforge-rpg-prototype
+    door: "16"
+    status: workshop
+    fork_check: true
+
+  - { name: dispatch-optimizer, door: "01", status: active }
+  - { name: LLM-evaluation-framework, door: "02", status: active }
+  - { name: MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin, door: "03", status: solved }
+  - { name: world-food-program-robust-simulator, door: "04", status: solved }
+  - { name: semiconductor-e2e-manufacturing-optimization, door: "05", status: solved }
+  - { name: Robust-Facility-Location, door: "06", status: solved }
+  - { name: News-Bias-Multi-Agent-Pipeline, door: "07", status: drawer }
+  - { name: MIT-AI-Fall20, door: "08", status: drawer }
+  - { name: leetcode, door: "09", status: drawer }

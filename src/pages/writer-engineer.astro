@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import DoorCard from "../components/DoorCard.astro";
+import doors from "../content/doors.json";
+
+const featured = ["14", "15", "16", "02"];
+const cards = doors
+  .filter((d) => featured.includes(d.n))
+  .sort((a, b) => featured.indexOf(a.n) - featured.indexOf(b.n));
+---
+
+<Base
+  title="Writer-engineer lens — Vignesh Gopalakrishnan"
+  description="Engineering applied to a passion project: a serialized novel and its adaptation pipeline."
+>
+  <section class="shell py-14 sm:py-20">
+    <p class="eyebrow">Writer-engineer lens</p>
+    <h1 class="mt-3 text-4xl font-semibold sm:text-5xl">Engineering applied to a passion project</h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
+      <a class="font-semibold" href="https://www.royalroad.com/fiction/149065/starforge-canticles" target="_blank" rel="noreferrer">Starforge Canticles</a>
+      is a serialized speculative-fiction novel I publish chapter-by-chapter on
+      Royal Road. The exhibits below are Act 1-safe slices: the python toolkit
+      that produces game-ready data from prose, plus two adaptation paths
+      (Ren'Py, Godot).
+    </p>
+    <p class="mt-4 max-w-2xl text-stone-700">
+      Same instinct that runs the eval framework — validation gates, schemas,
+      tests — applied to a different domain.
+    </p>
+  </section>
+
+  <section class="border-t border-line bg-white py-14 sm:py-16">
+    <div class="shell">
+      <p class="eyebrow">Featured doors</p>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((door) => <DoorCard door={door} />)}
+      </div>
+      <p class="mt-10 text-stone-700">
+        Full portfolio at <a class="font-semibold" href="/">/</a>.
+      </p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,42 @@
+name: Link check
+
+on:
+  schedule:
+    - cron: "0 10 * * 1"   # Monday 10:00 UTC (one hour after audit)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install pyyaml
+
+      - name: Build URL list from manifest
+        run: |
+          python - <<'PY' > urls.txt
+          import yaml, pathlib
+          m = yaml.safe_load(pathlib.Path("ops/portfolio-manifest.yml").read_text(encoding="utf-8"))
+          print(m["royal_road"]["url"])
+          for r in m["repos"]:
+              url = r.get("deploy_url")
+              if url and url != "<TBD>":
+                  print(url)
+          PY
+          cat urls.txt
+
+      - name: Lychee link check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --max-concurrency 4 urls.txt
+          fail: true

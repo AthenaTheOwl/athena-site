@@ -1,0 +1,40 @@
+---
+import Base from "../layouts/Base.astro";
+import DoorCard from "../components/DoorCard.astro";
+import doors from "../content/doors.json";
+
+const featured = ["13", "02", "10"];
+const cards = doors
+  .filter((d) => featured.includes(d.n))
+  .sort((a, b) => featured.indexOf(a.n) - featured.indexOf(b.n));
+---
+
+<Base
+  title="AI systems lens — Vignesh Gopalakrishnan"
+  description="Evaluated AI: receipts, refusal, eval rigor."
+>
+  <section class="shell py-14 sm:py-20">
+    <p class="eyebrow">AI systems lens</p>
+    <h1 class="mt-3 text-4xl font-semibold sm:text-5xl">Receipts, refusal, eval rigor</h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
+      A RAG agent that cites SEC filings or refuses. An eval framework that treats
+      quality as more than one score. A PRD that frames trust as the product spec.
+    </p>
+    <p class="mt-4 max-w-2xl text-stone-700">
+      Read: <a href="/essays/ai-copilots-and-trust">AI copilots and trust</a> —
+      the demos always work; it's the deployments that don't.
+    </p>
+  </section>
+
+  <section class="border-t border-line bg-white py-14 sm:py-16">
+    <div class="shell">
+      <p class="eyebrow">Featured doors</p>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((door) => <DoorCard door={door} />)}
+      </div>
+      <p class="mt-10 text-stone-700">
+        Full portfolio at <a class="font-semibold" href="/">/</a>.
+      </p>
+    </div>
+  </section>
+</Base>

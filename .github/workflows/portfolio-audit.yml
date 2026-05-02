@@ -1,0 +1,45 @@
+name: Portfolio audit
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"   # Monday 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install audit deps
+        run: pip install httpx pyyaml
+
+      - name: Run portfolio audit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/portfolio_audit.py \
+            --manifest ops/portfolio-manifest.yml \
+            --output ops/portfolio-health.md \
+            --auto-issue
+        continue-on-error: true
+
+      - name: Commit health report if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ops/portfolio-health.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "audit: weekly portfolio health"
+            git push
+          fi
