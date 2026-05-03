@@ -17,12 +17,12 @@ repos:
   - name: athena-site
     door: "11"
     status: active
-    deploy_url: "<TBD>"
+    deploy_url: "https://athena-site-six.vercel.app"
 
   - name: chip-supply-chain-map
     door: "12"
     status: active
-    deploy_url: "<TBD>"
+    deploy_url: "https://chip-supply-chain-map.vercel.app"
     file_freshness:
       path: src/data/nodes.csv
       threshold_days: 180
@@ -30,7 +30,7 @@ repos:
   - name: supplier-risk-rag-agent
     door: "13"
     status: active
-    deploy_url: "<TBD>"
+    deploy_url: "https://supplier-risk-rag-agent.streamlit.app"
     file_freshness:
       path: reports/baseline_eval_report.html
       threshold_days: 90

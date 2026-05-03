@@ -4,16 +4,16 @@
 
 | Repo | URL | Status |
 |---|---|---|
-| athena-site | — | ⏳ pending deploy |
-| chip-supply-chain-map | — | ⏳ pending deploy |
-| supplier-risk-rag-agent | — | ⏳ pending deploy |
+| athena-site | https://athena-site-six.vercel.app | ✅ 200 |
+| chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | ✅ 200 |
+| supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | ✅ 200 |
 
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 2 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 2 | 90 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 3 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 3 | 90 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
@@ -22,7 +22,7 @@
 | athena-site | 0 | ✅ |
 | chip-supply-chain-map | 0 | ✅ |
 | supplier-risk-rag-agent | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 0 | ✅ |
+| ai-supply-chain-copilot-prd | 1 | ✅ |
 | dispatch-optimizer | 6 | ✅ |
 | LLM-evaluation-framework | 6 | ✅ |
 

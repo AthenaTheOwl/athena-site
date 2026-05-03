@@ -4,7 +4,7 @@ personal site + essays. central hub linking portfolio doors,
 hosts long-form writing, and embeds the chip-supply-chain-map
 as a flagship interactive demo.
 
-deployed at: <URL once live>
+deployed at: https://athena-site-six.vercel.app
 
 ## local dev
 
