@@ -24,10 +24,14 @@ jobs:
 
       - name: Build URL list from manifest
         run: |
+          # Only deploy URLs go through lychee. Royal Road has bot-specific
+          # behavior (403/404 to non-browser UAs); the audit script in
+          # scripts/portfolio_audit.py handles that with proper anti-bot
+          # detection. Including it here would require accepting 4xx
+          # globally, which would mask real deploy outages.
           python - <<'PY' > urls.txt
           import yaml, pathlib
           m = yaml.safe_load(pathlib.Path("ops/portfolio-manifest.yml").read_text(encoding="utf-8"))
-          print(m["royal_road"]["url"])
           for r in m["repos"]:
               url = r.get("deploy_url")
               if url and url != "<TBD>":
@@ -38,5 +42,8 @@ jobs:
       - name: Lychee link check
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --no-progress --max-concurrency 4 urls.txt
+          # Streamlit Community Cloud redirects to a login/payload URL with
+          # 303 on cold-start; treat that as healthy without chasing the
+          # redirect chain (which can exceed max-redirects).
+          args: --no-progress --max-concurrency 4 --accept 200..=299,303 urls.txt
           fail: true
