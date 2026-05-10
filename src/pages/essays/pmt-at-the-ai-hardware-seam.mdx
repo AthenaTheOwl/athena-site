@@ -1,0 +1,31 @@
+---
+layout: ../../layouts/Essay.astro
+title: "PMT at the AI hardware seam"
+description: "Shipping AI products inside hardware companies is its own discipline."
+date: "2026-04-29"
+readingTime: "6 min read"
+---
+
+Shipping AI products inside a hardware company is its own discipline. Different from pure-software product management. Different from pure-hardware product management. The work sits between two operating systems: hardware programs that manage long lead times, qualification, supply constraints, and launch windows — and AI programs that learn through rapid iteration, eval drift, model updates, and user feedback.
+
+The first mismatch is cadence. Hardware ships on annual or multi-year rhythms. Silicon programs, devices, validation plans, supplier readiness, manufacturing ramps, customer commitments — every gate is expensive to move. AI ships on a much shorter loop. Models improve, prompts change, retrieval shifts, benchmarks move, user expectations reset in weeks. A PMT at this boundary has to make those cadences legible to each other.
+
+That doesn't mean forcing hardware to move like software, or freezing AI to look like hardware. It means designing interfaces between the cadences. Hardware needs stable commitments: what model class is supported, what latency envelope is required, what memory footprint is realistic, what offline behavior matters, what regulatory constraints apply. AI needs room to improve: eval suites that can absorb model changes, guardrails that can be tuned, launch plans that recognize uncertainty. The PMT job is to turn that tension into a roadmap instead of a calendar fight.
+
+The second mismatch is validation. Hardware organizations live on spec sheets, qualification tests, environmental conditions, yield data, pass/fail gates that can be tightly defined. AI systems need validation too — but the evidence looks different. Eval suites, holdout sets, red-team cases, retrieval quality checks, refusal tests, human review loops, regression gates. The answer isn't "AI is fuzzy." The answer is that AI quality has to be operationalized with the same seriousness as hardware quality, using tools that fit the domain.
+
+This is where a PMT can prevent theater. A model demo isn't validation. A benchmark screenshot isn't launch readiness. A few friendly examples aren't coverage. The validation plan needs to name the user tasks, the failure modes, the decision thresholds, the escalation paths, and the data needed to keep testing after launch. Work like the [LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) treats evals as product infrastructure — quality across deterministic rules, stakeholder perspectives, model judgment, and CI gates.
+
+The third mismatch is decision rights. In pure hardware programs, decision ownership is often clearer because subsystem boundaries are established. In AI-enabled hardware, boundaries blur fast. Who owns model selection? Who owns latency tradeoffs? Who decides whether a smaller model with better on-device behavior is preferable to a larger model with better benchmark performance? Who owns hallucination risk? Who approves retrieval sources? Who defines acceptable refusal? Who signs off when a model update changes behavior after launch?
+
+If the PMT doesn't force those questions early, they show up late as conflict. Engineering optimizes for performance. Product optimizes for user value. Legal or security optimizes for risk reduction. Operations optimizes for supportability. All of those incentives are legitimate. They need a decision system. A good program makes the tradeoffs explicit — model capability, compute budget, memory, thermal, privacy, latency, reliability, evidence quality — and defines which forum can make which call.
+
+The Amazon and Qualcomm seats both shape how I think about this. Qualcomm taught respect for hardware constraints: power, thermal behavior, silicon roadmaps, ecosystem dependencies, the cost of late change. Amazon taught respect for operational scale: customer impact, mechanisms, metrics, ownership, and the discipline of writing down what decision is actually being made. AI product work needs both instincts. Curiosity about what the model can do. Skepticism about what the system can safely promise.
+
+The most useful PMT behavior at this boundary is translation with teeth. Translation isn't repeating one team's words to another team. It's converting fuzzy ambition into testable commitments. If product strategy says "make it intelligent," the PMT drives toward tasks, users, data, constraints, evals. If engineering says "the model is good enough," the PMT asks for the evidence by failure mode. If hardware says "the platform is fixed," the PMT clarifies what can still change in software, retrieval, prompts, or operating procedure.
+
+The boundary also rewards narrower product framing. A broad assistant that can answer anything is hard to validate and hard to support. A focused workflow can be made trustworthy. The [ai-supply-chain-copilot-prd](https://github.com/AthenaTheOwl/ai-supply-chain-copilot-prd) is closer to the right shape because it frames AI as exception triage with explicit trust boundaries. The system has a job, data sources, refusal behavior, a human decision maker. That makes it possible to define quality in terms a hardware or operations organization can actually review.
+
+This discipline will matter more as AI moves closer to devices, factories, vehicles, warehouses, supplier networks. The question won't be whether models are impressive. Many will be. The question is whether the surrounding product system is honest about cadence, validation, decision rights, and operating risk. PMTs who can work across those differences will make better calls than teams that pretend AI is just another software feature, or that hardware is just a slower deployment target.
+
+The job isn't making the seam disappear. The job is making it productive.

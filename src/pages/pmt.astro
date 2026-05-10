@@ -3,29 +3,31 @@ import Base from "../layouts/Base.astro";
 import DoorCard from "../components/DoorCard.astro";
 import doors from "../content/doors.json";
 
-const featured = ["10", "11", "12", "02"];
+const featured = ["10", "11", "12", "02", "17"];
 const cards = doors
   .filter((d) => featured.includes(d.n))
   .sort((a, b) => featured.indexOf(a.n) - featured.indexOf(b.n));
 ---
 
 <Base
-  title="TPM lens — Vignesh Gopalakrishnan"
-  description="A short version of the portfolio for TPM hiring at AI/semis companies."
+  title="PMT lens — Vignesh Gopalakrishnan"
+  description="A short version of the portfolio for PMT (Product Manager - Technical) hiring at AI/semis companies."
 >
   <section class="shell py-14 sm:py-20">
-    <p class="eyebrow">TPM lens</p>
-    <h1 class="mt-3 text-4xl font-semibold sm:text-5xl">If you're hiring TPMs at AI or semis companies</h1>
+    <p class="eyebrow">PMT lens</p>
+    <h1 class="mt-3 text-4xl font-semibold sm:text-5xl">If you're hiring PMTs at AI or semis companies</h1>
     <p class="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
       A PRD that frames AI as exception triage with explicit trust boundaries. An
       interactive map of the chip supply chain. An eval framework that treats quality
-      as more than one score.
+      as more than one score. An interactive walk through mechanism design for
+      procurement.
     </p>
     <p class="mt-4 max-w-2xl text-stone-700">
-      Three essays sit alongside:
+      Four essays sit alongside:
+      <a href="/essays/the-coordination-gap">the coordination gap</a>,
       <a href="/essays/ai-copilots-and-trust">AI copilots and trust</a>,
       <a href="/essays/the-chip-supply-chain">the chip supply chain</a>,
-      <a href="/essays/tpm-at-the-ai-hardware-seam">TPM at the AI hardware seam</a>.
+      <a href="/essays/pmt-at-the-ai-hardware-seam">PMT at the AI hardware seam</a>.
     </p>
   </section>
 
@@ -36,7 +38,7 @@ const cards = doors
         {cards.map((door) => <DoorCard door={door} />)}
       </div>
       <p class="mt-10 text-stone-700">
-        Want depth? The full portfolio is at <a class="font-semibold" href="/">/</a> — sixteen doors.
+        Want depth? The full portfolio is at <a class="font-semibold" href="/">/</a> — seventeen doors.
       </p>
     </div>
   </section>
