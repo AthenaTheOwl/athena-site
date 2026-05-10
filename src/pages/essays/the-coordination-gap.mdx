@@ -1,0 +1,31 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The coordination gap"
+description: "Why two rational parties leave money on the table — and how mechanism design recovers it without forcing either side to disclose its costs."
+date: "2026-05-10"
+readingTime: "7 min read"
+---
+
+Two parties each optimize on private cost data. The joint plan is worse than it has to be. Neither will fully disclose. That's the problem mechanism design is built for.
+
+Procurement is the cleanest example. A buyer wants units delivered to specific fulfillment centers on specific dates; the buyer's plan is shaped by demand forecasts, inventory positions, and transportation costs the vendor can't see. The vendor has its own production schedules, warehouse locations, and shipping economics the buyer can't see. Each side optimizes locally. The result is a purchase order that's suboptimal for both — the vendor might be able to ship far more cheaply to one FC than another, but the buyer's just-in-time order doesn't encode that. The vendor doesn't know the buyer's downstream demand patterns, so its margin is lower than it could be. Multiply that by tens of thousands of POs a year and the gap is real.
+
+You can compute the gap. If both sides shared their cost structures, a centralized planner could solve the joint problem and find the welfare-maximizing plan. The gap between that plan and the one each side reaches alone is the **coordination gap** — money left on the table by the structure of the transaction, not by anyone's mistake.
+
+The hard part is that neither side will share its cost structure. The vendor's production cost is a competitive moat; the buyer's downstream margin is similarly proprietary. Naive cooperation fails for the same reason a poker game ends if everyone shows their cards. So the question becomes: can you design the rules of the transaction so that self-interested parties produce the joint-optimal outcome anyway?
+
+That's the mechanism-design question. The canonical answer is **Vickrey-Clarke-Groves** (VCG): a class of mechanisms where truthful reporting becomes a dominant strategy. Each party submits its preferences, the mechanism computes the welfare-maximizing plan, and side payments — **cost-benefit transfers** — make it not pay to lie. The vendor pays the buyer an amount equal to the cost the buyer absorbs by deviating from its preferred just-in-time plan. The math works out so that misreporting your costs makes you worse off, regardless of what the other side does.
+
+VCG has a practical problem: the direct version requires submitting your full utility function. In a high-dimensional supply chain — dozens of FCs, multiple products, rolling weekly horizons — that's infeasible and disclosure-heavy. The fix is to factor the computation. **Consensus Planning Protocol** (CPP), implemented as ADMM (alternating direction method of multipliers), works iteratively: a coordinator proposes a plan and price signals; each party responds with its preferred plan given those prices; the coordinator updates and repeats until convergence. The vendor never reveals its cost structure — only its responses to iterative queries. The mechanism extracts only the information needed to compute the efficient plan and the associated transfer payment.
+
+This is the Bergemann thesis, from his recent [Amazon Science article](https://www.linkedin.com/pulse/how-mechanism-design-theory-helps-optimize-amazon-vendor-9igre/) on the FloPro framework. The pilot ran nine weeks with a consumer-product manufacturer; real cost savings, no disclosure, both sides no-worse-off than walking away. The theory translated into operational savings.
+
+A handful of things make this matter now. Buyers and vendors are increasingly autonomous agents — Pactum, AgenticPay, others — negotiating procurement deals at machine speed without humans in the loop. Naive autonomous coordination has the same asymmetric-information failure mode as naive human coordination, just faster. The mechanisms that make agentic procurement reliable — VCG, CPP, cost-benefit transfers, menu-of-contracts — are the same ones Vickrey wrote down in 1961. The math is older than the agents.
+
+The hidden lever isn't the algorithm. It's that you can make truth-telling the dominant strategy through *how the rules are written*, not through trust or enforcement. That's the move that surprised me when I dug into it: there's a class of rules where rational self-interest produces cooperation. The mechanism is the trust.
+
+ADMM doesn't always win, either. The lab walks through cases where ADMM oscillates and alternating best response converges instead. Cases where the joint optimum doesn't exist — capacity is too tight, surplus is negative, the cost-benefit transfer flags infeasible rather than forcing a fake settlement. Cases where private information genuinely buys nothing and full disclosure is the right move. Cases where the privacy cost is enough to make the simpler menu-of-contracts approach more honest.
+
+If you want to see the gap close in real time — pick a scenario, vary the information sharing, swap the algorithm, watch the cost-benefit transfer keep both parties no-worse-off — the [procurement-negotiation-lab](https://procurement-negotiation-lab.vercel.app/) walks through it interactively. The lab makes the failure modes visible alongside the wins, which is the pedagogical point: the algorithm is one tool, not the answer. The answer is the mechanism, and that's a design choice.
+
+Mechanism design teaches a specific way of looking at coordination problems: ask what rules make truth-telling worth it, then build to those rules. Procurement is one application. The same logic shows up in spectrum auctions, ad markets, kidney exchanges, and any place where parties have to coordinate without trusting each other to disclose. The procurement version is the cleanest demo I've found of the underlying idea.
