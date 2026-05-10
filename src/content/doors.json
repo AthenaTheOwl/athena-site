@@ -110,5 +110,12 @@
     "status": "workshop",
     "url": "https://github.com/AthenaTheOwl/starforge-rpg-prototype",
     "hook": "act 1 of starforge canticles, prototyped as a godot 4 RPG. party data, combat, branching dialogue, scene tooling."
+  },
+  {
+    "n": "17",
+    "name": "procurement-negotiation-lab",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/procurement-negotiation-lab",
+    "hook": "an interactive walk through mechanism design for long-lead procurement. coordination gap, VCG, ADMM, cost-benefit transfers. custom agents, custom equations, joint-optimality cases."
   }
 ]

@@ -35,6 +35,11 @@ repos:
       path: reports/baseline_eval_report.html
       threshold_days: 90
 
+  - name: procurement-negotiation-lab
+    door: "17"
+    status: active
+    deploy_url: "https://procurement-negotiation-lab.vercel.app"
+
   - name: ai-supply-chain-copilot-prd
     door: "10"
     status: active
