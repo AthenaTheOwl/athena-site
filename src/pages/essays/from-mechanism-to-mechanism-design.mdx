@@ -1,28 +1,28 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "From mechanism to mechanism design"
-description: "One VCG mechanism isn't a procurement strategy — it's a tool. The field is in the rules, not the algorithm."
+description: "A single VCG mechanism is a tool. The interesting design work happens at the level of which rules to combine, and when to switch."
 date: "2026-05-10"
 readingTime: "7 min read"
 ---
 
-One Vickrey-Clarke-Groves mechanism isn't a procurement strategy. It's a tool. Mechanism design is the discipline of picking tools — and picking when each one breaks.
+A single Vickrey-Clarke-Groves mechanism is a tool. Mechanism design is the discipline of choosing which tools to combine, and recognizing when each one breaks in operation.
 
 [The coordination gap](/essays/the-coordination-gap/) argued that mechanism design recovers joint value without forcing either side to disclose its costs. True in theory. In practice, the textbook version of VCG fails before you ship it: full transfers can blow your budget; suppliers learn to inflate stated costs to game inflated transfers; running the full counterfactual per supplier per round costs real compute; and a planner who can override the optimization sovereignty nullifies the dominant-strategy guarantee. The math is right; the operating loop needs work.
 
 The operational refinements are themselves design choices. Four worth naming:
 
-**α clipping.** Instead of paying the full VCG transfer `T_i = max(E_i, 0)`, pay `α · T_i` with α between 0 and 1. The math weakens — dominant-strategy incentive compatibility becomes approximate — but the practical anti-gaming pressure survives, and the spend stays bounded. The choice of α encodes how much you trust the vendor base and how much budget you're willing to spend to enforce honesty. α isn't a tuning parameter. It's a posture.
+**α clipping.** Instead of paying the full VCG transfer `T_i = max(E_i, 0)`, pay `α · T_i` with α between 0 and 1. The math weakens — dominant-strategy incentive compatibility becomes approximate — but the practical anti-gaming pressure survives, and the spend stays bounded. α encodes a posture: how much you trust the vendor base, how much budget you're willing to spend enforcing honesty, and how much approximate-but-cheap you can stomach vs exact-but-expensive.
 
 **Reliability multipliers.** Instead of accepting vendor-stated capacity at face value, the planner system applies a historical-adherence weight. The vendor doesn't have to disclose its cost structure; the planner uses the vendor's past behavior as a prior on stated capacity. This sidesteps the asymmetric-information problem from a different angle — not "make truth-telling worth it" but "the system already knows enough of the truth to discount obvious overpromising." The choice of how much weight history gets is, again, a design decision.
 
-**ε-frontier.** Instead of returning one optimal plan, return the top-K within ε of optimal. Lets the planner choose between optimal-but-thin and slightly-suboptimal-but-robust. Transfers are recomputed consistently for whichever the planner picks. The ε isn't a UX nicety — it's the choice to preserve human judgment over pure optimization. Some categories want ε = 0 (trust the math). Some want ε large (preserve options). The right setting changes as the system matures.
+**ε-frontier.** Instead of returning one optimal plan, return the top-K within ε of optimal. The planner picks between optimal-but-thin and slightly-suboptimal-but-robust, and transfers are recomputed consistently for whichever pick lands. ε is the place in the system where human judgment overrides pure optimization. Some categories want ε = 0 (trust the math). Some want ε large (preserve options). The right setting changes as the system matures.
 
 **Decoy demand.** During pilots, inject scenarios with known answers — known-cheap routing, known-fragile suppliers, known-collusion-prone categories — and watch whether the vendor responses match the expected pattern. Catches systematic misreporting that the equilibrium math assumes away. The decoys aren't a feature; they're an audit trail.
 
 Each of these refinements is a *rule choice*. None is just an algorithm tweak. α encodes posture toward gaming. Reliability priors encode trust in behavioral history. ε encodes preference for optionality. Decoys encode tolerance for hidden adversarial behavior. The math underneath is the same VCG framework — but the operationalization is plural.
 
-Plural is the key word. There isn't one mechanism for procurement. There's a family of mechanisms parameterized by the four levers above, and the right family member for *which category* and *which season* changes as the system runs. Holiday seasonal volatility wants different α than steady-state purchasing. New-vendor onboarding wants more decoys; mature trusted vendors need fewer. Single-source categories get reliability priors that anchor heavily on incumbent history; categories with three credible alternates can afford more aggressive ε.
+Plural is the key word. Procurement gets a *family* of mechanisms parameterized by the four levers above, and the right family member for *which category* and *which season* changes as the system runs. Holiday seasonal volatility wants different α than steady-state purchasing. New-vendor onboarding wants more decoys; mature trusted vendors need fewer. Single-source categories get reliability priors that anchor heavily on incumbent history; categories with three credible alternates can afford more aggressive ε.
 
 You don't pick a mechanism. You pick a family with parameters that adapt.
 
@@ -32,6 +32,6 @@ This is the part that doesn't make it into the textbook chapter. The textbook st
 
 The [procurement-negotiation-lab](https://procurement-negotiation-lab.vercel.app/) teaches the foundation — one path through one set of mechanisms with default parameters. It's a fixed sample of what the math looks like in operation. The harder question — the one a planning org actually has to answer — is how the practice gets built around the math. What's the cadence for retuning α? Who owns the reliability-prior update? When does a decoy-detected misreport escalate to contract renegotiation versus algorithmic correction?
 
-Those aren't math questions. They're product and operating questions. They sit downstream of the mechanism choice and upstream of the actual cost savings. A PMT shipping procurement systems lives in that downstream-of-math, upstream-of-savings layer. The math is the ticket to the discussion. The discipline is everything after.
+Those are product and operating questions. They sit downstream of the mechanism choice and upstream of the actual cost savings. A PMT shipping procurement systems lives in that downstream-of-math, upstream-of-savings layer. The math gets you a seat at the discussion; the discipline of operating the mechanism is most of the actual work.
 
 Mechanism design teaches you that the rules of the transaction matter as much as the substance of the transaction. Operational mechanism design teaches you that the rules themselves are decisions to be made — and remade — by the people running the system. The lab is the foundation. The next layer is the work.
