@@ -4,6 +4,6 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
-  site: "https://athena-site.vercel.app",
+  site: "https://athena-site-six.vercel.app",
   integrations: [mdx(), tailwind(), sitemap()]
 });
