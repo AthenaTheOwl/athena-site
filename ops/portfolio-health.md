@@ -1,4 +1,4 @@
-# Portfolio health — 2026-05-11
+# Portfolio health — 2026-05-18
 
 ## Deploys
 
@@ -13,20 +13,20 @@
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 11 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 11 | 90 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 18 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 18 | 90 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
 | athena-site | 0 | ✅ |
-| chip-supply-chain-map | 8 | ✅ |
-| supplier-risk-rag-agent | 7 | ✅ |
+| chip-supply-chain-map | 15 | ✅ |
+| supplier-risk-rag-agent | 14 | ✅ |
 | procurement-negotiation-lab | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 9 | ✅ |
-| dispatch-optimizer | 14 | ✅ |
-| LLM-evaluation-framework | 14 | ✅ |
+| ai-supply-chain-copilot-prd | 16 | ✅ |
+| dispatch-optimizer | 21 | ✅ |
+| LLM-evaluation-framework | 21 | ✅ |
 
 ## Starforge cluster forks
 
