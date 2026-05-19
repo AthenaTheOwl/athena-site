@@ -1,0 +1,63 @@
+---
+const url = "https://procurement-negotiation-lab.vercel.app";
+const source = "https://github.com/AthenaTheOwl/procurement-negotiation-lab";
+---
+
+<section id="procurement-lab" class="shell py-14 sm:py-16">
+  <div class="max-w-3xl">
+    <p class="eyebrow">Flagship demo</p>
+    <h2 class="mt-3 text-3xl font-semibold sm:text-4xl">Procurement negotiation lab</h2>
+    <p class="mt-4 text-stone-700">
+      An interactive 8-level walk through mechanism design for long-lead procurement.
+      Start with the coordination gap, end at authoring your own utility function.
+      Open-source FloPro under the hood; cross-platform engine; mobile app on the way.
+    </p>
+  </div>
+  <div class="mt-8 overflow-hidden border border-line bg-white">
+    <div class="relative aspect-video w-full bg-stone-100">
+      <iframe
+        id="procurement-lab-frame"
+        src={url}
+        class="h-full w-full"
+        loading="lazy"
+        title="Procurement negotiation lab"
+      ></iframe>
+      <div
+        id="procurement-lab-fallback"
+        class="hidden absolute inset-0 grid place-items-center bg-white p-4 text-center"
+        aria-live="polite"
+      >
+        <div class="max-w-lg">
+          <p class="text-sm text-stone-600">
+            The embedded lab is still coming online.
+            <a class="font-semibold no-underline" href={url} target="_blank" rel="noreferrer">Open it in a new tab</a>
+            or view the
+            <a class="font-semibold no-underline" href={source} target="_blank" rel="noreferrer">source repository</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <p class="border-t border-line px-4 py-3 text-sm text-stone-500">
+      flagship demo |
+      <a href={url} target="_blank" rel="noreferrer">open in new tab</a>
+      |
+      <a href={source} target="_blank" rel="noreferrer">source</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  const frame = document.querySelector<HTMLIFrameElement>("#procurement-lab-frame");
+  const fallback = document.querySelector<HTMLElement>("#procurement-lab-fallback");
+  let loaded = false;
+
+  frame?.addEventListener("load", () => {
+    loaded = true;
+  });
+
+  window.setTimeout(() => {
+    if (!loaded) {
+      fallback?.classList.remove("hidden");
+    }
+  }, 3200);
+</script>
