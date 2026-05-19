@@ -74,7 +74,7 @@
     "name": "athena-site",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/athena-site",
-    "hook": "this site. doors, essays, and the chip map embedded as the flagship."
+    "hook": "this site. doors, essays, lens paths, and the procurement-negotiation-lab embedded as the flagship demo."
   },
   {
     "n": "12",
@@ -116,6 +116,6 @@
     "name": "procurement-negotiation-lab",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/procurement-negotiation-lab",
-    "hook": "an interactive walk through mechanism design for long-lead procurement. coordination gap, VCG, ADMM, cost-benefit transfers. custom agents, custom equations, joint-optimality cases."
+    "hook": "flagship interactive demo. an 8-level walkthrough of mechanism design for long-lead procurement: coordination gap, info trade-offs, walkaway zones, ADMM, VCG, multi-party splits, audits, and an authoring sandbox. cross-platform engine; mobile app on the way."
   }
 ]
