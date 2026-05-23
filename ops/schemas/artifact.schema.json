@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://athena.dev/ops/schemas/artifact.schema.json",
+  "title": "Artifact",
+  "description": "A typed output produced by a run. Artifacts carry provenance (which spec, which agent, which run) and a lifecycle status. Every promoted output in the system is an artifact of one of the listed types.",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "spec_id",
+    "produced_by",
+    "run_id",
+    "status",
+    "summary",
+    "evidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identifier for the artifact. Format is up to the producing repo, but must be unique within that repo."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "spec",
+        "plan",
+        "patch",
+        "pr",
+        "review",
+        "test_report",
+        "eval_report",
+        "screenshot",
+        "log",
+        "trace",
+        "decision_memo",
+        "release_note",
+        "postmortem",
+        "dream_report",
+        "memory_update",
+        "skill_patch",
+        "prompt_patch",
+        "config_patch"
+      ],
+      "description": "Artifact type. Determines which downstream consumers know how to interpret it."
+    },
+    "spec_id": {
+      "type": "string",
+      "description": "Identifier of the spec this artifact serves. Example: specs/0001-cognitive-delivery-control-plane/."
+    },
+    "produced_by": {
+      "type": "string",
+      "description": "Identifier of the agent or human that produced the artifact. Example: claude-opus-4-7 or a GitHub handle."
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Identifier of the Run that produced this artifact. Lets consumers join back to the run record for cost, events, and inputs."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["proposed", "accepted", "superseded", "rejected"],
+      "description": "Lifecycle state. Proposed on creation; accepted on merge or review pass; superseded when a later artifact replaces it; rejected when the gate or reviewer turned it down."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One- or two-sentence description of what the artifact is and why it exists."
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Pointers to supporting artifacts, runs, or external references.",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {"type": "string", "description": "Evidence category."},
+          "ref": {"type": "string", "description": "Pointer (path, URL, or id)."}
+        }
+      }
+    }
+  }
+}

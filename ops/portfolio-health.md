@@ -1,4 +1,4 @@
-# Portfolio health — 2026-05-18
+# Portfolio health — 2026-05-23
 
 ## Deploys
 
@@ -7,26 +7,29 @@
 | athena-site | https://athena-site-six.vercel.app | ✅ 200 |
 | chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | ✅ 200 |
 | supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | ✅ 200 |
+| ai-field-brief | https://ai-field-brief.vercel.app | ✅ 200 |
 | procurement-negotiation-lab | https://procurement-negotiation-lab.vercel.app | ✅ 200 |
 
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 18 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 18 | 90 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 23 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 23 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 1 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 0 | ✅ |
-| chip-supply-chain-map | 15 | ✅ |
-| supplier-risk-rag-agent | 14 | ✅ |
+| athena-site | 4 | ✅ |
+| chip-supply-chain-map | 20 | ✅ |
+| supplier-risk-rag-agent | 20 | ✅ |
+| ai-field-brief | 0 | ✅ |
 | procurement-negotiation-lab | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 16 | ✅ |
-| dispatch-optimizer | 21 | ✅ |
-| LLM-evaluation-framework | 21 | ✅ |
+| ai-supply-chain-copilot-prd | 21 | ✅ |
+| dispatch-optimizer | 27 | ✅ |
+| LLM-evaluation-framework | 27 | ✅ |
 
 ## Starforge cluster forks
 

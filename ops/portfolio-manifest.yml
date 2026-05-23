@@ -35,6 +35,14 @@ repos:
       path: reports/baseline_eval_report.html
       threshold_days: 90
 
+  - name: ai-field-brief
+    door: "18"
+    status: active
+    deploy_url: "https://ai-field-brief.vercel.app"
+    file_freshness:
+      path: briefs/INDEX.md
+      threshold_days: 14
+
   - name: procurement-negotiation-lab
     door: "17"
     status: active
