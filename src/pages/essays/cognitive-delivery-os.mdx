@@ -1,0 +1,67 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Cognitive Delivery OS as a portfolio thesis"
+description: "The durable system is specs, decisions, traces, ledgers, tests, evals, and deployment evidence — not the agent framework."
+date: "2026-05-24"
+readingTime: "9 min read"
+---
+
+A Claude Code agent finishes a refactor at 2 a.m., decides it should update the long-term memory store while the work is fresh, and rewrites the file unprompted. No spec asked for it. No decision recorded it. No proof gate caught it. The next morning, the human reads a tidy commit message and pulls. A week later the agent's behavior drifts in ways nobody can explain, because the memory it's reading from no longer matches the memory anyone reviewed. The team blames the model. The model isn't the bug. The discipline around the model is.
+
+That scene has cousins. A prompt change ships without an eval suite, and the regression only shows up after a customer escalates. Three agents commit to the same branch over a weekend and main now contains conflicting implementations of the same function. A "small" library bump silently changes the embedding model and last quarter's retrieval benchmarks become incomparable to this quarter's. Each failure points at the same missing discipline. The agent framework didn't cause it. The agent framework can't fix it.
+
+## The thesis
+
+The durable system is specs, decisions, traces, ledgers, tests, evals, and deployment evidence — not the agent framework. Frameworks turn over every six months. LangGraph today, something else by Q3, something else again the year after. The records survive every framework swap because they describe what happened in terms the next framework also has to honor. If the records have shape, agents can write them, gates can check them, humans can audit them, and the team can answer the only questions that matter at scale: what did we ship, why did we choose this, what evidence supports it, what will break if we change it.
+
+Each artifact type carries weight for a specific reader. A `specs/NNNN-<slug>/` ledger tells the engineer what got built and the customer what got promised. A `decisions/DEC-*.md` file tells the hiring manager how the maker reasons under uncertainty and tells future-self why the obvious alternative was rejected. An eval report tells the science guild whether retrieval quality survived the latest reranker swap and tells the commercial reader whether the citation faithfulness number is still defensible. A run trace tells the operations guild what the agent did versus what the workflow said it should do. A dream report tells the learning guild what patterns recurred enough to deserve promotion to a skill. A policy file tells the security guild which tool calls require human approval at which threshold.
+
+The records are framework-neutral on purpose. A JSON-schema-validated decision record reads the same whether the agent that wrote it ran on Anthropic's SDK or someone else's. The proof gate that validates it cares about the contract, not the provenance.
+
+## The eight planes
+
+**Spec.** What we're building, in a numbered ledger the team can point at. Procurement-lab's `specs/0001-lab-engine/` named eight levels of mechanism-design pedagogy before any TypeScript got typed. The spec ledger gated the build for three weeks while the requirements firmed up, which is what the spec ledger is supposed to do.
+
+**Agent guild.** Who does what, declared as YAML role files under `.agents/roles/`. Ai-field-brief's roles include `control.coordinator`, `product.spec-writer`, `engineering.implementation`, `engineering.code-reviewer`, `security.proof-gate-runner`, and `learning.dream-orchestrator`. The role file names the tools the role can call and the policies the role must honor. A schema in athena-site's `ops/schemas/role.schema.json` says what a valid role looks like.
+
+**Workspace.** Where the work happens, isolated. The Agent tool's worktree mechanism plus per-repo factory scripts handle workspace setup without a long-running service. A subagent gets its own copy of the tree, makes its mess, returns its result, and the parent decides whether to keep it.
+
+**Artifact.** What was made, typed. A patch is an artifact. A PR is an artifact. An eval report is an artifact. Each one carries provenance back to the spec and decision it implements. Supplier-risk-rag-agent's `reports/baseline_eval_report.html` is an artifact pointing at the four-suite eval that produced it.
+
+**Proof gate.** What's safe to ship. `voice_lint.py`, `spec_check.py`, `validate_decisions.py`, the test suite, the eval suite, the build. A failing gate blocks the merge. The gate is a script, not a meeting.
+
+**Decision.** Why we chose this path. Procurement-lab's `decisions/CIT-002.md` (the citation-shape evolution path) is a decision; it points at the requirement it resolves, lists the alternatives that lost, names the evidence, and writes down what would have to happen to reverse it. Supplier-risk-rag-agent's most recent commit amended that exact decision's reversibility note, which is what a real decisions directory looks like in operation.
+
+**Runtime.** Where the agent runs and what it did at run-time, logged. Run records carry the request, the tool calls, the timings, the cost, the outcome. The portfolio audit walks JSONL event files inside each repo's `events/` directory.
+
+**Dream.** What we learned, offline. A weekly cron reads the last N days of runs, postmortems, and evals; proposes promotion candidates (memory updates, generated tests, skill patches, backlog items); flags each candidate with `human_review_required: true` by default. Ai-field-brief, procurement-lab, and supplier-risk-rag-agent all have a `dreams/2026-W21/` folder. That's three product repos converging on the same offline-cognition loop without either of them being told to.
+
+## What we deliberately don't build
+
+LangGraph as a default. LangGraph is fine when a record shape asks for it. Adopting it before the records ask is how a portfolio ends up with five workflow representations and no source of truth. Pick a framework the day the records name the need, and write a decision file explaining why.
+
+Framework soup. CrewAI plus AutoGen plus Strands plus PydanticAI plus a homegrown router is how a solo builder loses a year. Each framework brings its own opinions about state, memory, tool contracts, and observability. The control plane's contracts already cover state, memory, tools, and events. A framework that re-implements those contracts in its own shape is a framework that's going to drift from the records the gates already validate.
+
+A twelve-screen governance SaaS. The weekly cron plus the per-repo gates plus a single portfolio-health markdown file do the job. A control-plane dashboard arrives the day the artifact volume makes the markdown unreadable, not before. Until then, the dashboard is the markdown, regenerated weekly, committed to the repo, diffable like any other record.
+
+A separate event-log database. Events land as JSONL inside each repo's `events/` directory; the portfolio audit walks the files. The database arrives the day join queries justify it.
+
+The shared rule across all four: defer the build until the record volume names the need. A solo builder who pre-builds infrastructure for volume they don't have is a solo builder who's stopped shipping.
+
+## Reference implementations
+
+Four repos under this portfolio carry the discipline at four different angles.
+
+[Athena-site](https://github.com/AthenaTheOwl/athena-site) is the meta-repo. It owns the eleven JSON-schema contracts in `ops/schemas/`, the charter in `ops/control-plane.md`, the manifest of what's in the portfolio, and the weekly cron that audits cross-repo health. It does not reach into product repos to fix their records. The audit reports drift; the product repo's own gates fix it.
+
+[Ai-field-brief](https://github.com/AthenaTheOwl/ai-field-brief) is primary-source curation under proof gates. A weekly digest gets drafted, every claim gets checked against a primary source, the citation map gets validated, and the brief ships only if the validators pass. The spec ledger gates the brief workflow. The decisions directory carries the editorial calls. The dream loop is already promoting patterns about which kinds of sources need stronger gates.
+
+[Procurement-negotiation-lab](https://github.com/AthenaTheOwl/procurement-negotiation-lab) is mechanism-design pedagogy. Eleven levels walk a player from a coordination gap through VCG transfers, α clipping, multi-party splits, audit mechanisms, and an authoring sandbox. The math gets named in plain English at each step. The spec ledger names what each level teaches; the decisions directory names which mechanisms got cut and why; the engine is cross-platform because the spec said so before the TypeScript said so.
+
+[Supplier-risk-rag-agent](https://github.com/AthenaTheOwl/supplier-risk-rag-agent) is citation-faithful RAG under a four-suite eval discipline. SEC filings in, cited answers out. Retrieval is the mechanism; citation faithfulness, abstention, and regression evals are wired into CI because the product promise depends on receipts. The decisions directory carries the citation-shape evolution path. The dream loop promotes patterns about when the agent abstains and what those abstentions reveal about missing integrations.
+
+Three of those four repos share the same CDCP shape: `specs/` ledger, `decisions/` directory, `.agents/` operating model, `dreams/<week>/` offline cognition, `ops/` for cross-repo gates. The fourth (athena-site) owns the contracts the other three honor. The convergence is the point. Three product repos, three different domains, one set of records.
+
+## Closing
+
+Clone any of the four repos. Read `decisions/` first; it's the cheapest way to see how the maker reasons under constraint. Read `specs/0001-*/requirements.md` next; it's where the project committed to what it was for. Read `dreams/2026-W21/report.md` last; it's the weekly snapshot of what the system learned about itself. Then form your own view about whether this shape of work is the one you'd want around the agents you're deploying.
