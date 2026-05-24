@@ -36,4 +36,27 @@
   .focus-ring {
     @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
   }
+
+  .door-cues > summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .door-cues > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .door-cues > summary::after {
+    content: "+";
+    margin-left: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85rem;
+    line-height: 1;
+    color: inherit;
+  }
+
+  .door-cues[open] > summary::after {
+    content: "\2212";
+  }
 }
