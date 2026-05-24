@@ -238,6 +238,28 @@ def section_drift(audit: Audit) -> None:
     audit.add_section("## Manifest drift", "\n".join(body_lines))
 
 
+def section_cdcp_status(audit: Audit) -> None:
+    """CDCP install status per repo. Pulled from manifest, not introspected.
+
+    The product repo's own gates prove the records exist; this table just
+    reflects what the manifest declares so a reader can see the throughline.
+    """
+    rows = ["| Repo | Door | CDCP status |", "|---|---|---|"]
+    any_rows = False
+    for r in audit.manifest["repos"]:
+        cs = r.get("cdcp_status")
+        if cs is None:
+            continue
+        any_rows = True
+        if isinstance(cs, list):
+            value = ", ".join(cs)
+        else:
+            value = str(cs)
+        rows.append(f"| {r['name']} | {r.get('door', '-')} | {value} |")
+    if any_rows:
+        audit.add_section("## CDCP status", "\n".join(rows))
+
+
 def section_anthropic(audit: Audit) -> None:
     if audit.manifest["anthropic"].get("manual_check_only"):
         body = (
@@ -292,6 +314,7 @@ def main() -> int:
     section_forks(audit)
     section_royal_road(audit)
     section_drift(audit)
+    section_cdcp_status(audit)
     section_anthropic(audit)
 
     args.output.write_text(audit.render(), encoding="utf-8")

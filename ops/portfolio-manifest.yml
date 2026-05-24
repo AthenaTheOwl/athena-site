@@ -18,11 +18,14 @@ repos:
     door: "11"
     status: active
     deploy_url: "https://athena-site-six.vercel.app"
+    # athena-site owns the CDCP contracts but doesn't operate the model itself.
+    cdcp_status: [contracts-owner]
 
   - name: chip-supply-chain-map
     door: "12"
     status: active
     deploy_url: "https://chip-supply-chain-map.vercel.app"
+    cdcp_status: pending
     file_freshness:
       path: src/data/nodes.csv
       threshold_days: 180
@@ -31,6 +34,7 @@ repos:
     door: "13"
     status: active
     deploy_url: "https://supplier-risk-rag-agent.streamlit.app"
+    cdcp_status: [installed, operating-model, dreams-promoted]
     file_freshness:
       path: reports/baseline_eval_report.html
       threshold_days: 90
@@ -39,6 +43,7 @@ repos:
     door: "18"
     status: active
     deploy_url: "https://ai-field-brief.vercel.app"
+    cdcp_status: [installed, operating-model, dreams-promoted]
     file_freshness:
       path: briefs/INDEX.md
       threshold_days: 14
@@ -47,10 +52,12 @@ repos:
     door: "17"
     status: active
     deploy_url: "https://procurement-negotiation-lab.vercel.app"
+    cdcp_status: [installed, operating-model, dreams-promoted]
 
   - name: ai-supply-chain-copilot-prd
     door: "10"
     status: active
+    cdcp_status: pending
 
   - name: starforge-narrative-tools
     door: "14"
