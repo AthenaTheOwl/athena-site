@@ -70,8 +70,11 @@ Roles cluster into 12 guilds. Control coordinates. Product owns specs.
 Research scouts. Design shapes interaction. Engineering implements.
 Science runs evals. Security audits. Operations runs the platform. Domain
 carries subject expertise. Learning runs the dream loop. Documentation
-keeps the written record. A 12th guild slot stays reserved for whatever
-the portfolio grows into next.
+keeps the written record. The 12th slot now belongs to Commercial:
+revenue-adjacent roles that name pricing, packaging, and subscriber
+experience without bending product or design out of shape. New
+graduations may pick `commercial` as a guild from now on; existing roles
+do not auto-rename — a rename is a migration and lands as its own DEC.
 
 ### The minimum-viable role set
 
@@ -95,6 +98,14 @@ validators that fail the build on drift:
 | `validate_roles.py` | `role.schema.json` | gates `.agents/roles/*.yaml` |
 | `validate_tools.py` | `tool.schema.json` | gates `.agents/tools/*.yaml` |
 | `validate_policies.py` | `policy.schema.json` | gates `.agents/policies/*.yaml` |
+| `validate_skills.py` | `skill.schema.json` | gates `.agents/skills/*/SKILL.md` front-matter |
+
+`validate_skills.py` lands in each product repo that ships skills. It
+parses YAML front-matter from `.agents/skills/*/SKILL.md`, fetches
+`skill.schema.json` from athena-site (with a local
+`ops/schemas-cache/skill.schema.json` fallback), and validates each
+record. The pattern mirrors the existing `validate_decisions.py` and is
+the next planned cross-portfolio validator.
 
 State machines and workflows are declarative; the same generic walker
 parses both and checks that every transition is legal and every step

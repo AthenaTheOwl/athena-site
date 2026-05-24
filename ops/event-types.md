@@ -293,6 +293,35 @@ security_review) returns clean.
 
 ---
 
+## `decision.amended`
+
+**When it fires.** A new DEC amends an existing DEC. The new DEC's
+`amends:` field carries the prior DEC's id. Use when refining a decision
+without overwriting it. The prior DEC is not changed; the new DEC is a
+sibling artifact that documents the amendment.
+
+**Required payload fields.** `amending_decision_id`,
+`amended_decision_id`, `reason`.
+
+**Typical actor.** `{kind: "role", id: "product.spec-writer"}`.
+
+**Example.**
+```json
+{
+  "event_id": "a0a1a2a3-a4a5-4a6a-8a7a-a8a9aaabacad",
+  "type": "decision.amended",
+  "created_at": "2026-05-23T11:00:00Z",
+  "actor": {"kind": "role", "id": "product.spec-writer"},
+  "payload": {
+    "amending_decision_id": "DEC-CIT-002-amendment-reversibility-mitigation",
+    "amended_decision_id": "DEC-CIT-002-original",
+    "reason": "Capture forward-looking mitigation without changing original."
+  }
+}
+```
+
+---
+
 ## `approval.granted`
 
 **When it fires.** A human or higher-privileged role approves a request
