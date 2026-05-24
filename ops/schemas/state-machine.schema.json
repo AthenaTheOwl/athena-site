@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://athena.dev/ops/schemas/state-machine.schema.json",
+  "title": "StateMachine",
+  "description": "A state machine for one artifact type. Names the legal states, the terminal subset, and the allowed transitions. Each transition records the trigger and an array of free-form condition strings the engine consults; a future pass replaces those strings with executable predicates.",
+  "type": "object",
+  "required": [
+    "id",
+    "applies_to",
+    "initial_state",
+    "states",
+    "transitions"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "State machine identifier in kebab-case. Example: spec-lifecycle, run-lifecycle, release-lifecycle."
+    },
+    "applies_to": {
+      "type": "string",
+      "enum": [
+        "spec",
+        "plan",
+        "patch",
+        "pr",
+        "review",
+        "test_report",
+        "eval_report",
+        "screenshot",
+        "log",
+        "trace",
+        "decision_memo",
+        "release_note",
+        "postmortem",
+        "dream_report",
+        "memory_update",
+        "skill_patch",
+        "prompt_patch",
+        "config_patch"
+      ],
+      "description": "Artifact type this machine governs. Must match the enum in artifact.schema.json."
+    },
+    "initial_state": {
+      "type": "string",
+      "description": "Name of the state every new artifact starts in. Must appear in states."
+    },
+    "states": {
+      "type": "array",
+      "minItems": 1,
+      "description": "All legal states.",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "terminal"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {"type": "string", "description": "State name. Unique within this machine."},
+          "description": {"type": "string", "description": "What this state means."},
+          "terminal": {"type": "boolean", "description": "True if no outgoing transitions are legal once the artifact enters this state."}
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "description": "Legal moves between states. The engine rejects any transition not listed.",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "trigger", "allowed_if"],
+        "additionalProperties": false,
+        "properties": {
+          "from": {"type": "string", "description": "Source state name."},
+          "to": {"type": "string", "description": "Destination state name."},
+          "trigger": {"type": "string", "description": "Event or action that fires the transition. Example: gate.passed, reviewer.approved, deploy.completed."},
+          "allowed_if": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Free-form condition strings that must all hold. Today the engine treats these as documentation; a future pass adds executable predicates."
+          }
+        }
+      }
+    }
+  }
+}

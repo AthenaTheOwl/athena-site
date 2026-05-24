@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://athena.dev/ops/schemas/workflow.schema.json",
+  "title": "Workflow",
+  "description": "A workflow declaration: an ordered (or partially parallel) sequence of steps that move an artifact from one state to the next. Each step pins to exactly one role and names the gate that must pass before the step is considered done.",
+  "type": "object",
+  "required": [
+    "id",
+    "trigger",
+    "steps",
+    "on_complete"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Workflow identifier in kebab-case. Example: software-change, incident-response, weekly-dream."
+    },
+    "trigger": {
+      "type": "object",
+      "required": ["kind", "detail"],
+      "additionalProperties": false,
+      "description": "What kicks the workflow off.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["signal", "manual", "scheduled", "event"],
+          "description": "Trigger category."
+        },
+        "detail": {
+          "type": "string",
+          "description": "Trigger-specific detail. For scheduled, a cron expression. For event, an event type. For signal or manual, a free-form label."
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Ordered list of steps. Steps named in parallel_steps may execute concurrently with their siblings.",
+      "items": {
+        "type": "object",
+        "required": ["id", "role", "input_from", "output_to", "gate", "on_failure", "on_success"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "Step identifier, unique within the workflow."
+          },
+          "role": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_-]*$",
+            "description": "Role id that owns this step."
+          },
+          "input_from": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Step ids whose outputs feed this step. Empty array means the trigger payload is the only input."
+          },
+          "output_to": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Step ids that consume this step's output. Empty array means terminal."
+          },
+          "gate": {
+            "type": "string",
+            "description": "Name of the proof gate that must pass before the step is marked done. Must appear in the role's required_gates."
+          },
+          "on_failure": {
+            "type": "string",
+            "description": "What to do if the gate fails. Common values: retry, escalate, halt, route_to:<role>."
+          },
+          "on_success": {
+            "type": "string",
+            "description": "What to do when the gate passes. Common values: continue, await_approval, route_to:<step>."
+          }
+        }
+      }
+    },
+    "on_complete": {
+      "type": "string",
+      "description": "Terminal action when the last step finishes. Common values: release, await_approval, route_to:<role>."
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable summary of the workflow's purpose."
+    },
+    "parallel_steps": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Step ids that may run in parallel with their siblings. Steps not listed run sequentially."
+    },
+    "human_checkpoints": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Step ids that pause for explicit human approval before continuing."
+    }
+  }
+}

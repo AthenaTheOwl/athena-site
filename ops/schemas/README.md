@@ -11,6 +11,34 @@ shares across repos.
 | `skill.schema.json` | a packaged reusable skill |
 | `artifact.schema.json` | any typed output produced by a run |
 | `run.schema.json` | a single agent run in a workspace or sandbox |
+| `role.schema.json` | a role contract (inputs, outputs, tools, gates, permissions) |
+| `tool.schema.json` | a tool registry entry (risk, callers, approval, events) |
+| `policy.schema.json` | a declarative permission rule the policy engine evaluates |
+| `workflow.schema.json` | a sequence of role-owned steps with gates |
+| `state-machine.schema.json` | the legal states and transitions for one artifact type |
+| `event.schema.json` | an append-only event-ledger entry |
+
+## Schema dependency map
+
+The schemas form a small graph. Cross-schema fields reference other schemas by
+id value, not by `$ref`; downstream validators resolve those ids themselves
+when they want to enforce join integrity.
+
+- `role` -> `tool` via `allowed_tools` (tool ids).
+- `role` -> `artifact` via `outputs[].artifact_type` (artifact type enum).
+- `tool` -> `role` via `allowed_roles` (role ids).
+- `tool` -> `event` via `emits_events` (event type names).
+- `tool` -> `artifact` via `output_schema` (URL ref, often to artifact.schema.json).
+- `workflow` -> `role` via `steps[].role` (role ids).
+- `workflow` -> role gates via `steps[].gate` (gate names from the role's `required_gates`).
+- `state-machine` -> `artifact` via `applies_to` (artifact type enum).
+- `event` -> `run`, `spec`, `artifact` via `run_id`, `spec_id`, `artifact_id` (ids).
+- `policy` -> `role`, `tool` via `applies_to.roles` and `applies_to.tools` (ids or `"*"`).
+- `dream-output`, `decision`, `skill` continue to reference `artifact` and `run` ids in their evidence and provenance fields.
+
+A future pass may add executable `$ref` resolution between schema files. Today
+the references are documented and policed by downstream validators, not the
+schemas themselves.
 
 ## Who uses these
 
