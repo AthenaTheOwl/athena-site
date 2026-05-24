@@ -28,8 +28,8 @@ The [supplier-risk-rag-agent](https://github.com/AthenaTheOwl/supplier-risk-rag-
 
 Supply-chain exception management is the right shape of problem for copilots because the work is messy but bounded. A planner asking the copilot for help with an exception — a supplier missed a commit, a shipment slipped, a demand signal changed, a quality hold appeared, a substitution has tradeoffs — wants context gathered, likely causes ranked, next actions proposed, risks surfaced, messages drafted, confidence explained. The decision still belongs to the operator.
 
-That boundary is the whole game. A chatbot that answers anything is hard to trust because the job is vague. A workflow copilot can be designed around explicit trust boundaries. The [ai-supply-chain-copilot-prd](https://github.com/AthenaTheOwl/ai-supply-chain-copilot-prd) frames the product as a triage tool, not a general assistant. That changes the eval plan. You can test whether the copilot identifies the right exception type, cites the right evidence, refuses when key data is missing, and routes the case to the right owner.
+That boundary is where the design work lives. A chatbot that answers anything is hard to trust because the job is vague. A workflow copilot can be designed around explicit trust boundaries. The [ai-supply-chain-copilot-prd](https://github.com/AthenaTheOwl/ai-supply-chain-copilot-prd) frames the product as a triage tool, not a general assistant. That changes the eval plan. You can test whether the copilot identifies the right exception type, cites the right evidence, refuses when key data is missing, and routes the case to the right owner.
 
-The best AI products won't be the ones that sound smartest in a demo. They'll be the ones that make uncertainty legible. Show their work without drowning the user in logs. Refuse without becoming useless. Turn messy real-world cases into a growing eval suite.
+The best AI products make uncertainty legible. They show their work without drowning the user in logs. They refuse when refusal is warranted. They turn messy real-world cases into a growing eval suite.
 
-In that world, trust isn't a layer added after the model works. Trust is the product spec.
+Trust is the product spec, written down before the model is chosen.
