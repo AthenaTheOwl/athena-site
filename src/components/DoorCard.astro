@@ -5,6 +5,7 @@ interface Door {
   status: "active" | "workshop" | "solved" | "drawer";
   url: string;
   hook: string;
+  for?: Record<string, string>;
 }
 
 const { door } = Astro.props as { door: Door };
@@ -15,6 +16,8 @@ const statusStyles = {
   solved: "border-stone-500 text-stone-700",
   drawer: "border-stone-300 text-stone-500"
 };
+
+const audienceCues = door.for ? Object.entries(door.for) : [];
 ---
 
 <article
@@ -32,6 +35,16 @@ const statusStyles = {
       <a class="focus-ring no-underline" href={door.url} target="_blank" rel="noreferrer">{door.name}</a>
     </h3>
     <p class="mt-4 text-sm leading-6 text-stone-700">{door.hook}</p>
+    {audienceCues.length > 0 && (
+      <dl class="mt-4 border-t border-line pt-3 text-xs leading-5 text-stone-600">
+        {audienceCues.map(([audience, cue]) => (
+          <div class="flex gap-2 py-0.5">
+            <dt class="shrink-0 font-mono uppercase tracking-[0.14em] text-stone-500">{audience}</dt>
+            <dd class="text-stone-700">{cue}</dd>
+          </div>
+        ))}
+      </dl>
+    )}
   </div>
   <a class="focus-ring mt-8 inline-flex text-sm font-semibold no-underline" href={door.url} target="_blank" rel="noreferrer">
     View repository

@@ -45,7 +45,7 @@
 
 ## Manifest drift
 
-- doors.json: 17 entries ✅
+- doors.json: 18 entries ✅
 
 ## CDCP status
 
