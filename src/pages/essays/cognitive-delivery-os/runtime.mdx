@@ -1,0 +1,64 @@
+---
+layout: ../../../layouts/Essay.astro
+title: "Plane 7 of 8: Runtime"
+description: "Where the agent runs and what it did at run-time, logged. Run records carry the request, the tool calls, the timings, the cost, the outcome."
+date: "2026-05-24"
+readingTime: "4 min read"
+---
+
+A runtime record is the receipt for a single agent run. It carries the request that started the run, the tool calls the run made, the timings and the cost of each call, and the outcome the run produced. Run records land as JSONL files inside each repo's `events/` directory. The contract is `ops/schemas/run.schema.json`; the event types that compose a run are documented in `ops/event-types.md`.
+
+## What the records carry
+
+A run is a sequence of events. The minimum set:
+
+- `agent.run.started` — the run begins, with `runtime`, `workspace_id`, `agent_id`.
+- `tool.call.started` and `tool.call.completed` — one pair per tool call, carrying tool id, arguments digest, duration, status.
+- `artifact.produced` — every artifact the run created.
+- `proof.gate.passed` or `proof.gate.failed` — every gate the run triggered.
+- `agent.run.completed` — the run ends, with `status`, `duration_seconds`, `cost_usd`, `tokens_input`, `tokens_output`.
+
+Each event carries a `run_id` that ties the events together. The schema doesn't constrain the inner `payload` shape, so the ledger absorbs new event types without a schema bump. The canonical types live in `ops/event-types.md` and adding a new one requires a DEC.
+
+## A concrete example
+
+A single run in ai-field-brief produces a JSONL chunk like:
+
+```jsonl
+{"event_id":"...","type":"agent.run.started","run_id":"run-2026-05-23-001","actor":{"kind":"role","id":"engineering.implementation"},"payload":{"runtime":"claude-code-cli","workspace_id":"wt-brief-2026-W21","agent_id":"claude-opus-4-7"}}
+{"event_id":"...","type":"tool.call.started","run_id":"run-2026-05-23-001","payload":{"tool_id":"repo.apply_patch","arguments_digest":"sha256:6f1c..."}}
+{"event_id":"...","type":"tool.call.completed","run_id":"run-2026-05-23-001","payload":{"tool_id":"repo.apply_patch","status":"ok","duration_ms":1820}}
+{"event_id":"...","type":"artifact.produced","run_id":"run-2026-05-23-001","payload":{"artifact_type":"patch","artifact_path":"patches/0042.diff","status":"proposed"}}
+{"event_id":"...","type":"proof.gate.passed","run_id":"run-2026-05-23-001","payload":{"gate_name":"voice_lint","target_ref":"sha:abc1234","duration_ms":412}}
+{"event_id":"...","type":"agent.run.completed","run_id":"run-2026-05-23-001","payload":{"status":"done","duration_seconds":1631,"outputs_count":3}}
+```
+
+The portfolio audit walks JSONL files inside each repo's `events/` directory and reports cross-repo health: how many runs per week, what fraction terminated `done` vs `needs_review`, which gates failed most often, which tools cost the most per call.
+
+## Why JSONL files instead of a database
+
+A JSONL file is greppable, diffable, committable, and replayable. The database arrives the day a join query needs to run across repos and the JSONL walker can no longer answer it in seconds. Until then, the JSONL file is the database — append-only, file-system-native, no migration to deploy.
+
+The deferred-by-design rule in the control-plane charter says it plain: defer the build until the record volume names the need. A solo builder running 20-50 runs a week does not need Postgres for the run log.
+
+## What the audit asks
+
+The weekly audit looks at runtime records and asks:
+
+- Which runs terminated `failed` or `needs_review`, and what gate failed first?
+- Which tool calls had the highest p95 duration this week?
+- Which roles ran which runs, and did any role exceed its policy's cost budget?
+- Which artifacts were produced without a matching `proof.gate.passed` event?
+
+The answers feed `ops/portfolio-health.md`. A run-record drift (an `agent.run.started` without a paired `agent.run.completed`, for example) is logged as drift and triaged in the next review.
+
+## See also
+
+- [Plane 1 — Spec](/essays/cognitive-delivery-os/spec/)
+- [Plane 2 — Agent Guild](/essays/cognitive-delivery-os/agent-guild/)
+- [Plane 3 — Workspace](/essays/cognitive-delivery-os/workspace/)
+- [Plane 4 — Artifact](/essays/cognitive-delivery-os/artifact/)
+- [Plane 5 — Proof Gate](/essays/cognitive-delivery-os/proof-gate/)
+- [Plane 6 — Decision](/essays/cognitive-delivery-os/decision/)
+- [Plane 8 — Dream](/essays/cognitive-delivery-os/dream/)
+- [Back to the main essay](/essays/cognitive-delivery-os/)

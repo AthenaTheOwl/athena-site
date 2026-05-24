@@ -1,0 +1,62 @@
+---
+layout: ../../../layouts/Essay.astro
+title: "Plane 2 of 8: Agent Guild"
+description: "Who does what, declared as YAML role files. Roles cluster into twelve guilds, and the schema says what a valid role looks like."
+date: "2026-05-24"
+readingTime: "4 min read"
+---
+
+A guild is a cluster of roles that share a discipline. The portfolio names twelve: control, product, research, design, engineering, science, security, operations, domain, learning, documentation, commercial. Each repo's `.agents/roles/*.yaml` files declare which roles that repo runs, what tools each role can call, and which policies each role must honor.
+
+## The role file
+
+A role is a YAML record. The contract lives in `ops/schemas/role.schema.json`. A minimal role looks like:
+
+```yaml
+id: engineering.implementation
+guild: engineering
+description: |
+  Writes the patch that resolves the requirement. Reads the spec,
+  applies the change, runs the local gates, opens the PR.
+tools:
+  - repo.apply_patch
+  - repo.run_tests
+  - repo.open_pr
+policies:
+  - branch.protected_main
+  - cost.budget_warn_at_5usd
+```
+
+The schema enforces that `id` matches `^[a-z][a-z0-9_-]*\.[a-z][a-z0-9_-]*$` (guild dot slug), that every tool listed under `tools` exists in `.agents/tools/`, and that every policy listed under `policies` exists in `.agents/policies/`. The validator is `scripts/validate_roles.py` in each product repo; it fetches `role.schema.json` from athena-site at a pinned ref and walks the local `.agents/roles/` directory.
+
+## The minimum-viable six
+
+A product repo ships six roles on day one:
+
+- `control.coordinator` — the role that owns the workflow state.
+- `product.spec-writer` — the role that opens and closes specs.
+- `engineering.implementation` — the role that writes the patch.
+- `engineering.code-reviewer` — the role that reviews the patch before merge.
+- `security.proof-gate-runner` — the role that runs the gates and reports the failures.
+- `learning.dream-orchestrator` — the role that runs the weekly dream job.
+
+Ai-field-brief ships all six. The rest of the 50-role aspiration (a designer, a release driver, a domain expert per repo) lands one role at a time, only when a workflow names the need and a working example can ship alongside.
+
+## A concrete example
+
+`ai-field-brief/.agents/roles/security.proof-gate-runner.yaml` declares the role that runs `voice_lint`, `spec_check`, `validate_decisions`, and the citation map validator on every PR. Its `tools` list names exactly the four scripts it can call; its `policies` list names `report.failures_as_pr_comments` so the role's failure mode is a comment thread, not a force-pushed fix.
+
+## Why "guild" instead of "team"
+
+A team is a roster. A guild is a discipline — the science guild on supplier-risk-rag-agent shares its eval methodology with the science guild on ai-field-brief, even though no human sits on both. The shared methodology lives in the schemas and the shared validators. The discipline travels; the roster doesn't have to.
+
+## See also
+
+- [Plane 1 — Spec](/essays/cognitive-delivery-os/spec/)
+- [Plane 3 — Workspace](/essays/cognitive-delivery-os/workspace/)
+- [Plane 4 — Artifact](/essays/cognitive-delivery-os/artifact/)
+- [Plane 5 — Proof Gate](/essays/cognitive-delivery-os/proof-gate/)
+- [Plane 6 — Decision](/essays/cognitive-delivery-os/decision/)
+- [Plane 7 — Runtime](/essays/cognitive-delivery-os/runtime/)
+- [Plane 8 — Dream](/essays/cognitive-delivery-os/dream/)
+- [Back to the main essay](/essays/cognitive-delivery-os/)

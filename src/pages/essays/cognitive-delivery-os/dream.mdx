@@ -1,0 +1,74 @@
+---
+layout: ../../../layouts/Essay.astro
+title: "Plane 8 of 8: Dream"
+description: "What we learned, offline. A weekly cron reads the last N days of runs, postmortems, and evals, and proposes promotion candidates with evidence."
+date: "2026-05-24"
+readingTime: "5 min read"
+---
+
+A dream is an offline-cognition run that consolidates memory, clusters failures, simulates adversarial inputs, and proposes promotion candidates: memory updates, generated tests, skill patches, backlog items. Each candidate carries evidence and a `human_review_required: true` flag by default. The contract is `ops/schemas/dream-output.schema.json`. Dream outputs land in each repo's `dreams/<YYYY-W##>/` directory.
+
+## What a dream run does
+
+A dream job runs once a week (typical cron: Sunday 03:00 UTC). It reads the last seven days of runs, postmortems, eval reports, and decisions from a scoped set of repos. It then operates in one or more declared modes:
+
+- `memory_consolidation` — find recurring lessons across run records and propose a memory-file edit.
+- `failure_clustering` — group failed gates and failed evals into clusters that share a root cause.
+- `adversarial_simulation` — generate inputs that would have broken the change had they been in the test set.
+- `skill_extraction` — propose packaging a repeated pattern as a `.agents/skills/<id>/SKILL.md`.
+- `golden_test_generation` — generate a test that pins behavior that recurred enough to deserve pinning.
+- `prompt_patch_generation` — propose a system-prompt edit grounded in an observed regression.
+- `architecture_drift_detection` — flag patterns that don't fit the current architectural contracts.
+
+Each mode produces typed candidates. Each candidate names the evidence (run ids, eval reports, traces) that justifies it. Each candidate ships with `human_review_required: true` so nothing graduates without a reviewer's eyes on it.
+
+## A concrete example
+
+Procurement-negotiation-lab's `dreams/2026-W21/` contains the report from the week of May 18-24. The report names three candidates: a memory update that captures a recurring lesson about how players misunderstand α clipping in level 6, a golden-test generation that pins the behavior of the VCG-transfer calculation at the corner case the spec missed, and a skill patch that proposes adding a "show me the math" affordance to the engine's pedagogy pass.
+
+The candidate file looks like:
+
+```yaml
+target_kind: memory_update
+target: .agents/memory/level-6-pitfalls.md
+patch: |
+  Players who set α=0 expect zero clipping. The math is correct; the
+  UX implies that "zero" means "no constraint." Surface a one-line
+  caption when α≤0.01 that names the implication explicitly.
+evidence:
+  - kind: run
+    ref: events/run-2026-05-19-007.jsonl
+  - kind: postmortem
+    ref: postmortems/2026-05-19-alpha-clip-confusion.md
+human_review_required: true
+```
+
+(The discriminator field is `target_kind`. Earlier files used `kind`; the validators in product repos tolerate both during the transition. The canonical form is `target_kind`.)
+
+## Why "dream" instead of "retrospective"
+
+A retrospective is a meeting. A dream is a script. The retrospective produces meeting notes; the dream produces typed candidates a reviewer can accept, modify, or reject one at a time. The retrospective happens once and decays; the dream happens every week and the dream loop's own evidence accumulates.
+
+The name has a second weight: dreams are offline, batched, and tolerant of slow expensive reasoning. The online runtime is constrained by p95 latency and per-call cost; the dream loop is constrained by the cron window. A dream can run a 100k-token consolidation pass over a week of logs because the user isn't waiting on it.
+
+## What the audit asks
+
+Three of the four product repos under athena-site (ai-field-brief, procurement-lab, supplier-risk-rag-agent) have a `dreams/2026-W21/` folder. The portfolio audit walks the dream directories and asks:
+
+- Which repos ran a dream this week and which skipped?
+- How many candidates did the dream produce, and what fraction got reviewed?
+- How many candidates promoted into memory, tests, or skills?
+- Which candidates sat in the queue more than 14 days without review?
+
+The first three answers feed `ops/portfolio-health.md`. The fourth files a backlog item against the repo's `learning.dream-orchestrator` role.
+
+## See also
+
+- [Plane 1 — Spec](/essays/cognitive-delivery-os/spec/)
+- [Plane 2 — Agent Guild](/essays/cognitive-delivery-os/agent-guild/)
+- [Plane 3 — Workspace](/essays/cognitive-delivery-os/workspace/)
+- [Plane 4 — Artifact](/essays/cognitive-delivery-os/artifact/)
+- [Plane 5 — Proof Gate](/essays/cognitive-delivery-os/proof-gate/)
+- [Plane 6 — Decision](/essays/cognitive-delivery-os/decision/)
+- [Plane 7 — Runtime](/essays/cognitive-delivery-os/runtime/)
+- [Back to the main essay](/essays/cognitive-delivery-os/)

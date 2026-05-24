@@ -1,0 +1,91 @@
+---
+layout: ../../../layouts/Essay.astro
+title: "Plane 6 of 8: Decision"
+description: "Why we chose this path. A decision points at the requirement it resolves, the alternatives that lost, and what would have to happen to reverse it."
+date: "2026-05-24"
+readingTime: "5 min read"
+---
+
+A decision record is the answer to "why did we do it this way?" — written down at the moment the answer is fresh, kept around for the moment it stops being obvious. Each product repo keeps `decisions/DEC-*.md` files. The contract is `ops/schemas/decision.schema.json`. The validator is `scripts/validate_decisions.py` in each repo.
+
+## What the record holds
+
+A decision has six required parts:
+
+- `decision_id` — a stable id like `DEC-CIT-002`.
+- `spec_id` — the spec the decision serves.
+- `requirement_id` — the requirement the decision resolves.
+- `alternatives` — the options that lost, with one sentence each on why.
+- `evidence` — pointers to the experiments or sources that grounded the choice.
+- `reversibility` — what would have to happen to undo this, and how expensive that would be.
+
+The reversibility field is the load-bearing one. A decision that doesn't name its reversibility cost is a decision that pretends the future has no opinion. Most decisions are reversible at a known cost; the act of naming the cost is the act of acknowledging the future has a vote.
+
+## A concrete example
+
+Procurement-lab's `decisions/CIT-002.md` is the citation-shape evolution path:
+
+```markdown
+---
+decision_id: DEC-CIT-002
+spec_id: specs/0001-lab-engine/
+requirement_id: R-LAB-0001-7
+status: accepted
+date: 2026-04-12
+reversible: true
+reversibility_cost: medium
+---
+
+# Citation shape evolution: from offsets to ranges
+
+## Decision
+
+Citations are stored as `{document_id, start, end}` byte ranges instead
+of `{document_id, offset, length}` pairs.
+
+## Alternatives that lost
+
+- **Offset + length.** Cheaper to store; harder to compose when two
+  citations cover adjacent text.
+- **Document id only.** Cheapest; useless for citation faithfulness eval.
+
+## Evidence
+
+- The four-suite eval in supplier-risk-rag-agent showed range-shaped
+  citations compose into multi-source claims; offset+length forced the
+  evaluator to recompute the end on every overlap check.
+
+## Reversibility
+
+Reversible. A migration script can convert range to offset+length in
+O(n) over the citation table; the four-suite eval would need its
+overlap-check rewritten.
+```
+
+Supplier-risk-rag-agent's most recent commit amended that exact decision's reversibility note — a `DEC-CIT-002-amendment-reversibility-mitigation` sibling file that points at the original via `amends:` and captures a forward-looking mitigation without overwriting the original record. That's what an amendment looks like in operation: the prior decision stays; the new one is a sibling artifact.
+
+## Why decisions are records, not commit messages
+
+A commit message answers "what changed." A decision record answers "why did we choose this, and what else did we consider?" The commit message lives inside the diff; the decision lives outside it, points at it, and survives a force-push. A team that puts the rationale in the commit message loses the rationale the next time someone rewrites history.
+
+## What the audit asks
+
+The portfolio audit asks four questions about decisions every week:
+
+- Which requirements have a spec but no decision yet?
+- Which decisions point at a spec or requirement that no longer exists?
+- Which decisions are open (`status: proposed`) more than 14 days?
+- Which decisions are reversible but haven't been re-validated since they landed?
+
+The answers go into `ops/portfolio-health.md` every Monday. The repo whose decision drifted has a week to either close the gap or file a follow-up decision that explains the delay.
+
+## See also
+
+- [Plane 1 — Spec](/essays/cognitive-delivery-os/spec/)
+- [Plane 2 — Agent Guild](/essays/cognitive-delivery-os/agent-guild/)
+- [Plane 3 — Workspace](/essays/cognitive-delivery-os/workspace/)
+- [Plane 4 — Artifact](/essays/cognitive-delivery-os/artifact/)
+- [Plane 5 — Proof Gate](/essays/cognitive-delivery-os/proof-gate/)
+- [Plane 7 — Runtime](/essays/cognitive-delivery-os/runtime/)
+- [Plane 8 — Dream](/essays/cognitive-delivery-os/dream/)
+- [Back to the main essay](/essays/cognitive-delivery-os/)

@@ -1,0 +1,66 @@
+---
+layout: ../../../layouts/Essay.astro
+title: "Plane 4 of 8: Artifact"
+description: "What was made, typed. Patches, PRs, eval reports, screenshots — each one a record with provenance back to its spec and decision."
+date: "2026-05-24"
+readingTime: "4 min read"
+---
+
+An artifact is anything an agent or a human makes that should outlive the run that made it. A patch is an artifact. A PR is an artifact. An eval report is an artifact. A release-notes file is an artifact. The schema that governs them lives at `ops/schemas/artifact.schema.json`.
+
+## What the record carries
+
+Every artifact record names six things:
+
+- `artifact_id` — a stable id the rest of the portfolio can point at.
+- `artifact_type` — patch, pr, eval_report, screenshot, release_notes, postmortem.
+- `artifact_path` — a URL or repo-relative path the reader can open.
+- `spec_id` — the spec the artifact serves.
+- `requirement_id` — the requirement the artifact resolves (or empty if cross-cutting).
+- `produced_by` — the role or human that made it.
+
+The provenance fields are what keep the record useful a year later. An eval report that doesn't say which spec it was measuring is a number without a question. The schema rejects records that drop the provenance.
+
+## A concrete example
+
+`supplier-risk-rag-agent/reports/baseline_eval_report.html` is an artifact. Its record says:
+
+```json
+{
+  "artifact_id": "art-srra-eval-baseline-2026-W18",
+  "artifact_type": "eval_report",
+  "artifact_path": "reports/baseline_eval_report.html",
+  "spec_id": "specs/0004-citation-faithfulness-eval/",
+  "requirement_id": "R-SRRA-0004-2",
+  "produced_by": "science.eval-runner",
+  "produced_at": "2026-05-03T14:22:11Z"
+}
+```
+
+The report itself sits in `reports/`. The record sits in `artifacts/` and points at the report. The audit walks both directories and complains if the report exists without a record or the record exists without a report.
+
+## Why typed records instead of "just files"
+
+Two reasons. First, the audit script can ask honest questions: "which specs have no eval reports?" or "which decisions ship without a postmortem?" — questions that need a typed answer, not a directory listing. Second, the dream loop needs typed inputs. A dream candidate that proposes "promote this pattern into a skill" has to point at the artifacts that show the pattern recurring; an untyped artifact is one the dream loop can't cite.
+
+## The four common types
+
+| Type | Example | Where it lands |
+|---|---|---|
+| `patch` | a diff produced by a subagent | `.worktrees/*/patches/` |
+| `pr` | a GitHub pull request | URL in the record |
+| `eval_report` | a four-suite RAG eval | `reports/` |
+| `postmortem` | a write-up of an incident | `postmortems/` |
+
+Each one has a record under `artifacts/`. Each record points at the spec and the requirement it serves. Each record carries a `produced_by` that names a role from the role registry, so the audit can answer "which roles produced which artifacts this week."
+
+## See also
+
+- [Plane 1 — Spec](/essays/cognitive-delivery-os/spec/)
+- [Plane 2 — Agent Guild](/essays/cognitive-delivery-os/agent-guild/)
+- [Plane 3 — Workspace](/essays/cognitive-delivery-os/workspace/)
+- [Plane 5 — Proof Gate](/essays/cognitive-delivery-os/proof-gate/)
+- [Plane 6 — Decision](/essays/cognitive-delivery-os/decision/)
+- [Plane 7 — Runtime](/essays/cognitive-delivery-os/runtime/)
+- [Plane 8 — Dream](/essays/cognitive-delivery-os/dream/)
+- [Back to the main essay](/essays/cognitive-delivery-os/)

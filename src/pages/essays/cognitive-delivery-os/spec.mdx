@@ -1,0 +1,56 @@
+---
+layout: ../../../layouts/Essay.astro
+title: "Plane 1 of 8: Spec"
+description: "What we're building, in a numbered ledger the team can point at. Specs gate the build until the requirements firm up."
+date: "2026-05-24"
+readingTime: "4 min read"
+---
+
+A spec is the answer to "what are we building, and how will we know it shipped?" — written down before the code starts and amended on the record when the answer shifts. Each product repo keeps the spec ledger under `specs/NNNN-<slug>/`, numbered in the order specs were opened.
+
+## What the ledger holds
+
+Three files per spec:
+
+- `requirements.md` — numbered requirements (R-NNNN-N), each with a one-line acceptance test.
+- `plan.md` — the build order and the dependencies between requirements.
+- `tests-and-evals.md` — which gates have to pass for each requirement before the spec closes.
+
+The shape gets enforced by `scripts/spec_check.py` in each product repo. A spec that's missing one of the three files fails the build. A requirement without an acceptance test fails the build. The script is short on purpose; the audit is structural, not semantic.
+
+## A concrete example
+
+`ai-field-brief/specs/0010-cognitive-delivery-control-plane/requirements.md` is the spec that landed the control plane in ai-field-brief. Its requirements include "validate every dream candidate against `dream-output.schema.json` before promotion" (R-AFB-0010-3) and "wire the validator into `.github/workflows/`" (R-AFB-0010-5). The plan file orders those: the validator script lands first, then the workflow wiring, then the first dream run that exercises both.
+
+Procurement-lab's `specs/0001-lab-engine/requirements.md` was the original eight-level pedagogy spec. Eight levels named before any TypeScript got typed. The spec gated the build for three weeks while the requirements firmed up — which is what the spec ledger is supposed to do.
+
+## What a typical requirement looks like
+
+A requirement is a single sentence plus its acceptance test:
+
+```markdown
+### R-AFB-0010-3 — Validate dream candidates against schema
+
+A dream candidate (memory_update, test_generation, skill_patch, backlog_item)
+fails validation if it does not match `dream-output.schema.json`.
+
+**Acceptance.** `scripts/validate_dreams.py` returns non-zero on a
+malformed candidate file in `dreams/2026-W21/candidates/`.
+```
+
+The numbering carries provenance: any decision that resolves this requirement names `R-AFB-0010-3` in its front-matter so the audit can walk from spec to decision to artifact without a separate join table.
+
+## Why the ledger comes first
+
+A spec ledger is the cheapest place to disagree. Disagreement on a sentence in `requirements.md` costs a sentence-edit. The same disagreement after the code lands costs a refactor. The product repos that adopted the ledger early (ai-field-brief, procurement-lab, supplier-risk-rag-agent) all converged on the same thing: the spec is the artifact the human and the agents read first, and every other plane points back to it.
+
+## See also
+
+- [Plane 2 — Agent Guild](/essays/cognitive-delivery-os/agent-guild/)
+- [Plane 3 — Workspace](/essays/cognitive-delivery-os/workspace/)
+- [Plane 4 — Artifact](/essays/cognitive-delivery-os/artifact/)
+- [Plane 5 — Proof Gate](/essays/cognitive-delivery-os/proof-gate/)
+- [Plane 6 — Decision](/essays/cognitive-delivery-os/decision/)
+- [Plane 7 — Runtime](/essays/cognitive-delivery-os/runtime/)
+- [Plane 8 — Dream](/essays/cognitive-delivery-os/dream/)
+- [Back to the main essay](/essays/cognitive-delivery-os/)
