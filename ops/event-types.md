@@ -507,3 +507,34 @@ as a skill and added to `skills/<id>/`.
   }
 }
 ```
+
+---
+
+## Schema evolution notes
+
+A small log of field-shape decisions that aren't worth their own DEC but
+should be visible to anyone writing emitters or validators.
+
+### `dream-output.candidate.kind` → `target_kind` (2026-05-24)
+
+The four candidate sub-schemas in `ops/schemas/dream-output.schema.json`
+(`memory_update`, `test_generation`, `skill_patch`, `backlog_item`)
+discriminate on `target_kind`. Earlier emissions across the product
+repos used `kind:` for the same field; validators in
+ai-field-brief, procurement-negotiation-lab, and supplier-risk-rag-agent
+tolerate both during the transition.
+
+**The canonical form is `target_kind`.** Reason: `kind` is a generic
+field name and already appears on `actor.kind` and on evidence items
+(`evidence[].kind`); a more specific name keeps the discriminator
+from getting confused with adjacent fields during reads.
+
+**Migration plan.** A future cleanup pass renames `kind:` to
+`target_kind:` in candidate front-matter across the existing
+`dreams/<week>/candidates/*.yaml` files, then tightens the per-repo
+validators to reject `kind:` alone. Until then, dual-acceptance stays.
+
+**Affected files.** `ops/schemas/dream-output.schema.json` (canonical
+contract). Product-repo validators read this schema at a pinned ref and
+add a tolerance layer that rewrites `kind` to `target_kind` before
+validation.
