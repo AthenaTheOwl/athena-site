@@ -4,14 +4,25 @@
     "name": "dispatch-optimizer",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/dispatch-optimizer",
-    "hook": "vehicle dispatch optimization with operational constraints. python, OR-tools."
+    "hook": "vehicle dispatch optimization with operational constraints. python, OR-tools.",
+    "for": {
+      "ops": "see how hard constraints survive real dispatch",
+      "builder": "fork the OR-tools model layout",
+      "hiring": "evidence of operations-research depth, not just ML"
+    }
   },
   {
     "n": "02",
     "name": "LLM-evaluation-framework",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/LLM-evaluation-framework",
-    "hook": "an LLM eval framework where quality isn't one number. deterministic rules, stakeholder personas, LLM-as-judge. yaml in, html out, CI gates the whole thing."
+    "hook": "an LLM eval framework where quality isn't one number. deterministic rules, stakeholder personas, LLM-as-judge. yaml in, html out, CI gates the whole thing.",
+    "for": {
+      "science": "rules, personas, LLM-judge — three signals, one report",
+      "builder": "drop yaml suites in, ship html reports out",
+      "ops": "wire CI to fail on regression, not vibes",
+      "hiring": "evidence of eval discipline before it was a trend"
+    }
   },
   {
     "n": "03",
@@ -67,28 +78,52 @@
     "name": "ai-supply-chain-copilot-prd",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/ai-supply-chain-copilot-prd",
-    "hook": "PRD for an AI copilot that triages supply-chain exceptions. workflow tool with explicit trust boundaries, not a chatbot."
+    "hook": "PRD for an AI copilot that triages supply-chain exceptions. workflow tool with explicit trust boundaries, not a chatbot.",
+    "for": {
+      "commercial": "read the PRD; see the trust boundaries named upfront",
+      "domain": "exception triage from a planner's seat, not a chat window",
+      "builder": "fork the spec shape for your own copilot scope",
+      "hiring": "evidence of PMT writing under AI uncertainty"
+    }
   },
   {
     "n": "11",
     "name": "athena-site",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/athena-site",
-    "hook": "this site. doors, essays, lens paths, and the procurement-negotiation-lab embedded as the flagship demo."
+    "hook": "this site. doors, essays, lens paths, the control-plane charter, and the cross-repo schemas.",
+    "for": {
+      "curious": "start here; the doors point everywhere else",
+      "builder": "read ops/control-plane.md and the 11 schemas",
+      "ai-agents": "the contracts a sibling repo's agent must honor",
+      "hiring": "the editorial throughline across the portfolio"
+    }
   },
   {
     "n": "12",
     "name": "chip-supply-chain-map",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/chip-supply-chain-map",
-    "hook": "the global semiconductor supply chain as a dependency graph. foundries, OSATs, equipment, substrates, EDA, hyperscalers, and chokepoints - with scenario toggles."
+    "hook": "the global semiconductor supply chain as a dependency graph. foundries, OSATs, equipment, substrates, EDA, hyperscalers, and chokepoints - with scenario toggles.",
+    "for": {
+      "curious": "click a node, see what depends on what",
+      "domain": "scenario toggles for tariff, fab, and EDA shocks",
+      "student": "the chip stack laid out as a graph, not a paragraph",
+      "commercial": "use the chokepoints view to brief a non-technical exec"
+    }
   },
   {
     "n": "13",
     "name": "supplier-risk-rag-agent",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/supplier-risk-rag-agent",
-    "hook": "supplier-risk RAG agent with receipts. SEC filings in, cited answers out. retrieval, citation faithfulness, abstention, and regression evals wired into CI."
+    "hook": "supplier-risk RAG agent with receipts. SEC filings in, cited answers out. retrieval, citation faithfulness, abstention, and regression evals wired into CI.",
+    "for": {
+      "science": "four-suite eval discipline gates every PR",
+      "domain": "ask a supplier-risk question; check the cited passages",
+      "builder": "fork the citation-shape schema and abstention rules",
+      "hiring": "evidence of RAG built around receipts, not vibes"
+    }
   },
   {
     "n": "14",
@@ -116,6 +151,27 @@
     "name": "procurement-negotiation-lab",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/procurement-negotiation-lab",
-    "hook": "flagship interactive demo. an 8-level walkthrough of mechanism design for long-lead procurement: coordination gap, info trade-offs, walkaway zones, ADMM, VCG, multi-party splits, audits, and an authoring sandbox. cross-platform engine; mobile app on the way."
+    "hook": "flagship interactive demo. an 8-level walkthrough of mechanism design for long-lead procurement: coordination gap, info trade-offs, walkaway zones, ADMM, VCG, multi-party splits, audits, and an authoring sandbox. cross-platform engine; mobile app on the way.",
+    "for": {
+      "student": "play levels 1-11; the math gets named in plain English",
+      "domain": "see VCG, ADMM, audits as procurement levers, not theorems",
+      "science": "mechanism-design pedagogy with the failure modes named",
+      "builder": "fork the engine; the authoring sandbox is the demo",
+      "hiring": "evidence of teaching-by-shipping over slide-deck depth"
+    }
+  },
+  {
+    "n": "18",
+    "name": "ai-field-brief",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/ai-field-brief",
+    "hook": "weekly AI field brief with primary-source citations. spec-driven workflow, voice-lint gated, dream loop promoting patterns from each week.",
+    "for": {
+      "curious": "read this week's brief in 10 minutes",
+      "builder": "fork the spec-driven brief workflow",
+      "science": "see the eval-as-gate discipline at work",
+      "ai-agents": "follow the role files; this is how the brief gets written",
+      "hiring": "evidence of taste plus opinionated discipline plus shipped"
+    }
   }
 ]
