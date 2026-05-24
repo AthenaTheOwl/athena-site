@@ -1,0 +1,67 @@
+---
+layout: ../../../layouts/Essay.astro
+title: "Plane 5 of 8: Proof Gate"
+description: "What's safe to ship. A gate is a script, not a meeting. Failing gates block the merge."
+date: "2026-05-24"
+readingTime: "4 min read"
+---
+
+A proof gate is a script that returns zero when the change is safe to merge and non-zero when it isn't. Every product repo runs its gates on every PR and on the weekly cron. A failing gate blocks the merge or files an issue — never a conversation, never a sign-off, never a slack thread.
+
+## The current gate inventory
+
+Each product repo ships at least these:
+
+- `scripts/voice_lint.py` — bans AI-speak, antithetical reversals, empty intensifiers.
+- `scripts/spec_check.py` — every `specs/NNNN-<slug>/` has the three required files and the requirements are numbered.
+- `scripts/validate_decisions.py` — every `decisions/DEC-*.md` matches `decision.schema.json`.
+- The repo's test suite — pytest, vitest, or whatever the language uses.
+- The repo's eval suite — for repos that ship retrieval, generation, or scoring.
+- The build — `npm run build`, `python -m build`, or the equivalent.
+
+Two newer gates are landing across the portfolio in 2026: `validate_roles.py`, `validate_tools.py`, `validate_policies.py` (one schema each from `ops/schemas/`), and `validate_skills.py` for repos that ship skills.
+
+## A concrete example
+
+Supplier-risk-rag-agent's CI runs five gates on every PR:
+
+```yaml
+# .github/workflows/ci.yml (excerpt)
+- name: voice lint
+  run: python scripts/voice_lint.py
+- name: spec check
+  run: python scripts/spec_check.py
+- name: validate decisions
+  run: python scripts/validate_decisions.py
+- name: tests
+  run: pytest tests/
+- name: citation-faithfulness eval
+  run: python scripts/run_eval.py --suite citation_faithfulness
+```
+
+The eval gate is the load-bearing one for that repo. SEC filings in, cited answers out — the product promise depends on receipts, so the gate measures the receipts. A change that drops citation faithfulness below the threshold fails the gate, and the gate fails the merge.
+
+## What makes a gate a gate
+
+Three properties:
+
+- It's a script — runnable from a shell, repeatable, hashable.
+- It returns a non-zero exit code on failure.
+- It runs in CI, not just on the author's laptop.
+
+A "lint" that only runs locally is a suggestion. A lint that runs in CI is a gate. The discipline lives in the distinction.
+
+## Why gates instead of reviews
+
+A human review catches the things a script can't catch yet. A gate catches the things a script already can, every time, for every change. The two compose: the gate handles the structural failures (missing spec, broken decision, AI-speak in the prose) so the human review can focus on the semantic ones (is the requirement the right requirement, is the decision the right decision). A repo without gates makes the reviewer the gate. A reviewer-as-gate is a reviewer who never sleeps; that's how PR queues grow.
+
+## See also
+
+- [Plane 1 — Spec](/essays/cognitive-delivery-os/spec/)
+- [Plane 2 — Agent Guild](/essays/cognitive-delivery-os/agent-guild/)
+- [Plane 3 — Workspace](/essays/cognitive-delivery-os/workspace/)
+- [Plane 4 — Artifact](/essays/cognitive-delivery-os/artifact/)
+- [Plane 6 — Decision](/essays/cognitive-delivery-os/decision/)
+- [Plane 7 — Runtime](/essays/cognitive-delivery-os/runtime/)
+- [Plane 8 — Dream](/essays/cognitive-delivery-os/dream/)
+- [Back to the main essay](/essays/cognitive-delivery-os/)

@@ -1,0 +1,51 @@
+---
+layout: ../../../layouts/Essay.astro
+title: "Plane 3 of 8: Workspace"
+description: "Where the work happens, isolated. Worktree mechanics plus per-repo factory scripts handle setup without a long-running service."
+date: "2026-05-24"
+readingTime: "4 min read"
+---
+
+A workspace is the isolated copy of the tree an agent gets to edit. The mess stays in the workspace; the parent decides whether to keep the result. Two mechanisms carry the discipline: the Agent tool's worktree primitive and a per-repo factory script that prepares the worktree for the role about to enter it.
+
+## The worktree primitive
+
+Git worktrees let one repository check out multiple branches into different directories at the same time. A subagent gets its own working copy, makes its changes, returns its result, and the parent reviews the diff against `main`. The factory script handles the housekeeping: branch creation, dependency install, environment-variable setup, and a clean-up hook that removes the worktree if the subagent fails.
+
+The Agent tool exposes the primitive as `EnterWorktree` / `ExitWorktree`. The parent agent calls `EnterWorktree`, the subagent runs in the new working directory, the parent calls `ExitWorktree` to either merge the branch into the parent's working tree or discard it. No long-running workspace service. No reservation table. No allocation deadlock.
+
+## What the factory script does
+
+Each product repo ships `scripts/factory.sh` (or `factory.ps1`). The script reads the role id and the spec id from arguments and prepares the worktree:
+
+```bash
+# scripts/factory.sh role=engineering.implementation spec=specs/0010-control-plane/
+#
+#   1. Create a worktree at .worktrees/<role>-<spec_id_slug>-<short_sha>/
+#   2. Install dependencies in that worktree (npm install, pip install -r requirements.txt)
+#   3. Copy .env.local from the parent (never .env.production)
+#   4. Write a workspace manifest at .worktrees/<dir>/WORKSPACE.md so the
+#      subagent reads the role, spec, and gates it must honor
+#   5. Print the worktree path so the parent can hand it to the subagent
+```
+
+The manifest is the load-bearing artifact. The subagent reads `WORKSPACE.md` first, then the spec, then the requirements file, then starts the work. The parent doesn't have to remember to brief the subagent because the manifest already did.
+
+## A concrete example
+
+Procurement-negotiation-lab's `scripts/factory.sh` accepts `--role engineering.implementation --spec specs/0001-lab-engine/` and produces a worktree at `.worktrees/eng-impl-lab-engine-a3f7c1d/`. Inside, `WORKSPACE.md` names the role file, the spec ledger, the policies that apply, and the gates that have to pass before the worktree's branch can be merged. The subagent's first action is to read that manifest; the second is to read the requirement it was asked to resolve.
+
+## Why no workspace-manager service
+
+A workspace-manager service is what you build when the worktree count justifies one. Until then, the worktree directory is the manifest, the branch is the lock, and the parent process is the scheduler. A solo builder who pre-builds a workspace daemon for traffic they don't have is a solo builder who's stopped shipping the actual product.
+
+## See also
+
+- [Plane 1 — Spec](/essays/cognitive-delivery-os/spec/)
+- [Plane 2 — Agent Guild](/essays/cognitive-delivery-os/agent-guild/)
+- [Plane 4 — Artifact](/essays/cognitive-delivery-os/artifact/)
+- [Plane 5 — Proof Gate](/essays/cognitive-delivery-os/proof-gate/)
+- [Plane 6 — Decision](/essays/cognitive-delivery-os/decision/)
+- [Plane 7 — Runtime](/essays/cognitive-delivery-os/runtime/)
+- [Plane 8 — Dream](/essays/cognitive-delivery-os/dream/)
+- [Back to the main essay](/essays/cognitive-delivery-os/)

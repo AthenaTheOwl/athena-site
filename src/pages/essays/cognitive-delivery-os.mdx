@@ -20,21 +20,16 @@ The records are framework-neutral on purpose. A JSON-schema-validated decision r
 
 ## The eight planes
 
-**Spec.** What we're building, in a numbered ledger the team can point at. Procurement-lab's `specs/0001-lab-engine/` named eight levels of mechanism-design pedagogy before any TypeScript got typed. The spec ledger gated the build for three weeks while the requirements firmed up, which is what the spec ledger is supposed to do.
+Each plane carries one piece of the discipline. Read the deep dive for the plane you care about; each sub-page names the schema, the validator, and a concrete file in one of the four product repos.
 
-**Agent guild.** Who does what, declared as YAML role files under `.agents/roles/`. Ai-field-brief's roles include `control.coordinator`, `product.spec-writer`, `engineering.implementation`, `engineering.code-reviewer`, `security.proof-gate-runner`, and `learning.dream-orchestrator`. The role file names the tools the role can call and the policies the role must honor. A schema in athena-site's `ops/schemas/role.schema.json` says what a valid role looks like.
-
-**Workspace.** Where the work happens, isolated. The Agent tool's worktree mechanism plus per-repo factory scripts handle workspace setup without a long-running service. A subagent gets its own copy of the tree, makes its mess, returns its result, and the parent decides whether to keep it.
-
-**Artifact.** What was made, typed. A patch is an artifact. A PR is an artifact. An eval report is an artifact. Each one carries provenance back to the spec and decision it implements. Supplier-risk-rag-agent's `reports/baseline_eval_report.html` is an artifact pointing at the four-suite eval that produced it.
-
-**Proof gate.** What's safe to ship. `voice_lint.py`, `spec_check.py`, `validate_decisions.py`, the test suite, the eval suite, the build. A failing gate blocks the merge. The gate is a script, not a meeting.
-
-**Decision.** Why we chose this path. Procurement-lab's `decisions/CIT-002.md` (the citation-shape evolution path) is a decision; it points at the requirement it resolves, lists the alternatives that lost, names the evidence, and writes down what would have to happen to reverse it. Supplier-risk-rag-agent's most recent commit amended that exact decision's reversibility note, which is what a real decisions directory looks like in operation.
-
-**Runtime.** Where the agent runs and what it did at run-time, logged. Run records carry the request, the tool calls, the timings, the cost, the outcome. The portfolio audit walks JSONL event files inside each repo's `events/` directory.
-
-**Dream.** What we learned, offline. A weekly cron reads the last N days of runs, postmortems, and evals; proposes promotion candidates (memory updates, generated tests, skill patches, backlog items); flags each candidate with `human_review_required: true` by default. Ai-field-brief, procurement-lab, and supplier-risk-rag-agent all have a `dreams/2026-W21/` folder. That's three product repos converging on the same offline-cognition loop without either of them being told to.
+- [Plane 1 — Spec](/essays/cognitive-delivery-os/spec/). What we're building, in a numbered ledger the team can point at.
+- [Plane 2 — Agent Guild](/essays/cognitive-delivery-os/agent-guild/). Who does what, declared as YAML role files under `.agents/roles/`.
+- [Plane 3 — Workspace](/essays/cognitive-delivery-os/workspace/). Where the work happens, isolated via worktrees plus per-repo factory scripts.
+- [Plane 4 — Artifact](/essays/cognitive-delivery-os/artifact/). What was made, typed, with provenance back to a spec and a decision.
+- [Plane 5 — Proof Gate](/essays/cognitive-delivery-os/proof-gate/). What's safe to ship. A gate is a script, not a meeting.
+- [Plane 6 — Decision](/essays/cognitive-delivery-os/decision/). Why we chose this path, with alternatives, evidence, and reversibility.
+- [Plane 7 — Runtime](/essays/cognitive-delivery-os/runtime/). Where the agent runs and what it did at run-time, logged as JSONL events.
+- [Plane 8 — Dream](/essays/cognitive-delivery-os/dream/). What we learned, offline, with typed promotion candidates and human review by default.
 
 ## What we deliberately don't build
 
