@@ -1,5 +1,10 @@
 # Portfolio manifest — source of truth for the audit script.
 # scripts/portfolio_audit.py reads this; .github/workflows/portfolio-audit.yml runs it weekly.
+#
+# local_root: where product repos are checked out for the cdcp_status walk.
+# Override with the RANDOM_APPS_ROOT env var. The default works on the
+# maintainer's box; CI overrides via env when needed.
+local_root: "e:/claude_code/random-apps"
 
 royal_road:
   url: https://www.royalroad.com/fiction/149065/starforge-canticles
@@ -19,13 +24,13 @@ repos:
     status: active
     deploy_url: "https://athena-site-six.vercel.app"
     # athena-site owns the CDCP contracts but doesn't operate the model itself.
-    cdcp_status: [contracts-owner]
+    cdcp_status: [meta-repo, cross-repo-schemas]
 
   - name: chip-supply-chain-map
     door: "12"
     status: active
     deploy_url: "https://chip-supply-chain-map.vercel.app"
-    cdcp_status: pending
+    cdcp_status: [installed, operating-model, first-decs]
     file_freshness:
       path: src/data/nodes.csv
       threshold_days: 180
@@ -34,7 +39,7 @@ repos:
     door: "13"
     status: active
     deploy_url: "https://supplier-risk-rag-agent.streamlit.app"
-    cdcp_status: [installed, operating-model, dreams-promoted]
+    cdcp_status: [installed, operating-model, dreams-promoted, skills-graduated]
     file_freshness:
       path: reports/baseline_eval_report.html
       threshold_days: 90
@@ -43,7 +48,7 @@ repos:
     door: "18"
     status: active
     deploy_url: "https://ai-field-brief.vercel.app"
-    cdcp_status: [installed, operating-model, dreams-promoted]
+    cdcp_status: [installed, operating-model, dreams-promoted, skills-graduated]
     file_freshness:
       path: briefs/INDEX.md
       threshold_days: 14
@@ -52,12 +57,12 @@ repos:
     door: "17"
     status: active
     deploy_url: "https://procurement-negotiation-lab.vercel.app"
-    cdcp_status: [installed, operating-model, dreams-promoted]
+    cdcp_status: [installed, operating-model, dreams-promoted, skills-graduated]
 
   - name: ai-supply-chain-copilot-prd
     door: "10"
     status: active
-    cdcp_status: pending
+    cdcp_status: [markdown-only, decisions-ledger]
 
   - name: starforge-narrative-tools
     door: "14"

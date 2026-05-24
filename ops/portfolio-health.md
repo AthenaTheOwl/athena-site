@@ -23,11 +23,11 @@
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
 | athena-site | 0 | ✅ |
-| chip-supply-chain-map | 21 | ✅ |
+| chip-supply-chain-map | 0 | ✅ |
 | supplier-risk-rag-agent | 0 | ✅ |
 | ai-field-brief | 0 | ✅ |
 | procurement-negotiation-lab | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 22 | ✅ |
+| ai-supply-chain-copilot-prd | 0 | ✅ |
 | dispatch-optimizer | 27 | ✅ |
 | LLM-evaluation-framework | 27 | ✅ |
 
@@ -51,12 +51,12 @@
 
 | Repo | Door | CDCP status |
 |---|---|---|
-| athena-site | 11 | contracts-owner |
-| chip-supply-chain-map | 12 | pending |
-| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted |
-| ai-field-brief | 18 | installed, operating-model, dreams-promoted |
-| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted |
-| ai-supply-chain-copilot-prd | 10 | pending |
+| athena-site | 11 | meta-repo, cross-repo-schemas |
+| chip-supply-chain-map | 12 | installed, operating-model, first-decs |
+| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated |
+| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated |
+| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated |
+| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger |
 
 ## Anthropic models
 
