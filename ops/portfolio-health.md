@@ -49,14 +49,14 @@
 
 ## CDCP status
 
-| Repo | Door | CDCP status |
-|---|---|---|
-| athena-site | 11 | meta-repo, cross-repo-schemas |
-| chip-supply-chain-map | 12 | installed, operating-model, first-decs |
-| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated |
-| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated |
-| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated |
-| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger |
+| Repo | Door | CDCP status | Drift |
+|---|---|---|---|
+| athena-site | 11 | meta-repo, cross-repo-schemas | — |
+| chip-supply-chain-map | 12 | installed, operating-model, first-decs | ✅ |
+| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
+| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
+| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
+| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ✅ |
 
 ## Anthropic models
 

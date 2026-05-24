@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -22,6 +23,22 @@ DEFAULT_MANIFEST = ROOT / "ops" / "portfolio-manifest.yml"
 DEFAULT_OUTPUT = ROOT / "ops" / "portfolio-health.md"
 USER_AGENT = "AthenaTheOwl-portfolio-audit"
 OWNER = "AthenaTheOwl"
+
+# Markers each cdcp_status label expects to find in the repo. The check
+# walks the local clone (resolved via local_root) and reports drift when
+# a declared label has missing markers, or when markers exist for a label
+# the manifest hasn't declared.
+CDCP_LABEL_MARKERS: dict[str, list[str]] = {
+    "installed": ["has_specs", "has_decisions", "has_agents_dir", "has_validators"],
+    "operating-model": ["has_agents_roles", "has_ops_release_ledger"],
+    "first-decs": ["has_decisions"],
+    "dreams-promoted": ["has_dreams", "has_dream_output"],
+    "skills-graduated": ["has_skills"],
+    "decisions-ledger": ["has_decisions"],
+    # markdown-only, markdown-only, meta-repo, cross-repo-schemas, contracts-owner
+    # are scope declarations rather than installation markers; the check leaves
+    # them alone.
+}
 
 
 def run_gh(*args: str) -> str:
@@ -238,24 +255,122 @@ def section_drift(audit: Audit) -> None:
     audit.add_section("## Manifest drift", "\n".join(body_lines))
 
 
-def section_cdcp_status(audit: Audit) -> None:
-    """CDCP install status per repo. Pulled from manifest, not introspected.
+def resolve_local_root(manifest: dict[str, Any]) -> Path | None:
+    """Resolve the workspace path where sibling product repos are checked out.
 
-    The product repo's own gates prove the records exist; this table just
-    reflects what the manifest declares so a reader can see the throughline.
+    Order of precedence: RANDOM_APPS_ROOT env var, then `local_root` in the
+    manifest. Returns None if neither resolves to an existing directory.
     """
-    rows = ["| Repo | Door | CDCP status |", "|---|---|---|"]
+    candidates: list[str] = []
+    env = os.environ.get("RANDOM_APPS_ROOT")
+    if env:
+        candidates.append(env)
+    declared = manifest.get("local_root")
+    if isinstance(declared, str) and declared:
+        candidates.append(declared)
+    for cand in candidates:
+        path = Path(cand).expanduser()
+        if path.is_dir():
+            return path.resolve()
+    return None
+
+
+def walk_repo_markers(repo_root: Path) -> dict[str, bool]:
+    """Probe filesystem for CDCP install markers. Cheap stat-only checks."""
+    dreams_dir = repo_root / "dreams"
+    skills_dir = repo_root / ".agents" / "skills"
+    scripts_dir = repo_root / "scripts"
+    return {
+        "has_specs": (repo_root / "specs").is_dir(),
+        "has_decisions": (repo_root / "decisions").is_dir(),
+        "has_agents_dir": (repo_root / ".agents").is_dir(),
+        "has_agents_roles": (repo_root / ".agents" / "roles").is_dir(),
+        "has_dreams": dreams_dir.is_dir(),
+        "has_dream_output": (
+            any(dreams_dir.glob("[0-9][0-9][0-9][0-9]-W*/report.md"))
+            if dreams_dir.is_dir() else False
+        ),
+        "has_skills": (
+            skills_dir.is_dir()
+            and any(
+                p for p in skills_dir.iterdir()
+                if p.name not in {"README.md", ".gitkeep"}
+            )
+        ),
+        "has_ops_release_ledger": (repo_root / "ops" / "RELEASE_LEDGER.md").is_file(),
+        "has_validators": all(
+            (scripts_dir / f"validate_{x}.py").is_file()
+            for x in ("decisions", "roles", "tools", "policies")
+        ),
+    }
+
+
+def cdcp_drift(declared: list[str], markers: dict[str, bool]) -> list[str]:
+    """Return human-readable drift items between declared labels and markers."""
+    drift: list[str] = []
+    declared_set = set(declared)
+    for label in declared:
+        expected = CDCP_LABEL_MARKERS.get(label)
+        if not expected:
+            continue
+        missing = [m for m in expected if not markers.get(m, False)]
+        if missing:
+            drift.append(f"declares `{label}` but missing: {', '.join(missing)}")
+    # Reverse direction: markers present that suggest an undeclared label.
+    full_install = all(markers.get(m, False) for m in CDCP_LABEL_MARKERS["installed"])
+    if full_install and "installed" not in declared_set and "markdown-only" not in declared_set:
+        drift.append("repo has full install markers but `installed` not declared")
+    if markers.get("has_dream_output") and "dreams-promoted" not in declared_set:
+        drift.append("dream report present but `dreams-promoted` not declared")
+    if markers.get("has_skills") and "skills-graduated" not in declared_set:
+        drift.append("skill directory populated but `skills-graduated` not declared")
+    return drift
+
+
+def section_cdcp_status(audit: Audit, local_root: Path | None) -> None:
+    """CDCP install status per repo. Walks the local clone to verify drift.
+
+    The product repo's own gates prove the records work; this section
+    cross-checks the manifest declaration against what's actually on disk
+    so the throughline stays honest.
+    """
+    rows = ["| Repo | Door | CDCP status | Drift |", "|---|---|---|---|"]
     any_rows = False
     for r in audit.manifest["repos"]:
         cs = r.get("cdcp_status")
         if cs is None:
             continue
         any_rows = True
-        if isinstance(cs, list):
-            value = ", ".join(cs)
+        declared = cs if isinstance(cs, list) else [str(cs)]
+        value = ", ".join(declared)
+
+        drift_text = "n/a"
+        if local_root is None:
+            drift_text = "⚠️ local_root unresolved"
+        elif r["name"] == "athena-site":
+            # athena-site is the meta-repo; markers don't apply here.
+            drift_text = "—"
         else:
-            value = str(cs)
-        rows.append(f"| {r['name']} | {r.get('door', '-')} | {value} |")
+            repo_root = local_root / r["name"]
+            if not repo_root.is_dir():
+                drift_text = "⚠️ not checked out"
+            else:
+                markers = walk_repo_markers(repo_root)
+                drift = cdcp_drift(declared, markers)
+                if drift:
+                    drift_text = "; ".join(drift)
+                    audit.flag_critical(
+                        r["name"],
+                        f"CDCP drift: {r['name']}",
+                        f"`portfolio-manifest.yml` declares `cdcp_status: {value}` "
+                        f"but the local clone shows drift:\n\n- "
+                        + "\n- ".join(drift)
+                        + "\n\nEither update the manifest to match reality or "
+                          "close the gap in the product repo.",
+                    )
+                else:
+                    drift_text = "✅"
+        rows.append(f"| {r['name']} | {r.get('door', '-')} | {value} | {drift_text} |")
     if any_rows:
         audit.add_section("## CDCP status", "\n".join(rows))
 
@@ -307,6 +422,7 @@ def main() -> int:
 
     manifest = yaml.safe_load(args.manifest.read_text(encoding="utf-8"))
     audit = Audit(manifest)
+    local_root = resolve_local_root(manifest)
 
     section_deploys(audit)
     section_freshness(audit)
@@ -314,7 +430,7 @@ def main() -> int:
     section_forks(audit)
     section_royal_road(audit)
     section_drift(audit)
-    section_cdcp_status(audit)
+    section_cdcp_status(audit, local_root)
     section_anthropic(audit)
 
     args.output.write_text(audit.render(), encoding="utf-8")
