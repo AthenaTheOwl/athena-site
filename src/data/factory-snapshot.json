@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-25T23:35:20.429751Z",
+  "generated_at": "2026-05-25T23:53:14.883971Z",
   "source": "scripts/factory_snapshot.py",
   "repos": [
     {
@@ -149,8 +149,8 @@
       ],
       "exists_local": true,
       "specs": 6,
-      "requirements": 56,
-      "decisions": 45,
+      "requirements": 57,
+      "decisions": 46,
       "roles": 9,
       "skills": 2,
       "dreams": 1,
@@ -286,7 +286,7 @@
       "exists_local": true,
       "specs": 1,
       "requirements": 0,
-      "decisions": 5,
+      "decisions": 6,
       "roles": 6,
       "skills": 0,
       "dreams": 0,
@@ -326,8 +326,8 @@
       ],
       "exists_local": true,
       "specs": 1,
-      "requirements": 9,
-      "decisions": 5,
+      "requirements": 10,
+      "decisions": 6,
       "roles": 6,
       "skills": 0,
       "dreams": 0,
@@ -440,8 +440,8 @@
   "totals": {
     "repos": 13,
     "specs": 31,
-    "requirements": 214,
-    "decisions": 117,
+    "requirements": 216,
+    "decisions": 120,
     "roles": 43,
     "skills": 5,
     "dreams": 3
