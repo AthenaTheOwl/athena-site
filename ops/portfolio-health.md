@@ -15,7 +15,7 @@
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
 | chip-supply-chain-map | src/data/nodes.csv | 0 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 25 | 90 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 26 | 90 | ✅ |
 | ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
@@ -59,8 +59,8 @@
 | ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
 | procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
 | ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ✅ |
-| mcp-security-lab | 19 | cdcp-lite, decisions-ledger | ✅ |
-| trace-to-eval-harness | 20 | cdcp-lite, decisions-ledger | ✅ |
+| mcp-security-lab | 19 | cdcp-lite, decisions-ledger | repo has full install markers but `installed` not declared |
+| trace-to-eval-harness | 20 | cdcp-lite, decisions-ledger | repo has full install markers but `installed` not declared |
 
 ## Anthropic models
 
@@ -71,4 +71,4 @@ Required models: claude-sonnet-4-6
 Verify at: https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 
 ---
-All critical checks passed.
+**2 critical issue(s) detected.** See sections above.
