@@ -192,7 +192,7 @@ TARGETS = [
     "src/**/*.astro",
     "src/**/*.mdx",
     "src/**/*.md",
-    "src/content/**/*.json",
+    "src/data/**/*.json",
 ]
 
 SKIP_DIRS = {"node_modules", "dist", ".astro", ".git", "_legacy"}

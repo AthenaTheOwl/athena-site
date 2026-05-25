@@ -234,7 +234,7 @@ def section_drift(audit: Audit) -> None:
     Both must list the same door numbers + names.
     """
     body_lines: list[str] = []
-    doors_json = ROOT / "src" / "content" / "doors.json"
+    doors_json = ROOT / "src" / "data" / "doors.json"
     if not doors_json.exists():
         body_lines.append("- doors.json: not found ⚠️")
     else:

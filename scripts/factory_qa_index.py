@@ -20,7 +20,7 @@ SOURCE_PATHS = [
     "ops/factory-build-queue.md",
     "ops/control-plane.md",
     "ops/portfolio-health.md",
-    "src/content/doors.json",
+    "src/data/doors.json",
 ]
 
 STOPWORDS = {
@@ -259,7 +259,7 @@ def source_chunks(path: Path) -> list[dict[str, Any]]:
     path_text = rel_path(path)
     if path_text == "src/data/factory-snapshot.json":
         return snapshot_chunks(path)
-    if path_text == "src/content/doors.json":
+    if path_text == "src/data/doors.json":
         return doors_chunks(path)
     return text_chunks(path)
 
@@ -340,12 +340,12 @@ def score_chunk(chunk: dict[str, Any], question: str, query_tokens: list[str]) -
         if path == "src/data/factory-snapshot.json" and "CDCP status" in snippet_text:
             score += 8
     if {"mcp", "security", "lab"}.issubset(raw_set):
-        if path == "src/content/doors.json":
+        if path == "src/data/doors.json":
             score += 16
         if "mcp-security-lab" in search_text:
             score += 5
     if "new" in raw_set and "factory" in raw_set and {"repo", "repos"} & raw_set:
-        if path in {"src/data/factory-snapshot.json", "src/content/doors.json"}:
+        if path in {"src/data/factory-snapshot.json", "src/data/doors.json"}:
             if "Door 19" in snippet_text or "Door 20" in snippet_text:
                 score += 16
     return score

@@ -65,7 +65,7 @@ Requirements:
 - R-FACT-QA-001: Build a static search index from
   `src/data/factory-snapshot.json`, `ops/portfolio-manifest.yml`,
   `ops/factory-build-queue.md`, `ops/control-plane.md`,
-  `ops/portfolio-health.md`, and `src/content/doors.json`.
+  `ops/portfolio-health.md`, and `src/data/doors.json`.
 - R-FACT-QA-002: Answer only with cited repo/file evidence; uncited
   answers render as "not enough evidence".
 - R-FACT-QA-003: Add a fixture gate that fails if a canned question

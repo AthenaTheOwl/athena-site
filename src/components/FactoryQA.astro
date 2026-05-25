@@ -163,11 +163,11 @@ const serializedIndex = JSON.stringify(qaIndex).replace(/</g, "\\u003c");
         if (path === "src/data/factory-snapshot.json" && snippet.includes("CDCP status")) score += 8;
       }
       if (rawSet.has("mcp") && rawSet.has("security") && rawSet.has("lab")) {
-        if (path === "src/content/doors.json") score += 16;
+        if (path === "src/data/doors.json") score += 16;
         if (searchText.includes("mcp-security-lab")) score += 5;
       }
       if (rawSet.has("new") && rawSet.has("factory") && hasAny("repo", "repos")) {
-        if (["src/data/factory-snapshot.json", "src/content/doors.json"].includes(path)) {
+        if (["src/data/factory-snapshot.json", "src/data/doors.json"].includes(path)) {
           if (snippet.includes("Door 19") || snippet.includes("Door 20")) score += 16;
         }
       }

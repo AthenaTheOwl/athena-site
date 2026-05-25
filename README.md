@@ -17,7 +17,7 @@ astro 4 | mdx | tailwind 3 | vercel
 
 ## structure
 
-- `src/content/doors.json` - single source of truth for the portfolio grid
+- `src/data/doors.json` - single source of truth for the portfolio grid
 - `src/pages/essays/` - long-form writing (MDX)
 - `src/components/` - page primitives
 - `ops/factory-build-queue.md` - repo-by-repo build queue for the software factory
