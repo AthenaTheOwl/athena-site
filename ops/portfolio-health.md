@@ -16,7 +16,7 @@
 |---|---|---|---|---|
 | chip-supply-chain-map | src/data/nodes.csv | 0 | 180 | ✅ |
 | supplier-risk-rag-agent | reports/baseline_eval_report.html | 25 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 1 | 14 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
