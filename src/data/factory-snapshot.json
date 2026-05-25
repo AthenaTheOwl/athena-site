@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-25T19:18:38.585939Z",
+  "generated_at": "2026-05-25T23:11:04.534053Z",
   "source": "scripts/factory_snapshot.py",
   "repos": [
     {
@@ -285,15 +285,33 @@
       "exists_local": true,
       "specs": 1,
       "requirements": 0,
-      "decisions": 3,
-      "roles": 0,
+      "decisions": 5,
+      "roles": 6,
       "skills": 0,
       "dreams": 0,
       "validators": [
         "spec_check.py",
-        "voice_lint.py"
+        "voice_lint.py",
+        "validate_decisions.py",
+        "validate_roles.py",
+        "validate_tools.py",
+        "validate_policies.py",
+        "validate_skills.py",
+        "validate_dreams.py",
+        "check_schema_cache_freshness.py"
       ],
-      "events": []
+      "events": [
+        {
+          "created_at": "",
+          "type": "cdcp.installed",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "spec.created",
+          "label": ""
+        }
+      ]
     },
     {
       "name": "trace-to-eval-harness",
@@ -306,16 +324,35 @@
       ],
       "exists_local": true,
       "specs": 1,
-      "requirements": 5,
-      "decisions": 3,
-      "roles": 0,
+      "requirements": 9,
+      "decisions": 5,
+      "roles": 6,
       "skills": 0,
       "dreams": 0,
       "validators": [
         "spec_check.py",
-        "voice_lint.py"
+        "voice_lint.py",
+        "validate_decisions.py",
+        "validate_roles.py",
+        "validate_tools.py",
+        "validate_policies.py",
+        "validate_skills.py",
+        "validate_dreams.py",
+        "check_schema_cache_freshness.py",
+        "validate_schemas.py"
       ],
-      "events": []
+      "events": [
+        {
+          "created_at": "",
+          "type": "cdcp.installed",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "spec.created",
+          "label": ""
+        }
+      ]
     },
     {
       "name": "starforge-narrative-tools",
@@ -401,9 +438,9 @@
   "totals": {
     "repos": 13,
     "specs": 31,
-    "requirements": 206,
-    "decisions": 109,
-    "roles": 31,
+    "requirements": 210,
+    "decisions": 113,
+    "roles": 43,
     "skills": 5,
     "dreams": 3
   }
