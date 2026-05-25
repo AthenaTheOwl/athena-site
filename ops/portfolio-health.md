@@ -27,9 +27,11 @@
 | supplier-risk-rag-agent | 0 | ✅ |
 | ai-field-brief | 0 | ✅ |
 | procurement-negotiation-lab | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 1 | ✅ |
-| dispatch-optimizer | 28 | ✅ |
-| LLM-evaluation-framework | 28 | ✅ |
+| ai-supply-chain-copilot-prd | 0 | ✅ |
+| mcp-security-lab | 0 | ✅ |
+| trace-to-eval-harness | 0 | ✅ |
+| dispatch-optimizer | 29 | ✅ |
+| LLM-evaluation-framework | 29 | ✅ |
 
 ## Starforge cluster forks
 
@@ -45,7 +47,7 @@
 
 ## Manifest drift
 
-- doors.json: 18 entries ✅
+- doors.json: 20 entries ✅
 
 ## CDCP status
 
@@ -57,6 +59,8 @@
 | ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
 | procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
 | ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ✅ |
+| mcp-security-lab | 19 | cdcp-lite, decisions-ledger | ✅ |
+| trace-to-eval-harness | 20 | cdcp-lite, decisions-ledger | ✅ |
 
 ## Anthropic models
 

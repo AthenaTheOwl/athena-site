@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-25T18:44:05.939964Z",
+  "generated_at": "2026-05-25T19:15:41.037589Z",
   "source": "scripts/factory_snapshot.py",
   "repos": [
     {
@@ -34,9 +34,9 @@
         "first-decs"
       ],
       "exists_local": true,
-      "specs": 1,
-      "requirements": 10,
-      "decisions": 8,
+      "specs": 2,
+      "requirements": 11,
+      "decisions": 9,
       "roles": 6,
       "skills": 0,
       "dreams": 0,
@@ -91,9 +91,9 @@
         "skills-graduated"
       ],
       "exists_local": true,
-      "specs": 6,
-      "requirements": 29,
-      "decisions": 22,
+      "specs": 7,
+      "requirements": 30,
+      "decisions": 23,
       "roles": 8,
       "skills": 2,
       "dreams": 1,
@@ -148,9 +148,9 @@
         "skills-graduated"
       ],
       "exists_local": true,
-      "specs": 5,
-      "requirements": 53,
-      "decisions": 42,
+      "specs": 6,
+      "requirements": 55,
+      "decisions": 44,
       "roles": 9,
       "skills": 2,
       "dreams": 1,
@@ -207,9 +207,9 @@
         "skills-graduated"
       ],
       "exists_local": true,
-      "specs": 13,
-      "requirements": 102,
-      "decisions": 21,
+      "specs": 14,
+      "requirements": 105,
+      "decisions": 24,
       "roles": 8,
       "skills": 1,
       "dreams": 1,
@@ -269,6 +269,50 @@
       "skills": 0,
       "dreams": 0,
       "validators": [
+        "voice_lint.py"
+      ],
+      "events": []
+    },
+    {
+      "name": "mcp-security-lab",
+      "door": "19",
+      "status": "active",
+      "deploy_url": null,
+      "cdcp_status": [
+        "cdcp-lite",
+        "decisions-ledger"
+      ],
+      "exists_local": true,
+      "specs": 1,
+      "requirements": 0,
+      "decisions": 3,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [
+        "spec_check.py",
+        "voice_lint.py"
+      ],
+      "events": []
+    },
+    {
+      "name": "trace-to-eval-harness",
+      "door": "20",
+      "status": "active",
+      "deploy_url": null,
+      "cdcp_status": [
+        "cdcp-lite",
+        "decisions-ledger"
+      ],
+      "exists_local": true,
+      "specs": 1,
+      "requirements": 5,
+      "decisions": 3,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [
+        "spec_check.py",
         "voice_lint.py"
       ],
       "events": []
@@ -355,10 +399,10 @@
     }
   ],
   "totals": {
-    "repos": 11,
-    "specs": 25,
-    "requirements": 194,
-    "decisions": 96,
+    "repos": 13,
+    "specs": 31,
+    "requirements": 206,
+    "decisions": 109,
     "roles": 31,
     "skills": 5,
     "dreams": 3

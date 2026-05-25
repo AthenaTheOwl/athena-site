@@ -64,6 +64,16 @@ repos:
     status: active
     cdcp_status: [markdown-only, decisions-ledger]
 
+  - name: mcp-security-lab
+    door: "19"
+    status: active
+    cdcp_status: [cdcp-lite, decisions-ledger]
+
+  - name: trace-to-eval-harness
+    door: "20"
+    status: active
+    cdcp_status: [cdcp-lite, decisions-ledger]
+
   - name: starforge-narrative-tools
     door: "14"
     status: workshop
