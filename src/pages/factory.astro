@@ -1,0 +1,211 @@
+---
+import Base from "../layouts/Base.astro";
+import snapshot from "../data/factory-snapshot.json";
+
+const repos = snapshot.repos;
+const activeRepos = repos.filter((repo) => repo.status === "active");
+const deployedRepos = activeRepos.filter((repo) => repo.deploy_url);
+const validators = Array.from(
+  new Set(repos.flatMap((repo) => repo.validators ?? []))
+).sort();
+
+const formatter = new Intl.DateTimeFormat("en", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "UTC"
+});
+const generatedAt = formatter.format(new Date(snapshot.generated_at));
+---
+
+<Base
+  title="Factory | Vignesh Gopalakrishnan"
+  description="A public control tower for the portfolio: repos, specs, decisions, roles, dreams, gates, and deployment evidence."
+>
+  <section class="border-b border-line bg-paper py-12 sm:py-16">
+    <div class="shell">
+      <p class="eyebrow">Factory control tower</p>
+      <div class="mt-5 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+        <div>
+          <h1 class="max-w-4xl text-5xl font-semibold leading-tight sm:text-6xl">
+            The portfolio's operating system, visible in one place.
+          </h1>
+          <p class="mt-6 max-w-3xl text-lg leading-8 text-stone-700">
+            Each active repo carries the same discipline: specs, decisions, roles,
+            dreams, proof gates, release ledgers, and deploy checks. This page is
+            the public read-only snapshot.
+          </p>
+        </div>
+        <div class="border border-line bg-white p-5 text-sm text-stone-600">
+          <p class="font-mono uppercase tracking-[0.16em] text-stone-500">Snapshot</p>
+          <p class="mt-3">Generated at {generatedAt} UTC.</p>
+          <p class="mt-2">
+            Source:
+            <code>scripts/factory_snapshot.py</code>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-b border-line bg-white py-10">
+    <div class="shell grid gap-3 sm:grid-cols-3 lg:grid-cols-7">
+      <div class="stat">
+        <p>{snapshot.totals.repos}</p>
+        <span>repos watched</span>
+      </div>
+      <div class="stat">
+        <p>{snapshot.totals.specs}</p>
+        <span>specs</span>
+      </div>
+      <div class="stat">
+        <p>{snapshot.totals.requirements}</p>
+        <span>requirements</span>
+      </div>
+      <div class="stat">
+        <p>{snapshot.totals.decisions}</p>
+        <span>decisions</span>
+      </div>
+      <div class="stat">
+        <p>{snapshot.totals.roles}</p>
+        <span>roles</span>
+      </div>
+      <div class="stat">
+        <p>{snapshot.totals.skills}</p>
+        <span>skills</span>
+      </div>
+      <div class="stat">
+        <p>{snapshot.totals.dreams}</p>
+        <span>dream cycles</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell py-12 sm:py-16">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="eyebrow">Active line</p>
+        <h2 class="mt-3 text-3xl font-semibold sm:text-4xl">What is shipping</h2>
+      </div>
+      <a class="focus-ring text-sm font-semibold no-underline" href="/essays/cognitive-delivery-os/">
+        Read the control-plane thesis
+      </a>
+    </div>
+
+    <div class="mt-8 grid gap-4 lg:grid-cols-2">
+      {activeRepos.map((repo) => (
+        <article class="border border-line bg-white p-5">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p class="font-mono text-xs uppercase tracking-[0.16em] text-stone-500">
+                No. {repo.door ?? "--"} | {repo.status}
+              </p>
+              <h3 class="mt-3 text-2xl font-semibold">{repo.name}</h3>
+            </div>
+            {repo.deploy_url && (
+              <a class="focus-ring text-sm font-semibold no-underline" href={repo.deploy_url} target="_blank" rel="noreferrer">
+                Open deploy
+              </a>
+            )}
+          </div>
+
+          <dl class="mt-5 grid grid-cols-3 gap-3 text-sm sm:grid-cols-6">
+            <div><dt>Specs</dt><dd>{repo.specs}</dd></div>
+            <div><dt>R-*</dt><dd>{repo.requirements}</dd></div>
+            <div><dt>DECs</dt><dd>{repo.decisions}</dd></div>
+            <div><dt>Roles</dt><dd>{repo.roles}</dd></div>
+            <div><dt>Skills</dt><dd>{repo.skills}</dd></div>
+            <div><dt>Dreams</dt><dd>{repo.dreams}</dd></div>
+          </dl>
+
+          <div class="mt-5 flex flex-wrap gap-2">
+            {repo.cdcp_status.map((status) => (
+              <span class="border border-line px-2 py-1 font-mono text-xs uppercase tracking-[0.14em] text-stone-600">
+                {status}
+              </span>
+            ))}
+          </div>
+
+          {repo.events.length > 0 && (
+            <div class="mt-5 border-t border-line pt-4">
+              <p class="font-mono text-xs uppercase tracking-[0.16em] text-stone-500">Recent events</p>
+              <ul class="mt-3 space-y-2 text-sm text-stone-700">
+                {repo.events.slice(0, 3).map((event) => (
+                  <li>
+                    <span class="font-mono text-stone-500">{event.type}</span>
+                    {event.label && <span> | {event.label}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="border-y border-line bg-white py-12">
+    <div class="shell grid gap-8 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow">Deploys</p>
+        <h2 class="mt-3 text-3xl font-semibold">Public apps</h2>
+        <ul class="mt-6 space-y-3 text-stone-700">
+          {deployedRepos.map((repo) => (
+            <li>
+              <a class="font-semibold no-underline" href={repo.deploy_url} target="_blank" rel="noreferrer">{repo.name}</a>
+              <span class="text-stone-500"> | {repo.deploy_url}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Proof gates</p>
+        <h2 class="mt-3 text-3xl font-semibold">Validator chain</h2>
+        <div class="mt-6 flex flex-wrap gap-2">
+          {validators.map((validator) => (
+            <span class="border border-line bg-paper px-2 py-1 font-mono text-xs text-stone-700">
+              {validator}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .stat {
+    border: 1px solid var(--line);
+    background: white;
+    padding: 1rem;
+  }
+
+  .stat p {
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 650;
+  }
+
+  .stat span {
+    margin-top: 0.5rem;
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(87 83 78);
+  }
+
+  dt {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(120 113 108);
+  }
+
+  dd {
+    margin-top: 0.25rem;
+    font-size: 1.35rem;
+    font-weight: 650;
+  }
+</style>

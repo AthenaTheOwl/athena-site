@@ -1,0 +1,366 @@
+{
+  "generated_at": "2026-05-25T18:34:18.017376Z",
+  "source": "scripts/factory_snapshot.py",
+  "repos": [
+    {
+      "name": "athena-site",
+      "door": "11",
+      "status": "active",
+      "deploy_url": "https://athena-site-six.vercel.app",
+      "cdcp_status": [
+        "meta-repo",
+        "cross-repo-schemas"
+      ],
+      "exists_local": true,
+      "specs": 0,
+      "requirements": 0,
+      "decisions": 0,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [
+        "voice_lint.py"
+      ],
+      "events": []
+    },
+    {
+      "name": "chip-supply-chain-map",
+      "door": "12",
+      "status": "active",
+      "deploy_url": "https://chip-supply-chain-map.vercel.app",
+      "cdcp_status": [
+        "installed",
+        "operating-model",
+        "first-decs"
+      ],
+      "exists_local": true,
+      "specs": 1,
+      "requirements": 10,
+      "decisions": 8,
+      "roles": 6,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [
+        "spec_check.py",
+        "voice_lint.py",
+        "validate_decisions.py",
+        "validate_roles.py",
+        "validate_tools.py",
+        "validate_policies.py",
+        "validate_dreams.py",
+        "check_schema_cache_freshness.py",
+        "check_data_freshness.py"
+      ],
+      "events": [
+        {
+          "created_at": "",
+          "type": "cdcp.installed",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "spec.created",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "decision.recorded",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "decision.recorded",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "decision.recorded",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "name": "supplier-risk-rag-agent",
+      "door": "13",
+      "status": "active",
+      "deploy_url": "https://supplier-risk-rag-agent.streamlit.app",
+      "cdcp_status": [
+        "installed",
+        "operating-model",
+        "dreams-promoted",
+        "skills-graduated"
+      ],
+      "exists_local": true,
+      "specs": 6,
+      "requirements": 29,
+      "decisions": 22,
+      "roles": 8,
+      "skills": 2,
+      "dreams": 1,
+      "validators": [
+        "spec_check.py",
+        "voice_lint.py",
+        "validate_decisions.py",
+        "validate_roles.py",
+        "validate_tools.py",
+        "validate_policies.py",
+        "validate_skills.py",
+        "validate_dreams.py",
+        "check_schema_cache_freshness.py"
+      ],
+      "events": [
+        {
+          "created_at": "",
+          "type": "cdcp.installed",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "spec.created",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "spec.created",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "spec.created",
+          "label": ""
+        },
+        {
+          "created_at": "",
+          "type": "spec.created",
+          "label": ""
+        }
+      ]
+    },
+    {
+      "name": "ai-field-brief",
+      "door": "18",
+      "status": "active",
+      "deploy_url": "https://ai-field-brief.vercel.app",
+      "cdcp_status": [
+        "installed",
+        "operating-model",
+        "dreams-promoted",
+        "skills-graduated"
+      ],
+      "exists_local": true,
+      "specs": 5,
+      "requirements": 53,
+      "decisions": 42,
+      "roles": 9,
+      "skills": 2,
+      "dreams": 1,
+      "validators": [
+        "spec_check.py",
+        "voice_lint.py",
+        "validate_decisions.py",
+        "validate_roles.py",
+        "validate_tools.py",
+        "validate_policies.py",
+        "validate_skills.py",
+        "validate_dreams.py",
+        "check_schema_cache_freshness.py",
+        "validate_schemas.py",
+        "validate_registry.py"
+      ],
+      "events": [
+        {
+          "created_at": "2026-05-24T23:45:15Z",
+          "type": "decision.recorded",
+          "label": "DEC-SRC-016-registry-type-map-to-source-type"
+        },
+        {
+          "created_at": "2026-05-24T23:45:14Z",
+          "type": "decision.recorded",
+          "label": "DEC-SRC-015-seed-loader-reads-registry-yaml"
+        },
+        {
+          "created_at": "2026-05-24T23:45:13Z",
+          "type": "decision.recorded",
+          "label": "DEC-SRC-014-reliability-history-table-now-writes-later"
+        },
+        {
+          "created_at": "2026-05-24T23:45:12Z",
+          "type": "decision.recorded",
+          "label": "DEC-SRC-013-source-type-union-schema-sync-test"
+        },
+        {
+          "created_at": "2026-05-24T23:45:11Z",
+          "type": "decision.recorded",
+          "label": "DEC-SRC-012-connector-provenance-version-stamp"
+        }
+      ]
+    },
+    {
+      "name": "procurement-negotiation-lab",
+      "door": "17",
+      "status": "active",
+      "deploy_url": "https://procurement-negotiation-lab.vercel.app",
+      "cdcp_status": [
+        "installed",
+        "operating-model",
+        "dreams-promoted",
+        "skills-graduated"
+      ],
+      "exists_local": true,
+      "specs": 13,
+      "requirements": 102,
+      "decisions": 21,
+      "roles": 8,
+      "skills": 1,
+      "dreams": 1,
+      "validators": [
+        "spec_check.py",
+        "voice_lint.py",
+        "validate_decisions.py",
+        "validate_roles.py",
+        "validate_tools.py",
+        "validate_policies.py",
+        "validate_skills.py",
+        "validate_dreams.py",
+        "check_schema_cache_freshness.py"
+      ],
+      "events": [
+        {
+          "created_at": "2026-05-24T08:00:12Z",
+          "type": "traceability.backfilled",
+          "label": "0013-cognitive-delivery-control-plane"
+        },
+        {
+          "created_at": "2026-05-24T08:00:11Z",
+          "type": "traceability.backfilled",
+          "label": "0012-mobile-release-and-agentic-sdlc"
+        },
+        {
+          "created_at": "2026-05-24T08:00:10Z",
+          "type": "traceability.backfilled",
+          "label": "0011-coordination-sandbox-governance"
+        },
+        {
+          "created_at": "2026-05-24T08:00:09Z",
+          "type": "traceability.backfilled",
+          "label": "0010-pedagogical-redesign"
+        },
+        {
+          "created_at": "2026-05-24T08:00:08Z",
+          "type": "traceability.backfilled",
+          "label": "0009-factory-dev-control-plane"
+        }
+      ]
+    },
+    {
+      "name": "ai-supply-chain-copilot-prd",
+      "door": "10",
+      "status": "active",
+      "deploy_url": null,
+      "cdcp_status": [
+        "markdown-only",
+        "decisions-ledger"
+      ],
+      "exists_local": true,
+      "specs": 0,
+      "requirements": 0,
+      "decisions": 3,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [
+        "voice_lint.py"
+      ],
+      "events": []
+    },
+    {
+      "name": "starforge-narrative-tools",
+      "door": "14",
+      "status": "workshop",
+      "deploy_url": null,
+      "cdcp_status": [],
+      "exists_local": true,
+      "specs": 0,
+      "requirements": 0,
+      "decisions": 0,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [],
+      "events": []
+    },
+    {
+      "name": "starforge-renpy-demo",
+      "door": "15",
+      "status": "workshop",
+      "deploy_url": null,
+      "cdcp_status": [],
+      "exists_local": true,
+      "specs": 0,
+      "requirements": 0,
+      "decisions": 0,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [],
+      "events": []
+    },
+    {
+      "name": "starforge-rpg-prototype",
+      "door": "16",
+      "status": "workshop",
+      "deploy_url": null,
+      "cdcp_status": [],
+      "exists_local": true,
+      "specs": 0,
+      "requirements": 0,
+      "decisions": 0,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [],
+      "events": []
+    },
+    {
+      "name": "dispatch-optimizer",
+      "door": "01",
+      "status": "active",
+      "deploy_url": null,
+      "cdcp_status": [],
+      "exists_local": false,
+      "specs": 0,
+      "requirements": 0,
+      "decisions": 0,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [],
+      "events": []
+    },
+    {
+      "name": "LLM-evaluation-framework",
+      "door": "02",
+      "status": "active",
+      "deploy_url": null,
+      "cdcp_status": [],
+      "exists_local": false,
+      "specs": 0,
+      "requirements": 0,
+      "decisions": 0,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [],
+      "events": []
+    }
+  ],
+  "totals": {
+    "repos": 11,
+    "specs": 25,
+    "requirements": 194,
+    "decisions": 96,
+    "roles": 31,
+    "skills": 5,
+    "dreams": 3
+  }
+}
