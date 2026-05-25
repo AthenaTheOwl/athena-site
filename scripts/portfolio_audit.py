@@ -29,6 +29,7 @@ OWNER = "AthenaTheOwl"
 # a declared label has missing markers, or when markers exist for a label
 # the manifest hasn't declared.
 CDCP_LABEL_MARKERS: dict[str, list[str]] = {
+    "cdcp-lite": ["has_specs", "has_decisions"],
     "installed": ["has_specs", "has_decisions", "has_agents_dir", "has_validators"],
     "operating-model": ["has_agents_roles", "has_ops_release_ledger"],
     "first-decs": ["has_decisions"],

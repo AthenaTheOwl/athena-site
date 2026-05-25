@@ -173,5 +173,31 @@
       "ai-agents": "follow the role files; this is how the brief gets written",
       "hiring": "evidence of taste plus opinionated discipline plus shipped"
     }
+  },
+  {
+    "n": "19",
+    "name": "mcp-security-lab",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/mcp-security-lab",
+    "hook": "MCP config risk scanner. server config in, policy report out: tool scope, transport, injection phrases, and approval gaps.",
+    "for": {
+      "security": "scan MCP configs before adding tools",
+      "builder": "run the CLI against your own mcpServers block",
+      "ai-agents": "tool permissions become inspectable before runtime",
+      "hiring": "evidence of AI tool-security judgment"
+    }
+  },
+  {
+    "n": "20",
+    "name": "trace-to-eval-harness",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/trace-to-eval-harness",
+    "hook": "failed AI traces become human-reviewed eval cases. deterministic checks first, regression bundle second.",
+    "for": {
+      "science": "turn failed traces into repeatable evals",
+      "builder": "use the CLI to create regression bundles",
+      "ops": "trace to report without an LLM dependency",
+      "hiring": "evidence that agent failures become tests"
+    }
   }
 ]
