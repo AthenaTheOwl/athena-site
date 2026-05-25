@@ -1,4 +1,4 @@
-# Portfolio health — 2026-05-24
+# Portfolio health — 2026-05-25
 
 ## Deploys
 
@@ -16,7 +16,7 @@
 |---|---|---|---|---|
 | chip-supply-chain-map | src/data/nodes.csv | 25 | 180 | ✅ |
 | supplier-risk-rag-agent | reports/baseline_eval_report.html | 25 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 1 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
@@ -27,7 +27,7 @@
 | supplier-risk-rag-agent | 0 | ✅ |
 | ai-field-brief | 0 | ✅ |
 | procurement-negotiation-lab | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 0 | ✅ |
+| ai-supply-chain-copilot-prd | 1 | ✅ |
 | dispatch-optimizer | 28 | ✅ |
 | LLM-evaluation-framework | 28 | ✅ |
 
@@ -51,12 +51,12 @@
 
 | Repo | Door | CDCP status | Drift |
 |---|---|---|---|
-| athena-site | 11 | meta-repo, cross-repo-schemas | — |
-| chip-supply-chain-map | 12 | installed, operating-model, first-decs | ✅ |
-| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
-| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
-| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
-| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ✅ |
+| athena-site | 11 | meta-repo, cross-repo-schemas | ⚠️ local_root unresolved |
+| chip-supply-chain-map | 12 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
+| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
+| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
+| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
+| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ⚠️ local_root unresolved |
 
 ## Anthropic models
 
