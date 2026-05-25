@@ -57,14 +57,15 @@ Requirements:
 
 ### athena-site: Factory Control Tower Q&A
 
-Status: `/factory` reads a checked-in snapshot and shows counts,
-deploys, validators, and recent events.
+Status: implemented as a static `/factory` evidence search over the
+checked-in factory snapshot and portfolio docs. No LLM API is used.
 
 Requirements:
 
 - R-FACT-QA-001: Build a static search index from
   `src/data/factory-snapshot.json`, `ops/portfolio-manifest.yml`,
-  decision files, and event logs.
+  `ops/factory-build-queue.md`, `ops/control-plane.md`,
+  `ops/portfolio-health.md`, and `src/content/doors.json`.
 - R-FACT-QA-002: Answer only with cited repo/file evidence; uncited
   answers render as "not enough evidence".
 - R-FACT-QA-003: Add a fixture gate that fails if a canned question

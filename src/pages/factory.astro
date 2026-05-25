@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import FactoryQA from "../components/FactoryQA.astro";
 import snapshot from "../data/factory-snapshot.json";
 
 const repos = snapshot.repos;
@@ -79,6 +80,8 @@ const generatedAt = formatter.format(new Date(snapshot.generated_at));
       </div>
     </div>
   </section>
+
+  <FactoryQA />
 
   <section class="shell py-12 sm:py-16">
     <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
