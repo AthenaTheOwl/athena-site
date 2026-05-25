@@ -14,7 +14,7 @@
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 25 | 180 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 0 | 180 | ✅ |
 | supplier-risk-rag-agent | reports/baseline_eval_report.html | 25 | 90 | ✅ |
 | ai-field-brief | briefs/INDEX.md | 1 | 14 | ✅ |
 
