@@ -20,3 +20,6 @@ jobs:
       - name: Run voice lint
         run: python scripts/voice_lint.py
         continue-on-error: true   # advisory, not a merge gate
+
+      - name: Check for UTF-8 BOM
+        run: python scripts/check_no_bom.py
