@@ -59,8 +59,8 @@
 | ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
 | procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
 | ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ✅ |
-| mcp-security-lab | 19 | cdcp-lite, decisions-ledger | repo has full install markers but `installed` not declared |
-| trace-to-eval-harness | 20 | cdcp-lite, decisions-ledger | repo has full install markers but `installed` not declared |
+| mcp-security-lab | 19 | installed, operating-model, first-decs | ✅ |
+| trace-to-eval-harness | 20 | installed, operating-model, first-decs | ✅ |
 
 ## Anthropic models
 
@@ -71,4 +71,4 @@ Required models: claude-sonnet-4-6
 Verify at: https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 
 ---
-**2 critical issue(s) detected.** See sections above.
+All critical checks passed.

@@ -26,8 +26,7 @@ External signals behind the queue:
 
 ### ai-supply-chain-copilot-prd: CI workflow for markdown gates
 
-Status: markdown-only PRD at `267fde5`; local scripts exist, CI does
-not.
+Status: shipped in `c47825e`; markdown gates now run in CI.
 
 Requirements:
 
@@ -42,8 +41,8 @@ door.
 
 ### athena-site: close Dependabot preview failures
 
-Status: major Astro and Tailwind preview PRs failed because peer
-dependencies require a coordinated migration.
+Status: shipped in `99f6d92`; major Astro and Tailwind preview PRs are
+kept out of Dependabot's automatic queue until a coordinated migration.
 
 Requirements:
 
@@ -57,8 +56,9 @@ Requirements:
 
 ### athena-site: Factory Control Tower Q&A
 
-Status: implemented as a static `/factory` evidence search over the
-checked-in factory snapshot and portfolio docs. No LLM API is used.
+Status: shipped in `4e9e0a3`; static `/factory` evidence search runs
+over the checked-in factory snapshot and portfolio docs. No LLM API is
+used.
 
 Requirements:
 
@@ -78,7 +78,8 @@ but not yet interrogable.
 
 ### mcp-security-lab: policy evaluator
 
-Status: CLI scores MCP configs and emits JSON/Markdown reports.
+Status: shipped in `8039bdf`; CLI scores MCP configs, evaluates policy
+YAML, and emits JSON/Markdown reports.
 
 Requirements:
 
@@ -96,7 +97,8 @@ static warning.
 
 ### trace-to-eval-harness: formal schemas
 
-Status: CLI ingests failed traces and runs deterministic checks.
+Status: shipped in `205b11b`; CLI ingests failed traces, validates the
+trace/eval/report schemas, and runs deterministic checks.
 
 Requirements:
 
@@ -116,7 +118,9 @@ contract is stable.
 
 ### supplier-risk-rag-agent: investor rollup
 
-Status: citation-faithful RAG with monthly EDGAR refresh path.
+Status: shipped in `8f9ad0f` as `R-CIT-004` and `DEC-CIT-004`;
+citation-faithful RAG now includes a deterministic investor portfolio
+rollup MVP.
 
 Requirements:
 
@@ -133,8 +137,8 @@ First because EDGAR refresh and citation verification already exist.
 
 ### chip-supply-chain-map: investor watchlist export
 
-Status: graph includes AI accelerator nodes, scenarios, history mode,
-and node-level investor sensitivity.
+Status: shipped in `529c655` as `R-FIN-002` and `DEC-FIN-002`; graph
+now includes investor watchlist aggregation and risk packet export.
 
 Requirements:
 
@@ -149,7 +153,8 @@ First because the last overlay is useful but still node-by-node.
 
 ### procurement-negotiation-lab: factory console
 
-Status: simulator plus reusable mechanism SDK and factory subsystem.
+Status: shipped in `73e5881` with ledger follow-up `2975078`; simulator
+now exposes a read-only factory console over replayable evidence.
 
 Requirements:
 
@@ -164,7 +169,8 @@ First because it makes the factory subsystem inspectable.
 
 ### ai-supply-chain-copilot-prd: runnable prototype
 
-Status: markdown PRD with a build plan.
+Status: shipped in `c0a22d6`; the PRD now includes a runnable static
+exception-workbench prototype.
 
 Requirements:
 
@@ -183,7 +189,9 @@ supply-chain workflow.
 
 ### ai-field-brief: subscriber ops cockpit
 
-Status: feeds, subscription form, and Resend weekly digest cron exist.
+Status: shipped in `009ce96` as `R-PUB-003` and `DEC-PUB-003`; feeds,
+subscription form, Resend cron, and credential-safe subscriber ops page
+exist.
 
 Requirements:
 

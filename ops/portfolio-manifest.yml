@@ -67,12 +67,12 @@ repos:
   - name: mcp-security-lab
     door: "19"
     status: active
-    cdcp_status: [cdcp-lite, decisions-ledger]
+    cdcp_status: [installed, operating-model, first-decs]
 
   - name: trace-to-eval-harness
     door: "20"
     status: active
-    cdcp_status: [cdcp-lite, decisions-ledger]
+    cdcp_status: [installed, operating-model, first-decs]
 
   - name: starforge-narrative-tools
     door: "14"
