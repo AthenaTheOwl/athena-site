@@ -130,6 +130,72 @@ work.
 
 ---
 
+## `gate.run.evidence_recorded`
+
+**When it fires.** A Run record is persisted with at least one of the
+replay-equivalence fields populated (`prompt_snapshot_hash`,
+`tool_schemas_snapshot_hash`, `determinism`, `checkpoint_ref`,
+`sandbox_image_ref`, `gate_results_summary`). The event marks the moment
+the source-of-truth Run carries enough evidence for a downstream packet
+generator to assemble a review packet.
+
+**Required payload fields.** `run_id`, `fields_populated`.
+
+**Typical actor.** `{kind: "role", id: "engineering.implementation"}` or
+`{kind: "system", id: "<runtime-id>"}`.
+
+**Example.**
+```json
+{
+  "event_id": "c4d5e6f7-0102-4304-8506-070809101112",
+  "type": "gate.run.evidence_recorded",
+  "created_at": "2026-05-27T20:31:00Z",
+  "actor": {"kind": "system", "id": "claude-code-cli"},
+  "run_id": "run-2026-05-27-007",
+  "payload": {
+    "run_id": "run-2026-05-27-007",
+    "fields_populated": [
+      "prompt_snapshot_hash",
+      "tool_schemas_snapshot_hash",
+      "determinism",
+      "gate_results_summary"
+    ]
+  }
+}
+```
+
+---
+
+## `run.evidence.replayed`
+
+**When it fires.** A consumer (`trace-to-eval-harness` or similar)
+reconstructs a Run from its evidence packet and verifies
+replay-equivalence against the recorded `prompt_snapshot_hash`,
+`tool_schemas_snapshot_hash`, and determinism knobs.
+
+**Required payload fields.** `run_id`, `packet_ref`, `replay_equivalent`.
+
+**Typical actor.** `{kind: "system", id: "trace-to-eval-harness"}` or
+`{kind: "role", id: "science.proof-gate-runner"}`.
+
+**Example.**
+```json
+{
+  "event_id": "d5e6f708-0203-4405-9607-181920212223",
+  "type": "run.evidence.replayed",
+  "created_at": "2026-05-27T20:42:11Z",
+  "actor": {"kind": "system", "id": "trace-to-eval-harness"},
+  "run_id": "run-2026-05-27-007",
+  "payload": {
+    "run_id": "run-2026-05-27-007",
+    "packet_ref": "reports/run-evidence/run-2026-05-27-007.json",
+    "replay_equivalent": true
+  }
+}
+```
+
+---
+
 ## `tool.call.started`
 
 **When it fires.** A role invokes a tool from the registry.

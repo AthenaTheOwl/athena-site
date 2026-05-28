@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://athena.dev/ops/schemas/run.schema.json",
   "title": "Run",
-  "description": "A single agent run inside a workspace or sandbox. A Run records which spec it targeted, which agent executed it, what inputs were supplied, what events fired, what outputs landed, and what it cost. Runs are the join key between Decisions and Artifacts.",
+  "description": "A single agent run inside a workspace or sandbox. A Run records which spec it targeted, which agent executed it, what inputs were supplied, what events fired, what outputs landed, what it cost, and (optionally) the replay-equivalence evidence — prompt/tool-schema hashes, determinism knobs, checkpoint and sandbox refs, gate rollup. Runs are the join key between Decisions and Artifacts, and the source from which review packets (see trace-to-eval-harness/schemas/run-evidence.schema.json) are derived.",
   "type": "object",
   "required": [
     "id",
@@ -120,6 +120,44 @@
           "minimum": 0,
           "description": "Estimated dollar cost of the run, computed from the token counts and the model's posted rates."
         }
+      }
+    },
+    "prompt_snapshot_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hex digest of the canonicalized prompt(s) that drove this run. Lets a reviewer prove two runs had identical prompt preconditions."
+    },
+    "tool_schemas_snapshot_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hex digest of the canonicalized list of tool schemas available to the agent at run start. Lets a reviewer prove two runs had identical tool surfaces."
+    },
+    "determinism": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Reproducibility knobs in effect for this run. Absence means the run was not pinned for determinism.",
+      "properties": {
+        "seed": {"type": "integer", "description": "Sampler seed if pinned."},
+        "temperature": {"type": "number", "minimum": 0, "description": "Sampler temperature."},
+        "top_p": {"type": "number", "minimum": 0, "maximum": 1, "description": "Sampler nucleus parameter."}
+      }
+    },
+    "checkpoint_ref": {
+      "type": "string",
+      "description": "Opaque reference (path or URI) to a serialized RunState/checkpoint that could resume this run."
+    },
+    "sandbox_image_ref": {
+      "type": "string",
+      "description": "Opaque reference (path or URI or image digest) to a frozen sandbox image associated with this run."
+    },
+    "gate_results_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Rollup of gate-check outcomes for this run. Detailed per-gate records live in events[] with kind=gate_check.",
+      "properties": {
+        "gates_passed": {"type": "array", "items": {"type": "string"}, "description": "Names of gates that passed."},
+        "gates_failed": {"type": "array", "items": {"type": "string"}, "description": "Names of gates that failed."},
+        "all_passed": {"type": "boolean", "description": "True iff gates_failed is empty."}
       }
     }
   }
