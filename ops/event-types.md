@@ -1,20 +1,31 @@
 # Canonical event types
 
 The append-only event ledger is governed by `ops/schemas/event.schema.json`.
-The schema does not constrain the inner `payload` shape so the ledger can
-absorb new event types without a schema bump. This file documents the
-canonical event types every product repo should emit and consume.
+Per `DEC-CDCP-013`, the schema now enforces typed payload contracts for
+nine canonical event types via a top-level `oneOf` discriminator:
+`pipeline.start`, `pipeline.complete`, `pipeline.done`,
+`tool.call.started`, `tool.call.completed`, `gate.check.passed`,
+`gate.check.failed`, `gate.run.evidence_recorded`, and
+`run.evidence.replayed`. Any other event type passes envelope-only
+validation via an escape-hatch branch so the ledger can still absorb new
+event types without a schema bump. This file documents the canonical
+event types every product repo should emit and consume; the entries
+below are the contract the schema enforces for the nine typed types and
+the documentation-only contract for everything else.
 
 Each entry below names:
 
 - **When it fires** — the moment that produces the event.
-- **Required payload fields** — fields the consumer expects to find.
+- **Required payload fields** — fields the consumer expects to find. For
+  the nine typed event types these are also enforced by the schema; for
+  the rest they are documentation only.
 - **Typical actor** — the most common `actor.kind` and `actor.id` shape.
 - **Example JSON** — a minimal record that would validate.
 
-Add new event types by appending to this file plus filing a DEC. Removing
-an event type requires a deprecation window of one quarter and a sweep of
-downstream consumers.
+Add new event types by appending to this file plus filing a DEC. Adding
+a new event type to the typed set requires extending the `oneOf` block
+in the schema. Removing an event type requires a deprecation window of
+one quarter and a sweep of downstream consumers.
 
 ---
 
@@ -130,6 +141,155 @@ work.
 
 ---
 
+## `pipeline.start`
+
+**When it fires.** A run-evidence-aware pipeline (factory, eval suite,
+brief backfill, watchlist export) begins execution. Marks the moment a
+run captures the preconditions a reviewer needs to verify replay
+equivalence later.
+
+**Required payload fields.** `prompt_snapshot_hash`,
+`tool_schemas_snapshot_hash`. Both are SHA-256 hex digests (64 lowercase
+hex chars) enforced by the schema.
+
+**Typical actor.** `{kind: "system", id: "<runtime-or-pipeline-id>"}`.
+
+**Example.**
+```json
+{
+  "event_id": "7cc291dc-967f-44e6-b3d6-40c83e7bd552",
+  "type": "pipeline.start",
+  "created_at": "2026-05-28T01:40:15Z",
+  "actor": {"kind": "system", "id": "procurement-lab-factory"},
+  "run_id": "run-cb524eb06115",
+  "payload": {
+    "prompt_snapshot_hash": "eb599443822c3aa2abb21160bb3cb234e196ce768ad7072db99fc9be8f2293f5",
+    "tool_schemas_snapshot_hash": "0051bdbb230ae794642e42a0033aca8e30f200c59c51a9f4899e6e90a6b42965"
+  }
+}
+```
+
+---
+
+## `pipeline.complete`
+
+**When it fires.** The same pipeline reaches a terminal state and a
+gate-results summary is available. Used where the runtime distinguishes
+`pipeline.complete` (run finished, gates summary attached) from a later
+`pipeline.done` (process exited).
+
+**Required payload fields.** `status` (one of `done`, `failed`,
+`cancelled`). Optional `gate_results_summary` with `gates_passed`,
+`gates_failed`, `all_passed`.
+
+**Typical actor.** `{kind: "system", id: "<runtime-or-pipeline-id>"}`.
+
+**Example.**
+```json
+{
+  "event_id": "d8d6862e-6e6b-4597-9406-d72de4b5efba",
+  "type": "pipeline.complete",
+  "created_at": "2026-05-28T01:42:30Z",
+  "actor": {"kind": "system", "id": "procurement-lab-factory"},
+  "run_id": "run-cb524eb06115",
+  "payload": {
+    "status": "done",
+    "gate_results_summary": {
+      "gates_passed": ["typecheck", "vitest", "spec_check"],
+      "gates_failed": [],
+      "all_passed": true
+    }
+  }
+}
+```
+
+---
+
+## `pipeline.done`
+
+**When it fires.** The pipeline process exits. Some runtimes emit
+`pipeline.done` instead of (not in addition to) `pipeline.complete`;
+others emit both. The schema treats `pipeline.done` as a sibling of
+`pipeline.complete` with the same required payload contract.
+
+**Required payload fields.** `status` (one of `done`, `failed`,
+`cancelled`). Optional `gate_results_summary` as on `pipeline.complete`.
+
+**Typical actor.** `{kind: "system", id: "<runtime-or-pipeline-id>"}`.
+
+**Example.**
+```json
+{
+  "event_id": "be4d546e-0753-4c90-b9e8-e890febcb440",
+  "type": "pipeline.done",
+  "created_at": "2026-05-28T02:30:03Z",
+  "actor": {"kind": "system", "id": "chip-supply-chain-map-export"},
+  "run_id": "run-efeb29900de3",
+  "payload": {
+    "status": "done"
+  }
+}
+```
+
+---
+
+## `gate.check.passed`
+
+**When it fires.** A named gate inside a run returns clean. Distinct
+from `proof.gate.passed`: this event is for the in-pipeline gate
+sequence (typecheck, vitest, input_validation, packet_shape, etc.),
+where `proof.gate.passed` is for the cross-cutting proof-gate runner.
+
+**Required payload fields.** `gate_name`. Optional `details` (any
+shape).
+
+**Typical actor.** `{kind: "system", id: "<runtime-or-pipeline-id>"}`.
+
+**Example.**
+```json
+{
+  "event_id": "7f0f2036-e1fb-4ce4-9dac-b97c73868e93",
+  "type": "gate.check.passed",
+  "created_at": "2026-05-28T01:40:16Z",
+  "actor": {"kind": "system", "id": "procurement-lab-factory"},
+  "run_id": "run-cb524eb06115",
+  "payload": {
+    "gate_name": "typecheck",
+    "details": {"cmd": "npx tsc --noEmit", "must_pass": true, "round": 0}
+  }
+}
+```
+
+---
+
+## `gate.check.failed`
+
+**When it fires.** A named in-pipeline gate returns non-zero. Mirrors
+`gate.check.passed`; the schema requires a `reason` so the failure mode
+is captured at the event boundary.
+
+**Required payload fields.** `gate_name`, `reason`. Optional `details`.
+
+**Typical actor.** `{kind: "system", id: "<runtime-or-pipeline-id>"}`.
+
+**Example.**
+```json
+{
+  "event_id": "a9b8c7d6-e5f4-4030-8201-021304050607",
+  "type": "gate.check.failed",
+  "created_at": "2026-05-28T01:40:16Z",
+  "actor": {"kind": "system", "id": "procurement-lab-factory"},
+  "run_id": "run-cb524eb06115",
+  "payload": {
+    "gate_name": "vitest",
+    "reason": "1 test failed: src/lib/scoring.test.ts > floor-clamp",
+    "details": {"cmd": "npm test -- --run", "must_pass": true, "round": 0}
+  }
+}
+```
+
+---
+
 ## `gate.run.evidence_recorded`
 
 **When it fires.** A Run record is persisted with at least one of the
@@ -200,7 +360,11 @@ replay-equivalence against the recorded `prompt_snapshot_hash`,
 
 **When it fires.** A role invokes a tool from the registry.
 
-**Required payload fields.** `tool_id`, `arguments_digest`.
+**Required payload fields.** `tool_name`. Optional `args` (any object).
+
+**Note.** Earlier emitters used `tool_id` for the same field. The
+schema source-of-truth is `tool_name`; emitter migration is tracked in
+the Round 3 follow-on to DEC-CDCP-013.
 
 **Typical actor.** `{kind: "role", id: "<role-id>"}`.
 
@@ -213,8 +377,8 @@ replay-equivalence against the recorded `prompt_snapshot_hash`,
   "actor": {"kind": "role", "id": "engineering.implementation"},
   "run_id": "run-2026-05-23-001",
   "payload": {
-    "tool_id": "repo.apply_patch",
-    "arguments_digest": "sha256:6f1c..."
+    "tool_name": "repo.apply_patch",
+    "args": {"arguments_digest": "sha256:6f1c..."}
   }
 }
 ```
@@ -225,7 +389,12 @@ replay-equivalence against the recorded `prompt_snapshot_hash`,
 
 **When it fires.** The same tool call returns or errors out.
 
-**Required payload fields.** `tool_id`, `status`, `duration_ms`.
+**Required payload fields.** `tool_name`. Optional `result` (any),
+`duration_ms` (non-negative integer), `error` (string).
+
+**Note.** Earlier emitters used `tool_id` for the same field and
+carried `status` / `duration_ms` at the payload root. The schema
+source-of-truth is `tool_name`; emitters migrate in Round 3.
 
 **Typical actor.** `{kind: "role", id: "<role-id>"}`.
 
@@ -239,8 +408,7 @@ replay-equivalence against the recorded `prompt_snapshot_hash`,
   "run_id": "run-2026-05-23-001",
   "parent_event_id": "4c4d4e4f-5050-6161-7272-838384848585",
   "payload": {
-    "tool_id": "repo.apply_patch",
-    "status": "ok",
+    "tool_name": "repo.apply_patch",
     "duration_ms": 1820
   }
 }
