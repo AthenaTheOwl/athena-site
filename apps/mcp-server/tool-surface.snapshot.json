@@ -1,0 +1,40 @@
+{
+  "version": "0.1.0",
+  "tools": [
+    {
+      "name": "decisions_get",
+      "description": "Return the full body plus parsed front-matter of a single DEC by id. Walks every product repo's decisions/ until the id is matched.",
+      "input_schema_hash": "e31b4ba10c2730ceb43014109eb9a508ebf51cd52aa2dc93317c37b105054d2e"
+    },
+    {
+      "name": "decisions_list",
+      "description": "List DEC-* decision records across the portfolio. Walks <portfolio>/<repo>/decisions/DEC-*.md, parses YAML front-matter, returns id/repo/prefix/status/owner_role/reversible/title/path for each. Filterable by repo, by DEC prefix (e.g. CDCP, MCPSEC), and by status.",
+      "input_schema_hash": "615f85438c40a6e5b6dc0c803295b2170730c3bdb26de33c3bd55d82b77c227f"
+    },
+    {
+      "name": "events_query",
+      "description": "Query the portfolio's event ledger. Walks <portfolio>/<repo>/ops/event-ledger/*.jsonl, parses each line, filters by run_id, type (exact or dotted-namespace prefix, e.g. 'gate' matches 'gate.check.passed'), and time range. Returns sorted-by-time event objects, capped by limit (default 100).",
+      "input_schema_hash": "6afa03d52fcedc008a6347669393f19a64831769352279cc224c0a4bcfc4058f"
+    },
+    {
+      "name": "runs_get",
+      "description": "Return the full Run record JSON document for one run by id. Walks every product repo's ops/run-records/ until matched.",
+      "input_schema_hash": "14a7a01852ff9c810d3409abde999e1fad05e96dc8d23e4dc419463cff3062f9"
+    },
+    {
+      "name": "runs_list",
+      "description": "List Run records across the portfolio. Walks <portfolio>/<repo>/ops/run-records/run-*.json and returns id/repo/spec_id/agent_id/runtime/status/started_at/finished_at/path. Filterable by repo, since (ISO 8601), and limit (default 50). Returned most-recent-first.",
+      "input_schema_hash": "4f6a1572c54b9de3ef657fc6b8156a98b2c8538cf93b7077f7e78b761431ce05"
+    },
+    {
+      "name": "schemas_get",
+      "description": "Return the full JSON Schema document for one named schema (e.g. 'run', 'event', 'decision', 'artifact', 'role', 'tool', 'policy', 'workflow', 'state-machine', 'skill', 'dream-output').",
+      "input_schema_hash": "2eb723594ab695e119bd6a835b11bb458aaa79a6b909c70e5ad0b9626190ea6f"
+    },
+    {
+      "name": "schemas_list",
+      "description": "List the portfolio's authoritative JSON Schemas. Walks athena-site/ops/schemas/*.schema.json and returns name/title/description/path for each.",
+      "input_schema_hash": "99334726611ccf58a148b0814696bfa6fe08c1b2d027e946beccf5a74331c9aa"
+    }
+  ]
+}

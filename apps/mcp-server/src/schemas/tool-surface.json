@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://athena.dev/mcp-server/tool-surface.schema.json",
+  "title": "Athena MCP Server Tool Surface",
+  "description": "Snapshot of the public tool surface this server exposes. The mcp-security-lab gate compares the live server's declared tools against this snapshot.",
+  "type": "object",
+  "required": ["tools", "version"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "input_schema_hash"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "input_schema_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    }
+  }
+}
