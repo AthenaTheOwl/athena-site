@@ -7,3 +7,7 @@ dist/
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
+
+# Python bytecode caches from running scripts/*.py
+__pycache__/
+*.pyc
