@@ -32,14 +32,25 @@ jobs:
             --auto-issue
         continue-on-error: true
 
-      - name: Commit health report if changed
+      - name: Run portfolio dashboard
+        # The dashboard probes sibling product repos under local_root.
+        # In CI we only have athena-site checked out, so per-repo sections
+        # for siblings will render as "Not checked out". That is the
+        # expected CI behavior; the run still produces a fresh summary.
+        run: |
+          python scripts/portfolio_dashboard.py \
+            --manifest ops/portfolio-manifest.yml \
+            --output ops/portfolio-status.md
+        continue-on-error: true
+
+      - name: Commit reports if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ops/portfolio-health.md
+          git add ops/portfolio-health.md ops/portfolio-status.md
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "audit: weekly portfolio health"
+            git commit -m "audit: weekly portfolio health + status"
             git push
           fi
