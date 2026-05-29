@@ -70,15 +70,32 @@ jobs:
             --manifest ops/portfolio-manifest.yml \
             --output ops/dec-graphs
 
+      - name: Run DEC coverage report
+        # Scans each active CDCP repo's tests for references to the R-*
+        # ids named by its DECs and emits ops/dec-coverage-report.md with
+        # per-repo totals plus an uncovered-DEC breakdown. The script
+        # exits 1 when portfolio coverage falls below --threshold; during
+        # the bootstrap phase we run with continue-on-error so a failed
+        # gate does not red-X the whole audit. The report still
+        # regenerates so its header reflects the run date.
+        # See DEC-CDCP-019.
+        if: always()
+        run: |
+          python scripts/dec_coverage_report.py \
+            --manifest ops/portfolio-manifest.yml \
+            --output ops/dec-coverage-report.md \
+            --threshold 70
+        continue-on-error: true
+
       - name: Commit reports if changed
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ops/portfolio-health.md ops/portfolio-status.md ops/evidence-quorum-report.md ops/dec-graphs
+          git add ops/portfolio-health.md ops/portfolio-status.md ops/evidence-quorum-report.md ops/dec-graphs ops/dec-coverage-report.md
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "audit: weekly portfolio health + status + evidence quorum + DEC graphs"
+            git commit -m "audit: weekly portfolio health + status + evidence quorum + DEC graphs + coverage"
             git push
           fi
