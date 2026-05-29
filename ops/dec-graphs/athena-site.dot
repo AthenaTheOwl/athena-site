@@ -8,4 +8,5 @@ digraph dec_chains_athena_site {
   "DEC-CDCP-016-portfolio-status-dashboard" [shape=box, style=solid];
   "DEC-CDCP-017-dec-dependency-graph-generator" [shape=box, style=solid];
   "DEC-CDCP-018-evidence-quorum-sentinel" [shape=box, style=solid];
+  "DEC-CDCP-019-dec-test-coverage-report" [shape=box, style=solid];
 }

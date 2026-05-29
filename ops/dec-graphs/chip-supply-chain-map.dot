@@ -10,6 +10,7 @@ digraph dec_chains_chip_supply_chain_map {
   "DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain" [shape=box, style=solid];
   "DEC-FIN-008-chip-map-dedicated-determinism-fixture" [shape=box, style=solid];
   "DEC-FIN-009-additional-scenarios" [shape=box, style=solid];
+  "DEC-FIN-010-chip-supply-chain-map-chaos-test-suite" [shape=box, style=solid];
   "DEC-MAP-001-cytoscape-over-react-flow-for-50-200-nodes" [shape=box, style=solid];
   "DEC-MAP-002-fcose-layout-for-supply-chain-shape" [shape=box, style=solid];
   "DEC-MAP-003-chokepoint-score-heuristic" [shape=box, style=solid];
@@ -23,4 +24,5 @@ digraph dec_chains_chip_supply_chain_map {
   "DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain" -> "DEC-FIN-006-watchlist-export-portable-repo-uri-migration" [label="amends"];
   "DEC-FIN-008-chip-map-dedicated-determinism-fixture" -> "DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain" [label="amends"];
   "DEC-FIN-009-additional-scenarios" -> "DEC-FIN-008-chip-map-dedicated-determinism-fixture" [label="amends"];
+  "DEC-FIN-010-chip-supply-chain-map-chaos-test-suite" -> "DEC-FIN-009-additional-scenarios" [label="amends"];
 }

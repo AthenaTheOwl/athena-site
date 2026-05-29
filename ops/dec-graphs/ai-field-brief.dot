@@ -42,6 +42,7 @@ digraph dec_chains_ai_field_brief {
   "DEC-PUB-008-brief-portable-repo-uri-migration" [shape=box, style=solid];
   "DEC-PUB-009-ai-field-brief-ci-enforces-run-evidence-chain" [shape=box, style=solid];
   "DEC-PUB-010-brief-timestamp-microsecond-fix" [shape=box, style=solid];
+  "DEC-PUB-011-ai-field-brief-chaos-test-suite" [shape=box, style=solid];
   "DEC-SRC-001-source-registry-table-per-workspace" [shape=box, style=solid];
   "DEC-SRC-002-tenant-scoped-source-crud-helpers" [shape=box, style=solid];
   "DEC-SRC-003-connector-contract-pure-inputs" [shape=box, style=solid];
@@ -66,4 +67,5 @@ digraph dec_chains_ai_field_brief {
   "DEC-PUB-008-brief-portable-repo-uri-migration" -> "DEC-PUB-007-brief-replay-command" [label="amends"];
   "DEC-PUB-009-ai-field-brief-ci-enforces-run-evidence-chain" -> "DEC-PUB-008-brief-portable-repo-uri-migration" [label="amends"];
   "DEC-PUB-010-brief-timestamp-microsecond-fix" -> "DEC-PUB-009-ai-field-brief-ci-enforces-run-evidence-chain" [label="amends"];
+  "DEC-PUB-011-ai-field-brief-chaos-test-suite" -> "DEC-PUB-010-brief-timestamp-microsecond-fix" [label="amends"];
 }

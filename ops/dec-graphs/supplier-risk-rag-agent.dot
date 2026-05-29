@@ -21,6 +21,7 @@ digraph dec_chains_supplier_risk_rag_agent {
   "DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain" [shape=box, style=solid];
   "DEC-EVL-011-supplier-risk-replay-determinism-test" [shape=box, style=solid];
   "DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite" [shape=box, style=solid];
+  "DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite" [shape=box, style=solid];
   "DEC-ING-001-edgar-refresh-generated-corpus-artifacts" [shape=box, style=solid];
   "DEC-LLM-001-provider-abstraction-default-anthropic" [shape=box, style=solid];
   "DEC-LLM-002-keys-flow-via-explicit-keys-object-no-env-reads" [shape=box, style=solid];
@@ -37,4 +38,5 @@ digraph dec_chains_supplier_risk_rag_agent {
   "DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain" -> "DEC-EVL-009-supplier-risk-rag-agent-portable-repo-uri-migration" [label="amends"];
   "DEC-EVL-011-supplier-risk-replay-determinism-test" -> "DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain" [label="amends"];
   "DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite" -> "DEC-EVL-011-supplier-risk-replay-determinism-test" [label="amends"];
+  "DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite" -> "DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite" [label="amends"];
 }

@@ -1,13 +1,13 @@
 # DEC dependency graph — ai-field-brief
 
-- Total DECs: **60**
+- Total DECs: **61**
 - Amendment chains: **2**
-- Deepest chain depth (edges): **5**
+- Deepest chain depth (edges): **6**
 
 ## Chains
 
 - DEC-MTRX-001-prompt-matrix-plane-install -> DEC-MTRX-006-brief-os-refinement-on-matrix-plane
-- DEC-PUB-005-brief-emits-conformant-run-evidence -> DEC-PUB-006-brief-emits-conformant-run-evidence-cross-checks -> DEC-PUB-007-brief-replay-command -> DEC-PUB-008-brief-portable-repo-uri-migration -> DEC-PUB-009-ai-field-brief-ci-enforces-run-evidence-chain -> DEC-PUB-010-brief-timestamp-microsecond-fix
+- DEC-PUB-005-brief-emits-conformant-run-evidence -> DEC-PUB-006-brief-emits-conformant-run-evidence-cross-checks -> DEC-PUB-007-brief-replay-command -> DEC-PUB-008-brief-portable-repo-uri-migration -> DEC-PUB-009-ai-field-brief-ci-enforces-run-evidence-chain -> DEC-PUB-010-brief-timestamp-microsecond-fix -> DEC-PUB-011-ai-field-brief-chaos-test-suite
 
 ## DECs
 
@@ -55,6 +55,7 @@
 | `DEC-PUB-008-brief-portable-repo-uri-migration` | approved | DEC-PUB-007-brief-replay-command | 2026-05-29 |
 | `DEC-PUB-009-ai-field-brief-ci-enforces-run-evidence-chain` | approved | DEC-PUB-008-brief-portable-repo-uri-migration | 2026-05-29 |
 | `DEC-PUB-010-brief-timestamp-microsecond-fix` | approved | DEC-PUB-009-ai-field-brief-ci-enforces-run-evidence-chain | 2026-05-29 |
+| `DEC-PUB-011-ai-field-brief-chaos-test-suite` | approved | DEC-PUB-010-brief-timestamp-microsecond-fix | 2026-05-29 |
 | `DEC-SRC-001-source-registry-table-per-workspace` | approved | — | 2026-05-24 |
 | `DEC-SRC-002-tenant-scoped-source-crud-helpers` | approved | — | 2026-05-24 |
 | `DEC-SRC-003-connector-contract-pure-inputs` | approved | — | 2026-05-24 |

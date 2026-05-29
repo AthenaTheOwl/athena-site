@@ -1,12 +1,12 @@
 # DEC dependency graph — chip-supply-chain-map
 
-- Total DECs: **17**
+- Total DECs: **18**
 - Amendment chains: **1**
-- Deepest chain depth (edges): **6**
+- Deepest chain depth (edges): **7**
 
 ## Chains
 
-- DEC-FIN-003-watchlist-export-emits-conformant-run-evidence -> DEC-FIN-004-watchlist-export-run-evidence-cross-checks -> DEC-FIN-005-watchlist-replay-command -> DEC-FIN-006-watchlist-export-portable-repo-uri-migration -> DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain -> DEC-FIN-008-chip-map-dedicated-determinism-fixture -> DEC-FIN-009-additional-scenarios
+- DEC-FIN-003-watchlist-export-emits-conformant-run-evidence -> DEC-FIN-004-watchlist-export-run-evidence-cross-checks -> DEC-FIN-005-watchlist-replay-command -> DEC-FIN-006-watchlist-export-portable-repo-uri-migration -> DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain -> DEC-FIN-008-chip-map-dedicated-determinism-fixture -> DEC-FIN-009-additional-scenarios -> DEC-FIN-010-chip-supply-chain-map-chaos-test-suite
 
 ## DECs
 
@@ -22,6 +22,7 @@
 | `DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain` | approved | DEC-FIN-006-watchlist-export-portable-repo-uri-migration | 2026-05-29 |
 | `DEC-FIN-008-chip-map-dedicated-determinism-fixture` | approved | DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain | 2026-05-29 |
 | `DEC-FIN-009-additional-scenarios` | approved | DEC-FIN-008-chip-map-dedicated-determinism-fixture | 2026-05-29 |
+| `DEC-FIN-010-chip-supply-chain-map-chaos-test-suite` | approved | DEC-FIN-009-additional-scenarios | 2026-05-29 |
 | `DEC-MAP-001-cytoscape-over-react-flow-for-50-200-nodes` | approved | — | 2026-05-24 |
 | `DEC-MAP-002-fcose-layout-for-supply-chain-shape` | approved | — | 2026-05-24 |
 | `DEC-MAP-003-chokepoint-score-heuristic` | approved | — | 2026-05-24 |

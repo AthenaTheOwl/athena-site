@@ -14,6 +14,7 @@ digraph dec_chains_procurement_negotiation_lab {
   "DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain" [shape=box, style=solid];
   "DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test" [shape=box, style=solid];
   "DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix" [shape=box, style=solid];
+  "DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite" [shape=box, style=solid];
   "DEC-LAB-005-visible-so-what-before-controls" [shape=box, style=solid];
   "DEC-LAB-006-canonical-scenario-presets-plus-editable-knobs" [shape=box, style=solid];
   "DEC-LAB-007-canonical-agent-archetypes-with-behavior-knobs" [shape=box, style=solid];
@@ -38,4 +39,5 @@ digraph dec_chains_procurement_negotiation_lab {
   "DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain" -> "DEC-FACTORY-010-procurement-lab-portable-repo-uri-migration" [label="amends"];
   "DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test" -> "DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain" [label="amends"];
   "DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix" -> "DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test" [label="amends"];
+  "DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite" -> "DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix" [label="amends"];
 }

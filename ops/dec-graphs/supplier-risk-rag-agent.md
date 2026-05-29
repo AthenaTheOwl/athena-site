@@ -1,12 +1,12 @@
 # DEC dependency graph — supplier-risk-rag-agent
 
-- Total DECs: **31**
+- Total DECs: **32**
 - Amendment chains: **1**
-- Deepest chain depth (edges): **6**
+- Deepest chain depth (edges): **7**
 
 ## Chains
 
-- DEC-EVL-006-eval-runner-emits-conformant-run-evidence -> DEC-EVL-007-eval-runner-run-evidence-cross-checks -> DEC-EVL-008-eval-replay-command -> DEC-EVL-009-supplier-risk-rag-agent-portable-repo-uri-migration -> DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain -> DEC-EVL-011-supplier-risk-replay-determinism-test -> DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite
+- DEC-EVL-006-eval-runner-emits-conformant-run-evidence -> DEC-EVL-007-eval-runner-run-evidence-cross-checks -> DEC-EVL-008-eval-replay-command -> DEC-EVL-009-supplier-risk-rag-agent-portable-repo-uri-migration -> DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain -> DEC-EVL-011-supplier-risk-replay-determinism-test -> DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite -> DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite
 
 ## DECs
 
@@ -33,6 +33,7 @@
 | `DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain` | approved | DEC-EVL-009-supplier-risk-rag-agent-portable-repo-uri-migration | 2026-05-29 |
 | `DEC-EVL-011-supplier-risk-replay-determinism-test` | approved | DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain | 2026-05-29 |
 | `DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite` | approved | DEC-EVL-011-supplier-risk-replay-determinism-test | 2026-05-29 |
+| `DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite` | approved | DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite | 2026-05-29 |
 | `DEC-ING-001-edgar-refresh-generated-corpus-artifacts` | approved | — | 2026-05-25 |
 | `DEC-LLM-001-provider-abstraction-default-anthropic` | approved | — | 2026-05-24 |
 | `DEC-LLM-002-keys-flow-via-explicit-keys-object-no-env-reads` | approved | — | 2026-05-24 |

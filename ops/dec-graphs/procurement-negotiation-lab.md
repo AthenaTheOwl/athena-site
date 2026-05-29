@@ -1,12 +1,12 @@
 # DEC dependency graph — procurement-negotiation-lab
 
-- Total DECs: **32**
+- Total DECs: **33**
 - Amendment chains: **1**
-- Deepest chain depth (edges): **6**
+- Deepest chain depth (edges): **7**
 
 ## Chains
 
-- DEC-FACTORY-007-factory-emits-conformant-run-evidence -> DEC-FACTORY-008-factory-run-evidence-cross-checks -> DEC-FACTORY-009-factory-replay-command -> DEC-FACTORY-010-procurement-lab-portable-repo-uri-migration -> DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain -> DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test -> DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix
+- DEC-FACTORY-007-factory-emits-conformant-run-evidence -> DEC-FACTORY-008-factory-run-evidence-cross-checks -> DEC-FACTORY-009-factory-replay-command -> DEC-FACTORY-010-procurement-lab-portable-repo-uri-migration -> DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain -> DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test -> DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix -> DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite
 
 ## DECs
 
@@ -26,6 +26,7 @@
 | `DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain` | approved | DEC-FACTORY-010-procurement-lab-portable-repo-uri-migration | 2026-05-29 |
 | `DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test` | approved | DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain | 2026-05-29 |
 | `DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix` | approved | DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test | 2026-05-29 |
+| `DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite` | approved | DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix | 2026-05-29 |
 | `DEC-LAB-005-visible-so-what-before-controls` | approved | — | 2026-05-24 |
 | `DEC-LAB-006-canonical-scenario-presets-plus-editable-knobs` | approved | — | 2026-05-24 |
 | `DEC-LAB-007-canonical-agent-archetypes-with-behavior-knobs` | approved | — | 2026-05-24 |
