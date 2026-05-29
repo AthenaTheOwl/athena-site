@@ -765,6 +765,21 @@ as a skill and added to `skills/<id>/`.
 A small log of field-shape decisions that aren't worth their own DEC but
 should be visible to anyone writing emitters or validators.
 
+### Systems-thinking discipline fields (DEC-CDCP-020, 2026-05-29)
+
+Per `DEC-CDCP-020`, four optional fields land on the decision, dream-output
+candidate, and run schemas: `systems_map`, `transferable_principle`,
+`falsification_test`, and `adoption_ladder`. The same fields apply to
+substantive events when an emitter wants to carry the discipline through to
+the ledger — `decision.recorded`, `decision.amended`,
+`dream.candidate.generated`, `agent.run.completed`, `pipeline.complete`, and
+similar events MAY echo any of the four fields inside their `payload`
+object. The event schema does not enforce the fields at the payload level
+during the bootstrap window; validators warn rather than fail when absent.
+After 30 days, an amendment DEC ratchets the warning to a failure for new
+DECs with `Status: approved`. See `DEC-CDCP-020` for the discipline contract
+and the adoption ladder.
+
 ### `dream-output.candidate.kind` → `target_kind` (2026-05-24)
 
 The four candidate sub-schemas in `ops/schemas/dream-output.schema.json`
