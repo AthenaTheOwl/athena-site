@@ -43,14 +43,42 @@ jobs:
             --output ops/portfolio-status.md
         continue-on-error: true
 
+      - name: Run evidence quorum sentinel
+        # Counts replay artifacts per active product repo in the last 30
+        # days and fails the workflow when any checked-out repo falls below
+        # the quorum. In CI only athena-site is checked out, so all watched
+        # product repos render as SKIPPED and the sentinel exits 0; the
+        # report still regenerates so its header reflects the run date.
+        # See DEC-CDCP-018.
+        run: |
+          python scripts/evidence_quorum_sentinel.py \
+            --manifest ops/portfolio-manifest.yml \
+            --output ops/evidence-quorum-report.md \
+            --window-days 30 \
+            --threshold 1
+
+      - name: Run DEC dependency graph generator
+        # Walks each portfolio repo's `decisions/` directory and emits a DOT
+        # graph + Markdown summary per repo plus a portfolio rollup. In CI
+        # only athena-site is checked out; sibling repos render as
+        # "not checked out" in the rollup. The local refresh on the
+        # maintainer's box is the canonical regeneration.
+        # See DEC-CDCP-017.
+        if: always()
+        run: |
+          python scripts/dec_dependency_graph.py \
+            --manifest ops/portfolio-manifest.yml \
+            --output ops/dec-graphs
+
       - name: Commit reports if changed
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ops/portfolio-health.md ops/portfolio-status.md
+          git add ops/portfolio-health.md ops/portfolio-status.md ops/evidence-quorum-report.md ops/dec-graphs
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "audit: weekly portfolio health + status"
+            git commit -m "audit: weekly portfolio health + status + evidence quorum + DEC graphs"
             git push
           fi
