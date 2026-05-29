@@ -547,8 +547,8 @@ security_review) returns clean.
 
 **When it fires.** A new DEC amends an existing DEC. The new DEC's
 `amends:` field carries the prior DEC's id. Use when refining a decision
-without overwriting it. The prior DEC is not changed; the new DEC is a
-sibling artifact that documents the amendment.
+without overwriting it. The prior DEC stays intact, and the new DEC
+lands as a sibling artifact that documents the amendment.
 
 **Required payload fields.** `amending_decision_id`,
 `amended_decision_id`, `reason`.
