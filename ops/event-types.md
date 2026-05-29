@@ -13,6 +13,22 @@ event types every product repo should emit and consume; the entries
 below are the contract the schema enforces for the nine typed types and
 the documentation-only contract for everything else.
 
+## Portable repo:// URI scheme (DEC-CDCP-014)
+
+Run-evidence ref fields (e.g. `sandbox_image_ref`, `checkpoint_ref`,
+evidence refs, packet refs) carry cross-repo references. Per
+`DEC-CDCP-014`, the portfolio adopts two URI forms for those refs:
+`repo://<repo-name>@<sha>/<rel-path>` for a file at a specific commit
+in a portfolio repo, and `artifact://<repo-name>/<artifact-id>` for
+logical artifact references that do not resolve to a fixed file path.
+
+Producers SHOULD emit URIs going forward; consumers MUST accept both
+URI forms and legacy local paths during the Round 6 migration window.
+The event and run schemas in this repo keep their ref fields as opaque
+strings; the URI grammar lives at the producer and consumer boundary.
+See `DEC-CDCP-014` for the full grammar, resolution rules, and
+migration notes.
+
 Each entry below names:
 
 - **When it fires** — the moment that produces the event.
