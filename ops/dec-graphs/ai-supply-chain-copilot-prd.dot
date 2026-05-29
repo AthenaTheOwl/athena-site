@@ -1,0 +1,7 @@
+digraph dec_chains_ai_supply_chain_copilot_prd {
+  rankdir=LR;
+  "DEC-PRD-001-acceptance-criteria-with-p0-p1-p2-priority" [shape=box, style=solid];
+  "DEC-PRD-002-trust-boundaries-named-per-component" [shape=box, style=solid];
+  "DEC-PRD-003-no-auto-execute-supplier-facing-actions" [shape=box, style=solid];
+  "DEC-PRD-004-install-cdcp-governance" [shape=box, style=solid];
+}

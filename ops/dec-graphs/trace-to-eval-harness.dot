@@ -1,0 +1,18 @@
+digraph dec_chains_trace_to_eval_harness {
+  rankdir=LR;
+  "DEC-TTE-001-deterministic-checks-before-llm-judges" [shape=box, style=solid];
+  "DEC-TTE-002-failed-trace-becomes-human-reviewed-eval-case" [shape=box, style=solid];
+  "DEC-TTE-003-report-json-plus-markdown" [shape=box, style=solid];
+  "DEC-TTE-004-install-cdcp-governance" [shape=box, style=solid];
+  "DEC-TTE-005-formal-schemas-before-integrations" [shape=box, style=solid];
+  "DEC-TTE-006-cdcp-event-log-adapter-boundaries" [shape=box, style=solid];
+  "DEC-TTE-007-run-evidence-packet-as-review-boundary" [shape=box, style=solid];
+  "DEC-TTE-008-run-evidence-packet-preserves-producer-identity" [shape=box, style=solid];
+  "DEC-TTE-009-packet-generator-resolves-repo-uris" [shape=box, style=solid];
+  "DEC-TTE-010-trace-to-eval-harness-ci-enforces-run-evidence-chain" [shape=box, style=solid];
+  "DEC-TTE-011-uri-parser-property-tests-and-validate-chain" [shape=box, style=solid];
+  "DEC-TTE-008-run-evidence-packet-preserves-producer-identity" -> "DEC-TTE-007-run-evidence-packet-as-review-boundary" [label="amends"];
+  "DEC-TTE-009-packet-generator-resolves-repo-uris" -> "DEC-TTE-008-run-evidence-packet-preserves-producer-identity" [label="amends"];
+  "DEC-TTE-010-trace-to-eval-harness-ci-enforces-run-evidence-chain" -> "DEC-TTE-009-packet-generator-resolves-repo-uris" [label="amends"];
+  "DEC-TTE-011-uri-parser-property-tests-and-validate-chain" -> "DEC-TTE-010-trace-to-eval-harness-ci-enforces-run-evidence-chain" [label="amends"];
+}

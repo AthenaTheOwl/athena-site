@@ -1,0 +1,26 @@
+digraph dec_chains_chip_supply_chain_map {
+  rankdir=LR;
+  "DEC-CDCP-001-install-cdcp-governance" [shape=box, style=solid];
+  "DEC-FIN-001-static-sourced-sensitivity-over-live-market-data" [shape=box, style=solid];
+  "DEC-FIN-002-deterministic-watchlist-risk-packets" [shape=box, style=solid];
+  "DEC-FIN-003-watchlist-export-emits-conformant-run-evidence" [shape=box, style=solid];
+  "DEC-FIN-004-watchlist-export-run-evidence-cross-checks" [shape=box, style=solid];
+  "DEC-FIN-005-watchlist-replay-command" [shape=box, style=solid];
+  "DEC-FIN-006-watchlist-export-portable-repo-uri-migration" [shape=box, style=solid];
+  "DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain" [shape=box, style=solid];
+  "DEC-FIN-008-chip-map-dedicated-determinism-fixture" [shape=box, style=solid];
+  "DEC-FIN-009-additional-scenarios" [shape=box, style=solid];
+  "DEC-MAP-001-cytoscape-over-react-flow-for-50-200-nodes" [shape=box, style=solid];
+  "DEC-MAP-002-fcose-layout-for-supply-chain-shape" [shape=box, style=solid];
+  "DEC-MAP-003-chokepoint-score-heuristic" [shape=box, style=solid];
+  "DEC-MAP-004-scenario-design-as-toggle-not-slider" [shape=box, style=solid];
+  "DEC-MAP-005-data-freshness-gate-180-days" [shape=box, style=solid];
+  "DEC-MAP-006-synthetic-historical-data-for-pedagogy" [shape=box, style=solid];
+  "DEC-MAP-007-history-slider-positioned-in-scenario-controls" [shape=box, style=solid];
+  "DEC-FIN-004-watchlist-export-run-evidence-cross-checks" -> "DEC-FIN-003-watchlist-export-emits-conformant-run-evidence" [label="amends"];
+  "DEC-FIN-005-watchlist-replay-command" -> "DEC-FIN-004-watchlist-export-run-evidence-cross-checks" [label="amends"];
+  "DEC-FIN-006-watchlist-export-portable-repo-uri-migration" -> "DEC-FIN-005-watchlist-replay-command" [label="amends"];
+  "DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain" -> "DEC-FIN-006-watchlist-export-portable-repo-uri-migration" [label="amends"];
+  "DEC-FIN-008-chip-map-dedicated-determinism-fixture" -> "DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain" [label="amends"];
+  "DEC-FIN-009-additional-scenarios" -> "DEC-FIN-008-chip-map-dedicated-determinism-fixture" [label="amends"];
+}

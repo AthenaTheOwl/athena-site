@@ -1,0 +1,11 @@
+digraph dec_chains_athena_site {
+  rankdir=LR;
+  "DEC-CDCP-011-run-records-carry-replay-equivalence-evidence" [shape=box, style=solid];
+  "DEC-CDCP-012-athena-mcp-server-exposes-portfolio-model" [shape=box, style=solid];
+  "DEC-CDCP-013-event-schema-enforces-typed-payloads" [shape=box, style=solid];
+  "DEC-CDCP-014-portable-repo-uri-scheme" [shape=box, style=solid];
+  "DEC-CDCP-015-ci-enforces-run-evidence-chain" [shape=box, style=solid];
+  "DEC-CDCP-016-portfolio-status-dashboard" [shape=box, style=solid];
+  "DEC-CDCP-017-dec-dependency-graph-generator" [shape=box, style=solid];
+  "DEC-CDCP-018-evidence-quorum-sentinel" [shape=box, style=solid];
+}

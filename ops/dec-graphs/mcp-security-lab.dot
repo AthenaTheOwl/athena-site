@@ -1,0 +1,12 @@
+digraph dec_chains_mcp_security_lab {
+  rankdir=LR;
+  "DEC-MCPSEC-001-config-scan-before-runtime" [shape=box, style=solid];
+  "DEC-MCPSEC-002-policy-corpus-over-llm-judge" [shape=box, style=solid];
+  "DEC-MCPSEC-003-json-and-markdown-report-shapes" [shape=box, style=solid];
+  "DEC-MCPSEC-004-install-cdcp-governance" [shape=box, style=solid];
+  "DEC-MCPSEC-005-policy-evaluation-over-score-only-warnings" [shape=box, style=solid];
+  "DEC-MCPSEC-006-baseline-current-diff-gate" [shape=box, style=solid];
+  "DEC-MCPSEC-007-athena-mcp-surface-drift-gate" [shape=box, style=solid];
+  "DEC-MCPSEC-008-mcp-server-agnostic-drift-gate" [shape=box, style=solid];
+  "DEC-MCPSEC-008-mcp-server-agnostic-drift-gate" -> "DEC-MCPSEC-007-athena-mcp-surface-drift-gate" [label="amends"];
+}
