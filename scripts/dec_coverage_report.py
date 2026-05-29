@@ -34,14 +34,18 @@ Probe contract per repo
    ids appears as a substring in any discovered test file's contents.
 6. Tally per-repo: total DECs, covered DECs, uncovered DECs, coverage
    %. Sum into a portfolio total.
-7. Exit 0 when portfolio coverage % >= `--threshold` (default 70);
+7. Exit 0 when portfolio coverage % >= `--threshold` (default 5%);
    exit 1 otherwise. Repos that are not checked out under `local_root`
    contribute zero DECs to the totals and render as "skipped" in the
    report, so missing siblings on CI do not skew the score downward.
 
+Bootstrap threshold of 5% during initial roll-up; ratchet up by 10pp
+per quarter as repos add requirement-ID references to tests. Each
+ratchet lands via DEC amendment.
+
 Run:
     python scripts/dec_coverage_report.py
-    python scripts/dec_coverage_report.py --threshold 80
+    python scripts/dec_coverage_report.py --threshold 15
     python scripts/dec_coverage_report.py --self-test
 """
 from __future__ import annotations
@@ -59,7 +63,10 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "ops" / "portfolio-manifest.yml"
 DEFAULT_OUTPUT = ROOT / "ops" / "dec-coverage-report.md"
-DEFAULT_THRESHOLD = 70.0
+# Bootstrap threshold of 5% during initial roll-up; ratchet up by 10pp
+# per quarter as repos add requirement-ID references to tests. Each
+# ratchet lands via DEC amendment.
+DEFAULT_THRESHOLD = 5.0
 
 # Pattern to match an R-* requirement id. Matches R-FAM-NNN with
 # optional inner family segment (R-MCPSEC-DIFF-001). The trailing digit
@@ -649,7 +656,7 @@ def main(argv: list[str] | None = None) -> int:
         "--threshold",
         type=float,
         default=DEFAULT_THRESHOLD,
-        help="portfolio coverage %% required for exit 0 (default 70)",
+        help="portfolio coverage %% required for exit 0 (default 5, bootstrap)",
     )
     parser.add_argument(
         "--self-test",

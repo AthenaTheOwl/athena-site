@@ -74,18 +74,19 @@ jobs:
         # Scans each active CDCP repo's tests for references to the R-*
         # ids named by its DECs and emits ops/dec-coverage-report.md with
         # per-repo totals plus an uncovered-DEC breakdown. The script
-        # exits 1 when portfolio coverage falls below --threshold; during
-        # the bootstrap phase we run with continue-on-error so a failed
-        # gate does not red-X the whole audit. The report still
-        # regenerates so its header reflects the run date.
+        # exits 1 when portfolio coverage falls below --threshold.
+        # The 5% bootstrap threshold sits just above the current floor;
+        # a per-quarter DEC amendment ratchets it up by 10pp as repos
+        # add R-* references to their tests. This is a real contract
+        # gate now (continue-on-error: false), not a flagged advisory.
         # See DEC-CDCP-019.
         if: always()
         run: |
           python scripts/dec_coverage_report.py \
             --manifest ops/portfolio-manifest.yml \
             --output ops/dec-coverage-report.md \
-            --threshold 70
-        continue-on-error: true
+            --threshold 5
+        continue-on-error: false
 
       - name: Commit reports if changed
         if: always()

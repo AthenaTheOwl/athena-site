@@ -16,9 +16,12 @@ decision: |
   requirement ids appears in any discovered test file. The report
   lands at `ops/dec-coverage-report.md` with per-repo totals plus an
   uncovered-DEC breakdown. The script exits 0 when portfolio
-  coverage clears `--threshold` (default 70%) and exits 1 otherwise.
-  The `Portfolio audit` workflow runs the script weekly alongside
-  the other portfolio audits.
+  coverage clears `--threshold` (default 5%, bootstrap) and exits 1
+  otherwise. The `Portfolio audit` workflow runs the script weekly
+  alongside the other portfolio audits with `continue-on-error:
+  false` — the coverage gate is a real contract. The 5% floor
+  ratchets up by 10pp per quarter via DEC amendment as repos add
+  R-* references to test files.
 alternatives:
   - label: skip the report and rely on per-repo spec_check.py
     rejected_because: |
@@ -48,13 +51,24 @@ alternatives:
       placeholders that add no signal. The coverage report names
       the gaps; whether each gap warrants a test is a per-DEC
       review call.
-  - label: gate the audit workflow on coverage from day one
+  - label: keep the original 70% aspirational threshold with
+      continue-on-error
     rejected_because: |
-      Portfolio coverage is at the floor today (0% R-* references
-      in tests). Failing the workflow immediately would train the
-      maintainer to ignore the alert. The report ships now and
-      flags the gap; a later DEC can ratchet the threshold up as
-      the per-repo coverage climbs.
+      A 70% target failing weekly with `continue-on-error: true`
+      trains the maintainer to ignore the step. A real gate at a
+      truthful floor (5%, just above today's ~1.7%) keeps the
+      contract honest: the build fails when coverage regresses
+      below floor, and the floor ratchets up by 10pp per quarter
+      via DEC amendment. The contract gates real movement instead
+      of advertising an unreachable goal.
+  - label: ratchet automatically without DEC amendment
+    rejected_because: |
+      Each ratchet is a portfolio-wide governance change: it
+      shortens slack for every active CDCP repo and may force test
+      additions before a release. That belongs in a reviewed DEC,
+      not in a cron-driven auto-bump. The amendment-per-quarter
+      cadence forces a 30-second human read every three months
+      and keeps the ledger honest about what changed and why.
 rationale: |
   DEC-CDCP-002 records that decisions are validated against the
   schema. DEC-CDCP-016 records the portfolio dashboard. Neither
@@ -80,18 +94,20 @@ rationale: |
   collective-coverage DECs do not show as uncovered just because
   their primary R-* lives in the allowlist.
 trade_off: |
-  The default 70% threshold is aspirational, not current. Portfolio
-  coverage today is at the floor; the report ships flagging the
-  gap rather than pretending coverage is healthy. The
-  `Portfolio audit` workflow runs the script with
-  `continue-on-error: true` so a failed gate does not red-X the
-  whole audit during the bootstrap phase. Once coverage climbs, a
-  follow-on DEC can flip the gate to hard-fail. A naive substring
-  search may also produce false positives (an R-* id that appears
-  in a comment unrelated to a real test of that requirement).
-  Across the portfolio R-* ids are unique enough that this risk is
-  small, and the alternative — a stricter contract — would force a
-  convention nobody has agreed to yet.
+  The 5% bootstrap threshold sits just above today's portfolio
+  coverage floor (~1.7%). It is honest about the current state and
+  still acts as a real contract: the audit workflow runs the script
+  with `continue-on-error: false`, so a regression below floor
+  red-Xes the weekly run. The ratchet plan adds 10pp per quarter
+  via DEC amendment as repos add R-* references to their tests
+  (Workflow G Phase 2 is the first such lift). Each ratchet is a
+  reviewed governance change, not an automatic bump, so the floor
+  only rises when the portfolio has the slack to absorb it. A naive
+  substring search may also produce false positives (an R-* id that
+  appears in a comment unrelated to a real test of that
+  requirement). Across the portfolio R-* ids are unique enough that
+  this risk is small, and the alternative — a stricter contract —
+  would force a convention nobody has agreed to yet.
 evidence:
   - kind: doc
     ref: scripts/dec_coverage_report.py
@@ -135,7 +151,9 @@ to those ids. A DEC counts as covered when at least one of its
 requirement ids appears in any discovered test. The script writes
 `ops/dec-coverage-report.md` with per-repo totals plus an
 uncovered-DEC breakdown, and exits 0 when portfolio coverage clears
-`--threshold` (default 70%).
+`--threshold` (default 5%, bootstrap). The bootstrap floor ratchets
+up by 10pp per quarter via DEC amendment as portfolio coverage
+climbs.
 
 ## why
 
@@ -157,11 +175,15 @@ ships the result alongside the other portfolio audits.
 - Require every DEC to ship a test in the same commit. Rejected:
   governance DECs do not always have a Python test surface; a
   hard rule would force placeholder tests.
-- Gate the audit workflow on coverage from day one. Rejected:
-  current coverage is at the floor; immediately failing the audit
-  would train the maintainer to ignore the alert. The report
-  ships now with `continue-on-error: true`; a follow-on DEC can
-  flip the gate.
+- Keep the 70% aspirational threshold with `continue-on-error:
+  true`. Rejected: a permanently failing step trains the
+  maintainer to ignore the alert. A truthful 5% floor with a
+  quarterly 10pp ratchet keeps the gate real and the goal
+  reachable.
+- Ratchet automatically without a DEC amendment. Rejected: each
+  ratchet shortens slack across every active CDCP repo and
+  belongs in a reviewed governance change, not a cron-driven
+  auto-bump.
 
 ## probe contract
 
@@ -187,33 +209,54 @@ active set):
    file's contents.
 6. Tally per-repo: total / covered / uncovered / coverage %.
    Portfolio coverage is the sum of per-repo covered over total.
-7. Exit 0 when portfolio coverage clears `--threshold`; exit 1
-   otherwise. Repos not checked out under `local_root` contribute
-   zero DECs and render as `skipped`.
+7. Exit 0 when portfolio coverage clears `--threshold` (default
+   5%, bootstrap); exit 1 otherwise. Repos not checked out under
+   `local_root` contribute zero DECs and render as `skipped`.
 
 ## trade-offs
 
-The default 70% threshold is aspirational. Coverage today starts
-at the floor (governance DECs largely lack R-* references in
-tests). The audit workflow runs the script with
-`continue-on-error: true` so a failed gate does not red-X the
-whole audit while the baseline is being established. A naive
-substring match can yield false positives; R-* ids are unique
-enough across the portfolio that this risk is small, and a
-stricter contract (magic comments, structured annotations) would
-force a portfolio-wide convention before any signal is visible.
+The 5% bootstrap threshold sits just above today's portfolio
+coverage floor (~1.7%). It is truthful about the current state
+and still acts as a real contract: the audit workflow runs the
+script with `continue-on-error: false`, so a regression below
+floor red-Xes the weekly run. The ratchet plan adds 10pp per
+quarter via DEC amendment as repos add R-* references to their
+tests; each ratchet is a reviewed governance change rather than
+an automatic bump, so the floor only rises when the portfolio has
+slack to absorb it. A naive substring match can yield false
+positives; R-* ids are unique enough across the portfolio that
+this risk is small, and a stricter contract (magic comments,
+structured annotations) would force a portfolio-wide convention
+before any signal is visible.
+
+## ratchet plan
+
+The threshold lives in three places (script default,
+`portfolio-audit.yml` step argument, this DEC's trade-off and
+decision blocks). Each quarterly ratchet is one DEC amendment
+that updates all three together:
+
+- Q3 2026 (after Workflow G Phase 2 lifts coverage): 15%
+- Q4 2026: 25%
+- Q1 2027: 35%
+- onward: +10pp per quarter until the portfolio sustains 70%
+
+An amendment may skip or compress steps when coverage outruns the
+schedule, or pause when a repo onboards a large new DEC family.
+The amendment is the reviewed signal; the cron is not allowed to
+ratchet on its own.
 
 ## CI wiring
 
 `.github/workflows/portfolio-audit.yml` runs the script after the
-DEC dependency graph step. The job uses `continue-on-error: true`
-during the bootstrap phase so a gate failure surfaces in the
-weekly run as a flagged step without failing the whole audit. The
-commit step adds `ops/dec-coverage-report.md` to its `git add`
-list so the regenerated report lands with the other audit
-outputs. On CI only athena-site is checked out, so sibling repos
-render as `skipped`; the portfolio coverage figure in the CI run
-reflects athena-site alone.
+DEC dependency graph step. The job uses `continue-on-error:
+false` so the gate is a real contract: a regression below the
+current floor fails the weekly run. The commit step adds
+`ops/dec-coverage-report.md` to its `git add` list so the
+regenerated report lands with the other audit outputs. On CI only
+athena-site is checked out, so sibling repos render as
+`skipped`; the portfolio coverage figure in the CI run reflects
+athena-site alone.
 
 ## coverage
 
