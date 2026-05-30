@@ -1,0 +1,27 @@
+# runtime lockin guard policy
+# Per DEC-CDCP-022. Vendor-supplied execution substrates may introduce
+# semantics that become the source of truth if unchecked.
+
+id: runtime-lockin-v1
+status: approved
+owner_role: governance.cdcp-curator
+created_at: "2026-05-30"
+
+principle: >
+  The control plane owns the evidence schema. The vendor runtime
+  supplies execution substrate. Evidence shape must NOT be
+  derived from a vendor's runtime API; the runtime adapts to the
+  evidence contract, not vice versa.
+
+guards:
+  - vendor_specific_run_state_must_be_wrapped_in_portable_evidence
+  - non_OAI_runtimes_must_produce_the_same_evidence_shape_as_OAI
+  - sandbox_session_state_is_metadata_not_authority
+
+review_triggers:
+  - quarterly: audit fraction of evidence fields populated from vendor-specific paths
+  - on_new_runtime_adapter: verify evidence emission parity against the canonical contract
+
+violations:
+  - emitting an evidence field by copying a vendor enum without semantic mapping
+  - storing vendor SDK objects as serialized payloads in Run records

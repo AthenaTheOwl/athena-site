@@ -1,0 +1,40 @@
+# replay acceptance policy v1
+# Per DEC-CDCP-022. Bounded replay framing — exact determinism is not claimed.
+# Inherits the run-evidence chain established by DEC-CDCP-011 + DEC-CDCP-021.
+
+id: replay-acceptance-v1
+status: approved
+owner_role: governance.cdcp-curator
+created_at: "2026-05-30"
+
+required_fields:
+  - run_state_ref           # RunState.to_json() reference (OpenAI Agents SDK or analog)
+  - source_registry_version # which registry sha was active
+  - prompt_lens_versions    # which lens prompt hashes
+  - artifact_hashes         # SHA-256 per output artifact
+  - tool_call_log           # event ledger reference covering tool calls
+  - validation_result       # gate_results_summary or equivalent
+  - source_refs_for_published_claims  # cell IDs or matrix-cell refs
+
+checks:
+  - no_digest_claim_without_verified_matrix_cell
+  - no_matrix_cell_without_source_reference
+  - no_action_candidate_without_test_plan
+  - runtime_version_recorded
+  - model_recorded
+  - workspace_snapshot_recorded_when_files_changed
+  - cost_usage_recorded
+
+warnings:
+  - mounted_remote_paths_may_not_be_copied_into_snapshots
+  - replay_may_not_be_bitwise_deterministic
+  - runtime_specific_semantics_may_create_lockin
+
+verdicts:
+  PASS:        all required fields present AND all checks pass
+  INVESTIGATE: any check yields a warning OR any optional field absent that would aid replay
+  BLOCK:       any required field missing OR any check fails
+
+scope:
+  - applies_to: agent runs producing committable artifacts (briefs, code patches, packets, etc.)
+  - not_applies_to: ephemeral chat sessions
