@@ -654,6 +654,65 @@ out-of-band runtime signal (pause, resume, cancel, budget warning).
 
 ---
 
+## `sandbox.manifest.recorded`
+
+**When it fires.** A runtime adapter writes a sandbox manifest for a run
+(per `DEC-CDCP-021`). The manifest captures the workspace mounts, env
+refs, model + adapter ids, and tool surface the adapter expects to use.
+The event marks the moment the manifest artifact is on disk and the
+`Run.sandbox_manifest_ref` field can resolve.
+
+**Required payload fields.** `run_id`, `manifest_ref`.
+
+**Typical actor.** `{kind: "system", id: "<runtime-adapter-id>"}`.
+
+**Example.**
+```json
+{
+  "event_id": "1a2b3c4d-5e6f-4708-8910-111213141516",
+  "type": "sandbox.manifest.recorded",
+  "created_at": "2026-05-30T12:00:00Z",
+  "actor": {"kind": "system", "id": "procurement-lab-agents-sdk-adapter"},
+  "run_id": "run-2026-05-30-001",
+  "payload": {
+    "run_id": "run-2026-05-30-001",
+    "manifest_ref": "repo://procurement-negotiation-lab@abc1234/ops/sandbox-manifests/run-2026-05-30-001.json"
+  }
+}
+```
+
+---
+
+## `runstate.checkpoint.persisted`
+
+**When it fires.** A runtime adapter persists a RunState snapshot at a
+named pause point inside a run (per `DEC-CDCP-021`). Typical labels are
+`plan_review`, `diff_review`, and `pre_pr` for the procurement-lab
+factory; other adapters MAY use their own labels. The event marks the
+moment a downstream resume or replay can use the snapshot.
+
+**Required payload fields.** `run_id`, `checkpoint_ref`, `step_label`.
+
+**Typical actor.** `{kind: "system", id: "<runtime-adapter-id>"}`.
+
+**Example.**
+```json
+{
+  "event_id": "2b3c4d5e-6f70-4819-9011-121314151617",
+  "type": "runstate.checkpoint.persisted",
+  "created_at": "2026-05-30T12:05:42Z",
+  "actor": {"kind": "system", "id": "procurement-lab-agents-sdk-adapter"},
+  "run_id": "run-2026-05-30-001",
+  "payload": {
+    "run_id": "run-2026-05-30-001",
+    "checkpoint_ref": "repo://procurement-negotiation-lab@abc1234/ops/checkpoints/run-2026-05-30-001.runstate.json",
+    "step_label": "plan_review"
+  }
+}
+```
+
+---
+
 ## `dream.job.started`
 
 **When it fires.** A weekly dream job begins.
