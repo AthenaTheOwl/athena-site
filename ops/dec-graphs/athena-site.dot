@@ -9,4 +9,9 @@ digraph dec_chains_athena_site {
   "DEC-CDCP-017-dec-dependency-graph-generator" [shape=box, style=solid];
   "DEC-CDCP-018-evidence-quorum-sentinel" [shape=box, style=solid];
   "DEC-CDCP-019-dec-test-coverage-report" [shape=box, style=solid];
+  "DEC-CDCP-020-systems-thinking-discipline" [shape=box, style=solid];
+  "DEC-CDCP-021-sandbox-manifest-and-agent-runtime-adapter" [shape=box, style=solid];
+  "DEC-CDCP-022-bounded-replay-discipline" [shape=box, style=solid];
+  "DEC-CDCP-023-sensitive-disclosure-discipline" [shape=box, style=solid];
+  "DEC-CDCP-022-bounded-replay-discipline" -> "DEC-CDCP-011-run-records-carry-replay-equivalence-evidence" [label="amends"];
 }

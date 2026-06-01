@@ -1,4 +1,4 @@
-# Portfolio health — 2026-05-27
+# Portfolio health — 2026-06-01
 
 ## Deploys
 
@@ -14,24 +14,24 @@
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 2 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 28 | 90 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 6 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 32 | 90 | ✅ |
 | ai-field-brief | briefs/INDEX.md | 2 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 2 | ✅ |
+| athena-site | 0 | ✅ |
 | chip-supply-chain-map | 2 | ✅ |
 | supplier-risk-rag-agent | 2 | ✅ |
-| ai-field-brief | 0 | ✅ |
+| ai-field-brief | 1 | ✅ |
 | procurement-negotiation-lab | 2 | ✅ |
 | ai-supply-chain-copilot-prd | 2 | ✅ |
-| mcp-security-lab | 2 | ✅ |
-| trace-to-eval-harness | 0 | ✅ |
-| dispatch-optimizer | 31 | ✅ |
-| LLM-evaluation-framework | 31 | ✅ |
+| mcp-security-lab | 0 | ✅ |
+| trace-to-eval-harness | 2 | ✅ |
+| dispatch-optimizer | 35 | ✅ |
+| LLM-evaluation-framework | 35 | ✅ |
 
 ## Starforge cluster forks
 
@@ -53,14 +53,14 @@
 
 | Repo | Door | CDCP status | Drift |
 |---|---|---|---|
-| athena-site | 11 | meta-repo, cross-repo-schemas | — |
-| chip-supply-chain-map | 12 | installed, operating-model, first-decs | ✅ |
-| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
-| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
-| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
-| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ✅ |
-| mcp-security-lab | 19 | installed, operating-model, first-decs | ✅ |
-| trace-to-eval-harness | 20 | installed, operating-model, first-decs | ✅ |
+| athena-site | 11 | meta-repo, cross-repo-schemas | ⚠️ local_root unresolved |
+| chip-supply-chain-map | 12 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
+| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
+| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
+| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
+| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ⚠️ local_root unresolved |
+| mcp-security-lab | 19 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
+| trace-to-eval-harness | 20 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
 
 ## Anthropic models
 
