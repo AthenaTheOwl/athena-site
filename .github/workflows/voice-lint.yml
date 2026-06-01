@@ -28,3 +28,6 @@ jobs:
 
       - name: Check for UTF-8 BOM
         run: python scripts/check_no_bom.py
+
+      - name: Sensitive disclosure gate
+        run: python scripts/validate_sensitive_disclosures.py

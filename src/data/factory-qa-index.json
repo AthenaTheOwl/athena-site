@@ -9029,7 +9029,7 @@
   "generated_at": "2026-05-28T00:27:49.929823Z",
   "schema_version": 1,
   "source": "scripts/factory_qa_index.py",
-  "source_hash": "bfaab37ba85cbb7907e781200bb9eaa71d33430ca1ac8c72470cf46068b23ee2",
+  "source_hash": "b35fa61281750239bd9b30ae45d413be5b02107f48444f2df493ba0bc790a588",
   "sources": [
     "src/data/factory-snapshot.json",
     "ops/portfolio-manifest.yml",

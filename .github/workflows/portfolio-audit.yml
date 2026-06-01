@@ -88,6 +88,13 @@ jobs:
             --threshold 5
         continue-on-error: false
 
+      - name: Sensitive disclosure gate
+        # Runs after generated reports and before the bot commit. This blocks
+        # public-source publication of credentials, operational incident
+        # detail, and unsafe remediation command material.
+        if: always()
+        run: python scripts/validate_sensitive_disclosures.py
+
       - name: Commit reports if changed
         if: always()
         run: |
