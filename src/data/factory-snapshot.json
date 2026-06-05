@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-28T00:27:49.929823Z",
+  "generated_at": "2026-06-05T03:03:01.514676Z",
   "source": "scripts/factory_snapshot.py",
   "repos": [
     {
@@ -12,9 +12,9 @@
         "cross-repo-schemas"
       ],
       "exists_local": true,
-      "specs": 0,
+      "specs": 1,
       "requirements": 0,
-      "decisions": 0,
+      "decisions": 13,
       "roles": 0,
       "skills": 0,
       "dreams": 0,
@@ -35,11 +35,11 @@
       ],
       "exists_local": true,
       "specs": 2,
-      "requirements": 12,
-      "decisions": 10,
+      "requirements": 47,
+      "decisions": 19,
       "roles": 6,
       "skills": 0,
-      "dreams": 0,
+      "dreams": 1,
       "validators": [
         "spec_check.py",
         "voice_lint.py",
@@ -92,11 +92,11 @@
       ],
       "exists_local": true,
       "specs": 7,
-      "requirements": 31,
-      "decisions": 24,
+      "requirements": 66,
+      "decisions": 33,
       "roles": 8,
       "skills": 2,
-      "dreams": 1,
+      "dreams": 2,
       "validators": [
         "spec_check.py",
         "voice_lint.py",
@@ -148,12 +148,12 @@
         "skills-graduated"
       ],
       "exists_local": true,
-      "specs": 6,
-      "requirements": 57,
-      "decisions": 47,
-      "roles": 9,
+      "specs": 7,
+      "requirements": 104,
+      "decisions": 66,
+      "roles": 13,
       "skills": 2,
-      "dreams": 1,
+      "dreams": 2,
       "validators": [
         "spec_check.py",
         "voice_lint.py",
@@ -207,12 +207,12 @@
         "skills-graduated"
       ],
       "exists_local": true,
-      "specs": 14,
-      "requirements": 106,
-      "decisions": 25,
+      "specs": 17,
+      "requirements": 168,
+      "decisions": 39,
       "roles": 8,
       "skills": 1,
-      "dreams": 1,
+      "dreams": 2,
       "validators": [
         "spec_check.py",
         "voice_lint.py",
@@ -264,12 +264,14 @@
       "exists_local": true,
       "specs": 0,
       "requirements": 0,
-      "decisions": 3,
+      "decisions": 5,
       "roles": 0,
       "skills": 0,
       "dreams": 0,
       "validators": [
-        "voice_lint.py"
+        "voice_lint.py",
+        "validate_decisions.py",
+        "check_schema_cache_freshness.py"
       ],
       "events": []
     },
@@ -286,7 +288,7 @@
       "exists_local": true,
       "specs": 1,
       "requirements": 0,
-      "decisions": 6,
+      "decisions": 9,
       "roles": 6,
       "skills": 0,
       "dreams": 0,
@@ -326,8 +328,8 @@
       ],
       "exists_local": true,
       "specs": 1,
-      "requirements": 12,
-      "decisions": 7,
+      "requirements": 31,
+      "decisions": 12,
       "roles": 6,
       "skills": 0,
       "dreams": 0,
@@ -439,11 +441,11 @@
   ],
   "totals": {
     "repos": 13,
-    "specs": 31,
-    "requirements": 218,
-    "decisions": 122,
-    "roles": 43,
+    "specs": 36,
+    "requirements": 416,
+    "decisions": 196,
+    "roles": 47,
     "skills": 5,
-    "dreams": 3
+    "dreams": 7
   }
 }
