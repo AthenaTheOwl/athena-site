@@ -122,8 +122,12 @@ repos:
   - name: News-Bias-Multi-Agent-Pipeline
     door: "07"
     status: active
-    deploy_url: "https://news-bias-pipeline.streamlit.app"
-    content_fingerprint:
-      expected_substrings: ["news-bias", "streamlit"]
+    # deploy_url + content_fingerprint deliberately omitted: Codex's
+    # refactor names `news-bias-pipeline.streamlit.app` as the target
+    # but the Streamlit Community Cloud deploy hasn't been claimed yet.
+    # Re-add both fields once Vignesh runs the deploy and confirms the
+    # URL is live. The audit will surface "deploy not live" as a manifest
+    # gap rather than a weekly "deploy stale" critical fail.
+    notes: "deploy pending — Streamlit Community Cloud claim required"
   - { name: MIT-AI-Fall20, door: "08", status: drawer }
   - { name: leetcode, door: "09", status: drawer }
