@@ -119,6 +119,11 @@ repos:
   - { name: world-food-program-robust-simulator, door: "04", status: solved }
   - { name: semiconductor-e2e-manufacturing-optimization, door: "05", status: solved }
   - { name: Robust-Facility-Location, door: "06", status: solved }
-  - { name: News-Bias-Multi-Agent-Pipeline, door: "07", status: drawer }
+  - name: News-Bias-Multi-Agent-Pipeline
+    door: "07"
+    status: active
+    deploy_url: "https://news-bias-pipeline.streamlit.app"
+    content_fingerprint:
+      expected_substrings: ["news-bias", "streamlit"]
   - { name: MIT-AI-Fall20, door: "08", status: drawer }
   - { name: leetcode, door: "09", status: drawer }

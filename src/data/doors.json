@@ -55,9 +55,15 @@
   {
     "n": "07",
     "name": "News-Bias-Multi-Agent-Pipeline",
-    "status": "drawer",
+    "status": "active",
     "url": "https://github.com/AthenaTheOwl/News-Bias-Multi-Agent-Pipeline",
-    "hook": "for-fun multi-agent pipeline: pull articles, summarize, detect bias, critique, summarize again. early experiment."
+    "hook": "the same agent pipeline implemented three ways — static python, langchain, langgraph — so you can compare frameworks on a real BYOK demo. critic, structured judgments, verbatim citations.",
+    "for": {
+      "builder": "compare static / langchain / langgraph on the same task with shared core",
+      "science": "structured Pydantic judgments + verbatim citation verification",
+      "ops": "BYOK Streamlit; the heuristic provider runs without keys",
+      "hiring": "evidence of framework judgment, not framework hype"
+    }
   },
   {
     "n": "08",
