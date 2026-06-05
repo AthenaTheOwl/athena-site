@@ -61,6 +61,19 @@ def http_status(url: str) -> int:
         return 0
 
 
+def http_body(url: str) -> str | None:
+    """GET the URL, return body text. None on error."""
+    headers = {"User-Agent": USER_AGENT, "Accept": "text/html,*/*"}
+    try:
+        with httpx.Client(timeout=20.0, follow_redirects=True, headers=headers) as c:
+            r = c.get(url)
+            if 200 <= r.status_code < 400:
+                return r.text
+            return None
+    except httpx.HTTPError:
+        return None
+
+
 def parse_iso(s: str) -> dt.datetime:
     return dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
 
@@ -143,6 +156,55 @@ def section_deploys(audit: Audit) -> None:
                 f"Audit detected `{r['name']}` ({url}) returning HTTP `{status}`.\n\nFiled by `portfolio-audit` workflow.",
             )
     audit.add_section("## Deploys", "\n".join(rows))
+
+
+def section_content_fingerprint(audit: Audit) -> None:
+    """Catch deploys that return 200 but serve stale or wrong content.
+
+    For each repo with a `content_fingerprint` block in the manifest, fetch
+    the URL (defaults to deploy_url) and verify the expected substrings
+    appear in the response body. Missing substrings flag a critical issue —
+    this is the failure mode where Vercel's ignoreCommand returned 0 and the
+    deploy was silently skipped while HTTP 200 was still served from cache.
+    """
+    rows = ["| Repo | URL | Expected | Status |", "|---|---|---|---|"]
+    any_rows = False
+    for r in audit.manifest["repos"]:
+        cf = r.get("content_fingerprint")
+        if not cf:
+            continue
+        any_rows = True
+        url = cf.get("url") or r.get("deploy_url")
+        substrings: list[str] = cf.get("expected_substrings") or []
+        if not url or not substrings:
+            rows.append(f"| {r['name']} | — | — | ⚠️ misconfigured |")
+            continue
+        body = http_body(url)
+        if body is None:
+            rows.append(f"| {r['name']} | {url} | — | ⚠️ fetch failed |")
+            continue
+        missing = [s for s in substrings if s not in body]
+        expected_label = ", ".join(f"`{s}`" for s in substrings)
+        if missing:
+            missing_label = ", ".join(f"`{s}`" for s in missing)
+            rows.append(f"| {r['name']} | {url} | {expected_label} | ❌ missing: {missing_label} |")
+            audit.flag_critical(
+                "athena-site",
+                f"Stale deploy: {r['name']} missing expected fingerprint",
+                (
+                    f"Audit fetched `{url}` and could not find expected substring(s): {missing_label}.\n\n"
+                    "Likely causes:\n"
+                    "1. Deploy is stale (e.g. Vercel `ignoreCommand` returning 0; build was silently skipped)\n"
+                    "2. CDN cache serving an old version\n"
+                    "3. The manifest's `content_fingerprint.expected_substrings` is out of date — "
+                    "update it if the site content has intentionally changed.\n\n"
+                    "First check: did the latest commit actually deploy? Check the platform's deploy log."
+                ),
+            )
+        else:
+            rows.append(f"| {r['name']} | {url} | {expected_label} | ✅ present |")
+    if any_rows:
+        audit.add_section("## Content fingerprint", "\n".join(rows))
 
 
 def section_freshness(audit: Audit) -> None:
@@ -426,6 +488,7 @@ def main() -> int:
     local_root = resolve_local_root(manifest)
 
     section_deploys(audit)
+    section_content_fingerprint(audit)
     section_freshness(audit)
     section_stale_active(audit)
     section_forks(audit)
