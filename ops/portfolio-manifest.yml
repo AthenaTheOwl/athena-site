@@ -93,6 +93,11 @@ repos:
     status: active
     cdcp_status: [installed, operating-model, first-decs]
 
+  - name: sports-prediction-os
+    door: "21"
+    status: active
+    cdcp_status: [cdcp-lite, has_specs]
+
   - name: starforge-narrative-tools
     door: "14"
     status: workshop

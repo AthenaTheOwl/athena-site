@@ -199,5 +199,18 @@
       "ops": "trace to report without an LLM dependency",
       "hiring": "evidence that agent failures become tests"
     }
+  },
+  {
+    "n": "21",
+    "name": "sports-prediction-os",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/sports-prediction-os",
+    "hook": "soccer event-data analysis beyond who-will-win. understat + statsbomb + socceraction; possession value + next-event modeling on a weekly eval loop.",
+    "for": {
+      "science": "see the possession-value primitives the OS hands you",
+      "builder": "fork the source-registry + offline-fixture pattern",
+      "ops": "treat a sports analytics surface like any other evaluated system",
+      "hiring": "evidence that eval-loop discipline transfers across domains"
+    }
   }
 ]
