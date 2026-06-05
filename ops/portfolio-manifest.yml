@@ -25,6 +25,11 @@ repos:
     deploy_url: "https://athena-site-six.vercel.app"
     # athena-site owns the CDCP contracts but doesn't operate the model itself.
     cdcp_status: [meta-repo, cross-repo-schemas]
+    # Catches deploy-stuck: HTTP 200 but stale content. Pick stable strings
+    # that should appear on every fresh deploy; update if the site copy
+    # intentionally changes.
+    content_fingerprint:
+      expected_substrings: ["Portfolio doors", "entry points"]
 
   - name: chip-supply-chain-map
     door: "12"
@@ -34,6 +39,8 @@ repos:
     file_freshness:
       path: src/data/nodes.csv
       threshold_days: 180
+    content_fingerprint:
+      expected_substrings: ["chip-supply-chain-map"]
 
   - name: supplier-risk-rag-agent
     door: "13"
@@ -43,6 +50,12 @@ repos:
     file_freshness:
       path: reports/baseline_eval_report.html
       threshold_days: 90
+    # Streamlit Community Cloud apps return a JS shell on initial GET; the
+    # session content arrives via websocket. Use a stable shell-level marker
+    # as "deploy reachable" signal only — full content rendering can't be
+    # fingerprinted from a single HTTP GET.
+    content_fingerprint:
+      expected_substrings: ["streamlit"]
 
   - name: ai-field-brief
     door: "18"
@@ -52,6 +65,12 @@ repos:
     file_freshness:
       path: briefs/INDEX.md
       threshold_days: 14
+    # The latest brief week SHOULD appear on the homepage. Bump the
+    # week marker when a new brief is published — when the deployed site
+    # doesn't contain it, that's the deploy-stuck signal we missed for 13
+    # days with W21 vs W23.
+    content_fingerprint:
+      expected_substrings: ["ai-field-brief", "2026-W23"]
 
   - name: procurement-negotiation-lab
     door: "17"
