@@ -1,0 +1,662 @@
+[
+  {
+    "name": "MIT-AI-Fall20",
+    "domain": "academic",
+    "maturity": "archive",
+    "hook": "archived problem sets from mit 6.034 intro ai (fall 2020): search, csp, games, k-nn/decision trees, neural nets, svms, bayes nets, boosting, each lab with its own tester. a personal time-capsule of coursework, kept as-is.",
+    "github": "https://github.com/AthenaTheOwl/MIT-AI-Fall20",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "cd Lab<n>; python tester.py"
+  },
+  {
+    "name": "MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin",
+    "domain": "academic",
+    "maturity": "lab",
+    "hook": "the model files and data pipeline for vignesh's mit sdm thesis modeling bitcoin as a system-dynamics stock-and-flow system (vensim dss 9.2.4 .mdl plus calibration .voc/.out/.rep files and a python data-pull script). an academic artifact preserved at submission state.",
+    "github": "https://github.com/AthenaTheOwl/MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "open thesis_checkpoint.mdl in Vensim DSS 9.2.4 (load DataFiles/ConsolidatedData.vdfx)"
+  },
+  {
+    "name": "earnings-pillar-diff",
+    "domain": "academic",
+    "maturity": "lab",
+    "hook": "event-driven cli that diffs hyperscaler 10-Q capex and purchase-obligation line items quarter-over-quarter, maps deltas onto named investment-thesis pillars, and renders a one-page action memo. for equity analysts tracking ai-infra capex theses.",
+    "github": "https://github.com/AthenaTheOwl/earnings-pillar-diff",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "uv run epd validate --pillar-repo ../thesis-pillar-tracker"
+  },
+  {
+    "name": "leetcode",
+    "domain": "academic",
+    "maturity": "archive",
+    "hook": "a collection of 21 leetcode solutions filed by problem number in python and sql, no write-ups. self-declared archived grind, kept for completeness.",
+    "github": "https://github.com/AthenaTheOwl/leetcode",
+    "live": null,
+    "deploy_target": "none",
+    "demo_cmd": "python '1_Two Sum.py'"
+  },
+  {
+    "name": "News-Bias-Multi-Agent-Pipeline",
+    "domain": "agent-runtime",
+    "maturity": "lab",
+    "hook": "a framing-brief generator that pulls an article set on a subject, summarizes, detects framing/bias, critiques the detection, and reconciles into one reader-facing brief with verbatim-verified citations. the same pipeline is implemented three ways (static python, langchain, langgraph) as an agent-orchestration teaching artifact; explicitly not a production bias detector.",
+    "github": "https://github.com/AthenaTheOwl/News-Bias-Multi-Agent-Pipeline",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "python main.py \"<subject>\" --impl static --provider heuristic"
+  },
+  {
+    "name": "agent-notary-layer",
+    "domain": "agent-runtime",
+    "maturity": "lab",
+    "hook": "a schema-first repo defining a tamper-evident receipt format for cross-org agent actions (PO commit, payment auth, redline accept), shipped as a JSON Schema plus a reference verifier CLI and a conformance suite. for teams needing an auditable agent-to-agent action trail (regulated finance/procurement).",
+    "github": "https://github.com/AthenaTheOwl/agent-notary-layer",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "uv run notary verify path/to/receipt.json"
+  },
+  {
+    "name": "ai-supply-chain-copilot-prd",
+    "domain": "agent-runtime",
+    "maturity": "active",
+    "hook": "a markdown-first product teardown and prd for an ai supply-chain exception-triage copilot (nine numbered docs: problem through build plan), paired with a small static vite/react prototype showing an exception queue with cited evidence and approval-gated actions on synthetic data. for hiring managers and eng leaders assessing tpm judgment.",
+    "github": "https://github.com/AthenaTheOwl/ai-supply-chain-copilot-prd",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "npm run build"
+  },
+  {
+    "name": "commit-provenance",
+    "domain": "agent-runtime",
+    "maturity": "lab",
+    "hook": "intended to produce cryptographically signed, machine-verifiable per-commit author attribution for AI-mixed codebases (human vs AI-authored vs AI-reviewed). today it ships only a CLI that reports which readiness artifacts exist in the repo. for regulated eng teams and maintainers facing AI-PR floods.",
+    "github": "https://github.com/AthenaTheOwl/commit-provenance",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "git-provenance report --out reports/commit-provenance-v0.1.jsonl"
+  },
+  {
+    "name": "dream-replay-cli",
+    "domain": "agent-runtime",
+    "maturity": "active",
+    "hook": "an offline-cognition CLI that ingests a week of agent traces plus a spec ledger and decision ledger and emits a human-reviewable dreams/YYYY-WNN/ folder of candidate skills, memory updates, tests, and spec amendments \u00e2\u20ac\u201d proposals only, promotion is human-gated. for builders running multi-agent portfolios who have traces but no review cadence.",
+    "github": "https://github.com/AthenaTheOwl/dream-replay-cli",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m dreamreplay run --traces <dir> --spec-ledger <dir> --decision-ledger <dir> --week 2026-W26 --run-date 2026-06-26 --out <dir>"
+  },
+  {
+    "name": "review-queue",
+    "domain": "agent-runtime",
+    "maturity": "lab",
+    "hook": "cli plus typed promotion-record schema for human-gating ai-generated candidates (memory updates, tests, briefs, contracts): a candidate lands in a queue, a reviewer approves/rejects/edits with diff and provenance, approved items ship to a target. for editorial ops and prompt-engineering teams running production ai content.",
+    "github": "https://github.com/AthenaTheOwl/review-queue",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m review_queue validate"
+  },
+  {
+    "name": "capital-build-reconciler",
+    "domain": "ai-infra",
+    "maturity": "lab",
+    "hook": "a monthly pipeline that ingests personal LLM-inference telemetry (rate-limit hits, dollar-per-token drift, region latency) and reconciles it against six AI-infra capital pillars to emit HOLD/UPWEIGHT/TRIM verdicts. for one portfolio operator tracking AI-infra exposure against private build telemetry.",
+    "github": "https://github.com/AthenaTheOwl/capital-build-reconciler",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m capital_reconcile ingest --provider anthropic --raw tests/fixtures --out reports/2026-M06.fixture.parquet"
+  },
+  {
+    "name": "channel-atlas",
+    "domain": "ai-infra",
+    "maturity": "lab",
+    "hook": "a fixture-backed catalog of hyperscaler off-balance-sheet AI-infra financing (JV/SPV/private-credit deals) built into a counterparty graph tied to specific data-center campuses, emitted as a markdown report plus graph JSON. for credit/equity analysts and CFOs assessing AI-infra supplier-concentration risk.",
+    "github": "https://github.com/AthenaTheOwl/channel-atlas",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m src.channel_atlas build"
+  },
+  {
+    "name": "grid-silicon",
+    "domain": "ai-infra",
+    "maturity": "flagship",
+    "hook": "phantom-vs-real capacity engine for announced US data-center gigawatts \u00e2\u20ac\u201d parses an ercot large-load queue fixture and emits a 0-100 realness score per project with five evidence items, shipped as a jsonl report. for power/semis equity desks and infra credit underwriters.",
+    "github": "https://github.com/AthenaTheOwl/grid-silicon",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m grid_silicon validate"
+  },
+  {
+    "name": "sovereign-compute",
+    "domain": "ai-infra",
+    "maturity": "active",
+    "hook": "cross-country feasibility scorecard for sovereign-ai compute programs (uae g42, saudi humain, eu ai factories, indiaai, uk aisi): scores each announced national build-out on silicon/power/water/talent, reports projected real GW vs announced GW and the binding constraint per program. for sovereign-program managers, defense planners, and sovereign-wealth-fund infra teams.",
+    "github": "https://github.com/AthenaTheOwl/sovereign-compute",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python sovereign_compute.py scorecard"
+  },
+  {
+    "name": "supplier-risk-rag-agent",
+    "domain": "ai-infra",
+    "maturity": "flagship",
+    "hook": "a citation-faithful rag agent over sec edgar filings: a deterministic hybrid ranker plus a post-hoc verbatim citation verifier, exposed as a byok streamlit app, gated by four named eval suites that run with no vendor keys. for procurement/supplier-risk readers and rag practitioners studying citation faithfulness as a separate gate.",
+    "github": "https://github.com/AthenaTheOwl/supplier-risk-rag-agent",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "python -m uv run streamlit run app.py"
+  },
+  {
+    "name": "puc-docket-rag",
+    "domain": "civic-data",
+    "maturity": "active",
+    "hook": "a citation-faithful retrieval index over public state-puc and ferc dockets: ingest, chunk, stdlib tf-idf index, search, and structured cost-allocation-rule extraction with citation validation. the evidence layer feeding ratepayer-exposure and site-atlas.",
+    "github": "https://github.com/AthenaTheOwl/puc-docket-rag",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "pdr chunk --fixture tests/fixtures/va/PUR-2024-00001 (then index/search/extract)"
+  },
+  {
+    "name": "site-atlas",
+    "domain": "civic-data",
+    "maturity": "active",
+    "hook": "static astro site that renders the grid-silicon dataset for the public: one page per announced us data center with its energization-confidence score, the five evidence items behind it, projected energization year, and source citations. for local journalists, county supervisors, puc commissioners, and ratepayer advocates.",
+    "github": "https://github.com/AthenaTheOwl/site-atlas",
+    "live": null,
+    "deploy_target": "vercel",
+    "demo_cmd": "npm run build"
+  },
+  {
+    "name": "oulipo-memory-deck",
+    "domain": "creative-narrative",
+    "maturity": "lab",
+    "hook": "a static narrative card deck where eight everyday-object base lines are run through a deterministic oulipo s+7 noun swap to seed a 40-80 word vignette, rendered to a single no-javascript html page. a personal creative-writing constraint tool.",
+    "github": "https://github.com/AthenaTheOwl/oulipo-memory-deck",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m oulipo_memory_deck validate"
+  },
+  {
+    "name": "promotion-vs-pip",
+    "domain": "creative-narrative",
+    "maturity": "lab",
+    "hook": "a 36-card brechtian corporate-satire print-and-play deckbuilder: cards live in yaml, a node script validates them against a json schema and renders a printable html sheet. the artifact is a paper deck plus a rules sheet.",
+    "github": "https://github.com/AthenaTheOwl/promotion-vs-pip",
+    "live": null,
+    "deploy_target": "vercel",
+    "demo_cmd": "npm run validate && npm run render"
+  },
+  {
+    "name": "starforge-choicescript-demo",
+    "domain": "creative-narrative",
+    "maturity": "lab",
+    "hook": "full released act 1 route of starforge canticles adapted into a stat-forward choicescript browser game, with a source-to-scene generator and quicktest/randomtest harness. runnable via a local static server.",
+    "github": "https://github.com/AthenaTheOwl/starforge-choicescript-demo",
+    "live": null,
+    "deploy_target": "vercel",
+    "demo_cmd": "python tools/check_release.py"
+  },
+  {
+    "name": "starforge-narrative-tools",
+    "domain": "creative-narrative",
+    "maturity": "lab",
+    "hook": "python toolkit behind the starforge canticles serial: prose-to-game conversion schemas plus deterministic validation gates that keep the act 1 game adaptation in sync with published prose. for the author and anyone reviewing the cluster's tooling.",
+    "github": "https://github.com/AthenaTheOwl/starforge-narrative-tools",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python tools/check_release.py"
+  },
+  {
+    "name": "starforge-renpy-demo",
+    "domain": "creative-narrative",
+    "maturity": "lab",
+    "hook": "act 1 of the starforge canticles serial rendered as a ren'py visual-novel demo with branching scenes, dialogue, combat vignettes and relationship state. python release gate validates source without the engine; ren'py sdk needed to actually play it.",
+    "github": "https://github.com/AthenaTheOwl/starforge-renpy-demo",
+    "live": null,
+    "deploy_target": "local-only",
+    "demo_cmd": "python tools/check_release.py"
+  },
+  {
+    "name": "starforge-rpg-prototype",
+    "domain": "creative-narrative",
+    "maturity": "lab",
+    "hook": "act 1 of starforge canticles prototyped as a data-driven godot 4 rpg with party management, combat, branching dialogue, quests and save/load. python checks (validate_project, playtest_audit, validate_balance) pass without godot; godot needed to run the game.",
+    "github": "https://github.com/AthenaTheOwl/starforge-rpg-prototype",
+    "live": null,
+    "deploy_target": "local-only",
+    "demo_cmd": "python tools/check_release.py"
+  },
+  {
+    "name": "starforge-twine-demo",
+    "domain": "creative-narrative",
+    "maturity": "lab",
+    "hook": "full act 1 route of starforge canticles as a single-html twine/sugarcube interactive-fiction demo, built with tweego and smoke-tested with playwright. a prebuilt build/index.html is checked in and playable in a browser.",
+    "github": "https://github.com/AthenaTheOwl/starforge-twine-demo",
+    "live": null,
+    "deploy_target": "vercel",
+    "demo_cmd": "npm run build"
+  },
+  {
+    "name": "interconnect-alpha",
+    "domain": "energy-grid",
+    "maturity": "active",
+    "hook": "queue-survival and capacity-curve analytics module for grid interconnection queues \u00e2\u20ac\u201d kaplan-meier probability-of-COD forecasts with a brier backtest and a 2027-2030 capacity-price fan chart, shipped as the analytics layer inside gridsilicon. for power hedge funds, ipp developers, and infra debt funds.",
+    "github": "https://github.com/AthenaTheOwl/interconnect-alpha",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m interconnect_alpha validate"
+  },
+  {
+    "name": "policy-replay",
+    "domain": "energy-grid",
+    "maturity": "lab",
+    "hook": "replays a proposed power-market rule change (FERC/ISO/PUC, e.g. PJM capacity-market reform) against a historical queue/auction fixture and forecasts the outcome distribution before the rule goes effective. for grid planning staff, PUC commissioners, and IPP developers.",
+    "github": "https://github.com/AthenaTheOwl/policy-replay",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m policy_replay simulate"
+  },
+  {
+    "name": "ratepayer-exposure",
+    "domain": "energy-grid",
+    "maturity": "active",
+    "hook": "a small public astro calculator estimating how much of a pjm-zone resident's 2026-2030 electricity bill increase is attributable to data-center load growth, with every assumption cited. the discipline is no number renders without a source.",
+    "github": "https://github.com/AthenaTheOwl/ratepayer-exposure",
+    "live": null,
+    "deploy_target": "vercel",
+    "demo_cmd": "npm install && npm run build"
+  },
+  {
+    "name": "LLM-evaluation-framework",
+    "domain": "eval-observability",
+    "maturity": "active",
+    "hook": "an llm eval framework that scores a model output through three independent lenses (deterministic rules, persona raters, llm-as-judge) instead of one number, with yaml-configured suites, html/json reports, regression diffing, and ci exit-code gating. for engineers building product-grade eval pipelines.",
+    "github": "https://github.com/AthenaTheOwl/LLM-evaluation-framework",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "pip install -e \".[dev]\"; llm-evals run eval_suites/customer_support/ --stage all --output html"
+  },
+  {
+    "name": "ai-field-brief",
+    "domain": "eval-observability",
+    "maturity": "flagship",
+    "hook": "a weekly ai digest published as markdown briefs (one folder per iso week) rendered by a next.js static site with rss/atom/json feeds and an optional resend email digest. for builder-tpms who want concrete weekly moves with worked artifacts rather than news summaries.",
+    "github": "https://github.com/AthenaTheOwl/ai-field-brief",
+    "live": null,
+    "deploy_target": "special",
+    "demo_cmd": "pnpm --filter @aifieldbrief/web dev"
+  },
+  {
+    "name": "brief-calibration",
+    "domain": "eval-observability",
+    "maturity": "lab",
+    "hook": "a calibration harness that Brier-scores a weekly Field Brief's explicit predictions against later outcomes and renders a quarterly calibration memo plus a 'framings to retire' list. for the single author of a prediction-shaped publication who wants scoring discipline.",
+    "github": "https://github.com/AthenaTheOwl/brief-calibration",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m brief_calibration validate --period 2026-Q2"
+  },
+  {
+    "name": "brief-matrix",
+    "domain": "eval-observability",
+    "maturity": "lab",
+    "hook": "a multi-tenant control plane that scores weekly briefs from other repos on three axes (voice discipline, citation coverage, section conformance) and appends a calibration row per run; a scorer, not a generator. for editors/platform leads running spec-driven brief workflows.",
+    "github": "https://github.com/AthenaTheOwl/brief-matrix",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m brief_matrix validate"
+  },
+  {
+    "name": "eval-forge",
+    "domain": "eval-observability",
+    "maturity": "archive",
+    "hook": "intended github-app-plus-cli that generates a recall@5 / citation-faithfulness / abstention / refusal / tool-call eval pack for a customer rag or agent repo and gates PRs on regressions. for ai teams who want evals that block merges, not dashboards.",
+    "github": "https://github.com/AthenaTheOwl/eval-forge",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m eval_forge init --repo ../supplier-risk-rag-agent --shape rag --out evals/"
+  },
+  {
+    "name": "mcp-security-lab",
+    "domain": "eval-observability",
+    "maturity": "active",
+    "hook": "static risk scanner for mcp server configs: flags command execution, broad filesystem scope, unauthenticated remote transports, and prompt-injection language, then writes json/markdown policy reports. for security reviewers and agent-platform engineers.",
+    "github": "https://github.com/AthenaTheOwl/mcp-security-lab",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m mcp_security_lab scan examples/claude-desktop-config.json --out report.json"
+  },
+  {
+    "name": "modelswap-replay",
+    "domain": "eval-observability",
+    "maturity": "lab",
+    "hook": "local release gate for llm model swaps \u00e2\u20ac\u201d samples recent route traffic, replays it offline against a candidate release, scores the replay, and writes a decision record with a pre-declared revert threshold. for ml platform teams gating model rollouts.",
+    "github": "https://github.com/AthenaTheOwl/modelswap-replay",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m cli.main replay --route customer-support --release fixture-candidate-v1 --since 7d --offline --out decisions/model-swap/fixture-candidate-v1-customer-support.md"
+  },
+  {
+    "name": "proof-gate-runner",
+    "domain": "eval-observability",
+    "maturity": "active",
+    "hook": "a drop-in github action plus stdlib-only python entry point that runs deterministic typed proof gates (voice_lint, spec_check) on a repo's pull requests. for oss maintainers and portfolio builders handling ai-generated pr volume.",
+    "github": "https://github.com/AthenaTheOwl/proof-gate-runner",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "bash scripts/run_gates.sh --gates voice_lint,spec_check --path ."
+  },
+  {
+    "name": "source-decay-ledger",
+    "domain": "eval-observability",
+    "maturity": "lab",
+    "hook": "typed registry over a high-volume reading list (~170 brief sources) that scores each source weekly by signal-yield against the author's published brief items, keeps an append-only item-to-source provenance ledger, and emits a KEEP/DROP/PROBATION memo. a personal forcing function for the author plus a reusable discipline for anyone running a large source list.",
+    "github": "https://github.com/AthenaTheOwl/source-decay-ledger",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m source_decay_ledger validate"
+  },
+  {
+    "name": "trace-ledger-spec",
+    "domain": "eval-observability",
+    "maturity": "active",
+    "hook": "json-schema, version-pinned controlled vocabulary, and a pure-python reference validator for an append-only ledger of agent trace events (content-addressable event_id, monotonic seq, prev_hash chaining). ships four worked example ledgers (one clean, three with planted bugs) the validator correctly catches. for teams building auditable agent-trace storage.",
+    "github": "https://github.com/AthenaTheOwl/trace-ledger-spec",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m trace_ledger_spec validate"
+  },
+  {
+    "name": "trace-to-eval-cli",
+    "domain": "eval-observability",
+    "maturity": "lab",
+    "hook": "a local cli that ingests an agent trace (langgraph jsonl fixture), runs deterministic eval checks, and emits json/markdown reports plus a regression compare. for builders who want a repeatable pass/fail trace eval with no network or keys.",
+    "github": "https://github.com/AthenaTheOwl/trace-to-eval-cli",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m trace_to_eval_cli validate"
+  },
+  {
+    "name": "trace-to-eval-harness",
+    "domain": "eval-observability",
+    "maturity": "active",
+    "hook": "python cli that turns a failed ai trace into a checked-in deterministic eval case and regression report, validates cdcp run-evidence packets, and wraps runs in runtime-agnostic bundles for replay/adapter comparison. for eval curators and review agents. no model key needed.",
+    "github": "https://github.com/AthenaTheOwl/trace-to-eval-harness",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m trace_to_eval run examples/eval_cases.yaml --traces examples/traces --out reports/run.json"
+  },
+  {
+    "name": "sports-prediction-os",
+    "domain": "misc",
+    "maturity": "lab",
+    "hook": "v0 scaffold for a soccer event-data analysis os built around possession value (vaep/xt via socceraction) with an understat fetcher and a planned streamlit surface. for an analytical, non-betting demo.",
+    "github": "https://github.com/AthenaTheOwl/sports-prediction-os",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "uv run sports-os --help"
+  },
+  {
+    "name": "Robust-Facility-Location",
+    "domain": "optimization-or",
+    "maturity": "active",
+    "hook": "an interactive streamlit explorer for facility location under demand uncertainty: solves nominal, polyhedral-robust, ellipsoidal, and adaptive formulations (pulp/cbc + cvxpy) and stress-tests each with monte carlo across thousands of scenarios. for learning robust optimization tradeoffs.",
+    "github": "https://github.com/AthenaTheOwl/Robust-Facility-Location",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "pip install -r requirements.txt; streamlit run app.py"
+  },
+  {
+    "name": "dispatch-optimizer",
+    "domain": "optimization-or",
+    "maturity": "active",
+    "hook": "an event-driven simulator for constrained logistics dispatch that runs greedy sequential vs hungarian batch assignment on the same world (driver shifts, temperature/equipment constraints, pickup-and-delivery routes, deadlines) and shows where greedy falls behind. fastapi backend with a browser ui. for people studying assignment/routing tradeoffs.",
+    "github": "https://github.com/AthenaTheOwl/dispatch-optimizer",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "pip install -r requirements.txt; python -m uvicorn app.main:app --reload"
+  },
+  {
+    "name": "robust-siting-lab",
+    "domain": "optimization-or",
+    "maturity": "lab",
+    "hook": "small reproducible benchmark for joint grid/water/silicon data-center siting risk: given candidate sites and risk weights it picks the lowest-expected-cost site and reports the regret of the announced choice. for siting-risk analysts and as an optimization fixture for sibling compute repos.",
+    "github": "https://github.com/AthenaTheOwl/robust-siting-lab",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m robust_siting_lab validate"
+  },
+  {
+    "name": "world-food-program-robust-simulator",
+    "domain": "optimization-or",
+    "maturity": "active",
+    "hook": "a streamlit walkthrough of humanitarian food logistics under uncertainty on a real wfp syria scenario (mit 15.094): nominal lp, budget-constrained triage, robust socp, monte carlo validation, and two-stage adaptive contracts via cvxpy. for teaching the cost-of-robustness tradeoff.",
+    "github": "https://github.com/AthenaTheOwl/world-food-program-robust-simulator",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "pip install -r requirements.txt; streamlit run app.py"
+  },
+  {
+    "name": "AthenaTheOwl",
+    "domain": "portfolio-tooling",
+    "maturity": "archive",
+    "hook": "the github profile README repo \u00e2\u20ac\u201d the portfolio's front-door index linking active/solved/drawer repos, plus a check_no_bom.py guard. not an application.",
+    "github": "https://github.com/AthenaTheOwl/AthenaTheOwl",
+    "live": null,
+    "deploy_target": "none",
+    "demo_cmd": "python check_no_bom.py"
+  },
+  {
+    "name": "athena-site",
+    "domain": "portfolio-tooling",
+    "maturity": "active",
+    "hook": "the personal portfolio hub: an astro site with a portfolio door grid (src/data/doors.json), long-form mdx essays, and embeds of chip-supply-chain-map and procurement-negotiation-lab. also hosts the cross-repo cdcp control-plane charter. for visitors and hiring managers entering the portfolio.",
+    "github": "https://github.com/AthenaTheOwl/athena-site",
+    "live": null,
+    "deploy_target": "vercel",
+    "demo_cmd": "npm run dev"
+  },
+  {
+    "name": "pattern-index",
+    "domain": "portfolio-tooling",
+    "maturity": "lab",
+    "hook": "mines DEC decision-ledger frontmatter across the portfolio for cross-domain pattern applications (procurement-to-AI and back), tags each with a 90-day-later outcome, and writes a quarterly retro. for the user to track which patterns actually transfer between repos.",
+    "github": "https://github.com/AthenaTheOwl/pattern-index",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m pattern_index validate"
+  },
+  {
+    "name": "portfolio-manifest",
+    "domain": "portfolio-tooling",
+    "maturity": "lab",
+    "hook": "a manifest format plus audit runner that walks ten-plus repos, checks each against declared artifact contracts (decision/spec/dream schema versions, voice-lint banlist, eval coverage, decision freshness), and emits a weekly markdown health snapshot. for multi-repo maintainers and platform teams.",
+    "github": "https://github.com/AthenaTheOwl/portfolio-manifest",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m portfolio_manifest validate --manifest manifests/example.yaml"
+  },
+  {
+    "name": "portfolio-thesis-plane",
+    "domain": "portfolio-tooling",
+    "maturity": "lab",
+    "hook": "generates a weekly machine-computed report card per portfolio repo (thesis-alive score from five typed factors, last-run-evidence date, eval-coverage delta, decision staleness) and forces an ATTEND/FREEZE/RETIRE verdict, plus a top-2/bottom-3 rollup. for the user's weekly portfolio planning.",
+    "github": "https://github.com/AthenaTheOwl/portfolio-thesis-plane",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m portfolio_thesis_plane generate --week 2026-W25"
+  },
+  {
+    "name": "pre-mortem-ledger",
+    "domain": "portfolio-tooling",
+    "maturity": "lab",
+    "hook": "runs a monthly forced pre-mortem on the largest active investing position: names 3-5 failure modes, attaches an observability trigger to each, and tracks their status month-over-month against subsequent evidence. for the user's concentrated investing book.",
+    "github": "https://github.com/AthenaTheOwl/pre-mortem-ledger",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m uv run premortem ledger list"
+  },
+  {
+    "name": "release-pillar-mapper",
+    "domain": "portfolio-tooling",
+    "maturity": "lab",
+    "hook": "maps one significant frontier-model release into a typed report against three downstream systems the user runs \u00e2\u20ac\u201d the repo portfolio, the published brief corpus, and investing thesis pillars \u00e2\u20ac\u201d emitting a per-target action queue. for vignesh's release-triage.",
+    "github": "https://github.com/AthenaTheOwl/release-pillar-mapper",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m release_pillar_mapper validate"
+  },
+  {
+    "name": "repo-position-coupling-index",
+    "domain": "portfolio-tooling",
+    "maturity": "lab",
+    "hook": "a monthly markdown index linking repo-portfolio slugs to investing thesis-pillar ids: validates report front matter, renders it, computes five flag types, and diffs month-to-month. for the user reconciling build bets against investing bets.",
+    "github": "https://github.com/AthenaTheOwl/repo-position-coupling-index",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m uv run coupling validate coupling_index/2026-M07.md"
+  },
+  {
+    "name": "repo-triage",
+    "domain": "portfolio-tooling",
+    "maturity": "active",
+    "hook": "a monthly forcing-function memo across the ~20 active portfolio repos: a hand-scorable 5-factor rubric forces exactly 2 ATTEND, 3 RETIRE, rest FREEZE, with a click cli to emit scoring stubs, render the memo, and run four merge gates. for the portfolio operator.",
+    "github": "https://github.com/AthenaTheOwl/repo-triage",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m uv run repo-triage render-memo ..."
+  },
+  {
+    "name": "thesis-pillar-tracker",
+    "domain": "portfolio-tooling",
+    "maturity": "lab",
+    "hook": "monthly data-report tool for a single investing thesis: decomposes the thesis into 6-12 named falsifiable pillars, logs accepted evidence (CONFIRMS/REFUTES) against each, and writes one monthly review file plus a quarterly binding-constraint snapshot. for an individual investor running a disciplined thesis review.",
+    "github": "https://github.com/AthenaTheOwl/thesis-pillar-tracker",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "uv run tpt validate"
+  },
+  {
+    "name": "multitier-psi",
+    "domain": "procurement-mechanism",
+    "maturity": "lab",
+    "hook": "reference private-set-intersection protocol over public supplier-graph fixtures \u00e2\u20ac\u201d maps party-local supplier names to canonical ids, traverses tier-2/3 dependencies, and runs a two-party intersection in a plaintext baseline and a dh-based reference mode. a local testbed for procurement teams exploring shared single-source exposure without revealing full supplier lists.",
+    "github": "https://github.com/AthenaTheOwl/multitier-psi",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m mtpsi validate"
+  },
+  {
+    "name": "negotiation-mechanism-replay",
+    "domain": "procurement-mechanism",
+    "maturity": "lab",
+    "hook": "turns one sanitized negotiation event into a five-section mechanism-design replay report (incentive map, leakage list, implied equilibrium, cross-application to portfolio repos), with a redaction gate that refuses raw/private paths. for the user's own post-hoc analysis of negotiations.",
+    "github": "https://github.com/AthenaTheOwl/negotiation-mechanism-replay",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m uv run replay validate"
+  },
+  {
+    "name": "power-ppa-forge",
+    "domain": "procurement-mechanism",
+    "maturity": "lab",
+    "hook": "an open mechanism spec, reference simulator, and white paper for multi-hyperscaler power-purchase-agreement syndication on long-duration generation, using a multi-buyer Vickrey-like auction with bounded leakage so co-offtakers never reveal load profiles. for energy project-finance and mechanism-design audiences.",
+    "github": "https://github.com/AthenaTheOwl/power-ppa-forge",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m power_ppa_forge validate"
+  },
+  {
+    "name": "procurement-negotiation-lab",
+    "domain": "procurement-mechanism",
+    "maturity": "flagship",
+    "hook": "a for-fun procurement-coordination simulator and mechanism-design workbench: a react/vite web app (play/lab/study) backed by a deterministic python engine that compares jit baseline, centralized oracle, admm, weighted-nash, and mpc mechanisms. for people learning why local procurement decisions leave joint surplus on the table.",
+    "github": "https://github.com/AthenaTheOwl/procurement-negotiation-lab",
+    "live": null,
+    "deploy_target": "special",
+    "demo_cmd": "npm run dev"
+  },
+  {
+    "name": "procurement-pattern-library",
+    "domain": "procurement-mechanism",
+    "maturity": "lab",
+    "hook": "a typed markdown library of procurement / supply-chain / mechanism-design patterns, each paired with application cases from ai-build work, plus a python cli that validates the typing, scores transfer, and renders quarterly retros. a personal knowledge primitive for vignesh.",
+    "github": "https://github.com/AthenaTheOwl/procurement-pattern-library",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m procurement_pattern_library validate"
+  },
+  {
+    "name": "sealed-bid-sourcing",
+    "domain": "procurement-mechanism",
+    "maturity": "lab",
+    "hook": "reference benchmark for sealed-bid reverse procurement: compares a sealed receipt-producing runtime (opens only winning bids, keeps losing bids out of buyer output) against an unsealed markup baseline on the same 10-supplier/5-lot scenario, and reports the surplus delta. for mechanism-design researchers and procurement-tooling teams.",
+    "github": "https://github.com/AthenaTheOwl/sealed-bid-sourcing",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m sealed_bid_sourcing validate scenarios/v0_10x5.json"
+  },
+  {
+    "name": "binding-constraint",
+    "domain": "semis",
+    "maturity": "lab",
+    "hook": "a deterministic diagnostic that takes a published capex plan and ranks which physical input (chip allocation, transformer lead time, water rights, labor, permits) is most likely to bind it; v0.1 ships one checked-in TSMC Arizona case and emits a sourced JSONL report. for an analyst/operator tracking semis buildout risk.",
+    "github": "https://github.com/AthenaTheOwl/binding-constraint",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m binding_constraint validate"
+  },
+  {
+    "name": "chip-supply-chain-map",
+    "domain": "semis",
+    "maturity": "flagship",
+    "hook": "an interactive cytoscape dependency graph of the global semiconductor supply chain (78 nodes, 180 edges) with a chokepoint heuristic, nine composable shock scenarios, sourced financial-sensitivity records, and a watchlist risk-packet export. for industry-curious readers, students, and analysts exploring chokepoints.",
+    "github": "https://github.com/AthenaTheOwl/chip-supply-chain-map",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "npm run build"
+  },
+  {
+    "name": "fab-risk-radar",
+    "domain": "semis",
+    "maturity": "active",
+    "hook": "scores 90-day disruption probability for tier-2/tier-3 semiconductor nodes (abf substrate, advanced-packaging osats) with three evidence items per score, rendering a monthly report. for semis procurement, resilience leads, and defense primes.",
+    "github": "https://github.com/AthenaTheOwl/fab-risk-radar",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python frr.py validate"
+  },
+  {
+    "name": "facility-war",
+    "domain": "semis",
+    "maturity": "active",
+    "hook": "deterministic supply-shock simulator over public supplier graphs \u00e2\u20ac\u201d loads a bom graph and a scenario, walks tier-1..4 dependencies, applies substitution edges, and writes a monte-carlo run record plus markdown report. for supply-chain resilience analysts stress-testing semis bills of materials.",
+    "github": "https://github.com/AthenaTheOwl/facility-war",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m facility_war validate"
+  },
+  {
+    "name": "semiconductor-e2e-manufacturing-optimization",
+    "domain": "semis",
+    "maturity": "active",
+    "hook": "an interactive streamlit app for fabless wafer sourcing under uncertainty: nominal, static-robust (bertsimas-sim), two-stage adaptive (vertex enumeration), and approximate ellipsoidal models over a 5d uncertainty set, with monte carlo on yield/cost/revenue. for studying robust supply-chain decisions in semis.",
+    "github": "https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization",
+    "live": null,
+    "deploy_target": "codex-lane",
+    "demo_cmd": "pip install -r requirements.txt; python -m streamlit run app.py"
+  },
+  {
+    "name": "wafer-to-watt",
+    "domain": "semis",
+    "maturity": "lab",
+    "hook": "parses a checked-in edgar 8-k html fixture into a typed accelerator-commitment graph (cowos/hbm allocation edges with citations), writes a jsonl snapshot and a quarterly markdown report, and validates it. for semis analysts wanting a citation-anchored allocation snapshot.",
+    "github": "https://github.com/AthenaTheOwl/wafer-to-watt",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python wtw.py validate"
+  }
+]

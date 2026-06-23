@@ -1,0 +1,198 @@
+{
+  "agent-notary-layer": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "binding-constraint": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "brief-calibration": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "brief-matrix": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "capital-build-reconciler": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "channel-atlas": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "commit-provenance": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "dream-replay-cli": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "earnings-pillar-diff": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "eval-forge": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "fab-risk-radar": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "facility-war": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "grid-silicon": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "interconnect-alpha": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "modelswap-replay": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "multitier-psi": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "negotiation-mechanism-replay": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "oulipo-memory-deck": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "pattern-index": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "policy-replay": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "portfolio-manifest": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "portfolio-thesis-plane": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "power-ppa-forge": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "pre-mortem-ledger": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "procurement-pattern-library": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "promotion-vs-pip": {
+    "live": null,
+    "target": "vercel"
+  },
+  "proof-gate-runner": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "puc-docket-rag": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "ratepayer-exposure": {
+    "live": null,
+    "target": "vercel"
+  },
+  "release-pillar-mapper": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "repo-position-coupling-index": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "repo-triage": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "review-queue": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "robust-siting-lab": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "sealed-bid-sourcing": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "site-atlas": {
+    "live": null,
+    "target": "vercel"
+  },
+  "source-decay-ledger": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "sovereign-compute": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "thesis-pillar-tracker": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "trace-ledger-spec": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "trace-to-eval-cli": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "wafer-to-watt": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "athena-site": {
+    "live": null,
+    "target": "vercel"
+  },
+  "starforge-narrative-tools": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "starforge-choicescript-demo": {
+    "live": null,
+    "target": "vercel"
+  },
+  "starforge-twine-demo": {
+    "live": null,
+    "target": "vercel"
+  },
+  "mcp-security-lab": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "trace-to-eval-harness": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "sports-prediction-os": {
+    "live": null,
+    "target": "streamlit"
+  }
+}

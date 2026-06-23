@@ -1,0 +1,864 @@
+{
+  "nodes": [
+    {
+      "name": "AthenaTheOwl",
+      "domain": "portfolio-tooling",
+      "maturity": "archive"
+    },
+    {
+      "name": "LLM-evaluation-framework",
+      "domain": "eval-observability",
+      "maturity": "active"
+    },
+    {
+      "name": "MIT-AI-Fall20",
+      "domain": "academic",
+      "maturity": "archive"
+    },
+    {
+      "name": "MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin",
+      "domain": "academic",
+      "maturity": "lab"
+    },
+    {
+      "name": "News-Bias-Multi-Agent-Pipeline",
+      "domain": "agent-runtime",
+      "maturity": "lab"
+    },
+    {
+      "name": "Robust-Facility-Location",
+      "domain": "optimization-or",
+      "maturity": "active"
+    },
+    {
+      "name": "agent-notary-layer",
+      "domain": "agent-runtime",
+      "maturity": "lab"
+    },
+    {
+      "name": "ai-field-brief",
+      "domain": "eval-observability",
+      "maturity": "flagship"
+    },
+    {
+      "name": "ai-supply-chain-copilot-prd",
+      "domain": "agent-runtime",
+      "maturity": "active"
+    },
+    {
+      "name": "athena-site",
+      "domain": "portfolio-tooling",
+      "maturity": "active"
+    },
+    {
+      "name": "binding-constraint",
+      "domain": "semis",
+      "maturity": "lab"
+    },
+    {
+      "name": "brief-calibration",
+      "domain": "eval-observability",
+      "maturity": "lab"
+    },
+    {
+      "name": "brief-matrix",
+      "domain": "eval-observability",
+      "maturity": "lab"
+    },
+    {
+      "name": "capital-build-reconciler",
+      "domain": "ai-infra",
+      "maturity": "lab"
+    },
+    {
+      "name": "channel-atlas",
+      "domain": "ai-infra",
+      "maturity": "lab"
+    },
+    {
+      "name": "chip-supply-chain-map",
+      "domain": "semis",
+      "maturity": "flagship"
+    },
+    {
+      "name": "commit-provenance",
+      "domain": "agent-runtime",
+      "maturity": "lab"
+    },
+    {
+      "name": "dispatch-optimizer",
+      "domain": "optimization-or",
+      "maturity": "active"
+    },
+    {
+      "name": "dream-replay-cli",
+      "domain": "agent-runtime",
+      "maturity": "active"
+    },
+    {
+      "name": "earnings-pillar-diff",
+      "domain": "academic",
+      "maturity": "lab"
+    },
+    {
+      "name": "eval-forge",
+      "domain": "eval-observability",
+      "maturity": "archive"
+    },
+    {
+      "name": "fab-risk-radar",
+      "domain": "semis",
+      "maturity": "active"
+    },
+    {
+      "name": "facility-war",
+      "domain": "semis",
+      "maturity": "active"
+    },
+    {
+      "name": "grid-silicon",
+      "domain": "ai-infra",
+      "maturity": "flagship"
+    },
+    {
+      "name": "interconnect-alpha",
+      "domain": "energy-grid",
+      "maturity": "active"
+    },
+    {
+      "name": "leetcode",
+      "domain": "academic",
+      "maturity": "archive"
+    },
+    {
+      "name": "mcp-security-lab",
+      "domain": "eval-observability",
+      "maturity": "active"
+    },
+    {
+      "name": "modelswap-replay",
+      "domain": "eval-observability",
+      "maturity": "lab"
+    },
+    {
+      "name": "multitier-psi",
+      "domain": "procurement-mechanism",
+      "maturity": "lab"
+    },
+    {
+      "name": "negotiation-mechanism-replay",
+      "domain": "procurement-mechanism",
+      "maturity": "lab"
+    },
+    {
+      "name": "oulipo-memory-deck",
+      "domain": "creative-narrative",
+      "maturity": "lab"
+    },
+    {
+      "name": "pattern-index",
+      "domain": "portfolio-tooling",
+      "maturity": "lab"
+    },
+    {
+      "name": "policy-replay",
+      "domain": "energy-grid",
+      "maturity": "lab"
+    },
+    {
+      "name": "portfolio-manifest",
+      "domain": "portfolio-tooling",
+      "maturity": "lab"
+    },
+    {
+      "name": "portfolio-thesis-plane",
+      "domain": "portfolio-tooling",
+      "maturity": "lab"
+    },
+    {
+      "name": "power-ppa-forge",
+      "domain": "procurement-mechanism",
+      "maturity": "lab"
+    },
+    {
+      "name": "pre-mortem-ledger",
+      "domain": "portfolio-tooling",
+      "maturity": "lab"
+    },
+    {
+      "name": "procurement-negotiation-lab",
+      "domain": "procurement-mechanism",
+      "maturity": "flagship"
+    },
+    {
+      "name": "procurement-pattern-library",
+      "domain": "procurement-mechanism",
+      "maturity": "lab"
+    },
+    {
+      "name": "promotion-vs-pip",
+      "domain": "creative-narrative",
+      "maturity": "lab"
+    },
+    {
+      "name": "proof-gate-runner",
+      "domain": "eval-observability",
+      "maturity": "active"
+    },
+    {
+      "name": "puc-docket-rag",
+      "domain": "civic-data",
+      "maturity": "active"
+    },
+    {
+      "name": "ratepayer-exposure",
+      "domain": "energy-grid",
+      "maturity": "active"
+    },
+    {
+      "name": "release-pillar-mapper",
+      "domain": "portfolio-tooling",
+      "maturity": "lab"
+    },
+    {
+      "name": "repo-position-coupling-index",
+      "domain": "portfolio-tooling",
+      "maturity": "lab"
+    },
+    {
+      "name": "repo-triage",
+      "domain": "portfolio-tooling",
+      "maturity": "active"
+    },
+    {
+      "name": "review-queue",
+      "domain": "agent-runtime",
+      "maturity": "lab"
+    },
+    {
+      "name": "robust-siting-lab",
+      "domain": "optimization-or",
+      "maturity": "lab"
+    },
+    {
+      "name": "sealed-bid-sourcing",
+      "domain": "procurement-mechanism",
+      "maturity": "lab"
+    },
+    {
+      "name": "semiconductor-e2e-manufacturing-optimization",
+      "domain": "semis",
+      "maturity": "active"
+    },
+    {
+      "name": "site-atlas",
+      "domain": "civic-data",
+      "maturity": "active"
+    },
+    {
+      "name": "source-decay-ledger",
+      "domain": "eval-observability",
+      "maturity": "lab"
+    },
+    {
+      "name": "sovereign-compute",
+      "domain": "ai-infra",
+      "maturity": "active"
+    },
+    {
+      "name": "sports-prediction-os",
+      "domain": "misc",
+      "maturity": "lab"
+    },
+    {
+      "name": "starforge-choicescript-demo",
+      "domain": "creative-narrative",
+      "maturity": "lab"
+    },
+    {
+      "name": "starforge-narrative-tools",
+      "domain": "creative-narrative",
+      "maturity": "lab"
+    },
+    {
+      "name": "starforge-renpy-demo",
+      "domain": "creative-narrative",
+      "maturity": "lab"
+    },
+    {
+      "name": "starforge-rpg-prototype",
+      "domain": "creative-narrative",
+      "maturity": "lab"
+    },
+    {
+      "name": "starforge-twine-demo",
+      "domain": "creative-narrative",
+      "maturity": "lab"
+    },
+    {
+      "name": "supplier-risk-rag-agent",
+      "domain": "ai-infra",
+      "maturity": "flagship"
+    },
+    {
+      "name": "thesis-pillar-tracker",
+      "domain": "portfolio-tooling",
+      "maturity": "lab"
+    },
+    {
+      "name": "trace-ledger-spec",
+      "domain": "eval-observability",
+      "maturity": "active"
+    },
+    {
+      "name": "trace-to-eval-cli",
+      "domain": "eval-observability",
+      "maturity": "lab"
+    },
+    {
+      "name": "trace-to-eval-harness",
+      "domain": "eval-observability",
+      "maturity": "active"
+    },
+    {
+      "name": "wafer-to-watt",
+      "domain": "semis",
+      "maturity": "lab"
+    },
+    {
+      "name": "world-food-program-robust-simulator",
+      "domain": "optimization-or",
+      "maturity": "active"
+    }
+  ],
+  "edges": [
+    {
+      "from": "binding-constraint",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "binding-constraint",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "brief-calibration",
+      "to": "source-decay-ledger"
+    },
+    {
+      "from": "brief-calibration",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "brief-matrix",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "brief-matrix",
+      "to": "review-queue"
+    },
+    {
+      "from": "brief-matrix",
+      "to": "brief-calibration"
+    },
+    {
+      "from": "capital-build-reconciler",
+      "to": "earnings-pillar-diff"
+    },
+    {
+      "from": "capital-build-reconciler",
+      "to": "thesis-pillar-tracker"
+    },
+    {
+      "from": "channel-atlas",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "dream-replay-cli",
+      "to": "trace-to-eval-harness"
+    },
+    {
+      "from": "earnings-pillar-diff",
+      "to": "thesis-pillar-tracker"
+    },
+    {
+      "from": "eval-forge",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "eval-forge",
+      "to": "trace-to-eval-harness"
+    },
+    {
+      "from": "fab-risk-radar",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "fab-risk-radar",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "fab-risk-radar",
+      "to": "wafer-to-watt"
+    },
+    {
+      "from": "facility-war",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "grid-silicon",
+      "to": "interconnect-alpha"
+    },
+    {
+      "from": "grid-silicon",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "grid-silicon",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "grid-silicon",
+      "to": "wafer-to-watt"
+    },
+    {
+      "from": "interconnect-alpha",
+      "to": "grid-silicon"
+    },
+    {
+      "from": "modelswap-replay",
+      "to": "trace-to-eval-harness"
+    },
+    {
+      "from": "multitier-psi",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "pattern-index",
+      "to": "procurement-negotiation-lab"
+    },
+    {
+      "from": "pattern-index",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "pattern-index",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "pattern-index",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "pattern-index",
+      "to": "trace-to-eval-harness"
+    },
+    {
+      "from": "policy-replay",
+      "to": "interconnect-alpha"
+    },
+    {
+      "from": "policy-replay",
+      "to": "grid-silicon"
+    },
+    {
+      "from": "policy-replay",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "portfolio-manifest",
+      "to": "athena-site"
+    },
+    {
+      "from": "portfolio-manifest",
+      "to": "portfolio-thesis-plane"
+    },
+    {
+      "from": "portfolio-thesis-plane",
+      "to": "athena-site"
+    },
+    {
+      "from": "portfolio-thesis-plane",
+      "to": "binding-constraint"
+    },
+    {
+      "from": "portfolio-thesis-plane",
+      "to": "portfolio-manifest"
+    },
+    {
+      "from": "power-ppa-forge",
+      "to": "sealed-bid-sourcing"
+    },
+    {
+      "from": "power-ppa-forge",
+      "to": "interconnect-alpha"
+    },
+    {
+      "from": "power-ppa-forge",
+      "to": "grid-silicon"
+    },
+    {
+      "from": "power-ppa-forge",
+      "to": "agent-notary-layer"
+    },
+    {
+      "from": "procurement-pattern-library",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "procurement-pattern-library",
+      "to": "procurement-negotiation-lab"
+    },
+    {
+      "from": "procurement-pattern-library",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "procurement-pattern-library",
+      "to": "athena-site"
+    },
+    {
+      "from": "proof-gate-runner",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "proof-gate-runner",
+      "to": "athena-site"
+    },
+    {
+      "from": "puc-docket-rag",
+      "to": "ratepayer-exposure"
+    },
+    {
+      "from": "puc-docket-rag",
+      "to": "site-atlas"
+    },
+    {
+      "from": "puc-docket-rag",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "ratepayer-exposure",
+      "to": "interconnect-alpha"
+    },
+    {
+      "from": "ratepayer-exposure",
+      "to": "grid-silicon"
+    },
+    {
+      "from": "ratepayer-exposure",
+      "to": "puc-docket-rag"
+    },
+    {
+      "from": "release-pillar-mapper",
+      "to": "thesis-pillar-tracker"
+    },
+    {
+      "from": "release-pillar-mapper",
+      "to": "repo-position-coupling-index"
+    },
+    {
+      "from": "release-pillar-mapper",
+      "to": "repo-triage"
+    },
+    {
+      "from": "repo-position-coupling-index",
+      "to": "thesis-pillar-tracker"
+    },
+    {
+      "from": "repo-position-coupling-index",
+      "to": "repo-triage"
+    },
+    {
+      "from": "repo-position-coupling-index",
+      "to": "release-pillar-mapper"
+    },
+    {
+      "from": "repo-triage",
+      "to": "grid-silicon"
+    },
+    {
+      "from": "repo-triage",
+      "to": "repo-position-coupling-index"
+    },
+    {
+      "from": "repo-triage",
+      "to": "release-pillar-mapper"
+    },
+    {
+      "from": "review-queue",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "robust-siting-lab",
+      "to": "sovereign-compute"
+    },
+    {
+      "from": "site-atlas",
+      "to": "grid-silicon"
+    },
+    {
+      "from": "source-decay-ledger",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "sovereign-compute",
+      "to": "grid-silicon"
+    },
+    {
+      "from": "sovereign-compute",
+      "to": "robust-siting-lab"
+    },
+    {
+      "from": "trace-ledger-spec",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "trace-ledger-spec",
+      "to": "trace-to-eval-cli"
+    },
+    {
+      "from": "trace-to-eval-cli",
+      "to": "trace-to-eval-harness"
+    },
+    {
+      "from": "trace-to-eval-cli",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "wafer-to-watt",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "wafer-to-watt",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "procurement-negotiation-lab",
+      "to": "athena-site"
+    },
+    {
+      "from": "procurement-negotiation-lab",
+      "to": "ai-supply-chain-copilot-prd"
+    },
+    {
+      "from": "procurement-negotiation-lab",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "ai-field-brief",
+      "to": "athena-site"
+    },
+    {
+      "from": "ai-field-brief",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "ai-field-brief",
+      "to": "procurement-negotiation-lab"
+    },
+    {
+      "from": "ai-field-brief",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "ai-field-brief",
+      "to": "ai-supply-chain-copilot-prd"
+    },
+    {
+      "from": "athena-site",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "athena-site",
+      "to": "procurement-negotiation-lab"
+    },
+    {
+      "from": "athena-site",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "athena-site",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "athena-site",
+      "to": "ai-supply-chain-copilot-prd"
+    },
+    {
+      "from": "chip-supply-chain-map",
+      "to": "athena-site"
+    },
+    {
+      "from": "chip-supply-chain-map",
+      "to": "wafer-to-watt"
+    },
+    {
+      "from": "supplier-risk-rag-agent",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "supplier-risk-rag-agent",
+      "to": "wafer-to-watt"
+    },
+    {
+      "from": "supplier-risk-rag-agent",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "supplier-risk-rag-agent",
+      "to": "ai-supply-chain-copilot-prd"
+    },
+    {
+      "from": "ai-supply-chain-copilot-prd",
+      "to": "procurement-negotiation-lab"
+    },
+    {
+      "from": "ai-supply-chain-copilot-prd",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "ai-supply-chain-copilot-prd",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "ai-supply-chain-copilot-prd",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "starforge-narrative-tools",
+      "to": "starforge-renpy-demo"
+    },
+    {
+      "from": "starforge-narrative-tools",
+      "to": "starforge-rpg-prototype"
+    },
+    {
+      "from": "starforge-narrative-tools",
+      "to": "starforge-twine-demo"
+    },
+    {
+      "from": "starforge-narrative-tools",
+      "to": "starforge-choicescript-demo"
+    },
+    {
+      "from": "starforge-renpy-demo",
+      "to": "starforge-narrative-tools"
+    },
+    {
+      "from": "starforge-renpy-demo",
+      "to": "starforge-rpg-prototype"
+    },
+    {
+      "from": "starforge-renpy-demo",
+      "to": "starforge-twine-demo"
+    },
+    {
+      "from": "starforge-renpy-demo",
+      "to": "starforge-choicescript-demo"
+    },
+    {
+      "from": "starforge-rpg-prototype",
+      "to": "starforge-narrative-tools"
+    },
+    {
+      "from": "starforge-rpg-prototype",
+      "to": "starforge-renpy-demo"
+    },
+    {
+      "from": "starforge-rpg-prototype",
+      "to": "starforge-twine-demo"
+    },
+    {
+      "from": "starforge-rpg-prototype",
+      "to": "starforge-choicescript-demo"
+    },
+    {
+      "from": "starforge-choicescript-demo",
+      "to": "starforge-narrative-tools"
+    },
+    {
+      "from": "starforge-choicescript-demo",
+      "to": "starforge-renpy-demo"
+    },
+    {
+      "from": "starforge-choicescript-demo",
+      "to": "starforge-rpg-prototype"
+    },
+    {
+      "from": "starforge-choicescript-demo",
+      "to": "starforge-twine-demo"
+    },
+    {
+      "from": "starforge-twine-demo",
+      "to": "starforge-narrative-tools"
+    },
+    {
+      "from": "starforge-twine-demo",
+      "to": "starforge-renpy-demo"
+    },
+    {
+      "from": "starforge-twine-demo",
+      "to": "starforge-rpg-prototype"
+    },
+    {
+      "from": "starforge-twine-demo",
+      "to": "starforge-choicescript-demo"
+    },
+    {
+      "from": "mcp-security-lab",
+      "to": "athena-site"
+    },
+    {
+      "from": "trace-to-eval-harness",
+      "to": "procurement-negotiation-lab"
+    },
+    {
+      "from": "trace-to-eval-harness",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "trace-to-eval-harness",
+      "to": "athena-site"
+    },
+    {
+      "from": "sports-prediction-os",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "AthenaTheOwl",
+      "to": "ai-field-brief"
+    },
+    {
+      "from": "AthenaTheOwl",
+      "to": "trace-to-eval-harness"
+    },
+    {
+      "from": "AthenaTheOwl",
+      "to": "mcp-security-lab"
+    },
+    {
+      "from": "AthenaTheOwl",
+      "to": "procurement-negotiation-lab"
+    },
+    {
+      "from": "AthenaTheOwl",
+      "to": "supplier-risk-rag-agent"
+    },
+    {
+      "from": "AthenaTheOwl",
+      "to": "chip-supply-chain-map"
+    },
+    {
+      "from": "AthenaTheOwl",
+      "to": "athena-site"
+    },
+    {
+      "from": "AthenaTheOwl",
+      "to": "dispatch-optimizer"
+    },
+    {
+      "from": "AthenaTheOwl",
+      "to": "LLM-evaluation-framework"
+    }
+  ]
+}

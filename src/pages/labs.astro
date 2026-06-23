@@ -1,0 +1,146 @@
+---
+import Base from "../layouts/Base.astro";
+import LabCard from "../components/LabCard.astro";
+import portfolio from "../data/portfolio.json";
+import liveUrls from "../data/live-urls.json";
+import connections from "../data/connections.json";
+
+// degree (number of connection edges) per repo
+const degree: Record<string, number> = {};
+for (const e of connections.edges) {
+  degree[e.from] = (degree[e.from] ?? 0) + 1;
+  degree[e.to] = (degree[e.to] ?? 0) + 1;
+}
+
+const liveMap = liveUrls as Record<string, { live: string | null; target: string }>;
+
+// domain display order + labels
+const DOMAINS: { key: string; label: string }[] = [
+  { key: "semis", label: "Semiconductors & supply chain" },
+  { key: "energy-grid", label: "Energy & grid" },
+  { key: "eval-observability", label: "Eval & observability" },
+  { key: "agent-runtime", label: "Agent runtime & trust" },
+  { key: "ai-infra", label: "AI infrastructure" },
+  { key: "procurement-mechanism", label: "Procurement & mechanisms" },
+  { key: "optimization-or", label: "Optimization & OR" },
+  { key: "civic-data", label: "Civic & public data" },
+  { key: "portfolio-tooling", label: "Portfolio control plane" },
+  { key: "creative-narrative", label: "Creative & narrative" },
+  { key: "academic", label: "Academic" },
+  { key: "misc", label: "Other" },
+];
+
+const byDomain = DOMAINS.map((d) => ({
+  ...d,
+  repos: portfolio
+    .filter((r) => r.domain === d.key)
+    .sort((a, b) => {
+      const order = { flagship: 0, active: 1, lab: 2, archive: 3 } as Record<string, number>;
+      return (order[a.maturity] ?? 9) - (order[b.maturity] ?? 9) || a.name.localeCompare(b.name);
+    }),
+})).filter((d) => d.repos.length > 0);
+
+const counts = portfolio.reduce(
+  (acc, r) => {
+    acc.all += 1;
+    acc[r.maturity] = (acc[r.maturity] ?? 0) + 1;
+    return acc;
+  },
+  { all: 0, flagship: 0, active: 0, lab: 0, archive: 0 } as Record<string, number>
+);
+
+const liveCount = Object.values(liveMap).filter((v) => v.live).length;
+const deployableCount = Object.keys(liveMap).length;
+
+const filters = [
+  { key: "all", label: "All" },
+  { key: "flagship", label: "Flagship" },
+  { key: "active", label: "Active" },
+  { key: "lab", label: "Lab" },
+  { key: "archive", label: "Archive" },
+];
+---
+
+<Base
+  title="Labs — every project, what it does, and where it runs"
+  description="The full portfolio: what each project does, how they connect, and a live demo where one exists."
+>
+  <section class="shell py-14 sm:py-20">
+    <p class="eyebrow">Labs</p>
+    <h1 class="mt-3 text-4xl font-semibold sm:text-5xl">Every project, grouped by what it touches</h1>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-stone-700">
+      {counts.all} public projects across {byDomain.length} areas. Each card says what the project does
+      in one line, links the code, and &mdash; where one exists &mdash; a live demo you can click.
+      Most are small, runnable systems with a real artifact, not slideware.
+    </p>
+    <div class="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-[0.14em] text-stone-500">
+      <span>{counts.flagship} flagship</span>
+      <span>{counts.active} active</span>
+      <span>{counts.lab} lab</span>
+      <span>{counts.archive} archive</span>
+      <span class="text-accent">{liveCount}/{deployableCount} live</span>
+    </div>
+
+    <div class="mt-8 flex flex-wrap gap-2" aria-label="Filter by maturity">
+      {filters.map((filter) => (
+        <button
+          class="lab-filter focus-ring border border-line px-3 py-2 font-mono text-xs uppercase tracking-[0.16em] text-stone-600 data-[active=true]:border-accent data-[active=true]:bg-accent data-[active=true]:text-white"
+          type="button"
+          data-filter={filter.key}
+          data-active={filter.key === "all" ? "true" : "false"}
+        >
+          {filter.label} {counts[filter.key] ?? 0}
+        </button>
+      ))}
+    </div>
+  </section>
+
+  {byDomain.map((domain) => (
+    <section class="lab-domain border-t border-line py-10" data-domain={domain.key}>
+      <div class="shell">
+        <h2 class="text-2xl font-semibold">{domain.label}</h2>
+        <p class="mt-2 font-mono text-xs uppercase tracking-[0.14em] text-stone-500">{domain.repos.length} project{domain.repos.length === 1 ? "" : "s"}</p>
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {domain.repos.map((repo) => (
+            <LabCard repo={repo} live={liveMap[repo.name]?.live ?? null} degree={degree[repo.name] ?? 0} />
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="border-t border-line bg-stone-50 py-12">
+    <div class="shell">
+      <h2 class="text-2xl font-semibold">How they connect</h2>
+      <p class="mt-3 max-w-2xl text-stone-700">
+        {connections.edges.length} links across the portfolio &mdash; one project feeding another's
+        input, sharing a schema, or scoring a sibling. The most-connected hubs are the supply-chain
+        graph, the weekly field brief, and the grid-silicon energy line.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>(".lab-filter");
+    const cards = document.querySelectorAll<HTMLElement>(".lab-card");
+    const domains = document.querySelectorAll<HTMLElement>(".lab-domain");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selected = button.dataset.filter ?? "all";
+        buttons.forEach((item) => {
+          item.dataset.active = String(item === button);
+        });
+        cards.forEach((card) => {
+          const visible = selected === "all" || card.dataset.maturity === selected;
+          card.toggleAttribute("hidden", !visible);
+        });
+        // hide a domain section if it has no visible cards
+        domains.forEach((section) => {
+          const anyVisible = section.querySelectorAll<HTMLElement>(".lab-card:not([hidden])").length > 0;
+          section.toggleAttribute("hidden", !anyVisible);
+        });
+      });
+    });
+  </script>
+</Base>
