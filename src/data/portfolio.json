@@ -6,7 +6,7 @@
     "hook": "archived problem sets from mit 6.034 intro ai (fall 2020): search, csp, games, k-nn/decision trees, neural nets, svms, bayes nets, boosting, each lab with its own tester. a personal time-capsule of coursework, kept as-is.",
     "github": "https://github.com/AthenaTheOwl/MIT-AI-Fall20",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "streamlit",
     "demo_cmd": "cd Lab<n>; python tester.py"
   },
   {
@@ -16,7 +16,7 @@
     "hook": "the model files and data pipeline for vignesh's mit sdm thesis modeling bitcoin as a system-dynamics stock-and-flow system (vensim dss 9.2.4 .mdl plus calibration .voc/.out/.rep files and a python data-pull script). an academic artifact preserved at submission state.",
     "github": "https://github.com/AthenaTheOwl/MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "streamlit",
     "demo_cmd": "open thesis_checkpoint.mdl in Vensim DSS 9.2.4 (load DataFiles/ConsolidatedData.vdfx)"
   },
   {
@@ -46,7 +46,7 @@
     "hook": "a framing-brief generator that pulls an article set on a subject, summarizes, detects framing/bias, critiques the detection, and reconciles into one reader-facing brief with verbatim-verified citations. the same pipeline is implemented three ways (static python, langchain, langgraph) as an agent-orchestration teaching artifact; explicitly not a production bias detector.",
     "github": "https://github.com/AthenaTheOwl/News-Bias-Multi-Agent-Pipeline",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "streamlit",
     "demo_cmd": "python main.py \"<subject>\" --impl static --provider heuristic"
   },
   {
@@ -66,7 +66,7 @@
     "hook": "a markdown-first product teardown and prd for an ai supply-chain exception-triage copilot (nine numbered docs: problem through build plan), paired with a small static vite/react prototype showing an exception queue with cited evidence and approval-gated actions on synthetic data. for hiring managers and eng leaders assessing tpm judgment.",
     "github": "https://github.com/AthenaTheOwl/ai-supply-chain-copilot-prd",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "vercel",
     "demo_cmd": "npm run build"
   },
   {
@@ -146,7 +146,7 @@
     "hook": "a citation-faithful rag agent over sec edgar filings: a deterministic hybrid ranker plus a post-hoc verbatim citation verifier, exposed as a byok streamlit app, gated by four named eval suites that run with no vendor keys. for procurement/supplier-risk readers and rag practitioners studying citation faithfulness as a separate gate.",
     "github": "https://github.com/AthenaTheOwl/supplier-risk-rag-agent",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "streamlit",
     "demo_cmd": "python -m uv run streamlit run app.py"
   },
   {
@@ -276,7 +276,7 @@
     "hook": "an llm eval framework that scores a model output through three independent lenses (deterministic rules, persona raters, llm-as-judge) instead of one number, with yaml-configured suites, html/json reports, regression diffing, and ci exit-code gating. for engineers building product-grade eval pipelines.",
     "github": "https://github.com/AthenaTheOwl/LLM-evaluation-framework",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "streamlit",
     "demo_cmd": "pip install -e \".[dev]\"; llm-evals run eval_suites/customer_support/ --stage all --output html"
   },
   {
@@ -406,7 +406,7 @@
     "hook": "an interactive streamlit explorer for facility location under demand uncertainty: solves nominal, polyhedral-robust, ellipsoidal, and adaptive formulations (pulp/cbc + cvxpy) and stress-tests each with monte carlo across thousands of scenarios. for learning robust optimization tradeoffs.",
     "github": "https://github.com/AthenaTheOwl/Robust-Facility-Location",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "streamlit",
     "demo_cmd": "pip install -r requirements.txt; streamlit run app.py"
   },
   {
@@ -416,7 +416,7 @@
     "hook": "an event-driven simulator for constrained logistics dispatch that runs greedy sequential vs hungarian batch assignment on the same world (driver shifts, temperature/equipment constraints, pickup-and-delivery routes, deadlines) and shows where greedy falls behind. fastapi backend with a browser ui. for people studying assignment/routing tradeoffs.",
     "github": "https://github.com/AthenaTheOwl/dispatch-optimizer",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "streamlit",
     "demo_cmd": "pip install -r requirements.txt; python -m uvicorn app.main:app --reload"
   },
   {
@@ -436,7 +436,7 @@
     "hook": "a streamlit walkthrough of humanitarian food logistics under uncertainty on a real wfp syria scenario (mit 15.094): nominal lp, budget-constrained triage, robust socp, monte carlo validation, and two-stage adaptive contracts via cvxpy. for teaching the cost-of-robustness tradeoff.",
     "github": "https://github.com/AthenaTheOwl/world-food-program-robust-simulator",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "streamlit",
     "demo_cmd": "pip install -r requirements.txt; streamlit run app.py"
   },
   {
@@ -616,7 +616,7 @@
     "hook": "an interactive cytoscape dependency graph of the global semiconductor supply chain (78 nodes, 180 edges) with a chokepoint heuristic, nine composable shock scenarios, sourced financial-sensitivity records, and a watchlist risk-packet export. for industry-curious readers, students, and analysts exploring chokepoints.",
     "github": "https://github.com/AthenaTheOwl/chip-supply-chain-map",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "vercel",
     "demo_cmd": "npm run build"
   },
   {
@@ -646,7 +646,7 @@
     "hook": "an interactive streamlit app for fabless wafer sourcing under uncertainty: nominal, static-robust (bertsimas-sim), two-stage adaptive (vertex enumeration), and approximate ellipsoidal models over a 5d uncertainty set, with monte carlo on yield/cost/revenue. for studying robust supply-chain decisions in semis.",
     "github": "https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization",
     "live": null,
-    "deploy_target": "codex-lane",
+    "deploy_target": "streamlit",
     "demo_cmd": "pip install -r requirements.txt; python -m streamlit run app.py"
   },
   {

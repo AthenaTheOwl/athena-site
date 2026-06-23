@@ -194,5 +194,49 @@
   "sports-prediction-os": {
     "live": null,
     "target": "streamlit"
+  },
+  "MIT-AI-Fall20": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "News-Bias-Multi-Agent-Pipeline": {
+    "live": "https://news-bias-pipeline.streamlit.app",
+    "target": "streamlit"
+  },
+  "ai-supply-chain-copilot-prd": {
+    "live": null,
+    "target": "vercel"
+  },
+  "supplier-risk-rag-agent": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "LLM-evaluation-framework": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "Robust-Facility-Location": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "dispatch-optimizer": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "world-food-program-robust-simulator": {
+    "live": null,
+    "target": "streamlit"
+  },
+  "chip-supply-chain-map": {
+    "live": null,
+    "target": "vercel"
+  },
+  "semiconductor-e2e-manufacturing-optimization": {
+    "live": null,
+    "target": "streamlit"
   }
 }
