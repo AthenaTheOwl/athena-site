@@ -1,4 +1,4 @@
-# Portfolio health — 2026-06-01
+# Portfolio health — 2026-06-22
 
 ## Deploys
 
@@ -10,28 +10,39 @@
 | ai-field-brief | https://ai-field-brief.vercel.app | ✅ 200 |
 | procurement-negotiation-lab | https://procurement-negotiation-lab.vercel.app | ✅ 200 |
 
+## Content fingerprint
+
+| Repo | URL | Expected | Status |
+|---|---|---|---|
+| athena-site | https://athena-site-six.vercel.app | `Portfolio doors`, `entry points` | ✅ present |
+| chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | `chip-supply-chain-map` | ✅ present |
+| supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | `streamlit` | ✅ present |
+| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W23` | ✅ present |
+
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 6 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 32 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 2 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 27 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 53 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 0 | ✅ |
-| chip-supply-chain-map | 2 | ✅ |
-| supplier-risk-rag-agent | 2 | ✅ |
-| ai-field-brief | 1 | ✅ |
-| procurement-negotiation-lab | 2 | ✅ |
-| ai-supply-chain-copilot-prd | 2 | ✅ |
-| mcp-security-lab | 0 | ✅ |
-| trace-to-eval-harness | 2 | ✅ |
-| dispatch-optimizer | 35 | ✅ |
-| LLM-evaluation-framework | 35 | ✅ |
+| athena-site | 6 | ✅ |
+| chip-supply-chain-map | 16 | ✅ |
+| supplier-risk-rag-agent | 16 | ✅ |
+| ai-field-brief | 0 | ✅ |
+| procurement-negotiation-lab | 0 | ✅ |
+| ai-supply-chain-copilot-prd | 23 | ✅ |
+| mcp-security-lab | 16 | ✅ |
+| trace-to-eval-harness | 5 | ✅ |
+| sports-prediction-os | 16 | ✅ |
+| dispatch-optimizer | 56 | ✅ |
+| LLM-evaluation-framework | 56 | ✅ |
+| News-Bias-Multi-Agent-Pipeline | 16 | ✅ |
 
 ## Starforge cluster forks
 
@@ -47,7 +58,7 @@
 
 ## Manifest drift
 
-- doors.json: 20 entries ✅
+- doors.json: 21 entries ✅
 
 ## CDCP status
 
@@ -61,6 +72,7 @@
 | ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ⚠️ local_root unresolved |
 | mcp-security-lab | 19 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
 | trace-to-eval-harness | 20 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
+| sports-prediction-os | 21 | cdcp-lite, has_specs | ⚠️ local_root unresolved |
 
 ## Anthropic models
 
