@@ -1,0 +1,2572 @@
+{
+  "scope": "portfolio",
+  "counts": {
+    "archive-functional": 1,
+    "functional": 47,
+    "likely-functional-needs-polish": 17,
+    "profile-index": 1
+  },
+  "repos": [
+    {
+      "name": "agent-notary-layer",
+      "local_path": "agent-notary-layer",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "agent-runtime",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "uv run notary verify path/to/receipt.json",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/notary/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_conformance.py",
+        "tests/test_verifier.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "ai-field-brief",
+      "local_path": "ai-field-brief",
+      "in_portfolio": true,
+      "maturity": "flagship",
+      "domain": "eval-observability",
+      "deploy_target": "special",
+      "live_url": null,
+      "demo_cmd": "pnpm --filter @aifieldbrief/web dev",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "package.json",
+        "vercel.json"
+      ],
+      "proof_files": [
+        "docs/deploy.md",
+        "examples",
+        "package.json",
+        "scripts/validate_decisions.py",
+        "scripts/validate_dreams.py",
+        "scripts/validate_policies.py",
+        "scripts/validate_registry.py",
+        "scripts/validate_roles.py",
+        "scripts/validate_run_evidence.py",
+        "scripts/validate_schemas.py",
+        "scripts/validate_sensitive_disclosures.py",
+        "scripts/validate_skills.py",
+        "scripts/validate_tools.py",
+        "tests",
+        "tests/property/test_matrix_invariants.py",
+        "tests/scripts/test_cadence_check.py",
+        "tests/scripts/test_chaos_run_evidence.py",
+        "tests/scripts/test_finalize_sandbox_ref.py",
+        "tests/scripts/test_replay_run.py",
+        "tests/scripts/test_run_evidence.py",
+        "tests/scripts/test_run_evidence_cli.py",
+        "tests/scripts/test_scout_runner.py",
+        "tests/scripts/test_validate_decisions_offline.py",
+        "tests/scripts/test_validate_run_evidence_cross_checks.py"
+      ],
+      "docs": [
+        "CHANGELOG.md",
+        "README.md",
+        "docs/MATRIX_PLANE_DESIGN.md",
+        "docs/UI_SPEC_PROMPT_MATRIX.md",
+        "docs/deploy.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:test",
+        "npm:build",
+        "npm:lint",
+        "npm:typecheck",
+        "npm:dev"
+      ],
+      "findings": [],
+      "score": 95,
+      "verdict": "functional"
+    },
+    {
+      "name": "ai-supply-chain-copilot-prd",
+      "local_path": "ai-supply-chain-copilot-prd",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "agent-runtime",
+      "deploy_target": "vercel",
+      "live_url": null,
+      "demo_cmd": "npm run build",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "index.html",
+        "package.json",
+        "vercel.json"
+      ],
+      "proof_files": [
+        "examples",
+        "package.json",
+        "scripts/validate_decisions.py",
+        "vite.config.js"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:test",
+        "npm:build",
+        "npm:dev",
+        "npm:preview"
+      ],
+      "findings": [],
+      "score": 95,
+      "verdict": "functional"
+    },
+    {
+      "name": "athena-site",
+      "local_path": "athena-site",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "portfolio-tooling",
+      "deploy_target": "vercel",
+      "live_url": null,
+      "demo_cmd": "npm run dev",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "package.json"
+      ],
+      "proof_files": [
+        "package.json",
+        "scripts/validate_schema_graph.py",
+        "scripts/validate_sensitive_disclosures.py",
+        "tests",
+        "tests/test_dec_coverage_report.py",
+        "tests/test_dec_dependency_graph.py",
+        "tests/test_portfolio_dashboard.py",
+        "tests/test_validate_schema_graph.py"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:build",
+        "npm:lint",
+        "npm:dev",
+        "npm:preview"
+      ],
+      "findings": [],
+      "score": 95,
+      "verdict": "functional"
+    },
+    {
+      "name": "AthenaTheOwl",
+      "local_path": "AthenaTheOwl",
+      "in_portfolio": true,
+      "maturity": "archive",
+      "domain": "portfolio-tooling",
+      "deploy_target": "none",
+      "live_url": null,
+      "demo_cmd": "python check_no_bom.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [],
+      "proof_files": [],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "no obvious executable entrypoint",
+        "README lacks explicit run/test verification",
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 55,
+      "verdict": "profile-index"
+    },
+    {
+      "name": "binding-constraint",
+      "local_path": "binding-constraint",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "semis",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m binding_constraint validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "tests",
+        "tests/test_binding_constraint.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "brief-calibration",
+      "local_path": "brief-calibration",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m brief_calibration validate --period 2026-Q2",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_ledger.py",
+        "tests/test_score.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/METHODOLOGY.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "brief-matrix",
+      "local_path": "brief-matrix",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m brief_matrix validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "scripts/validate_schemas.py",
+        "scripts/validate_tenants.py",
+        "tests",
+        "tests/test_calibrate.py",
+        "tests/test_cli.py",
+        "tests/test_loader.py",
+        "tests/test_voice_gate.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/METHODOLOGY.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "capital-build-reconciler",
+      "local_path": "capital-build-reconciler",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "ai-infra",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m capital_reconcile ingest --provider anthropic --raw tests/fixtures --out reports/2026-M06.fixture.parquet",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/capital_reconcile/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_pillars.py",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_ingest_helicone.py",
+        "tests/test_show.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "channel-atlas",
+      "local_path": "channel-atlas",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "ai-infra",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m src.channel_atlas build",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/channel_atlas/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_channel_atlas.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "chip-supply-chain-map",
+      "local_path": "chip-supply-chain-map",
+      "in_portfolio": true,
+      "maturity": "flagship",
+      "domain": "semis",
+      "deploy_target": "vercel",
+      "live_url": null,
+      "demo_cmd": "npm run build",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "index.html",
+        "package.json",
+        "vercel.json"
+      ],
+      "proof_files": [
+        "package.json",
+        "scripts/test_chaos_run_evidence.py",
+        "scripts/test_finalize_sandbox_ref.py",
+        "scripts/test_replay_determinism.py",
+        "scripts/test_replay_run.py",
+        "scripts/test_validate_run_evidence.py",
+        "scripts/validate_decisions.py",
+        "scripts/validate_dreams.py",
+        "scripts/validate_policies.py",
+        "scripts/validate_roles.py",
+        "scripts/validate_run_evidence.py",
+        "scripts/validate_tools.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/known-limitations.md",
+        "docs/methodology.md",
+        "docs/scenario-design.md",
+        "docs/scoring-history.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:test",
+        "npm:build",
+        "npm:lint",
+        "npm:dev",
+        "npm:preview"
+      ],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 80,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "commit-provenance",
+      "local_path": "commit-provenance",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "agent-runtime",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "git-provenance report --out reports/commit-provenance-v0.1.jsonl",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_report.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "dispatch-optimizer",
+      "local_path": "dispatch-optimizer",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "optimization-or",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "pip install -r requirements.txt; python -m uvicorn app.main:app --reload",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "tests",
+        "tests/test_integrity.py"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "dream-replay-cli",
+      "local_path": "dream-replay-cli",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "agent-runtime",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m dreamreplay run --traces <dir> --spec-ledger <dir> --decision-ledger <dir> --week 2026-W26 --run-date 2026-06-26 --out <dir>",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/dreamreplay/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_determinism.py",
+        "tests/test_end_to_end.py",
+        "tests/test_ingest_decisions.py",
+        "tests/test_ingest_specs.py",
+        "tests/test_ingest_traces.py",
+        "tests/test_render.py",
+        "tests/test_show.py",
+        "tests/test_synthesize.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/METHODOLOGY.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "earnings-pillar-diff",
+      "local_path": "earnings-pillar-diff",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "academic",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "uv run epd validate --pillar-repo ../thesis-pillar-tracker",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_memo_schema.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_validators.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "eval-forge",
+      "local_path": "eval-forge",
+      "in_portfolio": true,
+      "maturity": "archive",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m eval_forge init --repo ../supplier-risk-rag-agent --shape rag --out evals/",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "examples",
+        "pyproject.toml",
+        "reports",
+        "tests",
+        "tests/test_gate.py",
+        "tests/test_init.py",
+        "tests/test_pack.py",
+        "tests/test_run.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "fab-risk-radar",
+      "local_path": "fab-risk-radar",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "semis",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python frr.py validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/frr/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_frr.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "facility-war",
+      "local_path": "facility-war",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "semis",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m facility_war validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/facility_war/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_determinism.py",
+        "tests/test_geography_propagation.py",
+        "tests/test_report_presence.py",
+        "tests/test_schema_validation.py",
+        "tests/test_show.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "grid-silicon",
+      "local_path": "grid-silicon",
+      "in_portfolio": true,
+      "maturity": "flagship",
+      "domain": "ai-infra",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m grid_silicon validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/grid_silicon/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_ercot_fixture.py",
+        "tests/test_scoring.py",
+        "tests/test_validation.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "interconnect-alpha",
+      "local_path": "interconnect-alpha",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "energy-grid",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m interconnect_alpha validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "tests",
+        "tests/test_validate.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "leetcode",
+      "local_path": "leetcode",
+      "in_portfolio": true,
+      "maturity": "archive",
+      "domain": "academic",
+      "deploy_target": "none",
+      "live_url": null,
+      "demo_cmd": "python '1_Two Sum.py'",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [],
+      "proof_files": [
+        "scripts/validate_archive.py"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 70,
+      "verdict": "archive-functional"
+    },
+    {
+      "name": "LLM-evaluation-framework",
+      "local_path": "LLM-evaluation-framework",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "pip install -e \".[dev]\"; llm-evals run eval_suites/customer_support/ --stage all --output html",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_config.py",
+        "tests/test_deterministic.py",
+        "tests/test_judge.py",
+        "tests/test_persona.py",
+        "tests/test_regression.py",
+        "tests/test_runner.py"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "mcp-security-lab",
+      "local_path": "mcp-security-lab",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m mcp_security_lab scan examples/claude-desktop-config.json --out report.json",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "examples",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_athena_mcp_surface.py",
+        "scripts/validate_decisions.py",
+        "scripts/validate_dreams.py",
+        "scripts/validate_mcp_surface.py",
+        "scripts/validate_policies.py",
+        "scripts/validate_roles.py",
+        "scripts/validate_sensitive_disclosures.py",
+        "scripts/validate_skills.py",
+        "scripts/validate_tools.py",
+        "tests",
+        "tests/test_cli_show.py",
+        "tests/test_diff.py",
+        "tests/test_injection_corpus.py",
+        "tests/test_loader.py",
+        "tests/test_policy.py",
+        "tests/test_report.py",
+        "tests/test_scoring.py",
+        "tests/test_validate_athena_mcp_surface.py",
+        "tests/test_validate_mcp_surface_registry.py",
+        "tests/test_validate_sensitive_disclosures.py"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "MIT-AI-Fall20",
+      "local_path": "MIT-AI-Fall20",
+      "in_portfolio": true,
+      "maturity": "archive",
+      "domain": "academic",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "cd Lab<n>; python tester.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "Lab0/tester.py",
+        "Lab1/tester.py",
+        "Lab2/tester.py",
+        "Lab3/tester.py",
+        "Lab4/tester.py",
+        "Lab5/tester.py",
+        "Lab6/tester.py",
+        "Lab7/tester.py",
+        "Lab8/tester.py",
+        "Lab9/tester.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "Lab0/tester.py",
+        "Lab1/tester.py",
+        "Lab2/tester.py",
+        "Lab3/test_problems.py",
+        "Lab3/tester.py",
+        "Lab4/tester.py",
+        "Lab5/tester.py",
+        "Lab6/tester.py",
+        "Lab7/tester.py",
+        "Lab8/tester.py",
+        "Lab9/tester.py"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin",
+      "local_path": "MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "academic",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "open thesis_checkpoint.mdl in Vensim DSS 9.2.4 (load DataFiles/ConsolidatedData.vdfx)",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "scripts/validate_thesis_archive.py"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "modelswap-replay",
+      "local_path": "modelswap-replay",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m cli.main replay --route customer-support --release fixture-candidate-v1 --since 7d --offline --out decisions/model-swap/fixture-candidate-v1-customer-support.md",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_determinism.py",
+        "tests/test_end_to_end.py",
+        "tests/test_render.py",
+        "tests/test_replay.py",
+        "tests/test_sampler.py",
+        "tests/test_show.py",
+        "tests/test_verdict.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "multitier-psi",
+      "local_path": "multitier-psi",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "procurement-mechanism",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m mtpsi validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/mtpsi/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "examples",
+        "pyproject.toml",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_protocol.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/security-disclosure.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "negotiation-mechanism-replay",
+      "local_path": "negotiation-mechanism-replay",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "procurement-mechanism",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m uv run replay validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/replay/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "examples",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_replay_schema.py",
+        "tests",
+        "tests/test_matcher.py",
+        "tests/test_redactor.py",
+        "tests/test_render_roundtrip.py",
+        "tests/test_schema.py",
+        "tests/test_show.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "News-Bias-Multi-Agent-Pipeline",
+      "local_path": "News-Bias-Multi-Agent-Pipeline",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "agent-runtime",
+      "deploy_target": "streamlit",
+      "live_url": "https://news-bias-pipeline.streamlit.app",
+      "demo_cmd": "python main.py \"<subject>\" --impl static --provider heuristic",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "app.py",
+        "main.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "docs/deploy.md",
+        "scripts/validate_sensitive_disclosures.py",
+        "tests",
+        "tests/eval/test_bias_calls.py",
+        "tests/smoke/test_app_import.py",
+        "tests/unit/test_citation.py",
+        "tests/unit/test_framing.py",
+        "tests/unit/test_llm_provider.py",
+        "tests/unit/test_news_search.py",
+        "tests/unit/test_pipeline_impls.py",
+        "tests/unit/test_post_deploy_canary.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/deploy.md",
+        "docs/limitations.md",
+        "docs/product_vision.md",
+        "docs/requirements.md",
+        "docs/research.md",
+        "docs/roadmap.md",
+        "docs/three_implementations.md",
+        "docs/trust_model.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 75,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "oulipo-memory-deck",
+      "local_path": "oulipo-memory-deck",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "creative-narrative",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m oulipo_memory_deck validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "tests",
+        "tests/test_no_network.py",
+        "tests/test_render.py",
+        "tests/test_schema.py",
+        "tests/test_show.py",
+        "tests/test_swap.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "pattern-index",
+      "local_path": "pattern-index",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "portfolio-tooling",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m pattern_index validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/pattern_index/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_outcomes.py",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_dec_walker.py",
+        "tests/test_retro_writer.py",
+        "tests/test_show.py",
+        "tests/test_validate_outcomes.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "policy-replay",
+      "local_path": "policy-replay",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "energy-grid",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m policy_replay simulate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/policy_replay/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_policy_replay.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "portfolio-manifest",
+      "local_path": "portfolio-manifest",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "portfolio-tooling",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m portfolio_manifest validate --manifest manifests/example.yaml",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_decisions.py",
+        "scripts/validate_manifests.py",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_checks.py",
+        "tests/test_cli.py",
+        "tests/test_manifest.py",
+        "tests/test_snapshot.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/METHODOLOGY.md",
+        "docs/first-pr.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "portfolio-thesis-plane",
+      "local_path": "portfolio-thesis-plane",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "portfolio-tooling",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m portfolio_thesis_plane generate --week 2026-W25",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_registry.py",
+        "scripts/validate_rubric.py",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_rollup.py",
+        "tests/test_scorer.py",
+        "tests/test_show.py",
+        "tests/test_smoke.py",
+        "tests/test_validators.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/METHODOLOGY.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "power-ppa-forge",
+      "local_path": "power-ppa-forge",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "procurement-mechanism",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m power_ppa_forge validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_leakage_bound.py",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_simulator.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/SYSTEM_MAP.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "pre-mortem-ledger",
+      "local_path": "pre-mortem-ledger",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "portfolio-tooling",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m uv run premortem ledger list",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "examples",
+        "pyproject.toml",
+        "scripts/validate_premortem_schema.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_monthly.py",
+        "tests/test_rubric.py",
+        "tests/test_schema.py",
+        "tests/test_status_append_only.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/METHODOLOGY.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "procurement-negotiation-lab",
+      "local_path": "procurement-negotiation-lab",
+      "in_portfolio": true,
+      "maturity": "flagship",
+      "domain": "procurement-mechanism",
+      "deploy_target": "special",
+      "live_url": null,
+      "demo_cmd": "npm run dev",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "app.py",
+        "package.json",
+        "pyproject.toml",
+        "vercel.json"
+      ],
+      "proof_files": [
+        "_legacy/tests/test_algorithms.py",
+        "_legacy/tests/test_defaults.py",
+        "_legacy/tests/test_formula_engine.py",
+        "_legacy/tests/test_formulations.py",
+        "_legacy/tests/test_information_modes.py",
+        "_legacy/tests/test_learning_loop.py",
+        "_legacy/tests/test_scenario_loader.py",
+        "_legacy/tests/test_streamlit_app.py",
+        "_legacy/tests/test_synthetic_data.py",
+        "_legacy/tests/test_utility_and_cbt.py",
+        "data",
+        "package.json",
+        "playwright.config.ts",
+        "pyproject.toml",
+        "scripts/validate_decisions.py",
+        "scripts/validate_dreams.py",
+        "scripts/validate_first_actions.py",
+        "scripts/validate_policies.py",
+        "scripts/validate_roles.py",
+        "scripts/validate_run_evidence.py",
+        "scripts/validate_skills.py",
+        "scripts/validate_tools.py",
+        "tests",
+        "tests/factory/test_active_mvp_contract.py",
+        "tests/factory/test_artifacts.py",
+        "tests/factory/test_chaos_run_evidence.py",
+        "tests/factory/test_checkpoint_interrupts.py",
+        "tests/factory/test_cli_metadata.py",
+        "tests/factory/test_handoff_packet.py",
+        "tests/factory/test_interrupts.py",
+        "tests/factory/test_mcp_server.py",
+        "tests/factory/test_openai_agents_runtime.py",
+        "tests/factory/test_pipeline.py",
+        "tests/factory/test_privacy_canary.py",
+        "tests/factory/test_replay_determinism.py",
+        "tests/factory/test_replay_run.py",
+        "tests/factory/test_router.py",
+        "tests/factory/test_run_evidence.py",
+        "tests/factory/test_spec_tasks.py",
+        "tests/factory/test_state.py",
+        "tests/factory/test_task.py",
+        "tests/factory/test_templates.py",
+        "tests/factory/test_v2_lite.py",
+        "tests/factory/test_validate_run_evidence.py",
+        "tests/factory/test_workers.py",
+        "tests/property/test_cbt_budget_balance.py",
+        "tests/property/test_determinism.py",
+        "tests/property/test_individual_rationality.py",
+        "tests/property/test_infeasibility.py",
+        "tests/property/test_leakage_bound.py",
+        "tests/property/test_monotonicity.py",
+        "tests/property/test_numerical_stability.py",
+        "tests/property/test_pareto.py",
+        "tests/property/test_ts_parity.py",
+        "tests/test_admm_multi_party.py",
+        "tests/test_algorithm_baselines.py",
+        "tests/test_algorithms.py",
+        "tests/test_formula.py",
+        "tests/test_mechanism_sdk.py",
+        "tests/test_narrative_run_state.py",
+        "tests/test_narrative_story.py",
+        "tests/test_scenarios.py",
+        "tests/test_schemas.py",
+        "tests/test_spec_contract.py",
+        "tests/test_streamlit_app.py",
+        "tests/test_utility_and_cbt.py",
+        "tests/test_weighted_nash.py",
+        "tests/test_weighted_nash_mpc.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/algorithms.md",
+        "docs/architecture.md",
+        "docs/cbt.md",
+        "docs/decoy-library.md",
+        "docs/factory.md",
+        "docs/flopro.md",
+        "docs/formula-language.md",
+        "docs/information-value.md",
+        "docs/mechanism-sdk.md",
+        "docs/product-expansion-roadmap.md",
+        "docs/public-data-boundary.md",
+        "docs/synthetic-data.md",
+        "docs/tutorial.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:test",
+        "npm:build",
+        "npm:lint",
+        "npm:dev",
+        "npm:preview"
+      ],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 80,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "procurement-pattern-library",
+      "local_path": "procurement-pattern-library",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "procurement-mechanism",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m procurement_pattern_library validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "scripts/validate_outcomes.py",
+        "scripts/validate_patterns.py",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_ledger.py",
+        "tests/test_loader.py",
+        "tests/test_report.py",
+        "tests/test_score.py",
+        "tests/test_show.py",
+        "tests/test_validator.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/METHODOLOGY.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "promotion-vs-pip",
+      "local_path": "promotion-vs-pip",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "creative-narrative",
+      "deploy_target": "vercel",
+      "live_url": null,
+      "demo_cmd": "npm run validate && npm run render",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "package.json",
+        "print.example.html",
+        "print.html",
+        "vercel.json"
+      ],
+      "proof_files": [
+        "package.json",
+        "scripts/build_site.js",
+        "scripts/render_cards.js",
+        "scripts/validate_cards.js",
+        "tests"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:test",
+        "npm:build"
+      ],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 75,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "proof-gate-runner",
+      "local_path": "proof-gate-runner",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "bash scripts/run_gates.sh --gates voice_lint,spec_check --path .",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "examples",
+        "tests"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "puc-docket-rag",
+      "local_path": "puc-docket-rag",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "civic-data",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "pdr chunk --fixture tests/fixtures/va/PUR-2024-00001 (then index/search/extract)",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_chunk.py",
+        "tests/test_demo.py",
+        "tests/test_search.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "ratepayer-exposure",
+      "local_path": "ratepayer-exposure",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "energy-grid",
+      "deploy_target": "vercel",
+      "live_url": null,
+      "demo_cmd": "npm install && npm run build",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "package.json"
+      ],
+      "proof_files": [
+        "package.json"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:test",
+        "npm:build",
+        "npm:dev",
+        "npm:preview"
+      ],
+      "findings": [],
+      "score": 95,
+      "verdict": "functional"
+    },
+    {
+      "name": "release-pillar-mapper",
+      "local_path": "release-pillar-mapper",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "portfolio-tooling",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m release_pillar_mapper validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/release_mapper/__main__.py",
+        "src/release_pillar_mapper/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "examples",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_release_event.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_contracts.py",
+        "tests/test_render_roundtrip.py",
+        "tests/test_schema.py",
+        "tests/test_significance.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "repo-position-coupling-index",
+      "local_path": "repo-position-coupling-index",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "portfolio-tooling",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m uv run coupling validate coupling_index/2026-M07.md",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/coupling/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "examples",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_coupling_index.py",
+        "tests",
+        "tests/test_diff.py",
+        "tests/test_flagger.py",
+        "tests/test_render_roundtrip.py",
+        "tests/test_schemas.py",
+        "tests/test_show.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "repo-triage",
+      "local_path": "repo-triage",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "portfolio-tooling",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m uv run repo-triage render-memo ...",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/repo_triage/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_cli_smoke.py",
+        "tests/test_enforce_counts.py",
+        "tests/test_portfolio.py",
+        "tests/test_render_memo.py",
+        "tests/test_rubric.py",
+        "tests/test_rubric_pinned.py",
+        "tests/test_score_template.py",
+        "tests/test_validate_schemas.py",
+        "tests/test_voice_lint.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/METHODOLOGY.md",
+        "docs/first-pr.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "review-queue",
+      "local_path": "review-queue",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "agent-runtime",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m review_queue validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "examples",
+        "pyproject.toml",
+        "scripts/validate_decisions.py",
+        "scripts/validate_records.py",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_flows.py",
+        "tests/test_frontmatter.py",
+        "tests/test_schema.py",
+        "tests/test_scoring.py",
+        "tests/test_state.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/METHODOLOGY.md",
+        "docs/first-pr.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "Robust-Facility-Location",
+      "local_path": "Robust-Facility-Location",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "optimization-or",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "pip install -r requirements.txt; streamlit run app.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "app.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "DEPLOY.md"
+      ],
+      "docs": [
+        "DEPLOY.md",
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "robust-siting-lab",
+      "local_path": "robust-siting-lab",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "optimization-or",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m robust_siting_lab validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_model.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "sealed-bid-sourcing",
+      "local_path": "sealed-bid-sourcing",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "procurement-mechanism",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m sealed_bid_sourcing validate scenarios/v0_10x5.json",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/sealed_bid_sourcing/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_leakage_bound.py",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_scenario_validates.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "semiconductor-e2e-manufacturing-optimization",
+      "local_path": "semiconductor-e2e-manufacturing-optimization",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "semis",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "pip install -r requirements.txt; python -m streamlit run app.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "app.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "DEPLOY.md",
+        "validate.py"
+      ],
+      "docs": [
+        "DEPLOY.md",
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "site-atlas",
+      "local_path": "site-atlas",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "civic-data",
+      "deploy_target": "vercel",
+      "live_url": null,
+      "demo_cmd": "npm run build",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "package.json"
+      ],
+      "proof_files": [
+        "package.json"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:test",
+        "npm:build",
+        "npm:dev"
+      ],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 80,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "source-decay-ledger",
+      "local_path": "source-decay-ledger",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m source_decay_ledger validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/source_decay_ledger/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_ledger.py",
+        "tests/test_memo.py",
+        "tests/test_registry.py",
+        "tests/test_score.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "sovereign-compute",
+      "local_path": "sovereign-compute",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "ai-infra",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python sovereign_compute.py scorecard",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/sovereign_compute/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_sovereign_compute.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "sports-prediction-os",
+      "local_path": "sports-prediction-os",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "misc",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "uv run sports-os --help",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "scripts/validate_sensitive_disclosures.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_foundation.py",
+        "tests/test_registry.py",
+        "tests/test_run_manifest.py",
+        "tests/test_show.py",
+        "tests/test_understat.py"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "starforge-choicescript-demo",
+      "local_path": "starforge-choicescript-demo",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "creative-narrative",
+      "deploy_target": "vercel",
+      "live_url": null,
+      "demo_cmd": "python tools/check_release.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "package.json",
+        "vercel.json"
+      ],
+      "proof_files": [
+        "package.json",
+        "tests"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:test"
+      ],
+      "findings": [],
+      "score": 85,
+      "verdict": "functional"
+    },
+    {
+      "name": "starforge-narrative-tools",
+      "local_path": "starforge-narrative-tools",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "creative-narrative",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python tools/check_release.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "tests",
+        "tests/test_corpus_integrity.py",
+        "tests/test_tooling_compiles.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/cleanup-policy.md",
+        "docs/deterministic-orchestration.md",
+        "docs/portfolio-cluster.md",
+        "docs/portfolio-grade.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "starforge-renpy-demo",
+      "local_path": "starforge-renpy-demo",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "creative-narrative",
+      "deploy_target": "local-only",
+      "live_url": null,
+      "demo_cmd": "python tools/check_release.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "tests",
+        "tests/test_check_release.py",
+        "tests/test_clean_copy.py",
+        "tests/test_renpy_static_validation.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/deterministic-orchestration.md",
+        "docs/portfolio-grade.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "starforge-rpg-prototype",
+      "local_path": "starforge-rpg-prototype",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "creative-narrative",
+      "deploy_target": "local-only",
+      "live_url": null,
+      "demo_cmd": "python tools/check_release.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml"
+      ],
+      "proof_files": [
+        "data",
+        "examples",
+        "pyproject.toml",
+        "scripts/validate_balance.py",
+        "tests",
+        "tests_py/test_check_release.py",
+        "tests_py/test_project_integrity.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/PARTY_SPLIT_SYSTEM.md",
+        "docs/TASK_3.3_IMPLEMENTATION_SUMMARY.md",
+        "docs/deterministic-orchestration.md",
+        "docs/portfolio-grade.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "starforge-twine-demo",
+      "local_path": "starforge-twine-demo",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "creative-narrative",
+      "deploy_target": "vercel",
+      "live_url": null,
+      "demo_cmd": "npm run build",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "package.json",
+        "vercel.json"
+      ],
+      "proof_files": [
+        "package.json",
+        "playwright.config.ts",
+        "tests"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [
+        "npm:test",
+        "npm:build"
+      ],
+      "findings": [],
+      "score": 90,
+      "verdict": "functional"
+    },
+    {
+      "name": "supplier-risk-rag-agent",
+      "local_path": "supplier-risk-rag-agent",
+      "in_portfolio": true,
+      "maturity": "flagship",
+      "domain": "ai-infra",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m uv run streamlit run app.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "app.py",
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_decision_records.py",
+        "scripts/validate_decisions.py",
+        "scripts/validate_dreams.py",
+        "scripts/validate_policies.py",
+        "scripts/validate_roles.py",
+        "scripts/validate_run_evidence.py",
+        "scripts/validate_skills.py",
+        "scripts/validate_tools.py",
+        "tests",
+        "tests/test_agent_tools_evals.py",
+        "tests/test_chaos_run_evidence.py",
+        "tests/test_chunker.py",
+        "tests/test_citations.py",
+        "tests/test_config.py",
+        "tests/test_cross_encoder.py",
+        "tests/test_decision.py",
+        "tests/test_edgar_refresh.py",
+        "tests/test_manifest.py",
+        "tests/test_portfolio_rollup.py",
+        "tests/test_ranker.py",
+        "tests/test_ranker_weights.py",
+        "tests/test_refusal.py",
+        "tests/test_replay_determinism.py",
+        "tests/test_replay_run.py",
+        "tests/test_run_evidence.py",
+        "tests/test_run_evidence_integration.py",
+        "tests/test_validate_decisions_offline.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/architecture.md",
+        "docs/citation-shape-evolution.md",
+        "docs/eval-discipline.md",
+        "docs/eval_methodology.md",
+        "docs/failure_modes.md",
+        "docs/trust_model.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "thesis-pillar-tracker",
+      "local_path": "thesis-pillar-tracker",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "portfolio-tooling",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "uv run tpt validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_pillar_schema.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_validation_scripts.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "trace-ledger-spec",
+      "local_path": "trace-ledger-spec",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m trace_ledger_spec validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "examples",
+        "pyproject.toml",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_examples.py",
+        "tests/test_hash.py",
+        "tests/test_schema.py",
+        "tests/test_seq.py",
+        "tests/test_vocab.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "trace-to-eval-cli",
+      "local_path": "trace-to-eval-cli",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m trace_to_eval_cli validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "examples",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_cli.py",
+        "tests/test_runner.py",
+        "tests/test_scripts.py"
+      ],
+      "docs": [
+        "README.md",
+        "STATUS.md",
+        "docs/first-pr.md",
+        "docs/product-brief.md",
+        "docs/system-map.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "trace-to-eval-harness",
+      "local_path": "trace-to-eval-harness",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "eval-observability",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python -m trace_to_eval run examples/eval_cases.yaml --traces examples/traces --out reports/run.json",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "examples",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_decisions.py",
+        "scripts/validate_dreams.py",
+        "scripts/validate_policies.py",
+        "scripts/validate_roles.py",
+        "scripts/validate_schemas.py",
+        "scripts/validate_sensitive_disclosures.py",
+        "scripts/validate_skills.py",
+        "scripts/validate_tools.py",
+        "tests",
+        "tests/test_audit.py",
+        "tests/test_cdcp_events.py",
+        "tests/test_dashboard.py",
+        "tests/test_ingest.py",
+        "tests/test_report.py",
+        "tests/test_run_bundle.py",
+        "tests/test_run_evidence.py",
+        "tests/test_runner.py",
+        "tests/test_show.py",
+        "tests/test_uri.py",
+        "tests/test_uri_properties.py",
+        "tests/test_validate_chain.py",
+        "tests/test_validate_strict.py",
+        "tests/test_validation.py"
+      ],
+      "docs": [
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [
+        "README still contains scaffold/placeholder language"
+      ],
+      "score": 65,
+      "verdict": "likely-functional-needs-polish"
+    },
+    {
+      "name": "wafer-to-watt",
+      "local_path": "wafer-to-watt",
+      "in_portfolio": true,
+      "maturity": "lab",
+      "domain": "semis",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "python wtw.py validate",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "pyproject.toml",
+        "src/wtw/__main__.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "data",
+        "pyproject.toml",
+        "reports",
+        "scripts/validate_schemas.py",
+        "tests",
+        "tests/test_wtw.py"
+      ],
+      "docs": [
+        "README.md",
+        "docs/first-pr.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    },
+    {
+      "name": "world-food-program-robust-simulator",
+      "local_path": "world-food-program-robust-simulator",
+      "in_portfolio": true,
+      "maturity": "active",
+      "domain": "optimization-or",
+      "deploy_target": "streamlit",
+      "live_url": null,
+      "demo_cmd": "pip install -r requirements.txt; streamlit run app.py",
+      "exists": true,
+      "is_git_repo": true,
+      "entrypoints": [
+        "app.py",
+        "streamlit_app.py"
+      ],
+      "proof_files": [
+        "DEPLOY.md",
+        "data",
+        "tests",
+        "tests/test_hybrid_nodes.py"
+      ],
+      "docs": [
+        "DEPLOY.md",
+        "README.md",
+        "readme.md"
+      ],
+      "package_scripts": [],
+      "findings": [],
+      "score": 80,
+      "verdict": "functional"
+    }
+  ]
+}

@@ -503,7 +503,7 @@
     "name": "release-pillar-mapper",
     "domain": "portfolio-tooling",
     "maturity": "lab",
-    "hook": "maps one significant frontier-model release into a typed report against three downstream systems the user runs \u00e2\u20ac\u201d the repo portfolio, the published brief corpus, and investing thesis pillars \u00e2\u20ac\u201d emitting a per-target action queue. for vignesh's release-triage.",
+    "hook": "maps one major frontier-model release into a typed report against three downstream systems the user runs \u00e2\u20ac\u201d the repo portfolio, the published brief corpus, and investing thesis pillars \u00e2\u20ac\u201d emitting a per-target action queue. for vignesh's release-triage.",
     "github": "https://github.com/AthenaTheOwl/release-pillar-mapper",
     "live": null,
     "deploy_target": "streamlit",
