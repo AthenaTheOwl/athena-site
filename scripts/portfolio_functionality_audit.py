@@ -219,7 +219,7 @@ def score_repo(audit: RepoAudit) -> None:
         return
     if audit.deploy_target == "none" and audit.proof_files and audit.docs and not audit.findings:
         audit.score = 70
-        audit.verdict = "archive-functional"
+        audit.verdict = "archive-proof-ok"
         return
     score = 0
     if audit.exists:
@@ -243,9 +243,9 @@ def score_repo(audit: RepoAudit) -> None:
     if not audit.exists:
         audit.verdict = "missing-local"
     elif audit.score >= 75 and not audit.findings:
-        audit.verdict = "functional"
+        audit.verdict = "proof-surface-ok"
     elif audit.score >= 65:
-        audit.verdict = "likely-functional-needs-polish"
+        audit.verdict = "proof-surface-ok-doc-polish"
     elif audit.score >= 45:
         audit.verdict = "ambiguous"
     else:
@@ -312,7 +312,7 @@ def render_markdown(audits: list[RepoAudit]) -> str:
         "| Verdict | Count |",
         "|---|---:|",
     ]
-    for verdict in ("functional", "archive-functional", "profile-index", "likely-functional-needs-polish", "ambiguous", "needs-work", "missing-local"):
+    for verdict in ("proof-surface-ok", "archive-proof-ok", "profile-index", "proof-surface-ok-doc-polish", "ambiguous", "needs-work", "missing-local"):
         lines.append(f"| {verdict} | {len(by_verdict.get(verdict, []))} |")
     lines.extend(["", "## highest-priority gaps", "", "| Repo | Score | Target | Findings |", "|---|---:|---|---|"])
     gap_audits = sorted(
