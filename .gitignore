@@ -8,6 +8,10 @@ npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
 
+# Local audit outputs
+ops/portfolio-functionality.json
+ops/portfolio-functionality.md
+
 # Python bytecode caches from running scripts/*.py
 __pycache__/
 *.pyc

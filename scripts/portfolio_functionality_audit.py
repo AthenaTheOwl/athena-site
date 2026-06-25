@@ -21,8 +21,6 @@ ROOT = Path(__file__).resolve().parents[1]
 PORTFOLIO_ROOT = ROOT.parent
 PORTFOLIO_JSON = ROOT / "src" / "data" / "portfolio.json"
 LIVE_URLS_JSON = ROOT / "src" / "data" / "live-urls.json"
-DEFAULT_JSON_OUTPUT = ROOT / "ops" / "portfolio-functionality.json"
-DEFAULT_MD_OUTPUT = ROOT / "ops" / "portfolio-functionality.md"
 
 README_NAMES = ("README.md", "readme.md", "README.rst")
 PROFILE_REPOS = {"AthenaTheOwl", "AthenaTheOwl-profile"}
@@ -335,8 +333,8 @@ def render_markdown(audits: list[RepoAudit]) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON_OUTPUT)
-    parser.add_argument("--md-output", type=Path, default=DEFAULT_MD_OUTPUT)
+    parser.add_argument("--json-output", type=Path)
+    parser.add_argument("--md-output", type=Path)
     parser.add_argument(
         "--include-local-extra",
         action="store_true",
@@ -363,11 +361,14 @@ def main() -> int:
         },
         "repos": [asdict(audit) for audit in sorted(audits, key=lambda item: item.name.lower())],
     }
-    args.json_output.parent.mkdir(parents=True, exist_ok=True)
-    args.json_output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    args.md_output.write_text(render_markdown(audits), encoding="utf-8")
-    print(f"wrote {args.json_output}")
-    print(f"wrote {args.md_output}")
+    if args.json_output:
+        args.json_output.parent.mkdir(parents=True, exist_ok=True)
+        args.json_output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+        print(f"wrote {args.json_output}")
+    if args.md_output:
+        args.md_output.parent.mkdir(parents=True, exist_ok=True)
+        args.md_output.write_text(render_markdown(audits), encoding="utf-8")
+        print(f"wrote {args.md_output}")
     for verdict, count in payload["counts"].items():
         print(f"{verdict}: {count}")
     return 0
