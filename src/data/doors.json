@@ -18,7 +18,7 @@
     "url": "https://github.com/AthenaTheOwl/LLM-evaluation-framework",
     "hook": "an LLM eval framework where quality isn't one number. deterministic rules, stakeholder personas, LLM-as-judge. yaml in, html out, CI gates the whole thing.",
     "for": {
-      "science": "rules, personas, LLM-judge — three signals, one report",
+      "science": "rules, personas, LLM-judge \u2014 three signals, one report",
       "builder": "drop yaml suites in, ship html reports out",
       "ops": "wire CI to fail on regression, not vibes",
       "hiring": "evidence of eval discipline before it was a trend"
@@ -43,7 +43,7 @@
     "name": "semiconductor-e2e-manufacturing-optimization",
     "status": "solved",
     "url": "https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization",
-    "hook": "wafer supply-chain optimization in streamlit. nominal, static-robust, and two-stage adaptive — compared under monte carlo."
+    "hook": "wafer supply-chain optimization in streamlit. nominal, static-robust, and two-stage adaptive \u2014 compared under monte carlo."
   },
   {
     "n": "06",
@@ -57,7 +57,7 @@
     "name": "News-Bias-Multi-Agent-Pipeline",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/News-Bias-Multi-Agent-Pipeline",
-    "hook": "the same agent pipeline implemented three ways — static python, langchain, langgraph — so you can compare frameworks on a real BYOK demo. critic, structured judgments, verbatim citations.",
+    "hook": "the same agent pipeline implemented three ways \u2014 static python, langchain, langgraph \u2014 so you can compare frameworks on a real BYOK demo. critic, structured judgments, verbatim citations.",
     "for": {
       "builder": "compare static / langchain / langgraph on the same task with shared core",
       "science": "structured Pydantic judgments + verbatim citation verification",
@@ -217,6 +217,45 @@
       "builder": "fork the source-registry + offline-fixture pattern",
       "ops": "treat a sports analytics surface like any other evaluated system",
       "hiring": "evidence that eval-loop discipline transfers across domains"
+    }
+  },
+  {
+    "n": "22",
+    "name": "grid-silicon",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/grid-silicon",
+    "hook": "scores announced datacenter large-load projects 0-100 on how real they are. announced-vs-energized MW gap plus sourced queue, permit, and satellite signals.",
+    "for": {
+      "ops": "tell a real load buildout from a press release",
+      "builder": "fork the evidence-signal scoring layer",
+      "energy": "ERCOT queue realness without a subscription",
+      "hiring": "evidence of grid-data judgment, not just modeling"
+    }
+  },
+  {
+    "n": "23",
+    "name": "agent-notary-layer",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/agent-notary-layer",
+    "hook": "signed receipts for agent-to-agent actions. ed25519 hash-chained receipts in, a replayable dispute trail out, payload never exposed.",
+    "for": {
+      "security": "prove what an agent did without trusting its logs",
+      "builder": "verify a receipt chain with the CLI",
+      "ai-agents": "tamper-evident provenance between agents",
+      "hiring": "evidence of applied crypto and provenance design"
+    }
+  },
+  {
+    "n": "24",
+    "name": "eval-forge",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/eval-forge",
+    "hook": "eval-pack runner and CI gate for LLM systems. recall, citation-faithfulness, abstention, refusal in. a typed report and a non-zero exit on regression out.",
+    "for": {
+      "science": "score an LLM system against typed thresholds",
+      "builder": "wire it as a PR gate that blocks regressions",
+      "ops": "a deterministic eval report, no dashboards",
+      "hiring": "evidence of eval-driven engineering"
     }
   }
 ]
