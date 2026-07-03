@@ -122,7 +122,7 @@
   {
     "name": "grid-silicon",
     "domain": "ai-infra",
-    "maturity": "flagship",
+    "maturity": "active",
     "hook": "phantom-vs-real capacity engine for announced US data-center gigawatts \u2014 parses an ercot large-load queue fixture and emits a 0-100 realness score per project with five evidence items, shipped as a jsonl report. for power/semis equity desks and infra credit underwriters.",
     "github": "https://github.com/AthenaTheOwl/grid-silicon",
     "live": null,
@@ -322,7 +322,7 @@
   {
     "name": "mcp-security-lab",
     "domain": "eval-observability",
-    "maturity": "active",
+    "maturity": "flagship",
     "hook": "static risk scanner for mcp server configs: flags command execution, broad filesystem scope, unauthenticated remote transports, and prompt-injection language, then writes json/markdown policy reports. for security reviewers and agent-platform engineers.",
     "github": "https://github.com/AthenaTheOwl/mcp-security-lab",
     "live": null,
@@ -382,7 +382,7 @@
   {
     "name": "trace-to-eval-harness",
     "domain": "eval-observability",
-    "maturity": "active",
+    "maturity": "flagship",
     "hook": "python cli that turns a failed ai trace into a checked-in deterministic eval case and regression report, validates cdcp run-evidence packets, and wraps runs in runtime-agnostic bundles for replay/adapter comparison. for eval curators and review agents. no model key needed.",
     "github": "https://github.com/AthenaTheOwl/trace-to-eval-harness",
     "live": null,
