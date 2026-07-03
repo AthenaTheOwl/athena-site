@@ -72,7 +72,7 @@
   {
     "name": "commit-provenance",
     "domain": "agent-runtime",
-    "maturity": "lab",
+    "maturity": "archive",
     "hook": "intended to produce cryptographically signed, machine-verifiable per-commit author attribution for AI-mixed codebases (human vs AI-authored vs AI-reviewed). today it ships only a CLI that reports which readiness artifacts exist in the repo. for regulated eng teams and maintainers facing AI-PR floods.",
     "github": "https://github.com/AthenaTheOwl/commit-provenance",
     "live": null,
@@ -312,7 +312,7 @@
   {
     "name": "eval-forge",
     "domain": "eval-observability",
-    "maturity": "archive",
+    "maturity": "lab",
     "hook": "intended github-app-plus-cli that generates a recall@5 / citation-faithfulness / abstention / refusal / tool-call eval pack for a customer rag or agent repo and gates PRs on regressions. for ai teams who want evals that block merges, not dashboards.",
     "github": "https://github.com/AthenaTheOwl/eval-forge",
     "live": null,
@@ -372,7 +372,7 @@
   {
     "name": "trace-to-eval-cli",
     "domain": "eval-observability",
-    "maturity": "lab",
+    "maturity": "archive",
     "hook": "a local cli that ingests an agent trace (langgraph jsonl fixture), runs deterministic eval checks, and emits json/markdown reports plus a regression compare. for builders who want a repeatable pass/fail trace eval with no network or keys.",
     "github": "https://github.com/AthenaTheOwl/trace-to-eval-cli",
     "live": null,
@@ -522,7 +522,7 @@
   {
     "name": "repo-triage",
     "domain": "portfolio-tooling",
-    "maturity": "active",
+    "maturity": "archive",
     "hook": "a monthly forcing-function memo across the ~20 active portfolio repos: a hand-scorable 5-factor rubric forces exactly 2 ATTEND, 3 RETIRE, rest FREEZE, with a click cli to emit scoring stubs, render the memo, and run four merge gates. for the portfolio operator.",
     "github": "https://github.com/AthenaTheOwl/repo-triage",
     "live": null,
@@ -658,5 +658,35 @@
     "live": null,
     "deploy_target": "streamlit",
     "demo_cmd": "python wtw.py validate"
+  },
+  {
+    "name": "hbm-supply-tracker",
+    "domain": "semis",
+    "maturity": "lab",
+    "hook": "ranks announced hbm memory capacity by how well-backed it is against wafer, packaging, tooling, and customer-binding signals in a checked-in supply snapshot, scoring each announced line 0-100. for anyone deciding whether a capacity announcement is real.",
+    "github": "https://github.com/AthenaTheOwl/hbm-supply-tracker",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m hbm_supply_tracker validate"
+  },
+  {
+    "name": "interconnect-queue-risk",
+    "domain": "energy-grid",
+    "maturity": "lab",
+    "hook": "scores interconnection-queue projects 0-100 on the risk of not reaching commercial operation, from study-phase progress, network-upgrade cost per MW, and cluster withdrawal pressure, and names the binding factor per project. for grid planners triaging a crowded queue.",
+    "github": "https://github.com/AthenaTheOwl/interconnect-queue-risk",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "python -m interconnect_queue validate"
+  },
+  {
+    "name": "facility-location",
+    "domain": "optimization-or",
+    "maturity": "lab",
+    "hook": "a streamlit teaching tool for robust facility-location optimization: it solves one siting problem four ways (a nominal MILP plus three robustness models) and shows how the chosen placement moves as the model changes. for anyone learning robust optimization by watching it decide.",
+    "github": "https://github.com/AthenaTheOwl/facility-location",
+    "live": null,
+    "deploy_target": "streamlit",
+    "demo_cmd": "streamlit run app.py"
   }
 ]
