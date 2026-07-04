@@ -682,8 +682,8 @@
   {
     "name": "facility-location",
     "domain": "optimization-or",
-    "maturity": "lab",
-    "hook": "a streamlit teaching tool for robust facility-location optimization: it solves one siting problem four ways (a nominal MILP plus three robustness models) and shows how the chosen placement moves as the model changes. for anyone learning robust optimization by watching it decide.",
+    "maturity": "archive",
+    "hook": "archived: an earlier byte-identical copy of the robust facility-location engine, superseded by Robust-Facility-Location (which carries the deploy wrapper and the maintained scorecard). kept read-only to preserve history; use Robust-Facility-Location instead.",
     "github": "https://github.com/AthenaTheOwl/facility-location",
     "live": null,
     "deploy_target": "streamlit",
