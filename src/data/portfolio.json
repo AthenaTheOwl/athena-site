@@ -678,15 +678,5 @@
     "live": null,
     "deploy_target": "streamlit",
     "demo_cmd": "python -m interconnect_queue validate"
-  },
-  {
-    "name": "facility-location",
-    "domain": "optimization-or",
-    "maturity": "archive",
-    "hook": "archived: an earlier byte-identical copy of the robust facility-location engine, superseded by Robust-Facility-Location (which carries the deploy wrapper and the maintained scorecard). kept read-only to preserve history; use Robust-Facility-Location instead.",
-    "github": "https://github.com/AthenaTheOwl/facility-location",
-    "live": null,
-    "deploy_target": "streamlit",
-    "demo_cmd": "streamlit run app.py"
   }
 ]
