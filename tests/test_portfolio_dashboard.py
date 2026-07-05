@@ -141,12 +141,21 @@ class ManifestTests(unittest.TestCase):
         }
         self.assertEqual(pd.active_cdcp_repos(manifest), ["a", "d"])
 
-    def test_active_cdcp_repos_against_real_manifest_returns_eight(self) -> None:
+    def test_active_cdcp_repos_against_real_manifest(self) -> None:
+        # Count derives from an independent recount of the raw manifest, not a
+        # hardcoded literal: the previous `== 8` broke silently when the
+        # manifest grew (sports-prediction-os), and CI never runs pytest here.
         import yaml
 
         manifest = yaml.safe_load(pd.DEFAULT_MANIFEST.read_text(encoding="utf-8"))
         repos = pd.active_cdcp_repos(manifest)
-        self.assertEqual(len(repos), 8)
+        expected_count = sum(
+            1
+            for r in manifest.get("repos", [])
+            if r.get("status") == "active" and r.get("cdcp_status") is not None
+        )
+        self.assertEqual(len(repos), expected_count)
+        self.assertGreaterEqual(len(repos), 8)
         for expected in [
             "athena-site",
             "chip-supply-chain-map",
