@@ -17,8 +17,13 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Run voice lint
-        run: python scripts/voice_lint.py
+      - name: Run voice lint (proof-gate-runner@v0)
+        # Dogfoods the real published Action instead of the duplicated
+        # local scripts/voice_lint.py copy — the first true cross-repo
+        # consumer of AthenaTheOwl/proof-gate-runner.
+        uses: AthenaTheOwl/proof-gate-runner@v0
+        with:
+          gates: voice_lint
         continue-on-error: true   # advisory, not a merge gate
 
       - name: Check factory QA
