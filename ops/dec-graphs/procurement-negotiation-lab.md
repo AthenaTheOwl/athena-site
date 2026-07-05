@@ -1,12 +1,13 @@
 # DEC dependency graph — procurement-negotiation-lab
 
-- Total DECs: **33**
-- Amendment chains: **1**
-- Deepest chain depth (edges): **7**
+- Total DECs: **42**
+- Amendment chains: **2**
+- Deepest chain depth (edges): **8**
 
 ## Chains
 
-- DEC-FACTORY-007-factory-emits-conformant-run-evidence -> DEC-FACTORY-008-factory-run-evidence-cross-checks -> DEC-FACTORY-009-factory-replay-command -> DEC-FACTORY-010-procurement-lab-portable-repo-uri-migration -> DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain -> DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test -> DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix -> DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite
+- DEC-FACTORY-007-factory-emits-conformant-run-evidence -> DEC-FACTORY-008-factory-run-evidence-cross-checks -> DEC-FACTORY-009-factory-replay-command -> DEC-FACTORY-010-procurement-lab-portable-repo-uri-migration -> DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain -> DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test -> DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix -> DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite -> DEC-FACTORY-015-systems-thinking-discipline-adoption
+- DEC-NASH-001-weighted-nash-mechanism-parameters -> DEC-NASH-002-bounded-leakage-protocol-and-report -> DEC-MPC-001-mpc-mechanism-path-and-contract
 
 ## DECs
 
@@ -27,6 +28,10 @@
 | `DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test` | approved | DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain | 2026-05-29 |
 | `DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix` | approved | DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test | 2026-05-29 |
 | `DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite` | approved | DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix | 2026-05-29 |
+| `DEC-FACTORY-015-systems-thinking-discipline-adoption` | approved | DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite | 2026-05-29 |
+| `DEC-FACTORY-019-active-mvp-contract` | approved | — | 2026-06-21 |
+| `DEC-FACTORY-016-metrics-ledger` | approved | — | 2026-06-21 |
+| `DEC-FACTORY-018-multi-phase-pilot-before-scale-up` | approved | — | 2026-06-20 |
 | `DEC-LAB-005-visible-so-what-before-controls` | approved | — | 2026-05-24 |
 | `DEC-LAB-006-canonical-scenario-presets-plus-editable-knobs` | approved | — | 2026-05-24 |
 | `DEC-LAB-007-canonical-agent-archetypes-with-behavior-knobs` | approved | — | 2026-05-24 |
@@ -37,10 +42,15 @@
 | `DEC-MOBREL-003-tier-0-3-proof-ladder` | approved | — | 2026-05-24 |
 | `DEC-MOBREL-004-release-ledger-as-durable-evidence` | approved | — | 2026-05-24 |
 | `DEC-MOBREL-005-mobile-e2e-on-hosted-android-emulator` | approved | — | 2026-05-24 |
+| `DEC-MPC-001-mpc-mechanism-path-and-contract` | approved | DEC-NASH-002-bounded-leakage-protocol-and-report | 2026-06-01 |
+| `DEC-NASH-001-weighted-nash-mechanism-parameters` | approved | — | 2026-06-01 |
+| `DEC-NASH-002-bounded-leakage-protocol-and-report` | approved | DEC-NASH-001-weighted-nash-mechanism-parameters | 2026-06-01 |
+| `DEC-NEGOTIATE-001-versioned-surface-contract-before-engine-reconnect` | approved | — | 2026-06-03 |
 | `DEC-PLAY-001-six-canonical-roles-fixed-set` | approved | — | 2026-05-24 |
 | `DEC-PLAY-002-one-decision-per-round-design` | approved | — | 2026-05-24 |
 | `DEC-PLAY-003-consequence-before-math` | approved | — | 2026-05-24 |
 | `DEC-PLAY-004-teach-terms-in-context` | approved | — | 2026-05-24 |
+| `DEC-PROP-001-engine-property-test-battery` | approved | — | 2026-06-01 |
 | `DEC-SDK-001-library-boundary-wraps-engine-before-code-move` | approved | — | 2026-05-25 |
 | `DEC-SDK-002-public-api-three-operations` | approved | — | 2026-05-25 |
 | `DEC-SDK-003-module-demo-before-app-integration` | approved | — | 2026-05-25 |

@@ -4,4 +4,6 @@ digraph dec_chains_ai_supply_chain_copilot_prd {
   "DEC-PRD-002-trust-boundaries-named-per-component" [shape=box, style=solid];
   "DEC-PRD-003-no-auto-execute-supplier-facing-actions" [shape=box, style=solid];
   "DEC-PRD-004-install-cdcp-governance" [shape=box, style=solid];
+  "DEC-PRD-005-systems-thinking-discipline-adoption" [shape=box, style=solid];
+  "DEC-PRD-005-systems-thinking-discipline-adoption" -> "DEC-PRD-004-install-cdcp-governance" [label="amends"];
 }

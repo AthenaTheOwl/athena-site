@@ -11,8 +11,10 @@ digraph dec_chains_trace_to_eval_harness {
   "DEC-TTE-009-packet-generator-resolves-repo-uris" [shape=box, style=solid];
   "DEC-TTE-010-trace-to-eval-harness-ci-enforces-run-evidence-chain" [shape=box, style=solid];
   "DEC-TTE-011-uri-parser-property-tests-and-validate-chain" [shape=box, style=solid];
+  "DEC-TTE-012-systems-thinking-discipline-adoption" [shape=box, style=solid];
   "DEC-TTE-008-run-evidence-packet-preserves-producer-identity" -> "DEC-TTE-007-run-evidence-packet-as-review-boundary" [label="amends"];
   "DEC-TTE-009-packet-generator-resolves-repo-uris" -> "DEC-TTE-008-run-evidence-packet-preserves-producer-identity" [label="amends"];
   "DEC-TTE-010-trace-to-eval-harness-ci-enforces-run-evidence-chain" -> "DEC-TTE-009-packet-generator-resolves-repo-uris" [label="amends"];
   "DEC-TTE-011-uri-parser-property-tests-and-validate-chain" -> "DEC-TTE-010-trace-to-eval-harness-ci-enforces-run-evidence-chain" [label="amends"];
+  "DEC-TTE-012-systems-thinking-discipline-adoption" -> "DEC-TTE-011-uri-parser-property-tests-and-validate-chain" [label="amends"];
 }

@@ -32,6 +32,8 @@ digraph dec_chains_ai_field_brief {
   "DEC-MTRX-004-db-migration-parked-not-wired" [shape=box, style=solid];
   "DEC-MTRX-005-w22-rerun-from-verified-cells-only" [shape=box, style=solid];
   "DEC-MTRX-006-brief-os-refinement-on-matrix-plane" [shape=box, style=solid];
+  "DEC-MTRX-007-pipeline-systems-thinking-upgrade" [shape=box, style=solid];
+  "DEC-MTRX-008-scout-runner-action-packet-discipline" [shape=box, style=solid];
   "DEC-PUB-001-public-feeds-from-build-snapshot" [shape=box, style=solid];
   "DEC-PUB-002-resend-contacts-plus-broadcast-cron" [shape=box, style=solid];
   "DEC-PUB-003-credential-safe-subscriber-ops-page" [shape=box, style=solid];
@@ -61,7 +63,12 @@ digraph dec_chains_ai_field_brief {
   "DEC-SRC-016-registry-type-map-to-source-type" [shape=box, style=solid];
   "DEC-SRC-017-static-registry-connector-readiness" [shape=box, style=solid];
   "DEC-SRC-018-source-registry-w22-expansion" [shape=box, style=solid];
+  "DEC-SRC-019-w22-tier-1-ecosystem-sweep" [shape=box, style=solid];
+  "DEC-SRC-020-w22-forums-courses-textbooks-recovery" [shape=box, style=solid];
+  "DEC-SRC-021-frontier-scout-lane-for-early-actionable-sources" [shape=box, style=solid];
   "DEC-MTRX-006-brief-os-refinement-on-matrix-plane" -> "DEC-MTRX-001-prompt-matrix-plane-install" [label="amends"];
+  "DEC-MTRX-007-pipeline-systems-thinking-upgrade" -> "DEC-MTRX-006-brief-os-refinement-on-matrix-plane" [label="amends"];
+  "DEC-MTRX-008-scout-runner-action-packet-discipline" -> "DEC-SRC-021-frontier-scout-lane-for-early-actionable-sources" [label="amends"];
   "DEC-PUB-006-brief-emits-conformant-run-evidence-cross-checks" -> "DEC-PUB-005-brief-emits-conformant-run-evidence" [label="amends"];
   "DEC-PUB-007-brief-replay-command" -> "DEC-PUB-006-brief-emits-conformant-run-evidence-cross-checks" [label="amends"];
   "DEC-PUB-008-brief-portable-repo-uri-migration" -> "DEC-PUB-007-brief-replay-command" [label="amends"];

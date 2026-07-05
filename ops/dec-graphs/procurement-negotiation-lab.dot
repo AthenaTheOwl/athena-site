@@ -15,6 +15,10 @@ digraph dec_chains_procurement_negotiation_lab {
   "DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test" [shape=box, style=solid];
   "DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix" [shape=box, style=solid];
   "DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite" [shape=box, style=solid];
+  "DEC-FACTORY-015-systems-thinking-discipline-adoption" [shape=box, style=solid];
+  "DEC-FACTORY-019-active-mvp-contract" [shape=box, style=solid];
+  "DEC-FACTORY-016-metrics-ledger" [shape=box, style=solid];
+  "DEC-FACTORY-018-multi-phase-pilot-before-scale-up" [shape=box, style=solid];
   "DEC-LAB-005-visible-so-what-before-controls" [shape=box, style=solid];
   "DEC-LAB-006-canonical-scenario-presets-plus-editable-knobs" [shape=box, style=solid];
   "DEC-LAB-007-canonical-agent-archetypes-with-behavior-knobs" [shape=box, style=solid];
@@ -25,10 +29,15 @@ digraph dec_chains_procurement_negotiation_lab {
   "DEC-MOBREL-003-tier-0-3-proof-ladder" [shape=box, style=solid];
   "DEC-MOBREL-004-release-ledger-as-durable-evidence" [shape=box, style=solid];
   "DEC-MOBREL-005-mobile-e2e-on-hosted-android-emulator" [shape=box, style=solid];
+  "DEC-MPC-001-mpc-mechanism-path-and-contract" [shape=box, style=solid];
+  "DEC-NASH-001-weighted-nash-mechanism-parameters" [shape=box, style=solid];
+  "DEC-NASH-002-bounded-leakage-protocol-and-report" [shape=box, style=solid];
+  "DEC-NEGOTIATE-001-versioned-surface-contract-before-engine-reconnect" [shape=box, style=solid];
   "DEC-PLAY-001-six-canonical-roles-fixed-set" [shape=box, style=solid];
   "DEC-PLAY-002-one-decision-per-round-design" [shape=box, style=solid];
   "DEC-PLAY-003-consequence-before-math" [shape=box, style=solid];
   "DEC-PLAY-004-teach-terms-in-context" [shape=box, style=solid];
+  "DEC-PROP-001-engine-property-test-battery" [shape=box, style=solid];
   "DEC-SDK-001-library-boundary-wraps-engine-before-code-move" [shape=box, style=solid];
   "DEC-SDK-002-public-api-three-operations" [shape=box, style=solid];
   "DEC-SDK-003-module-demo-before-app-integration" [shape=box, style=solid];
@@ -40,4 +49,7 @@ digraph dec_chains_procurement_negotiation_lab {
   "DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test" -> "DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain" [label="amends"];
   "DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix" -> "DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test" [label="amends"];
   "DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite" -> "DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix" [label="amends"];
+  "DEC-FACTORY-015-systems-thinking-discipline-adoption" -> "DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite" [label="amends"];
+  "DEC-MPC-001-mpc-mechanism-path-and-contract" -> "DEC-NASH-002-bounded-leakage-protocol-and-report" [label="amends"];
+  "DEC-NASH-002-bounded-leakage-protocol-and-report" -> "DEC-NASH-001-weighted-nash-mechanism-parameters" [label="amends"];
 }
