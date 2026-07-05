@@ -176,6 +176,17 @@ def count_recent_artifacts(
 # ---------------------------------------------------------------------------
 
 
+def quorum_status(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], str]:
+    """Return checked-out rows, failing checked-out rows, and the report status."""
+    checked_out = [row for row in rows if row["checked_out"]]
+    failing = [row for row in checked_out if not row["pass"]]
+    if not checked_out:
+        return checked_out, failing, "SKIPPED (no repos checked out)"
+    if failing:
+        return checked_out, failing, "FAIL"
+    return checked_out, failing, "PASS"
+
+
 def render_report(
     rows: list[dict[str, Any]],
     window_days: int,
@@ -184,8 +195,7 @@ def render_report(
     now: dt.datetime,
 ) -> str:
     today = now.date().isoformat()
-    all_pass = all(row["pass"] for row in rows) if rows else False
-    overall = "PASS" if all_pass else "FAIL"
+    _checked_out, failing, overall = quorum_status(rows)
 
     lines: list[str] = [
         f"# Evidence quorum sentinel report - {today}",
@@ -221,7 +231,6 @@ def render_report(
             )
     lines.append("")
 
-    failing = [row for row in rows if row["checked_out"] and not row["pass"]]
     if failing:
         lines.append("## Failing repos")
         lines.append("")
@@ -236,7 +245,7 @@ def render_report(
     else:
         lines.append("## Failing repos")
         lines.append("")
-        lines.append("None. Every watched repo meets the quorum.")
+        lines.append("None. No checked-out repo is below quorum.")
         lines.append("")
 
     skipped = [row for row in rows if not row["checked_out"]]
@@ -410,13 +419,16 @@ def main(argv: list[str] | None = None) -> int:
     # do not contribute to the exit code so that CI (where siblings are absent)
     # does not always fail. The portfolio-audit workflow runs all sentinels
     # with continue-on-error so one sentinel failing does not mask the others.
-    failing = [r for r in rows if r["checked_out"] and not r["pass"]]
+    checked_out, failing, overall = quorum_status(rows)
+    if not checked_out:
+        print(f"evidence-quorum: {overall}", file=sys.stderr)
+        return 0
     if failing:
         names = ", ".join(r["name"] for r in failing)
         print(f"evidence-quorum: FAIL ({names})", file=sys.stderr)
         return 1
     print(
-        f"evidence-quorum: OK ({len([r for r in rows if r['checked_out']])} repo(s) checked)",
+        f"evidence-quorum: OK ({len(checked_out)} repo(s) checked)",
         file=sys.stderr,
     )
     return 0
