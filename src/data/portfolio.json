@@ -658,25 +658,5 @@
     "live": null,
     "deploy_target": "streamlit",
     "demo_cmd": "python wtw.py validate"
-  },
-  {
-    "name": "hbm-supply-tracker",
-    "domain": "semis",
-    "maturity": "lab",
-    "hook": "ranks announced hbm memory capacity by how well-backed it is against wafer, packaging, tooling, and customer-binding signals in a checked-in supply snapshot, scoring each announced line 0-100. for anyone deciding whether a capacity announcement is real.",
-    "github": "https://github.com/AthenaTheOwl/hbm-supply-tracker",
-    "live": null,
-    "deploy_target": "streamlit",
-    "demo_cmd": "python -m hbm_supply_tracker validate"
-  },
-  {
-    "name": "interconnect-queue-risk",
-    "domain": "energy-grid",
-    "maturity": "lab",
-    "hook": "scores interconnection-queue projects 0-100 on the risk of not reaching commercial operation, from study-phase progress, network-upgrade cost per MW, and cluster withdrawal pressure, and names the binding factor per project. for grid planners triaging a crowded queue.",
-    "github": "https://github.com/AthenaTheOwl/interconnect-queue-risk",
-    "live": null,
-    "deploy_target": "streamlit",
-    "demo_cmd": "python -m interconnect_queue validate"
   }
 ]

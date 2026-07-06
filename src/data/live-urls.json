@@ -238,17 +238,5 @@
   "semiconductor-e2e-manufacturing-optimization": {
     "live": null,
     "target": "streamlit"
-  },
-  "hbm-supply-tracker": {
-    "live": null,
-    "target": "streamlit"
-  },
-  "interconnect-queue-risk": {
-    "live": null,
-    "target": "streamlit"
-  },
-  "facility-location": {
-    "live": null,
-    "target": "streamlit"
   }
 }
