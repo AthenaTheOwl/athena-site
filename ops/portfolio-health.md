@@ -1,4 +1,4 @@
-# Portfolio health — 2026-07-05
+# Portfolio health — 2026-07-06
 
 ## Deploys
 
@@ -23,26 +23,26 @@
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 40 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 66 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 4 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 41 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 67 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 5 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 1 | ✅ |
-| chip-supply-chain-map | 8 | ✅ |
-| supplier-risk-rag-agent | 4 | ✅ |
-| ai-field-brief | 2 | ✅ |
-| procurement-negotiation-lab | 2 | ✅ |
-| ai-supply-chain-copilot-prd | 8 | ✅ |
-| mcp-security-lab | 3 | ✅ |
-| trace-to-eval-harness | 3 | ✅ |
-| sports-prediction-os | 3 | ✅ |
+| athena-site | 0 | ✅ |
+| chip-supply-chain-map | 0 | ✅ |
+| supplier-risk-rag-agent | 0 | ✅ |
+| ai-field-brief | 0 | ✅ |
+| procurement-negotiation-lab | 0 | ✅ |
+| ai-supply-chain-copilot-prd | 0 | ✅ |
+| mcp-security-lab | 0 | ✅ |
+| trace-to-eval-harness | 0 | ✅ |
+| sports-prediction-os | 0 | ✅ |
 | dispatch-optimizer | 0 | ✅ |
-| LLM-evaluation-framework | 2 | ✅ |
-| News-Bias-Multi-Agent-Pipeline | 8 | ✅ |
+| LLM-evaluation-framework | 0 | ✅ |
+| News-Bias-Multi-Agent-Pipeline | 9 | ✅ |
 
 ## Starforge cluster forks
 
@@ -64,15 +64,15 @@
 
 | Repo | Door | CDCP status | Drift |
 |---|---|---|---|
-| athena-site | 11 | meta-repo, cross-repo-schemas | — |
-| chip-supply-chain-map | 12 | installed, operating-model, first-decs | dream report present but `dreams-promoted` not declared |
-| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
-| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
-| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
-| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ✅ |
-| mcp-security-lab | 19 | installed, operating-model, first-decs | ✅ |
-| trace-to-eval-harness | 20 | installed, operating-model, first-decs | ✅ |
-| sports-prediction-os | 21 | cdcp-lite, has_specs | declares `cdcp-lite` but missing: has_decisions |
+| athena-site | 11 | meta-repo, cross-repo-schemas | ⚠️ local_root unresolved |
+| chip-supply-chain-map | 12 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
+| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
+| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
+| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
+| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ⚠️ local_root unresolved |
+| mcp-security-lab | 19 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
+| trace-to-eval-harness | 20 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
+| sports-prediction-os | 21 | cdcp-lite, has_specs | ⚠️ local_root unresolved |
 
 ## Anthropic models
 
@@ -83,4 +83,4 @@ Required models: claude-sonnet-4-6
 Verify at: https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 
 ---
-**2 critical issue(s) detected.** See sections above.
+All critical checks passed.
