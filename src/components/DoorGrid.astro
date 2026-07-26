@@ -2,13 +2,25 @@
 import doors from "../data/doors.json";
 import DoorCard from "./DoorCard.astro";
 
-const counts = doors.reduce(
+const DOOR_STATUSES = ["active", "workshop", "solved", "drawer"] as const;
+type DoorStatus = (typeof DOOR_STATUSES)[number];
+type FilterKey = "all" | DoorStatus;
+
+function isDoorStatus(value: string): value is DoorStatus {
+  return DOOR_STATUSES.includes(value as DoorStatus);
+}
+
+const counts = doors.reduce<Record<FilterKey, number>>(
   (acc, door) => {
+    if (!isDoorStatus(door.status)) {
+      throw new Error(`Unknown door status in doors.json: ${door.status}`);
+    }
+
     acc.all += 1;
     acc[door.status] += 1;
     return acc;
   },
-  { all: 0, active: 0, workshop: 0, solved: 0, drawer: 0 }
+  { all: 0, active: 0, workshop: 0, solved: 0, drawer: 0 },
 );
 
 const NUMBER_WORDS = [
@@ -20,7 +32,7 @@ const NUMBER_WORDS = [
 ];
 const doorCountWord = NUMBER_WORDS[counts.all] ?? String(counts.all);
 
-const filters = [
+const filters: Array<{ key: FilterKey; label: string }> = [
   { key: "all", label: "All" },
   { key: "active", label: "Active" },
   { key: "workshop", label: "Workshop" },
