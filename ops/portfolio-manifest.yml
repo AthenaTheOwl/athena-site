@@ -124,9 +124,7 @@ repos:
   - name: News-Bias-Multi-Agent-Pipeline
     door: "07"
     status: active
-    deploy_url: "https://news-bias-multi-agent-pipeline.streamlit.app"
-    content_fingerprint:
-      expected_substrings: ["streamlit"]
+    notes: "deployment exists but redirects to Streamlit authentication; public access is not verified"
 
   - { name: MIT-AI-Fall20, door: "08", status: drawer }
   - { name: leetcode, door: "09", status: drawer }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-25T15:30:54.027036Z",
+  "generated_at": "2026-07-26T15:11:31.152272Z",
   "source": "scripts/factory_snapshot.py",
   "repos": [
     {
@@ -465,7 +465,7 @@
       "name": "News-Bias-Multi-Agent-Pipeline",
       "door": "07",
       "status": "active",
-      "deploy_url": "https://news-bias-multi-agent-pipeline.streamlit.app",
+      "deploy_url": null,
       "cdcp_status": [],
       "exists_local": true,
       "specs": 0,

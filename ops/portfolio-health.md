@@ -1,4 +1,4 @@
-# Portfolio health — 2026-07-25
+# Portfolio health — 2026-07-26
 
 ## Deploys
 
@@ -9,7 +9,6 @@
 | supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | ✅ 200 |
 | ai-field-brief | https://ai-field-brief.vercel.app | ✅ 200 |
 | procurement-negotiation-lab | https://procurement-negotiation-lab.vercel.app | ✅ 200 |
-| News-Bias-Multi-Agent-Pipeline | https://news-bias-multi-agent-pipeline.streamlit.app | ✅ 200 |
 
 ## Content fingerprint
 
@@ -19,32 +18,31 @@
 | chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | `chip-supply-chain-map` | PASS |
 | supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | `streamlit` | PASS |
 | ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W30` | PASS |
-| News-Bias-Multi-Agent-Pipeline | https://news-bias-multi-agent-pipeline.streamlit.app | `streamlit` | PASS |
 
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 60 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 86 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 61 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 87 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 1 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 5 | ✅ |
+| athena-site | 0 | ✅ |
 | chip-supply-chain-map | 0 | ✅ |
 | supplier-risk-rag-agent | 0 | ✅ |
 | ai-field-brief | 0 | ✅ |
 | procurement-negotiation-lab | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 19 | ✅ |
-| mcp-security-lab | 19 | ✅ |
+| ai-supply-chain-copilot-prd | 20 | ✅ |
+| mcp-security-lab | 20 | ✅ |
 | trace-to-eval-harness | 0 | ✅ |
-| sports-prediction-os | 19 | ✅ |
-| dispatch-optimizer | 19 | ✅ |
-| LLM-evaluation-framework | 19 | ✅ |
-| News-Bias-Multi-Agent-Pipeline | 28 | ✅ |
+| sports-prediction-os | 20 | ✅ |
+| dispatch-optimizer | 20 | ✅ |
+| LLM-evaluation-framework | 20 | ✅ |
+| News-Bias-Multi-Agent-Pipeline | 29 | ✅ |
 
 ## Starforge cluster forks
 

@@ -168,7 +168,7 @@
     "target": "streamlit"
   },
   "athena-site": {
-    "live": null,
+    "live": "https://athena-site-six.vercel.app",
     "target": "vercel"
   },
   "starforge-narrative-tools": {
@@ -204,8 +204,16 @@
     "target": "streamlit"
   },
   "News-Bias-Multi-Agent-Pipeline": {
-    "live": "https://news-bias-multi-agent-pipeline.streamlit.app",
+    "live": null,
     "target": "streamlit"
+  },
+  "ai-field-brief": {
+    "live": "https://ai-field-brief.vercel.app",
+    "target": "vercel"
+  },
+  "procurement-negotiation-lab": {
+    "live": "https://procurement-negotiation-lab.vercel.app",
+    "target": "vercel"
   },
   "ai-supply-chain-copilot-prd": {
     "live": null,
@@ -232,7 +240,7 @@
     "target": "streamlit"
   },
   "chip-supply-chain-map": {
-    "live": null,
+    "live": "https://chip-supply-chain-map.vercel.app",
     "target": "vercel"
   },
   "semiconductor-e2e-manufacturing-optimization": {
