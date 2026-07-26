@@ -9,6 +9,7 @@ digraph dec_chains_mcp_security_lab {
   "DEC-MCPSEC-007-athena-mcp-surface-drift-gate" [shape=box, style=solid];
   "DEC-MCPSEC-008-mcp-server-agnostic-drift-gate" [shape=box, style=solid];
   "DEC-MCPSEC-009-systems-thinking-discipline-adoption" [shape=box, style=solid];
+  "DEC-MCPSEC-010-real-config-eval-scorecard" [shape=box, style=solid];
   "DEC-MCPSEC-008-mcp-server-agnostic-drift-gate" -> "DEC-MCPSEC-007-athena-mcp-surface-drift-gate" [label="amends"];
   "DEC-MCPSEC-009-systems-thinking-discipline-adoption" -> "DEC-MCPSEC-008-mcp-server-agnostic-drift-gate" [label="amends"];
 }

@@ -39,6 +39,8 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "ops" / "portfolio-manifest.yml"
 DEFAULT_OUTPUT = ROOT / "ops" / "portfolio-status.md"
+PUBLIC_CATALOG = ROOT / "src" / "data" / "portfolio.json"
+CURATED_DOORS = ROOT / "src" / "data" / "doors.json"
 
 RECENT_COMMITS_WINDOW_DAYS = 7
 LATEST_DECS_COUNT = 3
@@ -53,8 +55,9 @@ LATEST_DREAMS_COUNT = 3
 def run_git(repo_root: Path, *args: str) -> str:
     """Run a git command in repo_root. Returns stdout (stripped), or empty on failure."""
     try:
+        safe_root = repo_root.resolve().as_posix()
         result = subprocess.run(
-            ["git", *args],
+            ["git", "-c", f"safe.directory={safe_root}", *args],
             cwd=str(repo_root),
             capture_output=True,
             text=True,
@@ -202,6 +205,17 @@ def active_cdcp_repos(manifest: dict[str, Any]) -> list[str]:
     return out
 
 
+def json_list_count(path: Path) -> int:
+    """Count a JSON list, returning zero for missing or malformed files."""
+    import json
+
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return 0
+    return len(value) if isinstance(value, list) else 0
+
+
 # ---------------------------------------------------------------------------
 # probe + render
 # ---------------------------------------------------------------------------
@@ -278,7 +292,13 @@ def render_repo_section(name: str, data: dict[str, Any] | None) -> str:
 
 
 def render_dashboard(
-    repos: list[str], probes: dict[str, dict[str, Any] | None], local_root: Path | None
+    repos: list[str],
+    probes: dict[str, dict[str, Any] | None],
+    local_root: Path | None,
+    *,
+    public_catalog_count: int | None = None,
+    curated_door_count: int | None = None,
+    audit_manifest_count: int | None = None,
 ) -> str:
     today = dt.date.today().isoformat()
     out: list[str] = [
@@ -317,7 +337,7 @@ def render_dashboard(
     summary_rows = [
         "| Metric | Value |",
         "|---|---|",
-        f"| Repos indexed | {probed} / {len(repos)} |",
+        f"| Deep CDCP repos indexed | {probed} / {len(repos)} |",
         f"| Commits (last {RECENT_COMMITS_WINDOW_DAYS} days, summed) | {total_commits} |",
         f"| Latest-DEC entries shown (sum of per-repo top 3) | {total_decs_dir} |",
         f"| Latest-dream entries shown (sum of per-repo top 3) | {total_dreams_dir} |",
@@ -325,6 +345,24 @@ def render_dashboard(
         f"| Replay artifacts (sum) | {total_replay_artifacts} |",
         f"| CI workflow files (sum) | {total_workflows} |",
     ]
+    scope_rows = [
+        (
+            f"| Public catalog repos | {public_catalog_count} |"
+            if public_catalog_count is not None
+            else ""
+        ),
+        (
+            f"| Curated front-door entries | {curated_door_count} |"
+            if curated_door_count is not None
+            else ""
+        ),
+        (
+            f"| Audit manifest entries | {audit_manifest_count} |"
+            if audit_manifest_count is not None
+            else ""
+        ),
+    ]
+    summary_rows[2:2] = [row for row in scope_rows if row]
     out.extend(summary_rows)
     out.append("")
     out.append("## Per-repo detail")
@@ -417,7 +455,14 @@ def main(argv: list[str] | None = None) -> int:
             continue
         probes[name] = probe_repo(repo_root)
 
-    rendered = render_dashboard(repos, probes, local_root)
+    rendered = render_dashboard(
+        repos,
+        probes,
+        local_root,
+        public_catalog_count=json_list_count(PUBLIC_CATALOG),
+        curated_door_count=json_list_count(CURATED_DOORS),
+        audit_manifest_count=len(manifest.get("repos", [])),
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(rendered, encoding="utf-8")
     print(f"Wrote {args.output}", file=sys.stderr)

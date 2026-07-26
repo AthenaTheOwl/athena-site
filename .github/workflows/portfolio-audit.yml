@@ -2,7 +2,7 @@ name: Portfolio audit
 
 on:
   schedule:
-    - cron: "0 9 * * 1"   # Monday 09:00 UTC
+    - cron: "0 9 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -12,6 +12,8 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    env:
+      RANDOM_APPS_ROOT: ${{ runner.temp }}/random-apps
     steps:
       - uses: actions/checkout@v4
 
@@ -19,13 +21,23 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install audit deps
-        run: pip install httpx pyyaml
+      - name: Install audit dependencies
+        run: pip install httpx pyyaml pytest
+
+      - name: Materialize complete CDCP scope
+        run: |
+          python scripts/materialize_portfolio_scope.py \
+            --manifest ops/portfolio-manifest.yml \
+            --destination "$RANDOM_APPS_ROOT"
+
+      - name: Verify control-plane tests
+        run: python -m pytest -q
 
       - name: Validate cross-repo schema graph
         run: python scripts/validate_schema_graph.py
 
       - name: Run portfolio audit
+        id: portfolio_audit
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -36,10 +48,7 @@ jobs:
         continue-on-error: true
 
       - name: Run portfolio dashboard
-        # The dashboard probes sibling product repos under local_root.
-        # In CI we only have athena-site checked out, so per-repo sections
-        # for siblings will render as "Not checked out". That is the
-        # expected CI behavior; the run still produces a fresh summary.
+        id: portfolio_dashboard
         run: |
           python scripts/portfolio_dashboard.py \
             --manifest ops/portfolio-manifest.yml \
@@ -47,58 +56,41 @@ jobs:
         continue-on-error: true
 
       - name: Run evidence quorum sentinel
-        # Counts replay artifacts per active product repo in the last 30
-        # days and fails the workflow when any checked-out repo falls below
-        # the quorum. In CI only athena-site is checked out, so all watched
-        # product repos render as SKIPPED and the sentinel exits 0; the
-        # report still regenerates so its header reflects the run date.
-        # See DEC-CDCP-018.
+        id: evidence_quorum
         run: |
           python scripts/evidence_quorum_sentinel.py \
             --manifest ops/portfolio-manifest.yml \
             --output ops/evidence-quorum-report.md \
             --window-days 30 \
             --threshold 1
+        continue-on-error: true
 
       - name: Run DEC dependency graph generator
-        # Walks each portfolio repo's `decisions/` directory and emits a DOT
-        # graph + Markdown summary per repo plus a portfolio rollup. In CI
-        # only athena-site is checked out; sibling repos render as
-        # "not checked out" in the rollup. The local refresh on the
-        # maintainer's box is the canonical regeneration.
-        # See DEC-CDCP-017.
+        id: dec_graph
         if: always()
         run: |
           python scripts/dec_dependency_graph.py \
             --manifest ops/portfolio-manifest.yml \
             --output ops/dec-graphs
+        continue-on-error: true
 
       - name: Run DEC coverage report
-        # Scans each active CDCP repo's tests for references to the R-*
-        # ids named by its DECs and emits ops/dec-coverage-report.md with
-        # per-repo totals plus an uncovered-DEC breakdown. The script
-        # exits 1 when portfolio coverage falls below --threshold.
-        # The 5% bootstrap threshold sits just above the current floor;
-        # a per-quarter DEC amendment ratchets it up by 10pp as repos
-        # add R-* references to their tests. This is a real contract
-        # gate now (continue-on-error: false), not a flagged advisory.
-        # See DEC-CDCP-019.
+        id: dec_coverage
         if: always()
         run: |
           python scripts/dec_coverage_report.py \
             --manifest ops/portfolio-manifest.yml \
             --output ops/dec-coverage-report.md \
             --threshold 5
-        continue-on-error: false
+        continue-on-error: true
 
       - name: Sensitive disclosure gate
-        # Runs after generated reports and before the bot commit. This blocks
-        # public-source publication of credentials, operational incident
-        # detail, and unsafe remediation command material.
+        id: sensitive_disclosure
         if: always()
         run: python scripts/validate_sensitive_disclosures.py
+        continue-on-error: true
 
-      - name: Commit reports if changed
+      - name: Commit complete reports if changed
         if: always()
         run: |
           git config user.name "github-actions[bot]"
@@ -110,3 +102,28 @@ jobs:
             git commit -m "audit: weekly portfolio health + status + evidence quorum + DEC graphs + coverage"
             git push
           fi
+
+      - name: Enforce report outcomes
+        if: always()
+        env:
+          PORTFOLIO_AUDIT: ${{ steps.portfolio_audit.outcome }}
+          PORTFOLIO_DASHBOARD: ${{ steps.portfolio_dashboard.outcome }}
+          EVIDENCE_QUORUM: ${{ steps.evidence_quorum.outcome }}
+          DEC_GRAPH: ${{ steps.dec_graph.outcome }}
+          DEC_COVERAGE: ${{ steps.dec_coverage.outcome }}
+          SENSITIVE_DISCLOSURE: ${{ steps.sensitive_disclosure.outcome }}
+        run: |
+          failed=0
+          for result in \
+            "$PORTFOLIO_AUDIT" \
+            "$PORTFOLIO_DASHBOARD" \
+            "$EVIDENCE_QUORUM" \
+            "$DEC_GRAPH" \
+            "$DEC_COVERAGE" \
+            "$SENSITIVE_DISCLOSURE"
+          do
+            if [ "$result" != "success" ]; then
+              failed=1
+            fi
+          done
+          exit "$failed"

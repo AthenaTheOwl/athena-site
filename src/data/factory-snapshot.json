@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-05T03:03:01.514676Z",
+  "generated_at": "2026-07-25T15:30:54.027036Z",
   "source": "scripts/factory_snapshot.py",
   "repos": [
     {
@@ -31,7 +31,8 @@
       "cdcp_status": [
         "installed",
         "operating-model",
-        "first-decs"
+        "first-decs",
+        "dreams-promoted"
       ],
       "exists_local": true,
       "specs": 2,
@@ -207,12 +208,12 @@
         "skills-graduated"
       ],
       "exists_local": true,
-      "specs": 17,
-      "requirements": 168,
-      "decisions": 39,
+      "specs": 19,
+      "requirements": 216,
+      "decisions": 42,
       "roles": 8,
       "skills": 1,
-      "dreams": 2,
+      "dreams": 7,
       "validators": [
         "spec_check.py",
         "voice_lint.py",
@@ -283,15 +284,16 @@
       "cdcp_status": [
         "installed",
         "operating-model",
-        "first-decs"
+        "first-decs",
+        "dreams-promoted"
       ],
       "exists_local": true,
       "specs": 1,
       "requirements": 0,
-      "decisions": 9,
+      "decisions": 10,
       "roles": 6,
       "skills": 0,
-      "dreams": 0,
+      "dreams": 1,
       "validators": [
         "spec_check.py",
         "voice_lint.py",
@@ -359,6 +361,27 @@
       ]
     },
     {
+      "name": "sports-prediction-os",
+      "door": "21",
+      "status": "active",
+      "deploy_url": null,
+      "cdcp_status": [
+        "has_specs"
+      ],
+      "exists_local": true,
+      "specs": 2,
+      "requirements": 0,
+      "decisions": 0,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [
+        "spec_check.py",
+        "voice_lint.py"
+      ],
+      "events": []
+    },
+    {
       "name": "starforge-narrative-tools",
       "door": "14",
       "status": "workshop",
@@ -412,7 +435,7 @@
       "status": "active",
       "deploy_url": null,
       "cdcp_status": [],
-      "exists_local": false,
+      "exists_local": true,
       "specs": 0,
       "requirements": 0,
       "decisions": 0,
@@ -428,7 +451,23 @@
       "status": "active",
       "deploy_url": null,
       "cdcp_status": [],
-      "exists_local": false,
+      "exists_local": true,
+      "specs": 0,
+      "requirements": 0,
+      "decisions": 0,
+      "roles": 0,
+      "skills": 0,
+      "dreams": 0,
+      "validators": [],
+      "events": []
+    },
+    {
+      "name": "News-Bias-Multi-Agent-Pipeline",
+      "door": "07",
+      "status": "active",
+      "deploy_url": "https://news-bias-multi-agent-pipeline.streamlit.app",
+      "cdcp_status": [],
+      "exists_local": true,
       "specs": 0,
       "requirements": 0,
       "decisions": 0,
@@ -440,12 +479,12 @@
     }
   ],
   "totals": {
-    "repos": 13,
-    "specs": 36,
-    "requirements": 416,
-    "decisions": 196,
+    "repos": 15,
+    "specs": 40,
+    "requirements": 464,
+    "decisions": 200,
     "roles": 47,
     "skills": 5,
-    "dreams": 7
+    "dreams": 13
   }
 }

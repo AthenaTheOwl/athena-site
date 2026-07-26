@@ -118,6 +118,24 @@ class ProbeTests(unittest.TestCase):
     def test_schema_cache_freshness_returns_none_when_script_absent(self) -> None:
         self.assertIsNone(pd.schema_cache_freshness_exit(self.repo))
 
+    def test_run_git_scopes_safe_directory_to_the_probed_repo(self) -> None:
+        completed = subprocess.CompletedProcess(
+            args=[], returncode=0, stdout="abc123\n", stderr=""
+        )
+        from unittest import mock
+
+        with mock.patch.object(pd.subprocess, "run", return_value=completed) as run:
+            output = pd.run_git(self.repo, "rev-parse", "HEAD")
+
+        command = run.call_args.args[0]
+        self.assertEqual(output, "abc123")
+        self.assertEqual(command[:3], [
+            "git",
+            "-c",
+            f"safe.directory={self.repo.resolve().as_posix()}",
+        ])
+        self.assertEqual(command[3:], ["rev-parse", "HEAD"])
+
     def test_recent_commits_against_real_git_repo(self) -> None:
         init_git_repo(self.repo)
         (self.repo / "f.txt").write_text("hi\n", encoding="utf-8")
@@ -130,6 +148,14 @@ class ProbeTests(unittest.TestCase):
 
 
 class ManifestTests(unittest.TestCase):
+    def test_json_list_count(self) -> None:
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "items.json"
+            path.write_text('[{"name": "a"}, {"name": "b"}]\n', encoding="utf-8")
+            self.assertEqual(pd.json_list_count(path), 2)
+
     def test_active_cdcp_repos_keeps_active_with_cdcp_status(self) -> None:
         manifest = {
             "repos": [
@@ -191,12 +217,25 @@ class RenderTests(unittest.TestCase):
         rendered = pd.render_dashboard(["alpha", "beta"], probes, Path("/tmp"))
         self.assertIn("# Portfolio status dashboard", rendered)
         self.assertIn("## Portfolio summary", rendered)
-        self.assertIn("Repos indexed | 1 / 2", rendered)
+        self.assertIn("Deep CDCP repos indexed | 1 / 2", rendered)
         self.assertIn("### alpha", rendered)
         self.assertIn("### beta", rendered)
         self.assertIn("Not checked out", rendered)
         self.assertIn("DEC-X-001-foo.md", rendered)
         self.assertIn("fresh (exit 0)", rendered)
+
+    def test_render_dashboard_labels_distinct_inventory_scopes(self) -> None:
+        rendered = pd.render_dashboard(
+            [],
+            {},
+            Path("/tmp"),
+            public_catalog_count=66,
+            curated_door_count=24,
+            audit_manifest_count=21,
+        )
+        self.assertIn("Public catalog repos | 66", rendered)
+        self.assertIn("Curated front-door entries | 24", rendered)
+        self.assertIn("Audit manifest entries | 21", rendered)
 
     def test_render_dashboard_marks_stale_schema_cache(self) -> None:
         probes = {

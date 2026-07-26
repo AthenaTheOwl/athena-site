@@ -1,4 +1,4 @@
-# Portfolio health — 2026-07-20
+# Portfolio health — 2026-07-25
 
 ## Deploys
 
@@ -9,40 +9,42 @@
 | supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | ✅ 200 |
 | ai-field-brief | https://ai-field-brief.vercel.app | ✅ 200 |
 | procurement-negotiation-lab | https://procurement-negotiation-lab.vercel.app | ✅ 200 |
+| News-Bias-Multi-Agent-Pipeline | https://news-bias-multi-agent-pipeline.streamlit.app | ✅ 200 |
 
 ## Content fingerprint
 
 | Repo | URL | Expected | Status |
 |---|---|---|---|
-| athena-site | https://athena-site-six.vercel.app | `Portfolio doors`, `entry points` | ✅ present |
-| chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | `chip-supply-chain-map` | ✅ present |
-| supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | `streamlit` | ✅ present |
-| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W23` | ✅ present |
+| athena-site | https://athena-site-six.vercel.app | `Portfolio doors`, `entry points` | PASS |
+| chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | `chip-supply-chain-map` | PASS |
+| supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | `streamlit` | PASS |
+| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W30` | PASS |
+| News-Bias-Multi-Agent-Pipeline | https://news-bias-multi-agent-pipeline.streamlit.app | `streamlit` | PASS |
 
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 55 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 81 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 8 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 60 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 86 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 6 | ✅ |
-| chip-supply-chain-map | 14 | ✅ |
-| supplier-risk-rag-agent | 14 | ✅ |
-| ai-field-brief | 8 | ✅ |
-| procurement-negotiation-lab | 14 | ✅ |
-| ai-supply-chain-copilot-prd | 14 | ✅ |
-| mcp-security-lab | 14 | ✅ |
-| trace-to-eval-harness | 14 | ✅ |
-| sports-prediction-os | 14 | ✅ |
-| dispatch-optimizer | 14 | ✅ |
-| LLM-evaluation-framework | 14 | ✅ |
-| News-Bias-Multi-Agent-Pipeline | 23 | ✅ |
+| athena-site | 5 | ✅ |
+| chip-supply-chain-map | 0 | ✅ |
+| supplier-risk-rag-agent | 0 | ✅ |
+| ai-field-brief | 0 | ✅ |
+| procurement-negotiation-lab | 0 | ✅ |
+| ai-supply-chain-copilot-prd | 19 | ✅ |
+| mcp-security-lab | 19 | ✅ |
+| trace-to-eval-harness | 0 | ✅ |
+| sports-prediction-os | 19 | ✅ |
+| dispatch-optimizer | 19 | ✅ |
+| LLM-evaluation-framework | 19 | ✅ |
+| News-Bias-Multi-Agent-Pipeline | 28 | ✅ |
 
 ## Starforge cluster forks
 
@@ -64,15 +66,15 @@
 
 | Repo | Door | CDCP status | Drift |
 |---|---|---|---|
-| athena-site | 11 | meta-repo, cross-repo-schemas | ⚠️ local_root unresolved |
-| chip-supply-chain-map | 12 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
-| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
-| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
-| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ⚠️ local_root unresolved |
-| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ⚠️ local_root unresolved |
-| mcp-security-lab | 19 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
-| trace-to-eval-harness | 20 | installed, operating-model, first-decs | ⚠️ local_root unresolved |
-| sports-prediction-os | 21 | cdcp-lite, has_specs | ⚠️ local_root unresolved |
+| athena-site | 11 | meta-repo, cross-repo-schemas | — |
+| chip-supply-chain-map | 12 | installed, operating-model, first-decs, dreams-promoted | ✅ |
+| supplier-risk-rag-agent | 13 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
+| ai-field-brief | 18 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
+| procurement-negotiation-lab | 17 | installed, operating-model, dreams-promoted, skills-graduated | ✅ |
+| ai-supply-chain-copilot-prd | 10 | markdown-only, decisions-ledger | ✅ |
+| mcp-security-lab | 19 | installed, operating-model, first-decs, dreams-promoted | ✅ |
+| trace-to-eval-harness | 20 | installed, operating-model, first-decs | ✅ |
+| sports-prediction-os | 21 | has_specs | ✅ |
 
 ## Anthropic models
 

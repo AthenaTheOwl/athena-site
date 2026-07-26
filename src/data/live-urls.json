@@ -204,7 +204,7 @@
     "target": "streamlit"
   },
   "News-Bias-Multi-Agent-Pipeline": {
-    "live": "https://news-bias-pipeline.streamlit.app",
+    "live": "https://news-bias-multi-agent-pipeline.streamlit.app",
     "target": "streamlit"
   },
   "ai-supply-chain-copilot-prd": {

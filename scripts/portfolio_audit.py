@@ -10,6 +10,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -158,54 +159,118 @@ def section_deploys(audit: Audit) -> None:
     audit.add_section("## Deploys", "\n".join(rows))
 
 
-def section_content_fingerprint(audit: Audit) -> None:
-    """Catch deploys that return 200 but serve stale or wrong content.
+def _repo_root(name: str, local_root: Path | None) -> Path | None:
+    if name == "athena-site":
+        return ROOT
+    if local_root is None:
+        return None
+    candidate = local_root / name
+    return candidate if candidate.is_dir() else None
 
-    For each repo with a `content_fingerprint` block in the manifest, fetch
-    the URL (defaults to deploy_url) and verify the expected substrings
-    appear in the response body. Missing substrings flag a critical issue —
-    this is the failure mode where Vercel's ignoreCommand returned 0 and the
-    deploy was silently skipped while HTTP 200 was still served from cache.
-    """
+
+def fingerprint_from_repo(
+    repo_name: str,
+    source: dict[str, Any],
+    local_root: Path | None,
+) -> tuple[str | None, str | None]:
+    """Extract a deployment marker from committed state in a repo."""
+
+    repo_root = _repo_root(repo_name, local_root)
+    if repo_root is None:
+        return None, "source repo is not checked out"
+    raw_path = source.get("path")
+    pattern = source.get("pattern")
+    if not isinstance(raw_path, str) or not isinstance(pattern, str):
+        return None, "path and pattern are required"
+    candidate = (repo_root / raw_path).resolve()
+    try:
+        candidate.relative_to(repo_root.resolve())
+    except ValueError:
+        return None, "source path escapes repository root"
+    try:
+        text = candidate.read_text(encoding="utf-8")
+    except OSError as exc:
+        return None, f"cannot read {raw_path}: {exc}"
+    try:
+        match = re.search(pattern, text, flags=re.MULTILINE)
+    except re.error as exc:
+        return None, f"invalid pattern: {exc}"
+    if match is None:
+        return None, f"pattern did not match {raw_path}"
+    value = match.group(1) if match.lastindex else match.group(0)
+    return value, None
+
+
+def section_content_fingerprint(
+    audit: Audit, local_root: Path | None
+) -> None:
+    """Verify deployed content against static and repo-derived markers."""
+
     rows = ["| Repo | URL | Expected | Status |", "|---|---|---|---|"]
     any_rows = False
-    for r in audit.manifest["repos"]:
-        cf = r.get("content_fingerprint")
-        if not cf:
+    for repo in audit.manifest["repos"]:
+        fingerprint = repo.get("content_fingerprint")
+        if not isinstance(fingerprint, dict):
             continue
         any_rows = True
-        url = cf.get("url") or r.get("deploy_url")
-        substrings: list[str] = cf.get("expected_substrings") or []
-        if not url or not substrings:
-            rows.append(f"| {r['name']} | — | — | ⚠️ misconfigured |")
-            continue
-        body = http_body(url)
-        if body is None:
-            rows.append(f"| {r['name']} | {url} | — | ⚠️ fetch failed |")
-            continue
-        missing = [s for s in substrings if s not in body]
-        expected_label = ", ".join(f"`{s}`" for s in substrings)
-        if missing:
-            missing_label = ", ".join(f"`{s}`" for s in missing)
-            rows.append(f"| {r['name']} | {url} | {expected_label} | ❌ missing: {missing_label} |")
+        url = fingerprint.get("url") or repo.get("deploy_url")
+        expected = [
+            marker
+            for marker in fingerprint.get("expected_substrings", [])
+            if isinstance(marker, str) and marker
+        ]
+        source = fingerprint.get("expected_from_repo")
+        if isinstance(source, dict):
+            value, error = fingerprint_from_repo(repo["name"], source, local_root)
+            if error:
+                rows.append(
+                    f"| {repo['name']} | {url or '-'} | dynamic | FAIL: {error} |"
+                )
+                audit.flag_critical(
+                    "athena-site",
+                    f"Fingerprint source unavailable: {repo['name']}",
+                    f"Could not derive the deployment marker: {error}.",
+                )
+                continue
+            if value:
+                expected.append(value)
+        expected = list(dict.fromkeys(expected))
+        if not url or not expected:
+            rows.append(f"| {repo['name']} | - | - | FAIL: misconfigured |")
             audit.flag_critical(
                 "athena-site",
-                f"Stale deploy: {r['name']} missing expected fingerprint",
+                f"Fingerprint misconfigured: {repo['name']}",
+                "A content fingerprint requires a URL and at least one expected marker.",
+            )
+            continue
+        body = http_body(url)
+        expected_label = ", ".join(f"`{marker}`" for marker in expected)
+        if body is None:
+            rows.append(f"| {repo['name']} | {url} | {expected_label} | FAIL: fetch failed |")
+            audit.flag_critical(
+                "athena-site",
+                f"Fingerprint fetch failed: {repo['name']}",
+                f"Audit could not fetch `{url}`.",
+            )
+            continue
+        missing = [marker for marker in expected if marker not in body]
+        if missing:
+            missing_label = ", ".join(f"`{marker}`" for marker in missing)
+            rows.append(
+                f"| {repo['name']} | {url} | {expected_label} | FAIL: missing {missing_label} |"
+            )
+            audit.flag_critical(
+                "athena-site",
+                f"Stale deploy: {repo['name']} missing expected fingerprint",
                 (
-                    f"Audit fetched `{url}` and could not find expected substring(s): {missing_label}.\n\n"
-                    "Likely causes:\n"
-                    "1. Deploy is stale (e.g. Vercel `ignoreCommand` returning 0; build was silently skipped)\n"
-                    "2. CDN cache serving an old version\n"
-                    "3. The manifest's `content_fingerprint.expected_substrings` is out of date — "
-                    "update it if the site content has intentionally changed.\n\n"
-                    "First check: did the latest commit actually deploy? Check the platform's deploy log."
+                    f"Audit fetched `{url}` and could not find: {missing_label}.\n\n"
+                    "Check the production deployment and CDN before changing the expected marker."
                 ),
             )
         else:
-            rows.append(f"| {r['name']} | {url} | {expected_label} | ✅ present |")
+            rows.append(f"| {repo['name']} | {url} | {expected_label} | PASS |")
     if any_rows:
         audit.add_section("## Content fingerprint", "\n".join(rows))
-
 
 def section_freshness(audit: Audit) -> None:
     rows = ["| Repo | Path | Age (days) | Threshold | Status |", "|---|---|---|---|---|"]
@@ -488,7 +553,7 @@ def main() -> int:
     local_root = resolve_local_root(manifest)
 
     section_deploys(audit)
-    section_content_fingerprint(audit)
+    section_content_fingerprint(audit, local_root)
     section_freshness(audit)
     section_stale_active(audit)
     section_forks(audit)

@@ -35,7 +35,7 @@ repos:
     door: "12"
     status: active
     deploy_url: "https://chip-supply-chain-map.vercel.app"
-    cdcp_status: [installed, operating-model, first-decs]
+    cdcp_status: [installed, operating-model, first-decs, dreams-promoted]
     file_freshness:
       path: src/data/nodes.csv
       threshold_days: 180
@@ -65,12 +65,14 @@ repos:
     file_freshness:
       path: briefs/INDEX.md
       threshold_days: 14
-    # The latest brief week SHOULD appear on the homepage. Bump the
-    # week marker when a new brief is published — when the deployed site
-    # doesn't contain it, that's the deploy-stuck signal we missed for 13
-    # days with W21 vs W23.
+    # Derive the expected week from the committed index. This catches a stale
+    # deploy without requiring a hand-edited week marker after every issue.
     content_fingerprint:
-      expected_substrings: ["ai-field-brief", "2026-W23"]
+      expected_substrings: ["ai-field-brief"]
+      expected_from_repo:
+        path: briefs/INDEX.md
+        pattern: '\[(\d{4}-W\d{2})\]'
+
 
   - name: procurement-negotiation-lab
     door: "17"
@@ -86,7 +88,7 @@ repos:
   - name: mcp-security-lab
     door: "19"
     status: active
-    cdcp_status: [installed, operating-model, first-decs]
+    cdcp_status: [installed, operating-model, first-decs, dreams-promoted]
 
   - name: trace-to-eval-harness
     door: "20"
@@ -96,7 +98,7 @@ repos:
   - name: sports-prediction-os
     door: "21"
     status: active
-    cdcp_status: [cdcp-lite, has_specs]
+    cdcp_status: [has_specs]
 
   - name: starforge-narrative-tools
     door: "14"
@@ -122,12 +124,9 @@ repos:
   - name: News-Bias-Multi-Agent-Pipeline
     door: "07"
     status: active
-    # deploy_url + content_fingerprint deliberately omitted: Codex's
-    # refactor names `news-bias-pipeline.streamlit.app` as the target
-    # but the Streamlit Community Cloud deploy hasn't been claimed yet.
-    # Re-add both fields once Vignesh runs the deploy and confirms the
-    # URL is live. The audit will surface "deploy not live" as a manifest
-    # gap rather than a weekly "deploy stale" critical fail.
-    notes: "deploy pending — Streamlit Community Cloud claim required"
+    deploy_url: "https://news-bias-multi-agent-pipeline.streamlit.app"
+    content_fingerprint:
+      expected_substrings: ["streamlit"]
+
   - { name: MIT-AI-Fall20, door: "08", status: drawer }
   - { name: leetcode, door: "09", status: drawer }
