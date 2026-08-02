@@ -4,12 +4,20 @@ import datetime as dt
 import sys
 from pathlib import Path
 
+import pytest
+
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import evidence_quorum_sentinel as eqs  # noqa: E402
 
 
 NOW = dt.datetime(2026, 5, 29, tzinfo=dt.timezone.utc)
+
+
+@pytest.fixture(autouse=True)
+def isolate_portfolio_root(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Keep fixture manifests authoritative even when the caller exports a root."""
+    monkeypatch.delenv("RANDOM_APPS_ROOT", raising=False)
 
 
 def make_row(
