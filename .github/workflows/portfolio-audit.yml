@@ -13,7 +13,7 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     env:
-      RANDOM_APPS_ROOT: ${{ runner.temp }}/random-apps
+      RANDOM_APPS_ROOT: ${{ github.workspace }}/../random-apps
     steps:
       - uses: actions/checkout@v4
 
