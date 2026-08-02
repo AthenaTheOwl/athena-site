@@ -31,14 +31,14 @@
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 6 | ✅ |
+| athena-site | 0 | ✅ |
 | chip-supply-chain-map | 7 | ✅ |
 | supplier-risk-rag-agent | 0 | ✅ |
 | ai-field-brief | 0 | ✅ |
-| procurement-negotiation-lab | 7 | ✅ |
+| procurement-negotiation-lab | 0 | ✅ |
 | ai-supply-chain-copilot-prd | 27 | ✅ |
-| mcp-security-lab | 27 | ✅ |
-| trace-to-eval-harness | 7 | ✅ |
+| mcp-security-lab | 0 | ✅ |
+| trace-to-eval-harness | 0 | ✅ |
 | sports-prediction-os | 27 | ✅ |
 | dispatch-optimizer | 27 | ✅ |
 | LLM-evaluation-framework | 27 | ✅ |
