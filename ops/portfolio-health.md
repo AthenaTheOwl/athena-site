@@ -1,4 +1,4 @@
-# Portfolio health — 2026-08-02
+# Portfolio health — 2026-08-03
 
 ## Deploys
 
@@ -23,26 +23,26 @@
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 68 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 0 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 69 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 1 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 1 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 0 | ✅ |
-| chip-supply-chain-map | 7 | ✅ |
-| supplier-risk-rag-agent | 0 | ✅ |
-| ai-field-brief | 0 | ✅ |
-| procurement-negotiation-lab | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 27 | ✅ |
-| mcp-security-lab | 0 | ✅ |
-| trace-to-eval-harness | 0 | ✅ |
-| sports-prediction-os | 27 | ✅ |
-| dispatch-optimizer | 27 | ✅ |
-| LLM-evaluation-framework | 27 | ✅ |
-| News-Bias-Multi-Agent-Pipeline | 36 | ✅ |
+| athena-site | 1 | ✅ |
+| chip-supply-chain-map | 8 | ✅ |
+| supplier-risk-rag-agent | 1 | ✅ |
+| ai-field-brief | 1 | ✅ |
+| procurement-negotiation-lab | 1 | ✅ |
+| ai-supply-chain-copilot-prd | 28 | ✅ |
+| mcp-security-lab | 1 | ✅ |
+| trace-to-eval-harness | 1 | ✅ |
+| sports-prediction-os | 28 | ✅ |
+| dispatch-optimizer | 28 | ✅ |
+| LLM-evaluation-framework | 28 | ✅ |
+| News-Bias-Multi-Agent-Pipeline | 37 | ✅ |
 
 ## Starforge cluster forks
 
