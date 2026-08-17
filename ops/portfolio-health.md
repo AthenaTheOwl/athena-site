@@ -1,4 +1,4 @@
-# Portfolio health — 2026-08-10
+# Portfolio health — 2026-08-17
 
 ## Deploys
 
@@ -23,26 +23,26 @@
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 76 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 8 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 8 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 83 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 15 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 15 | 14 | ⚠️ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
 | athena-site | 6 | ✅ |
-| chip-supply-chain-map | 15 | ✅ |
-| supplier-risk-rag-agent | 8 | ✅ |
-| ai-field-brief | 8 | ✅ |
-| procurement-negotiation-lab | 8 | ✅ |
-| ai-supply-chain-copilot-prd | 35 | ✅ |
-| mcp-security-lab | 8 | ✅ |
-| trace-to-eval-harness | 8 | ✅ |
-| sports-prediction-os | 35 | ✅ |
-| dispatch-optimizer | 35 | ✅ |
-| LLM-evaluation-framework | 35 | ✅ |
-| News-Bias-Multi-Agent-Pipeline | 44 | ✅ |
+| chip-supply-chain-map | 22 | ✅ |
+| supplier-risk-rag-agent | 15 | ✅ |
+| ai-field-brief | 15 | ✅ |
+| procurement-negotiation-lab | 15 | ✅ |
+| ai-supply-chain-copilot-prd | 42 | ✅ |
+| mcp-security-lab | 15 | ✅ |
+| trace-to-eval-harness | 15 | ✅ |
+| sports-prediction-os | 42 | ✅ |
+| dispatch-optimizer | 42 | ✅ |
+| LLM-evaluation-framework | 42 | ✅ |
+| News-Bias-Multi-Agent-Pipeline | 51 | ✅ |
 
 ## Starforge cluster forks
 
@@ -83,4 +83,4 @@ Required models: claude-sonnet-4-6
 Verify at: https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 
 ---
-All critical checks passed.
+**1 critical issue(s) detected.** See sections above.
