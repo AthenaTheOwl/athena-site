@@ -1,4 +1,4 @@
-# Portfolio health — 2026-08-17
+# Portfolio health — 2026-08-19
 
 ## Deploys
 
@@ -17,32 +17,32 @@
 | athena-site | https://athena-site-six.vercel.app | `Portfolio doors`, `entry points` | PASS |
 | chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | `chip-supply-chain-map` | PASS |
 | supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | `streamlit` | PASS |
-| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W31` | PASS |
+| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W33` | PASS |
 
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 83 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 15 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 15 | 14 | ⚠️ |
+| chip-supply-chain-map | src/data/nodes.csv | 86 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 17 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 6 | ✅ |
-| chip-supply-chain-map | 22 | ✅ |
-| supplier-risk-rag-agent | 15 | ✅ |
-| ai-field-brief | 15 | ✅ |
-| procurement-negotiation-lab | 15 | ✅ |
-| ai-supply-chain-copilot-prd | 42 | ✅ |
-| mcp-security-lab | 15 | ✅ |
-| trace-to-eval-harness | 15 | ✅ |
-| sports-prediction-os | 42 | ✅ |
-| dispatch-optimizer | 42 | ✅ |
-| LLM-evaluation-framework | 42 | ✅ |
-| News-Bias-Multi-Agent-Pipeline | 51 | ✅ |
+| athena-site | 2 | ✅ |
+| chip-supply-chain-map | 25 | ✅ |
+| supplier-risk-rag-agent | 17 | ✅ |
+| ai-field-brief | 0 | ✅ |
+| procurement-negotiation-lab | 0 | ✅ |
+| ai-supply-chain-copilot-prd | 44 | ✅ |
+| mcp-security-lab | 17 | ✅ |
+| trace-to-eval-harness | 17 | ✅ |
+| sports-prediction-os | 44 | ✅ |
+| dispatch-optimizer | 44 | ✅ |
+| LLM-evaluation-framework | 44 | ✅ |
+| News-Bias-Multi-Agent-Pipeline | 53 | ✅ |
 
 ## Starforge cluster forks
 
@@ -83,4 +83,4 @@ Required models: claude-sonnet-4-6
 Verify at: https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 
 ---
-**1 critical issue(s) detected.** See sections above.
+All critical checks passed.
