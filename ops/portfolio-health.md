@@ -31,7 +31,7 @@
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 4 | ✅ |
+| athena-site | 0 | ✅ |
 | chip-supply-chain-map | 41 | ✅ |
 | supplier-risk-rag-agent | 0 | ✅ |
 | ai-field-brief | 0 | ✅ |
