@@ -1,4 +1,4 @@
-# Portfolio health — 2026-08-31
+# Portfolio health — 2026-09-04
 
 ## Deploys
 
@@ -17,32 +17,32 @@
 | athena-site | https://athena-site-six.vercel.app | `Portfolio doors`, `entry points` | PASS |
 | chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | `chip-supply-chain-map` | PASS |
 | supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | `streamlit` | PASS |
-| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W34` | PASS |
+| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W36` | PASS |
 
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 97 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 29 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 3 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 102 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 33 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 7 | ✅ |
-| chip-supply-chain-map | 37 | ✅ |
-| supplier-risk-rag-agent | 29 | ✅ |
-| ai-field-brief | 3 | ✅ |
-| procurement-negotiation-lab | 11 | ✅ |
-| ai-supply-chain-copilot-prd | 56 | ✅ |
-| mcp-security-lab | 29 | ✅ |
-| trace-to-eval-harness | 29 | ✅ |
-| sports-prediction-os | 56 | ✅ |
-| dispatch-optimizer | 56 | ✅ |
-| LLM-evaluation-framework | 56 | ✅ |
-| News-Bias-Multi-Agent-Pipeline | 65 | ✅ |
+| athena-site | 4 | ✅ |
+| chip-supply-chain-map | 41 | ✅ |
+| supplier-risk-rag-agent | 0 | ✅ |
+| ai-field-brief | 0 | ✅ |
+| procurement-negotiation-lab | 0 | ✅ |
+| ai-supply-chain-copilot-prd | 61 | ✅ |
+| mcp-security-lab | 0 | ✅ |
+| trace-to-eval-harness | 33 | ✅ |
+| sports-prediction-os | 61 | ✅ |
+| dispatch-optimizer | 61 | ✅ |
+| LLM-evaluation-framework | 61 | ✅ |
+| News-Bias-Multi-Agent-Pipeline | 69 | ✅ |
 
 ## Starforge cluster forks
 

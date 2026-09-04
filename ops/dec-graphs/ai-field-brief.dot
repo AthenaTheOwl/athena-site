@@ -34,6 +34,7 @@ digraph dec_chains_ai_field_brief {
   "DEC-MTRX-006-brief-os-refinement-on-matrix-plane" [shape=box, style=solid];
   "DEC-MTRX-007-pipeline-systems-thinking-upgrade" [shape=box, style=solid];
   "DEC-MTRX-008-scout-runner-action-packet-discipline" [shape=box, style=solid];
+  "DEC-MTRX-009-matrix-cell-vocabulary-normalization" [shape=box, style=solid];
   "DEC-PUB-001-public-feeds-from-build-snapshot" [shape=box, style=solid];
   "DEC-PUB-002-resend-contacts-plus-broadcast-cron" [shape=box, style=solid];
   "DEC-PUB-003-credential-safe-subscriber-ops-page" [shape=box, style=solid];
@@ -45,6 +46,8 @@ digraph dec_chains_ai_field_brief {
   "DEC-PUB-009-ai-field-brief-ci-enforces-run-evidence-chain" [shape=box, style=solid];
   "DEC-PUB-010-brief-timestamp-microsecond-fix" [shape=box, style=solid];
   "DEC-PUB-011-ai-field-brief-chaos-test-suite" [shape=box, style=solid];
+  "DEC-PUB-012-action-surface-taxonomy-v2" [shape=box, style=solid];
+  "DEC-PUB-013-brief-top-signal-conformance-gate" [shape=box, style=solid];
   "DEC-SRC-001-source-registry-table-per-workspace" [shape=box, style=solid];
   "DEC-SRC-002-tenant-scoped-source-crud-helpers" [shape=box, style=solid];
   "DEC-SRC-003-connector-contract-pure-inputs" [shape=box, style=solid];
@@ -66,6 +69,7 @@ digraph dec_chains_ai_field_brief {
   "DEC-SRC-019-w22-tier-1-ecosystem-sweep" [shape=box, style=solid];
   "DEC-SRC-020-w22-forums-courses-textbooks-recovery" [shape=box, style=solid];
   "DEC-SRC-021-frontier-scout-lane-for-early-actionable-sources" [shape=box, style=solid];
+  "DEC-SRC-022-registry-v14-changelog-and-practitioner-sources" [shape=box, style=solid];
   "DEC-MTRX-006-brief-os-refinement-on-matrix-plane" -> "DEC-MTRX-001-prompt-matrix-plane-install" [label="amends"];
   "DEC-MTRX-007-pipeline-systems-thinking-upgrade" -> "DEC-MTRX-006-brief-os-refinement-on-matrix-plane" [label="amends"];
   "DEC-MTRX-008-scout-runner-action-packet-discipline" -> "DEC-SRC-021-frontier-scout-lane-for-early-actionable-sources" [label="amends"];
