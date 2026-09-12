@@ -181,3 +181,60 @@ def test_main_all_rows_skipped_exits_zero(tmp_path: Path, capsys) -> None:
     assert "- Overall: **SKIPPED (no repos checked out)**" in rendered
     assert "replay artifact(s)" not in failing_section(rendered)
     assert "evidence-quorum: SKIPPED (no repos checked out)" in capsys.readouterr().err
+
+
+def write_artifact(repo_root: Path, run_id: str, body: str) -> Path:
+    artifact = repo_root / "ops" / "replay-records" / run_id / "artifact.json"
+    artifact.parent.mkdir(parents=True, exist_ok=True)
+    artifact.write_text(body, encoding="utf-8")
+    return artifact
+
+
+def test_replayed_at_is_a_recognized_timestamp_field(tmp_path: Path) -> None:
+    """supplier-risk-rag-agent writes `replayed_at`; omitting it from
+    TIMESTAMP_FIELDS silently sent that repo down the undated path and reported
+    a 2026-05-29 replay as 2026-07-05 off the file mtime."""
+    repo_root = tmp_path / "repo"
+    stamp = (NOW - dt.timedelta(days=3)).isoformat().replace("+00:00", "Z")
+    path = write_artifact(repo_root, "run-1", '{"replayed_at": "' + stamp + '"}\n')
+
+    ts, source = eqs.artifact_timestamp(path)
+
+    assert source == "replayed_at"
+    assert ts == NOW - dt.timedelta(days=3)
+
+
+def test_artifact_with_no_timestamp_field_is_undated_not_mtime(tmp_path: Path) -> None:
+    """No mtime fallback. CI reads sibling repos from `git clone --depth 1`,
+    where every mtime is clone time, so an mtime fallback made the gate report
+    PASS for any repo whose artifacts carry no timestamp."""
+    repo_root = tmp_path / "repo"
+    path = write_artifact(repo_root, "run-1", '{"replay_equivalent": true}\n')
+
+    ts, source = eqs.artifact_timestamp(path)
+
+    assert ts is None
+    assert source == "undated"
+
+
+def test_undated_artifacts_count_toward_total_but_never_quorum(tmp_path: Path) -> None:
+    repo_root = tmp_path / "repo"
+    write_artifact(repo_root, "run-1", '{"replay_equivalent": true}\n')
+    write_artifact(repo_root, "run-2", '{"no_timestamp_here": 1}\n')
+
+    counts = eqs.count_recent_artifacts(repo_root, 30, now=NOW)
+
+    assert counts["total"] == 2
+    assert counts["undated"] == 2
+    assert counts["recent"] == 0
+    assert counts["latest_ts"] is None
+
+
+def test_failing_row_names_the_undated_artifacts_and_the_fix() -> None:
+    row = make_row("chip-supply-chain-map", checked_out=True, passed=False, recent=0, total=2)
+    row["undated"] = 2
+
+    section = failing_section(eqs.render_report([row], 30, 1, Path("/workspace"), NOW))
+
+    assert "2 of its 2 artifact(s) carry no recognized timestamp field" in section
+    assert "replayed_at" in section

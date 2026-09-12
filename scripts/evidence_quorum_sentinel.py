@@ -15,7 +15,10 @@ procurement-negotiation-lab, ai-field-brief), the sentinel:
     1. Globs `ops/replay-records/<run-id>/*.json` files
     2. Parses each file's timestamp from the first present field of
        `created_at`, `replay_timestamp`, `finished_at`, `started_at`,
-       falling back to the file mtime when none are present
+       `replayed_at`. An artifact carrying none of them is counted as
+       `undated`, reported, and never counted toward quorum -- there is
+       no file-mtime fallback, because CI reads these repos from a fresh
+       `git clone --depth 1` where every mtime is clone time
     3. Counts how many files land in the last `--window-days` window
     4. Compares to the per-repo quorum threshold (default 1)
     5. Writes a Markdown report to `ops/evidence-quorum-report.md`
@@ -55,7 +58,19 @@ WATCHED_REPOS = (
     "ai-field-brief",
 )
 
-TIMESTAMP_FIELDS = ("created_at", "replay_timestamp", "finished_at", "started_at")
+# Timestamp keys emitted by the replay writers across the portfolio. These are
+# not uniform: ai-field-brief writes `replay_timestamp`, procurement-negotiation-lab
+# writes `finished_at`/`started_at`, and supplier-risk-rag-agent writes
+# `replayed_at`. Omitting a key here does not fail loudly -- it silently sends the
+# artifact down the undated path below, which is how supplier-risk-rag-agent's
+# 2026-05-29 replay was being reported as 2026-07-05.
+TIMESTAMP_FIELDS = (
+    "created_at",
+    "replay_timestamp",
+    "finished_at",
+    "started_at",
+    "replayed_at",
+)
 
 
 # ---------------------------------------------------------------------------
@@ -107,12 +122,22 @@ def parse_iso_timestamp(value: str) -> dt.datetime | None:
         return None
 
 
-def artifact_timestamp(path: Path) -> tuple[dt.datetime, str]:
+def artifact_timestamp(path: Path) -> tuple[dt.datetime | None, str]:
     """Pick a timestamp for a replay artifact.
 
     Looks for the first present TIMESTAMP_FIELDS entry at the top of the JSON
-    document. Falls back to the file mtime when no field is present or the file
-    cannot be parsed. Returns the timestamp and the source label.
+    document. Returns ``(None, "undated")`` when no field parses.
+
+    There is deliberately no file-mtime fallback. This sentinel's only job in
+    CI is to notice that replays stopped landing, and `portfolio-audit.yml`
+    reaches the sibling repos through `materialize_portfolio_scope.py`, which
+    runs `git clone --depth 1`. In a fresh clone every mtime is clone time, so
+    an mtime fallback dated every undated artifact to "now" and the gate
+    reported PASS no matter how stale the evidence chain was. Three of the four
+    watched repos took that path: chip-supply-chain-map's replay records carry
+    no timestamp field at all, and supplier-risk-rag-agent's key was missing
+    from TIMESTAMP_FIELDS. An artifact that cannot say when it was produced
+    cannot be evidence of freshness, so it is counted and surfaced, never aged.
     """
     try:
         with path.open(encoding="utf-8") as fh:
@@ -128,8 +153,7 @@ def artifact_timestamp(path: Path) -> tuple[dt.datetime, str]:
                     ts = ts.replace(tzinfo=dt.timezone.utc)
                 return ts, field
 
-    mtime = dt.datetime.fromtimestamp(path.stat().st_mtime, tz=dt.timezone.utc)
-    return mtime, "mtime"
+    return None, "undated"
 
 
 def count_recent_artifacts(
@@ -144,6 +168,7 @@ def count_recent_artifacts(
     result: dict[str, Any] = {
         "total": 0,
         "recent": 0,
+        "undated": 0,
         "latest_ts": None,
         "latest_path": None,
         "directory_present": replay_dir.is_dir(),
@@ -158,6 +183,11 @@ def count_recent_artifacts(
             continue
         result["total"] += 1
         ts, _src = artifact_timestamp(path)
+        if ts is None:
+            # Undated artifacts count toward total so the repo's history stays
+            # visible, but they can never satisfy quorum.
+            result["undated"] += 1
+            continue
         if ts >= cutoff:
             result["recent"] += 1
         if latest_ts is None or ts > latest_ts:
@@ -235,11 +265,20 @@ def render_report(
         lines.append("## Failing repos")
         lines.append("")
         for row in failing:
+            undated = row.get("undated") or 0
+            note = ""
+            if undated:
+                note = (
+                    f" {undated} of its {row['total']} artifact(s) carry no "
+                    "recognized timestamp field and cannot count toward quorum; "
+                    "add one of "
+                    f"{', '.join(TIMESTAMP_FIELDS)} to the replay writer."
+                )
             lines.append(
                 f"- **{row['name']}**: {row['recent']} replay artifact(s) in "
                 f"the last {window_days} days; quorum is {threshold}. "
                 f"Latest artifact: `{row.get('latest_path') or 'none'}` "
-                f"({row.get('latest_ts') or 'no timestamp'})."
+                f"({row.get('latest_ts') or 'no timestamp'}).{note}"
             )
         lines.append("")
     else:
@@ -402,6 +441,7 @@ def main(argv: list[str] | None = None) -> int:
                 "name": name,
                 "recent": counts["recent"],
                 "total": counts["total"],
+                "undated": counts["undated"],
                 "pass": counts["recent"] >= args.threshold,
                 "checked_out": True,
                 "latest_path": counts["latest_path"],
