@@ -76,15 +76,15 @@ An archive with a known gap and a note about it is in better order than one that
 
 ## FINDING FOUR: THE COURSE ARCHIVE ROTTED WHERE NOBODY WAS LOOKING.
 
-The MIT archive has CI as well. It compiles `streamlit_app.py` and any `src`, `scripts` or `tests` directory. The labs live in `Lab0` through `Lab9`, so the workflow compiles the index app and nothing it indexes. It is green.
+The MIT archive had CI as well. It compiled `streamlit_app.py` and any `src`, `scripts` or `tests` directory. The labs live in `Lab0` through `Lab9`, so the workflow compiled the index app and nothing it indexed. It was green.
 
 Running the ten testers by hand on current Python returned seven clean passes and three that were not.
 
 LAB 0 — WARMUP: 63 of 68. The five failures are `NAME`, `COLLABORATORS`, `PYTHON_EXPERIENCE`, `PROGRAMMING_EXPERIENCE` and `HOW_MANY_HOURS_THIS_LAB_TOOK`. The survey answers are not in the archive. The tests that asked who the student was are the only ones that fail.
 
-LAB 4 — RULE-BASED SYSTEMS: fails on import. `utils.py` imports `MutableMapping` from `collections`, one of the deprecated aliases Python 3.10 removed. The bytecode still sitting in three of the folders was compiled by CPython 3.8, which still had the alias.
+LAB 4 — RULE-BASED SYSTEMS: failed on import. `utils.py` imported `MutableMapping` from `collections`, one of the deprecated aliases Python 3.10 removed. The bytecode still sitting in three of the folders was compiled by CPython 3.8, which still had the alias.
 
-LAB 7 — NEURAL NETS: `SyntaxError` at line 197. The line reads `<<<<<<< Updated upstream`. Half of a merge conflict was committed, the opening marker without its partner, directly above an empty survey header.
+LAB 7 — NEURAL NETS: `SyntaxError` at line 197. The line read `<<<<<<< Updated upstream`. Half of a merge conflict was committed, the opening marker without its partner, directly above an empty survey header.
 
 Nothing in the archive changed for the Lab 4 failure. The language moved underneath it.
 
@@ -92,7 +92,7 @@ Lab 7 needed no help from anyone.
 
 ## FINDING FIVE: THE LABEL ROTTED FIRST.
 
-The Streamlit app that browses the archive carries a hard-coded table of topics, one per folder. Checked against the first line of each lab file, eight of the ten are wrong, each carrying another folder's topic:
+The Streamlit app that browses the archive carried a hard-coded table of topics, one per folder. Checked against the first line of each lab file, eight of the ten were wrong, each carrying another folder's topic:
 
 search filed as rule-based systems
 games filed as search
@@ -103,7 +103,7 @@ nearest neighbours filed as neural networks
 neural networks filed as support vector machines
 support vector machines filed as Bayesian inference
 
-The warmup and boosting are correct. The app describes itself as a read-only browser that "indexes the committed lab folders." It does, faithfully, under the wrong names.
+The warmup and boosting were correct. The app described itself as a read-only browser that "indexes the committed lab folders." It did, faithfully, under the wrong names.
 
 The compiler read the table and found it valid Python.
 
@@ -147,11 +147,13 @@ Ten in, seven out.
 
 ARCHIVE INVENTORY — REMAINING FIELDS
 
-Condition: seven labs verified, one pinned to a version nobody wrote down, one holding half a merge.
-Index: eight labels wrong.
+Condition, as found: seven labs verified, one pinned to a version nobody wrote down, one holding half a merge.
+Index, as found: eight labels wrong.
+Filed, 23 September 2026: labels corrected, the marker removed, Lab 4's import repaired, and a check that parses every lab file and matches every label now runs on every push.
+Condition, as filed: nine labs verified.
 Survey: withdrawn.
 Problem 638: still open.
-Next check: whoever opens the drawer.
+Next check: every push.
 
 ---
 
