@@ -1,0 +1,162 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Curtailability is the asset"
+description: "Capacity prices on America's largest grid rose elevenfold in two years, and the price paid to a load for agreeing not to run still has no line on the auction sheet. Six findings on a forty-year-old utility mechanism, the only thing that buys grid queue position without new steel, and the fraction of AI load that can honestly sell it."
+date: "2026-09-22"
+readingTime: "11 min read"
+---
+
+CAPACITY AUCTION — PJM
+
+Clearing price, 2024/25 delivery year: $28.92 per megawatt-day.
+Clearing price, 2026/27: $329.17 per megawatt-day.
+Share of the 2025/26 price increase the market monitor attributed to data centres: 63 percent, about $9.3 billion recovered from customers.
+Data-centre-related charges across the last four auctions: nearly half of $63.6 billion.
+Price paid to a large load for agreeing not to run at the peak: no field.
+
+Every number on that sheet is a price for being available. None of them is a price for being willing to stop.
+
+That missing line is the asset. The mechanism behind it is forty years old and was designed for aluminium smelters.
+
+## FINDING ONE: THE RIGHT NOT TO RUN IS A SELLABLE OPTION.
+
+Utility demand-response programmes are a decades-old and thoroughly unglamorous corner of grid operations. The portable mechanism is one sentence: sell optionality on your own consumption, and get paid for the right not to run. A large load that can be curtailed on short notice is a sellable option on grid capacity, worth roughly what avoiding new peaking plant is worth.
+
+The strict version carries its own condition. A curtailable load is worth more to a grid than an equivalent firm load only if the curtailment is contractually enforceable and fast.
+
+A pledge to curtail is worth nothing.
+
+A breaker is worth the peaker it replaces.
+
+Convert a reliability obligation into an optionality contract: the customer sells the right to be interrupted, priced against the grid's scarcity value. Scarcity pricing is finally high enough, and political pressure on ratepayers finally sharp enough, that flexibility has a real bid.
+
+·   ·
+
+An aluminium smelter has been selling the right not to run for decades.
+
+The potlines can be dropped for an hour when the grid is short, and the smelter is paid for being willing.
+
+Nobody thinks of a building full of molten metal as flexible. It sells flexibility anyway, because it wrote down exactly how much it could give and for how long.
+
+## FINDING TWO: FLEXIBILITY BUYS QUEUE POSITION WITHOUT STEEL.
+
+The idea stopped being about the electricity bill once regulators began trading flexibility for speed. A load that can credibly shed or shift consumption is worth more to a constrained grid than a rigid load of the same size, so flexibility converts directly into queue position and tariff advantage.
+
+In December 2025, FERC told PJM it "expects tailored service options for loads willing and able to curtail use of the transmission system." In the national large-load docket, FERC is asking whether large loads that "agree to be flexible and curtail usage should be able to move through interconnection studies faster," and whether those studies "could be completed within 60 days."
+
+PJM's own planning moved the same way. It proposed curtailment plans for data centres, and signalled that large loads without their own supply would be excluded from capacity planning from the 2029/30 delivery year.
+
+Flexibility is the only lever that buys queue position without new steel in the ground.
+
+Everything else in the queue is a transformer with a delivery date, or a turbine reserved for 2031.
+
+## FINDING THREE: TRAINING IS INTERRUPTIBLE. INFERENCE IS NOT.
+
+Model training is the most schedule-elastic gigawatt-scale process ever built. Long assumed to be must-run baseload, training clusters turn out to have hours of deferrable work; the constraint is coordination, not physics, and the orchestration layers that can act on grid signals now exist.
+
+Inference serves live users and cannot pause.
+
+Splitting a fleet into interruptible and firm tiers turns a power bill into a two-sided position. That is the asset: not the megawatts, the tiering.
+
+The trap sits beside it. As the workload mix shifts toward inference, the curtailable fraction shrinks precisely when the grid needs it most. If inference grows as a share of the fleet faster than the flexibility layer scales, the addressable slack shrinks under you.
+
+## FINDING FOUR: THE GRID WANTS LOAD THAT CAN MOVE IN BOTH DIRECTIONS.
+
+Demand response is usually drawn as a load that stops. An August paper, tested on a model of the Korean grid, argued the opposite direction is worth something too. After a fault on the grid, generators accelerate, and a sudden increase in demand at the right place can absorb the excess and steady them. The authors call it a training-induced load surge: start or resume flexible AI training workloads right after the fault clears, "to increase active-power demand at electrically effective locations."
+
+Their results, across a textbook test system and a model of the Korean grid, show the surge can raise the stability-constrained limit on how much generation the system can carry. Larger responses, earlier activation and better-sited buses help more.
+
+A large controllable load is a negative generator. It can stop when supply is short and start when supply is surging, and each of those is a service a grid pays for.
+
+The costs sit beside the result. It is a simulation, and the authors' own conditions are demanding: it works "when sufficient electrical headroom, flexible workloads, and reliable grid-triggered activation are available."
+
+## FINDING FIVE: THE FLEXIBLE FRACTION IS SMALLER THAN THE PAPERS SAY.
+
+The case for curtailable AI load arrives with its caveats every time it is made, and the caveats are specific.
+
+Frontier training runs are far less interruptible than the models assume. Checkpoint and restart on a synchronous run across tens of thousands of accelerators carries real cost.
+
+A four-hour curtailment can cost more in stalled cluster-hours and lost synchronisation than the capacity payment.
+
+A real-world demonstration of rapid load reduction and sustained curtailment ran on a 130-kilowatt GPU cluster. The claims are about gigawatts.
+
+Customer service agreements already sold may make the flexibility legally unavailable regardless of technical capability.
+
+And the plainest arithmetic: GPU depreciation is relentless, and the option premium may simply be smaller than the utilisation foregone on an expensive accelerator, which is why this works for training and not for serving.
+
+The idea and its caveat belong in the same paragraph every time. A curtailment thesis that drops the caveat is a sales deck.
+
+## FINDING SIX: DEMAND RESPONSE, POINTED AT COGNITION.
+
+When a resource is capacity-constrained and expansion has a multi-year lead time, price flexibility instead of rationing access, and let consumers self-select into interruptible tiers. Every layer of the AI stack became supply-constrained with two-to-five-year lead times at once.
+
+The effort dial on a frontier model is already this: a cheaper, slower tier for work that can wait. Interruptible memory tiers and curtailable-versus-firm API rate limits are the plausible next targets.
+
+The failure mode is the same as on the grid. Demand response works when load is genuinely deferrable, and a vendor that sells "flexible" capacity to inherently inflexible workloads will discover its curtailment credits are a fiction.
+
+·   ·
+
+Every megawatt on a grid is either promised or negotiable.
+
+For a century, industrial load was promised. The most valuable thing a new load can say now is how much of itself it is willing to negotiate.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that market design lags. If grid operators do not create tariffs that pay for flexibility, the battery stays a cost centre.
+
+That was true in July and is the thing that changed. FERC's PJM order, its large-load docket and PJM's own curtailment rules are the tariff arriving. Market design lagged for years and then moved in one summer, because the alternative was ratepayer politics.
+
+The second explanation was that "interruptible" is marketing.
+
+Often. The flexibility may be thinner than the models assume, and service agreements may make it more marketing than reality. The fix is the same as the fix for every other claim on this site: make it auditable. Orchestration software whose output is a utility-accepted flexibility attestation, so that curtailment commitments are auditable and therefore contractable. A curtailment nobody can verify is a pledge, and pledges do not clear.
+
+**Objection:** Then flexibility is a training-only story.
+
+**Reply:** Today.
+
+Batch inference, fine-tuning and evaluation runs are more schedulable than training, and inference with quantisation fallbacks can shed some load at the cost of some quality. The line moves as the fleet does.
+
+**Objection:** The line moves the wrong way.
+
+**Reply:** Yes. That is Finding Three, and it is why the option should be priced before the fleet is mostly inference and not after.
+
+The third explanation was that the training-cluster grid resource was a crypto idea, and crypto mining is more interruptible than training.
+
+Correct. Miners sold demand response first, and the analogy was always a stretch. It transferred anyway, because the grid did not need training to be as flexible as mining. It needed it to be more flexible than a hospital.
+
+The fourth explanation was the inversion, and a CFO would make it: the capacity payment for curtailment is small next to the cost of idle accelerators, so the only real value in flexibility is faster interconnection, and faster interconnection is a regulatory favour, not an asset.
+
+The case is strong. Finding Five's arithmetic supports it, and Finding Two admits the value arrives through the queue.
+
+**Objection:** Then it is a favour, not an asset.
+
+**Reply:** A favour with a tariff.
+
+The evidence that settles it is a tranche-by-tranche comparison: for each block of curtailable training load, set the value of the capacity payment plus the months saved in interconnection against the utilisation lost to curtailment events. If the loss exceeds the value for every tranche, the inversion wins and flexibility is a siting concession to be spent once. The failure mode sits in the same sentence: most of the value on the ledger is queue acceleration, which regulators grant and can withdraw, so the asset has the same political duration as the queue positions in the essay beside this one.
+
+## THE FORM AND THE WIRE
+
+[grid-silicon](https://github.com/AthenaTheOwl/grid-silicon) starts from the gap this essay is about. A data centre is announced as 1,200 megawatts. One hundred twenty are energised. The other 1,080 live on a form, and the repo scores the difference. Curtailability is the price of moving a megawatt from the form to the wire without waiting for the transformer, and a scorer that cannot see the flexibility tier cannot see why two identical announcements energise at different speeds.
+
+[power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) works the contract side: three hyperscalers want power off the same 1,000-megawatt reactor, and none will tell the others what it needs or what it would pay. Curtailability is a term in that contract, and a buyer who can credibly sell the right not to run is bidding with an asset the other two do not have.
+
+Sell the right not to run.
+
+Do not sell it twice, and do not sell it on inference.
+
+·   ·
+
+CAPACITY AUCTION — REMAINING FIELDS
+
+Megawatts offered as curtailable: to be written into the tariff.
+Hours of curtailment per year: specified, or it is a pledge.
+Verified by: an attestation the utility accepts.
+Share of the fleet that is inference: rising.
+
+The sheet ends there. The smelter, as ever, knew exactly how much it could give.
+
+---
+
+Sources: IEEFA on PJM capacity prices (https://ieefa.org/resources/projected-data-center-growth-spurs-pjm-capacity-prices-factor-10); Utility Dive on the market monitor's findings (https://www.utilitydive.com/news/pjm-data-centers-capacity-auction-imm-bowring/825626/); Day Pitney on FERC's PJM co-location order (https://www.daypitney.com/alert-federal-energy-regulatory-commission-orders-major-pjm-tariff-reforms-for-co-located-load-and-behind-the-meter-generation); FERC, Interconnection of Large Loads, Docket RM26-4 (https://www.ferc.gov/rm26-4); "Flexible Training Workloads in Large-Scale AI Data Centers for Transient-Stability Support" (https://arxiv.org/abs/2608.30901).

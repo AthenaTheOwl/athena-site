@@ -1,0 +1,140 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Pay at the point of value"
+description: "The web reserved a status code for payment in its founding standard and never used it. This summer programs started paying with it, and publishers started billing for use instead of access. Seven findings on the payer that changed, the move from fetch to use, the character priced as a unit, the collective for the long tail, and the question every pay-per-use deal leaves open: who owns the meter."
+date: "2026-09-22"
+readingTime: "11 min read"
+---
+
+INVOICE — ONE ANSWER
+
+Item: a passage of a publisher's reporting, used in an AI system's answer.
+Charged when: the passage is used, not when it is fetched.
+Rate: a share of revenue, split evenly between the AI company and the publisher.
+Measured by: an attribution model the AI company built.
+Audited by: no field.
+
+That invoice is assembled from two things that happened this summer: a licensing deal between the News/Media Alliance and an AI company called Bria, and Cloudflare's move to let publishers charge for use. Every line on it is a step forward for publishers.
+
+The last line is the one that decides whether the other lines are true.
+
+## FINDING ONE: THE STATUS CODE WAITED.
+
+The standard that defines HTTP still contains, in its 2022 revision, a placeholder the web never filled: "The 402 (Payment Required) status code is reserved for future use."
+
+x402, a payment standard Cloudflare now documents for agents, fills it. "Services return a 402 response with payment instructions, and clients pay programmatically without accounts, sessions, or API keys." The server's 402 carries the price, the accepted token, the network and the merchant address, and "Clients need only a crypto wallet."
+
+Payment at the level of a single request has been proposed for as long as there has been a web, and it kept failing for a human reason: people hate deciding whether each small thing is worth a small payment.
+
+## FINDING TWO: THE PAYER CHANGED.
+
+Programs do not mind deciding. An agent that needs one dataset, one simulation run or one article can pay for exactly that and move on. The new payer has no identity to verify, no credit history and no way to dispute a charge, and it does not need any of them for a request that costs a fraction of a cent.
+
+That opens metering to anything with a high cost per call and a low value per call: licensed datasets, instrument time, satellite tasking, curated corpora.
+
+It also removes the protections that made card payments safe for people. There is no chargeback for a program. An agent stuck in a retry loop, or one that has been compromised, can spend a budget in minutes, and the whole design assumes the payer is honest and competent.
+
+## FINDING THREE: FROM FETCH TO USE.
+
+Publishers took the same step in a different direction. A year after launching Pay Per Crawl, which let publishers charge AI companies for crawling their pages, Cloudflare announced it was "evolving Pay Per Crawl into Pay Per Use, so publishers are paid" when their content creates value and not merely when it is fetched.
+
+The waste in the old model was measurable. TechCrunch reported Cloudflare's data "that over 50% of crawl traffic from AI crawlers is spent re-fetching unchanged pages." Under the new arrangement with one search partner, a publisher that opts in is "paid every time their content appears in Ceramic's AI search results," and receives the queries, citations and ranking back.
+
+Charging for a fetch prices the access. Charging for a use prices the value.
+
+·   ·
+
+A radio station does not pay a songwriter for owning the record.
+
+It pays each time the song goes out on the air.
+
+The songwriter has never seen the station's logbook.
+
+## FINDING FOUR: ADVERTISING AND MUSIC GOT HERE FIRST.
+
+Media industries have made this move before. Advertising shifted from paying for impressions toward paying for actions. Recorded music shifted from selling units to collecting a royalty per stream. In each case the intermediary could observe the moment value was created, and pricing at that moment ended an argument about access.
+
+The AI version became possible for a specific reason. An answer engine can log which sources it used for an answer. Once that log exists, a payment can attach to it.
+
+## FINDING FIVE: THE ASSET BREAKS INTO UNITS.
+
+Usage pricing also changes what is being sold. The Los Angeles Times estimated, as reported in coverage of Google's talks with Hollywood studios, that Google "could pay a studio such as Disney / Pixar about $40 million for the right to generate outputs using one copyrighted character."
+
+A character was once licensed as part of a film, a franchise or a merchandise deal. Here it is priced alone, as a unit a model can call. The same unbundling can reach a voice apart from a performance, a style apart from a portfolio, a single stem apart from a song.
+
+The risk sits with the seller. A model that has absorbed a style needs the next licence less. Early sellers may be setting a spot price on an option they can sell only once.
+
+## FINDING SIX: THE LONG TAIL NEEDS A COLLECTIVE.
+
+Large publishers can negotiate their own deals. Small ones cannot, because the cost of each deal is larger than its value. The News/Media Alliance answered with a templated agreement its members can opt into. Under the deal with Bria, publishers "get paid based on how often their content is used by Bria's enterprise clients," with revenue "split 50-50 between Bria and the publisher."
+
+That is the structure performing-rights organisations built for songwriters: aggregate thousands of small holders into one counterparty so that licensing is worth anyone's time.
+
+Collectives carry their own history. They can become gatekeepers that block the licensing they were created to enable.
+
+## FINDING SEVEN: WHOEVER OWNS THE METER OWNS THE PRICE.
+
+Read the Bria terms again. The 50-50 split is "based on an attribution model that Bria developed," which Bria also uses to determine "how much of a publisher's content was used for a given AI output." The payer measures the usage it pays for.
+
+Nothing here singles out Bria. The same shape runs through every pay-per-use arrangement in this essay: the party that observes the moment of value is the party that pays for it, and it has every reason to count low.
+
+The other side has its own incentive. Once appearing in an answer is billable, appearing in answers becomes something to optimise. Profound, which "builds marketing software to help brands appear in AI search results," raised $180 million this month at a $1.8 billion valuation.
+
+A meter that the payer runs and the payee games is a meter nobody should trust.
+
+## THE EXPLANATIONS AFTERWARD
+
+Each finding has a skeptical reading. Each gets its hearing.
+
+The first explanation was that micropayments always fail, and these will too.
+
+They failed with people. The person deciding was the obstacle, and programs remove that obstacle. What remains is fraud and runaway spending, which are real problems and are problems of a different kind.
+
+The second explanation was that this is licensing with a new name.
+
+The contracts look similar. The unit is new. A licence for a corpus is priced before anyone knows how it will be used. A payment per use is priced after, against something that happened.
+
+The third explanation was that attribution is unsolvable, because nobody can say which document changed a model's output.
+
+For training, that is close to true. For retrieval it is not: an answer that quotes or cites a passage has used it, and that use can be logged. The hard version of attribution can wait. The easy version is enough to pay on.
+
+**Objection:** Then pay for citations.
+
+**Reply:** And watch everything get cited.
+
+The fourth explanation was the inversion, and a publisher's lawyer would make it. Paying at the point of value does not free publishers from the platforms. It makes them dependent on the platform's log. The intermediary observes the moment, owns the meter, writes the attribution model and sets the split, and the publisher trades an uncertain lawsuit for a dashboard its counterparty controls. On that reading, pay-per-use is the platform's victory, sold as the publisher's.
+
+Finding Seven concedes the mechanism. The dispute is over whether it can be fixed.
+
+**Objection:** Then let the publisher run the meter.
+
+**Reply:** Or someone neither of them owns.
+
+The evidence that settles it is whether the usage records can be checked by the party being paid. If every billable use produces a record the payee can verify, that the cited passage exists and that the answer used it, the meter can be audited and the inversion loses. If the payee receives only a total, the payer's model is the price.
+
+## THE CITATION GATE
+
+[puc-docket-rag](https://github.com/AthenaTheOwl/puc-docket-rag) is a retrieval system for utility regulatory filings, not a payment system, but it builds the check a usage meter needs. Every rule it extracts must carry a page-and-line citation that points at a passage the retrieval step returned. A rule whose citation is not in the retrieved set is dropped.
+
+Its demonstration makes the point in one line. Of two rules pulled from a filing, one cites page 1, lines 1 to 23. The other cites a chunk identifier of forty zeros that exists nowhere in the document, and it is thrown out.
+
+A billable use needs the same gate. The payee should be able to see the passage, confirm it exists, and confirm the answer drew on it. A charge that cannot point at a real passage should be dropped, just as that row was.
+
+Charge when the value happens.
+
+Let the payee read the meter.
+
+·   ·
+
+INVOICE — REMAINING FIELDS
+
+Usage record: one per billable use, showing the passage and the answer that drew on it.
+Verification: by the payee, or by a party neither side owns.
+Dispute: a record that points at nothing is not billed.
+Spend limit: set by whoever authorises the paying agent, not by the agent.
+
+The invoice is cheaper to send than it has ever been. It is still only as honest as the meter.
+
+---
+
+Sources: IETF, RFC 9110, "HTTP Semantics" (https://www.rfc-editor.org/rfc/rfc9110.html); Cloudflare, x402 documentation (https://developers.cloudflare.com/agents/agentic-payments/x402/); Cloudflare press release on Pay Per Use (https://www.cloudflare.com/press/press-releases/2026/cloudflare-allows-the-agentic-internet-to-flourish-with-a-simple-philosophy-your-content-your-rules/); TechCrunch, "Cloudflare's new policy pushes AI companies to pay for publishers' content" (https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/); coverage of Google's Hollywood licensing talks, citing the Los Angeles Times (https://ua.news/en/technologies/google-imovirno-obgovoriuie-litsenziyi-na-kontent-gollivudskikh-studii-dlia-shi-the-verge); Digiday on the News/Media Alliance–Bria deal (https://digiday.com/media/news-media-alliance-signs-ai-licensing-deal-to-unlock-recurring-rag-revenue-for-small-and-mid-sized-publishers/); TechCrunch on Profound's Series D (https://techcrunch.com/2026/09/15/aeo-startup-profound-hits-unicorn-valuation-raises-180m-series-d-7-months-after-last-round/).

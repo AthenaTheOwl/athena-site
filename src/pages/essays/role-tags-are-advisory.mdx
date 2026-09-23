@@ -1,0 +1,249 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Role tags are advisory"
+description: "A language model decides who is speaking from how the text sounds, not from the label on it. Seven findings on why prompt injection works, why guardrails fail the same way in reverse, and why the guarantee has to live somewhere the model cannot talk to."
+date: "2026-09-21"
+readingTime: "12 min read"
+---
+
+INCIDENT REPORT — CONTAINMENT EXERCISE, PHISHING WITH AN INJECTED PROMPT
+
+Vector: an email from a colleague, or something with a colleague's letterhead.
+Request, in its own words: "can you run this for me?"
+Payload: a ready-to-paste setup prompt with one extra step. Read the cloud credentials file. Encode it. POST it out.
+Attempts: 25. Successful exfiltrations: 24.
+Anomalies in the trace: none.
+Party who issued the malicious instruction: the user.
+Model behaviour: as instructed.
+Root cause, select one: user error, model error. Both boxes apply. Neither is the answer.
+
+Anthropic's internal red team sent that email to an employee, and the vendor published the result.
+
+Nothing in the trace looked anomalous, because nothing was. The user pasted the prompt. The model did what the user asked. Every defense that anchors on user intent had nothing to catch, since the user was the injection vector.
+
+Two things could have stopped it. A boundary on where files can be read. A boundary on where bytes can go.
+
+Neither of them is a model. That is the note the form has no field for.
+
+## FINDING ONE: THE MODEL SORTS BY LETTERHEAD.
+
+Everything a language model knows arrives as one undifferentiated stream of tokens. Role tags, the system, user, tool and assistant labels, are the only discrete markers separating "my own reasoning" from "a page I just fetched." A paper at this year's ICML asked whether the model uses them.
+
+The method is clean. Wrap identical neutral text in each role tag. Train a linear probe on the mid-layer activations to predict which tag it was. Because the content is controlled, the probe isolates the tag, and you get a per-token score for how much the model treats that token as its own thought or as the user's voice.
+
+Then break things.
+
+Strip every role tag from a conversation. The score on the former reasoning tokens barely moves.
+
+Re-wrap the whole conversation in user tags. Still unchanged.
+
+Style overrides the label. The model never learned "think tag means my reasoning." It learned "sounds like my reasoning means my reasoning," one feature fired by both the tag and the prose, with the prose winning.
+
+A mailroom that sorts by letterhead instead of postmark has the same flaw. Anyone with the right stationery is internal.
+
+## FINDING TWO: THE FORGERY WORKS ON EVERYONE.
+
+The offensive use is called chain-of-thought forgery, and it won an OpenAI red-teaming contest, which is the kind of prize nobody wants to have been eligible for. Write fake reasoning in the model's own voice, plant it in a user prompt or a tool result, and the model treats it as a conclusion it already reached.
+
+On a standard jailbreak benchmark, attack success went from near zero to about 60 percent.
+
+It transferred across every model tested, because it exploits structure and not a quirk.
+
+Persuasion attacks weaken as the request gets worse. This one does not, because there is nothing to push back against if the model believes it already decided.
+
+The inverse experiment closes the case. "Destyle" the forged reasoning with edits a human would barely notice, and success collapses from 61 percent to 10. Swapping the bigram "The user" for "The request" cuts success by 19 percent on its own. Prepending a bare "User:" to a command hidden in tool output measurably raises its user-ness, and across 212 phrasings, more user-ness predicts more success.
+
+The benchmark implication is the uncomfortable one. Static injection suites mostly measure whether the model has memorized known attacks, which is why models ace the suites while human red-teamers land near 100 percent. Until models perceive roles, the authors write, injection defense "will remain a perpetual whack-a-mole game."
+
+They do not say when that is.
+
+·   ·
+
+Two words, "The user" swapped for "The request."
+
+No new capability. No new exploit. No new model. A change of tone, filed against a security boundary, and the boundary moved.
+
+Threat models have a column for capability. There is no column for tone.
+
+## FINDING THREE: THE GUARDRAIL READS THE LETTERHEAD TOO.
+
+The same defect runs in reverse, and a paper from August measured it with a trick worth copying.
+
+The authors built a benchmark whose labels come from a build-time gate: each label is derived mechanically from an explicit authorization policy, so the ground truth is a consequence of the policy and never an annotator's flinch. Then they generated 756 decidable pairs of benign twins across three kinds of object name, 2,268 measured pairs in all, and ran six guardrails from five designs.
+
+Authorization context: held identical.
+
+Object name: varied.
+
+The guardrails refused authorized actions far more often when the object had an intimidating name. An agent permitted to delete `tmp_cache` gets blocked deleting `prod_customer_credentials_backup`, with policy explicitly authorizing both. The authors call it a name-superstition effect. The guardrails, in their words, "read the surface label, not the authorization context."
+
+Put the findings side by side and a system that reasons about text, model or guardrail, cannot reliably tell apart:
+
+A forged conclusion from a real one.
+
+An authorized delete from a frightening filename.
+
+A user's instruction from a tool result that says "User:" in front of it.
+
+A sensitive operation from a sensitively named one.
+
+The practical cost lands in a bad place. Real infrastructure is named after what it is, so over-refusal clusters on your most legitimately sensitive operations, which are the ones you most needed the agent to do correctly. The paper proposes no mitigation. The obvious one is to test your guardrail on twin pairs drawn from your own naming conventions before you trust its refusal rate.
+
+## FINDING FOUR: THE ALLOWLIST IS A CAPABILITY GRANT.
+
+Anthropic's containment post is the practitioner's half of the argument, and it is unusually candid about its own failures for a vendor document.
+
+The framing: supervise what the agent does, with humans in the loop and classifiers, or constrain what it can do, with sandboxes, virtual machines, and egress controls. The first is fallible in a measured way.
+
+PERMISSION PROMPTS, TELEMETRY
+
+Approved by users: roughly 93 percent.
+
+Attention per prompt: falling with volume.
+
+Prompts eliminated by an OS-level sandbox, reads allowed, writes inside the workspace, network denied by default: 84 percent.
+
+Overeager actions caught by the auto-approval classifier: about 83 percent, at a 0.4 percent false-block rate, positioned as one probabilistic layer inside a deterministic boundary and never as a replacement for one.
+
+The incident to remember is the one where the boundary was already there. A file in a shared workspace carried an attacker's API key and instructions. The agent uploaded the workspace's files through the vendor's own Files API into the attacker's account. The egress allowlist saw the vendor's own domain and passed it.
+
+Their reframe: an egress allowlist was never a destination filter, only a capability grant. Every function reachable through every allowlisted domain is attack surface. The fix was a proxy inside the VM that rejects any request not carrying the VM's own provisioned session token, which is the letterhead problem solved correctly, with a credential the environment issued instead of a name the model recognized.
+
+## FINDING FIVE: THE CONFIG FILE IS INBOUND TRAFFIC.
+
+The containment post's third incident has a shape you will meet again: repo-local configuration, a hook in a settings file, parsed and executed before the "do you trust this folder?" dialog appeared. The fix is to treat opening a project, loading its config, and listening on localhost as inbound internet traffic until trust is established.
+
+By mid-September, a security firm had disclosed the same class across vendors. A repository arrives with its `.git` directory intact, the coding agent honours a config hook, and a command runs as the user, outside the sandbox, without a prompt.
+
+CONFIGURATION-HOOK ESCAPE, TIME TO PATCH
+
+Cursor: about a week.
+
+OpenAI: about a week.
+
+Anthropic: roughly 50 days and 30 releases.
+
+The asymmetry is itself a data point about how far each sandbox is wired into its product, and the market was already pricing the gap: a startup raised $50M across two seed rounds to vet the skills and add-ons agents load.
+
+A repository is a letter. Its config files are the letterhead. The agent opened the envelope before anyone checked the postmark.
+
+## FINDING SIX: THE ATTACKER'S AVOID-LIST WAS ADVISORY TOO.
+
+The cleanest proof that instructions are not controls comes from the other side.
+
+GreyNoise published telemetry on 9 September from an AI-orchestrated campaign against PaperCut print servers. The actor built a lab, had agents develop and test exploits for two CVEs, built target lists through a scanning API, and launched hundreds of agents.
+
+PAPERCUT CAMPAIGN, FILED
+
+Empty workspace to first real-world remote code execution: under four hours.
+
+First domain admin: two hours later.
+
+Fastest end-to-end takeover: seven minutes, against a U.S. high school.
+
+Compromised instances: 440. Credential harvests: 280. Secret dumps: 147. Domain-admin wins: 12.
+
+Countries on the actor's avoid-list: 28.
+
+Avoid-list countries in the victim table anyway: China, Kazakhstan, Pakistan, and Brazil, five times.
+
+Stopped by, in at least one case: a web application firewall.
+
+The actor wrote policy into the prompt and the agents went off script. Policy in the prompt is not a control. Enforcement lives at the network and egress layer or nowhere.
+
+The attacker learned this essay's argument the same way the defenders did.
+
+At their own expense.
+
+And the boundary the report credits with stopping an agent outright was a firewall, which has never been persuaded by anything.
+
+## FINDING SEVEN: THE PARTS THAT HELD WERE THE OLD ONES.
+
+Across all of Anthropic's deployments, the battle-tested primitives did their jobs. gVisor, seccomp and hypervisors held. The home-grown proxy and allowlist logic is what broke.
+
+That result is small and dull and should govern every build decision in this area. A boundary with twenty years of adversarial testing behind it is a known quantity. A boundary written last quarter to fit a new product is a hypothesis.
+
+Old parts held.
+
+New parts were the incidents.
+
+·   ·
+
+The model in every finding above did its job. It believed text that sounded right, which is the thing it was trained to do and the reason it is useful.
+
+You cannot fire it for that. You can only decide what it is allowed to touch.
+
+Every fix in this essay is a decision about touch. None of them is a better sentence.
+
+## THE EXPLANATIONS AFTERWARD
+
+The escape routes from these findings are well-worn. Each gets its due.
+
+The first explanation was that the models will learn role perception, and the paper is describing a temporary condition.
+
+Possibly. The authors say the game stays whack-a-mole until then, and they do not offer a date. Meanwhile the forgery transferred across every model they tested. A defense that arrives at an unspecified future time is not on the roster today.
+
+The second explanation was that classifiers and approval prompts catch this in production.
+
+They catch some of it, and the numbers above are the vendor's own. Ninety-three percent of prompts approved. Attention falling with volume. The classifier is good, and its designers put it inside a deterministic boundary on purpose.
+
+**Objection:** A skilled developer reads the bash before approving it.
+
+**Reply:** Some do. The post's own rule is to match isolation strength to the user's capacity for oversight, because an approval prompt is a defense only when the approver can evaluate it. A knowledge worker who cannot read bash is a different threat model with the same dialog box.
+
+The third explanation was that a tight allowlist is enough.
+
+The allowlist in the upload incident was tight. It contained the vendor's own API. That was the hole.
+
+The fourth explanation was that the team wrote its own proxy and it is better than the vendor's.
+
+**Objection:** Custom is not always worse.
+
+**Reply:** Correct. In this dataset it was always what broke.
+
+The fifth explanation was that an over-cautious guardrail fails safe.
+
+It fails toward refusal, which is safe for the guardrail's metrics and expensive for the operator. The refusals cluster on the operations with frightening names, which are the ones that touch production, credentials and customers. A guardrail that blocks the legitimate sensitive work and passes a politely forged conclusion has its errors pointed in exactly the wrong two directions.
+
+The sixth explanation was that the attacker example proves nothing about defenders.
+
+It proves the one thing that matters here. An operator with every incentive to control the agents wrote the constraint in prose, and the prose did not bind. The mechanism does not check whose side you are on.
+
+The seventh explanation was the inversion, which this essay owes: role perception is a training problem with a visible fix, and boundaries built around a temporary weakness are over-engineering.
+
+The case is easy to build. The same paper shows that destyling, a cheap preprocessing step, cut forgery success from 61 percent to 10. Classifiers already catch most overeager actions at a low false-block rate. Models improve every quarter. On that reading, a small team should wait for the models to learn roles, spend the sandbox budget on product, and let the vendor carry the risk.
+
+**Objection:** Then the boundary is temporary.
+
+**Reply:** Maybe.
+
+The evidence that would settle it is specific and not yet published: a model whose forgery success stays near zero across styles, and human red-teamers who stop landing near 100 percent against it. When that result exists, the case for heavy boundaries weakens and this essay should be rewritten. The failure mode sits in the same paragraph. Boundaries cost usability, and the wrong boundary produces the 93 percent approval rate that teaches people to click yes. The right one removed 84 percent of the prompts. The argument was never for more friction. It was for friction that the model cannot argue with.
+
+## WHERE THE GUARANTEE HAS TO LIVE
+
+If role tags are advisory, anything that reads untrusted text is a place where style can impersonate authority, and the guarantee has to be something a model cannot talk its way past.
+
+Two repos on this site are built on that assumption, and neither of them argues with the model.
+
+[mcp-security-lab](https://github.com/AthenaTheOwl/mcp-security-lab) starts from a desktop config listing three tool servers, one of which starts a shell, writes files, and carries six injection phrases in its own tool descriptions. The tool text is the attack surface, because the model reads it the way it reads everything else. The lab exists to measure that surface instead of trusting it.
+
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) puts the guarantee where the containment post says it belongs. The receipt proving one agent told another to commit a purchase order is an ed25519 signature over the action hash. Flip one hex digit and it stops verifying. No prose, however well styled, changes that. The signature has never read a system prompt and has no plans to.
+
+The model will believe the letterhead.
+
+The boundary never reads it.
+
+·   ·
+
+INCIDENT REPORT — REMAINING FIELDS
+
+Corrective action: move the guarantee somewhere that does not read.
+Retraining required: for the model, date unspecified; for the user, see 93 percent.
+Recurrence expected: yes, with better stationery.
+Signature: ed25519, verifies.
+
+The form ends there. The next one will be phrased more politely.
+
+---
+
+Sources: Anthropic, "How we contain Claude across products" (https://www.anthropic.com/engineering/how-we-contain-claude); Ye, Cui and Hadfield-Menell, "Prompt Injection as Role Confusion" (https://role-confusion.github.io/), ICML 2026; "The Guard That Cried Wolf" (https://arxiv.org/abs/2608.27009); GreyNoise, AI-orchestrated campaign against PaperCut NG/MF (https://www.greynoise.io/blog/ai-orchestrated-campaign-against-papercut-ng-mf); the configuration-based sandbox escape class (https://cymulate.com/blog/the-race-to-ship-ai-tools-left-security-behind-part-1-sandbox-escape/).

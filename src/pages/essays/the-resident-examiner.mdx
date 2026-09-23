@@ -1,0 +1,145 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The resident examiner"
+description: "In one summer, oversight of frontier AI moved from 'report it yourself' to 'we will have someone in the building.' Banks and reactors got there decades ago. Six findings on the mechanism, the precondition, and the field on the docket nobody has filled."
+date: "2026-09-22"
+readingTime: "11 min read"
+---
+
+DOCKET — OVERSIGHT OF FRONTIER AI, SUMMER 2026
+
+June: a presidential action on covered frontier models gives the government privileged access to assess dual-use risk before release. Mechanism: pre-release review.
+1 July: an export-licence requirement on two frontier models is lifted after the lab agrees to "proactively detect and address security risks associated with the models" and to inform the government of "malicious activity." Mechanism: self-reporting.
+3 September: an FDA pilot lets generative-AI medical devices reach patients before they are authorised. Mechanism: release under observation.
+4 September: the federal auto-safety regulator opens a probe into nearly 1,000 driverless vehicles, the day after commercial deployment began, examining the basis for the manufacturer's certification. Mechanism: self-certification, questioned afterward.
+12 September: a frontier lab's chief executive commits the company to embedded third-party evaluators, with desks, badges, laptops and the right to publish. Mechanism: the resident examiner.
+Paid by: no field.
+
+One summer, from "tell us if something goes wrong" to "we will be in the building when it does." Nobody planned the arc. The incidents did.
+
+The unfilled field is the oldest problem in supervision, and it is where this essay ends.
+
+## FINDING ONE: SELF-REPORTING IS STRUCTURALLY LATE.
+
+The July arrangement is bonded self-regulation in its classic form: the regulator stops inspecting every unit and mandates an internal detect-and-report loop, with consequences attached. HACCP for food. Suspicious-activity reports for banks. Security reporting for models.
+
+The summer's incidents made the case against relying on it from two directions. Self-reporting surfaces failures only after economic damage, because the reporter is the last party with an incentive to look and the first with an incentive to wait. And self-evolving agent systems break the older assumption underneath every audit regime: that evaluating the finished artifact tells you what it will do.
+
+A point-in-time audit of a system that rewrites itself between audits is a photograph of a river.
+
+Continuous, process-level observation by an outsider with insider access replaces the photograph, because the inspected party's cost of concealment rises with the inspector's dwell time. That is the whole mechanism of the resident examiner. Large U.S. banks have hosted on-site supervisory teams for decades, and the Nuclear Regulatory Commission stations resident inspectors at every operating reactor, long enough that nobody remembers it was ever controversial.
+
+## FINDING TWO: THE TEETH ARE THE RIGHT TO PUBLISH.
+
+The design detail that makes the arrangement work is not enforcement power. Amodei's essay spells out the contract. The embedded team gets "desks in our offices, access badges, and company laptops," and workspaces and permissions "mostly comparable to what internal risk assessment teams have." Then the clause that matters: "External reviewers should have the right to publish key findings about risk levels, incidents, practices, and the access they received or didn't receive — without editorial control by Anthropic." The company keeps a narrow right to redact security-sensitive, privileged or confidential material, "but we can't redact findings just because they are unfavorable. The reviewers can say publicly if a redaction removed something important to their conclusions."
+
+The essay names its precedent: the banking industry, "which sometimes involves regulatory 'supervisors' embedded along with employees." It also names its status: "Anthropic is unilaterally committing to this step now."
+
+The observer's power is the right to publish, not the right to punish. That is the IAEA safeguards model and the financial-audit engagement model, and it is the version a lab will accept voluntarily, as one did.
+
+Publication rights change what concealment costs. A finding that cannot be redacted is a finding the firm will fix before it is written, which is the only kind of compliance that arrives ahead of the incident.
+
+·   ·
+
+A resident inspector at a power plant has a desk on site.
+
+They come to the same plant most working days for years. They badge in with the operators, sit in on the meetings, and learn which pump sounds wrong before anyone writes it down.
+
+The inspection report is not the valuable part. The valuable part is that everyone in the building knows the inspector will be back tomorrow.
+
+## FINDING THREE: RELEASE, THEN CONFIRM, WITH A DEADLINE.
+
+By September the FDA was "provisionally allowing some developers to launch their products on the market," with four devices recently accepted into a pilot called TEMPO that lets them reach patients before authorisation, under observation. The transfer to agents is exact. When a technology's failure modes appear only in deployment, replace gate-then-release with release-then-monitor, and make the monitoring the evidentiary record. Regulators now have the internal capacity to process continuous telemetry instead of periodic filings, which is the first time that sentence has been true.
+
+The companion pattern is accelerated approval, and it carries the fix for the obvious abuse. Separate the decision to permit from the decision to confirm, and make confirmation binding with a deadline. For AI deployment: release on benchmark surrogates, with binding real-world outcome reporting within twelve months.
+
+The failure mode is the same in both regimes, and it is documented. Unenforced confirmatory obligations turn staged approval into approval with extra steps. "Temporary under observation" has a way of becoming permanent regardless of what the observation shows, and without withdrawal teeth the surrogate becomes the endpoint.
+
+## FINDING FOUR: "WHO CERTIFIED THIS?" IS THE MOST VALUABLE POSITION IN THE STACK.
+
+The day after Tesla began commercial deployment of its two-seat Cybercab in Austin, the federal auto-safety regulator opened a probe into nearly 1,000 of them. The vehicle "lacks permanently attached conventional manual controls, including a steering wheel, brake pedal, accelerator pedal and mirrors," and the agency said it would examine the basis for the company's certification against federal safety standards.
+
+When a system removes the human control surface, the question of who certified it becomes the binding constraint on deployment, and therefore the most valuable position in the stack. Computer-use agents and driverless vehicles both removed the human in the loop inside the same eighteen months. The probe is that question being asked one day late.
+
+The older version is regulatory qualification as a moat: get a regulator to accept your tool as a standard, so adoption is driven by de-risking instead of raw performance. It is narrow and slow, and a tool blessed for one use confers no halo elsewhere.
+
+And the moat has a precise downside. Certification regimes calcify around whoever's architecture arrives first, locking in a technically inferior design for a decade. The existing exemption path for vehicles without manual controls, capped at 2,500 vehicles per manufacturer, is the shape of that lock-in forming.
+
+## FINDING FIVE: THE INSTITUTION NEEDS PEOPLE WHO DO NOT EXIST YET.
+
+An embedded evaluator for a frontier lab has to read training pipelines, alignment evaluations and security architecture, and has to be trusted by both the lab and the public. There are maybe a few dozen people qualified for the role today. The three largest labs have reportedly been meeting since July on a standards body, which would institutionalise demand for exactly those people.
+
+The credentialing and training pipeline for evaluators does not exist. Neither do most of the tools they would carry into the building: provenance on training runs, audit logs the lab cannot rewrite, incident schemas more than one lab uses.
+
+A resident examiner without those tools is a person with a badge and a chair.
+
+A resident examiner who is one of forty qualified people in the world has a scarcity problem, and scarcity is where capture starts.
+
+·   ·
+
+Every entry on the docket is a different answer to one question: who is in the room when the thing goes wrong.
+
+In June the answer was nobody until release. By September it was somebody with a desk. The answers moved closer to the room one incident at a time.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits, and one of them is the whole history of financial regulation. Each gets its due.
+
+The first explanation was capture. Embedded evaluators paid by, housed by, and dependent on the evaluated firm is the structure that produced the credit rating agencies.
+
+Correct. Resident examiners did not prevent 2008. Evaluators who can be ignored are examiners without enforcement. Publication rights are necessary and historically not sufficient, and the analogy holds only if legislated standards arrive.
+
+**Objection:** Then the arrangement is theatre until legislation.
+
+**Reply:** It is a rehearsal. The tooling the examiner needs, provenance, audit logs, incident schemas, has to exist before the statute names it, or the statute names nothing.
+
+**Objection:** Who pays for the rehearsal.
+
+**Reply:** The labs, which is the capture problem restated. The tooling will be sold to labs first and to regulators later, and the handover between those two customers is where the 2008 dynamic either repeats or does not.
+
+The second explanation was that voluntary regimes ossify into de facto licensing and entrench incumbents.
+
+Also correct, and the certification finding says the same about architectures. The answer is structure with an expiry, not less of it: the confirmatory deadline, the withdrawal teeth, the finding that cannot be redacted.
+
+The third explanation was that benchmarks cannot keep pace with capability, so pre-release certification certifies last year's risk.
+
+Yes. Which is why the docket moved from pre-release to resident. An examiner in the building does not need the benchmark to keep pace. The examiner watches the process, and the process is what changed.
+
+The fourth explanation was that a lab accepting the arrangement voluntarily proves it is toothless.
+
+It proves the lab expected the alternative to be worse, which is the usual reason anyone lets an examiner in, and the teams in the banks are still there.
+
+The fifth explanation was the inversion, and it cuts at the analogy itself: a frontier lab is not a bank. A bank's risky process is a ledger built to be audited. A lab's risky process is a training run, and an examiner at a desk sees logs and dashboards, not risk. On that reading, the resident examiner imports the furniture of supervision without the legibility that made it work, and lends the lab a badge's worth of credibility for free.
+
+The case is serious, and the essay's own evidence supports half of it. The tools the examiner needs do not yet exist. The people barely do.
+
+**Objection:** The examiner will see only what the lab shows.
+
+**Reply:** Then they say so, in public.
+
+The evidence that settles it arrives with the first published reports. If the embedded team's first year of findings contains something the lab had not already disclosed, a practice, an incident, an access the team was refused, the examiner is doing the job and the inversion loses. If the reports restate the lab's own disclosures in a second voice, the examiner is decoration and the inversion wins. The failure mode sits in the same sentence: the lab still controls what is legible, and the one clause that checks it is the reviewers' right to say publicly that a redaction removed something important. That clause is worth more than the desks.
+
+## THE STACK BENEATH THE EXAMINER
+
+The examiner institution is not a repository, and this site does not pretend to have built one. What it has built is one layer of the tooling the examiner needs.
+
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) supplies provenance: the receipt that one agent instructed another is a signature over the action hash, and a resident examiner who can verify signatures does not have to take the firm's word for who did what. The audit-log and incident-schema layers are open, and they are the next things to build.
+
+Put someone in the building.
+
+Let them publish.
+
+·   ·
+
+DOCKET — REMAINING FIELDS
+
+Examiner paid by: the examined, for now.
+Date that stops: not yet written.
+Findings redacted for being unfavourable: none permitted, by contract.
+Redactions the reviewers objected to in public: none yet, because the reviewers have not yet arrived.
+
+The docket ends there. The desks, the badges and the laptops were promised for the near future.
+
+---
+
+Sources: Dario Amodei, "We Must Pace the Frontier" (https://darioamodei.com/post/we-must-pace-the-frontier); TechCrunch on the plan (https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier/); Al Jazeera on the lifted export restrictions (https://www.aljazeera.com/economy/2026/7/1/us-lifts-restrictions-on-powerful-ai-models-fable-mythos-anthropic-says); White House, presidential action on covered frontier models (https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/); STAT on the FDA TEMPO pilot (https://www.statnews.com/2026/09/03/tempo-fda-pilor-generative-ai-medical-device-regulation/); CNBC on the Cybercab probe (https://www.cnbc.com/2026/09/04/us-auto-safety-regulator-opens-probe-into-nearly-1000-tesla-cybercabs.html).

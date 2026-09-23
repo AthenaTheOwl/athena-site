@@ -1,0 +1,152 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Sparsity is an operating principle"
+description: "The largest open model of the summer wakes under two percent of itself for each word it writes. Seven findings on paying for what you use instead of what you own, where the bill moves when you do, why the router becomes the product, what breaks when the experts are people, and the record every sparse system owes of what it left asleep."
+date: "2026-09-22"
+readingTime: "11 min read"
+---
+
+CAPACITY LEDGER — ONE MODEL
+
+Installed: 2.8 trillion parameters.
+Organised as: 896 experts.
+Awake for any one token: 16, "roughly 1.8% of the pool."
+Cost of keeping the other experts ready: paid in memory, every hour, whether they are called or not.
+Cases where the router skipped an expert that would have changed the answer: no field.
+
+That is Moonshot's Kimi K3, the largest open-weight model released this summer. It owns an enormous amount of capacity and spends almost none of it on any single step.
+
+The missing line is the one every sparse system owes and almost none keeps.
+
+## FINDING ONE: PAY FOR WHAT YOU USE, NOT WHAT YOU OWN.
+
+The idea is older than the current generation of models. A 2017 paper called it conditional computation, "where parts of the network are active on a per-example basis," and made it practical with a layer of "up to thousands of feed-forward sub-networks" and a trainable gate that picks "a sparse combination of these experts to use for each example." The result was "greater than 1000x improvements in model capacity with only minor losses in computational efficiency."
+
+The principle separates two costs that dense systems bundle together. One is the cost of having a capability available. The other is the cost of using it. A sparse design accepts a large fixed cost for breadth so that the cost of each decision stays small.
+
+Plenty of organisations run the other way. They order the full panel of tests for every patient, scan every file, reprocess the whole table and review every claim with the same care. The expensive resource is applied to every case because nobody built the gate that would say which cases need it.
+
+·   ·
+
+A library with ten million books has one reading room.
+
+Nobody complains that most of the books are closed. The catalogue is the clever part.
+
+## FINDING TWO: THE CONSTRAINED PARTY INVENTS THE EFFICIENCY.
+
+Tom's Hardware ran its K3 story under a headline that included the phrase "as China works around U.S. compute limits." A lab with less compute than its rivals has a stronger reason to build a model that spends less of it per step.
+
+Scarcity produces selectivity, and selectivity travels. The workaround a constrained party builds out of necessity becomes an efficiency upgrade for everyone else once it works.
+
+That is the uncomfortable half of any control on inputs. It can slow a rival and teach them to need less.
+
+## FINDING THREE: SPARSE COMPUTE MOVES THE BILL TO MEMORY.
+
+Experts that are not running still have to be somewhere. A sparse model trades compute for storage, and when memory is the scarce part of the machine, the whole design problem becomes where to keep the sleeping experts.
+
+Edge0's preview release is the extreme answer. It runs a 35-billion-parameter mixture-of-experts model "in under 3 GiB of active memory." The full 4-bit checkpoint "stays on storage and experts are streamed on demand, so only the active weights are in RAM." A small trained prerouter predicts routing one step ahead, so loading the next experts overlaps with computing the current step, which it credits with "up to +59%" decode throughput. Adapters trained by distillation keep the 4-bit model "within 3.9 points of its fp16 base."
+
+This is an operating system's virtual memory, rediscovered for weights: keep the cold majority on cheap storage, predict the hot minority, and hide the wait. The model card is candid about the price. The preview "is not yet optimized for agentic tasks," and tool use, multi-step planning and long-horizon autonomy are listed as weak.
+
+The economics depend on memory being dear and storage being cheap. If that ratio flips back, the trick is worth less. The principle is not.
+
+## FINDING FOUR: THE ROUTER IS THE PRODUCT.
+
+In every sparse system, one small component decides what the large one does. In the 2017 design it is a gating network. In Edge0 it is the prerouter. It is always the cheapest part of the system and the one whose mistakes cost the most.
+
+The same is true outside models. A specialist network is worth what its triage is worth. An underwriting team that reviews every claim identically is a dense model. One that routes the plain claims to a fast path and the strange ones to its best people is a sparse one, and its quality lives almost entirely in the routing rule.
+
+Routing is also the layer that survives model churn. A triage layer that decides what to spend the expensive resource on sits above whichever model wins this quarter.
+
+·   ·
+
+An emergency department does not call the neurologist for a sprained ankle.
+
+The triage nurse is the router.
+
+When the triage nurse is wrong, nobody notices until the patient comes back.
+
+## FINDING FIVE: IDLE EXPERTS ARE CHEAP IN SILICON AND EXPENSIVE IN PEOPLE.
+
+A mixture-of-experts model assumes that keeping an expert available costs little compared with running it. For parameters that is true: an unused expert is a block of numbers in memory.
+
+For people it is false. An expert who is rarely called still has to be paid, and an expert who is paid to wait eventually leaves. For physical plant it is also false. A turbine or a production line cannot be woken at the speed a gate switches, and starting and stopping has its own cost.
+
+So the principle transfers cleanly to anything that can sleep cheaply: software, stored inventory, data, standby contracts. It transfers badly to anything that decays, quits or wears out while idle. The ratio between the cost of waiting and the cost of working decides which side a system is on.
+
+## FINDING SIX: THINKING WITHOUT TALKING IS SPARSITY IN TIME.
+
+The same principle is appearing on a different axis. Chain-of-thought reasoning spends tokens on every intermediate step, and every token costs money and time. BDH-CQ, published in August, solves problems "through iterative computation in a high-dimensional latent space, without verbalizing its intermediate reasoning."
+
+A 150-million-parameter version "reaches 29.5% pass@2" on the public ARC-AGI-1 evaluation at a computed cost of "$0.00070 per task," from roughly 0.85 H200 GPU-seconds each. On the leaderboard's own reported costs, the authors put it at about 57 times cheaper than a commercial model that scores 34.2 percent. After that model's 80 percent price cut, which the leaderboard had not yet reflected, the gap is about 11 times.
+
+The honest caveats are in the paper. ARC is a narrow, exactly verifiable puzzle benchmark, and the cheaper system is also less accurate. And the mechanism cannot be checked from outside: "Dimensions, exact update rules, and implementation details remain proprietary."
+
+## FINDING SEVEN: A SPARSE SYSTEM OWES A RECORD OF WHAT IT SKIPPED.
+
+Every saving in this essay comes from not looking at something. That is the point, and it is also the failure mode. A router tuned on a benchmark degrades when the inputs change, and it degrades silently. It does not raise an error. It quietly stops escalating the cases that most needed escalating.
+
+A dense system that fails usually fails loudly, because it looked at everything and got something wrong in plain view. A sparse system that fails has usually looked away, and the evidence of the failure is in the part it never opened.
+
+So every sparse system needs an audit path for what it chose not to look at: a record of what the router skipped, and a sample of skipped cases run the expensive way to see whether skipping them was right.
+
+## THE EXPLANATIONS AFTERWARD
+
+Each finding has a narrower reading. Each gets its hearing.
+
+The first explanation was that sparsity is a cost trick for neural networks and nothing more general.
+
+The 2017 paper framed it as capacity, not cost: a thousand times more capability for about the same compute per example. The organisational version is older than any network. What is new is that routing is now a learned function that can be measured, instead of a manager's habit that cannot.
+
+The second explanation was that cheaper hardware will bring dense designs back.
+
+For some systems it will. The memory-streaming tricks depend on today's price ratios, and a memory glut would weaken them. The capacity argument does not depend on prices. A system that can hold a thousand specialists and call four will always be able to know more per unit of work than one that must call all of them.
+
+The third explanation was that latent reasoning will replace chain-of-thought, since it is so much cheaper.
+
+On narrow, exactly checkable problems it may. On open-ended work, the written-out steps are often the only thing a reviewer can read, and a system that stops writing them has become cheaper by becoming harder to audit.
+
+**Objection:** Then keep the reasoning tokens.
+
+**Reply:** Where someone reads them.
+
+The fourth explanation was the inversion, and anyone who has run a triage desk would make it. Sparsity saves nothing. It moves the cost from computation into memory, into routing, and into the errors of the router, which are invisible by construction. On that reading, a sparse system is cheaper on the benchmark and more expensive on the day the router sends the wrong case down the fast path, and nobody can tell how often that happens.
+
+Finding Seven concedes the mechanism. What it disputes is the conclusion that the cost cannot be measured.
+
+**Objection:** Then run everything, some of the time.
+
+**Reply:** That is the audit.
+
+The evidence that settles it is the skip-regret rate: take a random sample of cases, run them densely, and count how often the full answer differs from the sparse one. If the rate is low and stable, the sparsity is earning its savings. If it climbs when the inputs change, the router is failing quietly and the savings are a loan.
+
+## THE BUDGET OF UNCERTAINTY
+
+No repository on this site routes experts. The nearest ones apply the same idea to risk.
+
+[semiconductor-e2e-manufacturing-optimization](https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization) plans wafer purchases for a fabless chip company four ways, including a Bertsimas–Sim robust model. That model does not protect against every uncertain input going wrong at once. Its uncertainty set caps the total deviation with a budget, Γ, so the plan is hedged against a few of the five inputs moving against it together, not all five.
+
+That is sparsity applied to the adversary. The design assumes that bad luck, like computation, arrives in a few places at a time, and it prices the hedge accordingly. Its two-stage variant adds the other half of the principle: commit to the wafers first, then decide the rest after yield is observed, when there is something to route on.
+
+[world-food-program-robust-simulator](https://github.com/AthenaTheOwl/world-food-program-robust-simulator) shows what that second half is worth. It plans food relief for 77,000 people under price spikes, route closures and budget cuts, in a scenario based on a Syria food-assistance exercise. The nominal plan costs $31,046 a day. The plan protected to 95 percent costs $35,565. The two-stage plan, which pairs contracts with flexibility and settles part of the decision after prices are seen, costs $28,201, less than either.
+
+[Robust-Facility-Location](https://github.com/AthenaTheOwl/Robust-Facility-Location) asks the same question of warehouses. It solves a facility network four ways, stress-tests each plan against Monte Carlo demand, and lets the reader watch how the cost of protection changes as Γ, the budget of inputs allowed to go wrong together, grows.
+
+Keep everything. Wake only what the case needs.
+
+Write down what you left asleep.
+
+·   ·
+
+CAPACITY LEDGER — REMAINING FIELDS
+
+Skipped by the router this period: logged.
+Skipped cases re-run the expensive way: a random sample, every week.
+Skip-regret rate: measured, and watched when the inputs change.
+Experts that are people: paid to wait, or not kept.
+
+The model sleeps most of itself on every word. The ledger has to stay awake.
+
+---
+
+Sources: Tom's Hardware on Kimi K3 (https://www.tomshardware.com/tech-industry/artificial-intelligence/moonshot-releases-2-8-trillion-parameter-kimi-k3); Shazeer et al., "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer" (https://arxiv.org/abs/1701.06538); Edge0-35B-A3B preview model card (https://huggingface.co/Edge0/Edge0-35B-A3B-preview); BDH-CQ (https://arxiv.org/html/2608.09888).

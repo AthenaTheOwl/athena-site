@@ -1,0 +1,148 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Memory is the new chokepoint"
+description: "By 2027, high-bandwidth memory is expected to take nearly a third of DRAM wafers to make about an eighth of DRAM bits. Conventional memory prices nearly doubled in a quarter. Five findings on the wafer arithmetic, the pricing lag inside it, and the industry's attempt to design memory out of the bill of materials."
+date: "2026-09-22"
+readingTime: "10 min read"
+---
+
+WAFER ALLOCATION — DRAM, TOP THREE SUPPLIERS
+
+HBM share of DRAM wafer input: about 18 percent at the end of 2025, 22 percent at the end of 2026, 30 percent at the end of 2027.
+HBM share of DRAM bit supply: about 8 percent, 9 percent, 13 percent.
+Conventional DRAM contract prices, first quarter of 2026: up about 93 to 98 percent on the quarter.
+DRAM industry revenue, same quarter: up 81 percent, to $97 billion.
+Per-wafer revenue, first quarter of 2026: HBM overtaken by a conventional server memory module.
+HBM pricing mechanism: annual.
+Which product gets the next wafer: no field.
+
+By 2027, HBM is expected to take nearly a third of the wafers to make about an eighth of the bits. That ratio is the chokepoint.
+
+Which way the next wafer goes is the field the form cannot fill, because it is being negotiated.
+
+## FINDING ONE: HBM EATS WAFERS FASTER THAN IT MAKES BITS.
+
+HBM demand does not sit beside conventional DRAM demand. It draws on the same wafers, and it draws on more of them per bit. On TrendForce's estimates, HBM's share of wafer input runs at more than twice its share of bit output in every year from 2025 to 2027, and its share of wafers keeps climbing as the stacks grow.
+
+The stacks are growing on both kinds of chip. HBM per AI accelerator ASIC is rising from 96 or 192 gigabytes to 216 or 288 in 2026, and one GPU platform is expected to reach 384 gigabytes per GPU in 2027. TrendForce's summary: "the crowding-out effect on conventional DRAM capacity is expected to intensify further."
+
+The downstream effect arrived in the first quarter of 2026. Conventional DRAM contract prices rose about 93 to 98 percent on the quarter, and supplier inventories stayed "extremely low" into the second, with incremental supply going to high-capacity server modules for AI and limited availability for PC and phone makers.
+
+A gaming rig got more expensive because a language model needed bandwidth.
+
+That is a strange sentence, and it is the correct one.
+
+·   ·
+
+A server memory module and an HBM stack start as the same kind of wafer.
+
+Whichever one pays more per wafer gets the next one. The fab does not have a view on AI. It has a price list.
+
+The wafer does not know it is in a chokepoint. It only knows its price.
+
+## FINDING TWO: THE PRICE LAGGED THE SHORTAGE, AND THE WAFERS FOLLOW THE PRICE.
+
+The shortage has a pricing wrinkle that the simple story misses. The three major suppliers sell HBM on an annual pricing mechanism, which "prevented contract prices from fully reflecting quarterly market price increases in a timely manner." Conventional DRAM repriced every quarter. HBM did not.
+
+The result, on TrendForce's per-wafer analysis, is that in the first quarter of 2026 "HBM wafer revenue was overtaken by DDR5 64GB RDIMM," a conventional server module, and HBM's profitability fell below it. "Consequently, suppliers are expected to adjust production allocation between HBM and conventional DRAM depending on HBM pricing outcomes."
+
+The negotiations for 2027 have moved to the next generation of HBM, and the headline of the same release is the forecast: HBM contract prices "Expected to Surge Multiples Higher in 2027."
+
+The scarce product was, for a quarter, the less profitable one to make.
+
+That is how a chokepoint behaves when its price is set once a year and its competitor's is set four times.
+
+## FINDING THREE: WHEN AN INPUT GOES SCARCE, DESIGN IT OUT.
+
+The durable advantage was never securing more of the scarce input. It is removing the input from the bill of materials.
+
+The silicon version arrived first: inference chips built on SRAM with no external DRAM, and fixed-function transformer ASICs. The general form is a screening rule, and it is the most portable idea in this essay. Screen every AI-adjacent supply chain for the input with the steepest price curve, then fund the team eliminating it. Water-free cooling in drought regions. Lithium-free grid storage as battery demand outruns supply. Rare-earth-free motors for robotics.
+
+The failure mode is arithmetic, not doubt. Designing out an input usually costs performance on some other axis, and if the shortage resolves faster than your product cycle, you are left holding an architecture optimised for a constraint that no longer binds. Memory capacity is already responding.
+
+You can be early to the wrong scarcity as easily as to the right one.
+
+## FINDING FOUR: COMPRESS, PAGE, OR DESIGN FOR THE CONSTRAINED TIER.
+
+Three responses appeared within weeks of each other, all of them versions of spending something other than memory.
+
+Compress the weights. Ternary weights map to minus one, zero and one, replacing most floating-point multiplies with additions, and what was a mobile technique became a datacentre margin lever. Several papers converged on it this year, and a ternary 27-billion-parameter model trended with 1.9 million downloads. The caveat travels with it: reasoning models degrade disproportionately under aggressive quantisation, and adoption remains limited.
+
+Page the weights. Keep the cold majority on cheap storage, predict the hot minority, and hide the fault latency, which is demand paging from operating systems pointed at mixture-of-experts inference. One implementation faults in experts so that a 35-billion-parameter model fits in three gibibytes. It works now because of a price ratio, not a breakthrough: DRAM inventory under ten days made memory the priced resource and storage bandwidth the cheap one. The failure mode is the same ratio running backwards, because a DRAM glut collapses the advantage.
+
+Design for the constrained tier first. Quantisation-aware training builds the artifact around the cheapest deployment target's constraints instead of building the premium version and degrading it, and it held at 2.8 trillion parameters, so it is no longer a small-model compromise. The limit of the analogy is honest: it works because neural networks are massively overparameterised and noise-tolerant, and most physical systems have no equivalent slack.
+
+## FINDING FIVE: THE TIERING IDEA IS OLDER THAN THE SHORTAGE.
+
+Computer architecture solved this long ago and gave it a name. Rank information by access value and store each tier at a cost proportional to its usefulness: cache, then DRAM, then disk.
+
+The obvious transfer is agent cognition, context against index against forget, which is the memory-governance essay on this site. The sharper transfer is capital markets, where booked forward commitments are being cached as a stand-in for real end demand, and the failure mode is the one the compute-purchase-agreement essay ends on: cached bits are lossless, booked demand can evaporate, and treating the second like the first is how circular financing magnifies losses.
+
+The same sentence describes a cache and a backlog.
+
+Only one of them is allowed to lie to you.
+
+·   ·
+
+Every response in this essay spends something other than memory: precision, latency, performance, architecture, schedule.
+
+None of them is free. They are paid in currencies that do not appear on the memory invoice.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that shortages always resolve, and capacity is already responding.
+
+It is, and part of the response is price, not steel: suppliers are expected to move wafers between HBM and conventional DRAM according to which pays more. That resolves some of the shortage quickly and some of it not at all, because the larger 2027 stacks keep pushing HBM's share of wafers up.
+
+The second explanation was that quantisation and paging make the shortage a non-event.
+
+They make it survivable at a quality cost nobody has measured on the workloads that matter. Reasoning models degrade disproportionately under aggressive quantisation. The quality cost of storage-backed inference is not yet measured on long-horizon agentic tasks. Both techniques are hedges priced in a currency, model quality, that the buyer cannot see on the invoice.
+
+**Objection:** Then the techniques are a trap.
+
+**Reply:** They are a hedge with an unpriced premium. That is not the same as a trap, and it is not the same as free.
+
+**Objection:** How would anyone price it.
+
+**Reply:** Run the eval at both precisions and publish the pair. Almost nobody does.
+
+The third explanation was that architectural immunity is the real answer, so memory-free silicon wins.
+
+Only while the shortage lasts. The argument for designing the input out carries its own warning: you may end up holding an architecture optimised for a constraint that resolved. The screening rule survives the objection; any particular chip may not.
+
+The fourth explanation was the inversion, and Finding Two hands it the ammunition: the memory crunch is partly a contract problem, not a physical one. HBM's annual pricing let it fall behind conventional DRAM for a quarter; once the 2027 contracts reprice, the suppliers rebalance their wafers and conventional prices normalise. On that reading, designing memory out of the bill of materials is solving a pricing lag with silicon.
+
+The case is real, and TrendForce's own analysis supports its first half.
+
+**Objection:** Then wait for the contracts to reprice.
+
+**Reply:** Until 2027.
+
+The evidence that settles it arrives with the 2027 HBM contracts and the conventional DRAM prices that follow them. If conventional contract prices fall back once HBM reprices, the crunch was mostly the lag, and the inversion wins for everyone who can wait a year. If conventional prices stay high while HBM's wafer share climbs toward 30 percent, the constraint is physical. The failure mode sits in the same sentence: the same release that describes the pricing lag also forecasts the crowding-out intensifying in 2027, so repricing HBM upward may pull more wafers away from conventional memory, not fewer.
+
+## THE MAP AND THE PLAN
+
+[chip-supply-chain-map](https://github.com/AthenaTheOwl/chip-supply-chain-map) is 87 nodes, 205 edges and 113 sources, and its own line is the one this essay needs: a supply chain fits on a screen only after you remove the panic. The HBM chokepoint is a node with a fan-out, and the map's job is to show which downstream things move when it tightens, before anyone has to guess on a call.
+
+[semiconductor-e2e-manufacturing-optimization](https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization) is the buyer's side of the same constraint. A wafer plan can look profitable at 30 million dies until yield moves under it; the app buys wafers four ways and makes the plans survive demand, yield and cost weather. Every response in this essay is a plan that has to survive the same weather, and the wafer allocation is the weather.
+
+Screen for the steepest price curve.
+
+Then check whether the scarcity outlives your product cycle, because that is the whole bet.
+
+·   ·
+
+WAFER ALLOCATION — REMAINING FIELDS
+
+HBM contract price for 2027: "multiples higher," expected.
+Conventional DRAM price after that: not yet known.
+Share of wafers for HBM at the end of 2027: about 30 percent.
+Which product gets the next wafer: whichever pays more.
+
+The allocation ends there. The fab, as ever, has no opinion about AI.
+
+---
+
+Sources: TrendForce, "Rapid Contract Price Surge Drives 1Q26 DRAM Industry Up 81% QoQ" (https://www.trendforce.com/presscenter/news/20260601-13070.html); TrendForce, "Tight DRAM Supply Gives Suppliers Greater Pricing Power in HBM" (https://www.trendforce.com/presscenter/news/20260602-13074.html); CAT-Q (https://arxiv.org/html/2606.26650v1); TWLA (https://arxiv.org/html/2606.13054v1); Sherry (https://arxiv.org/html/2601.07892v1); ScaleQ-1.58 (https://arxiv.org/html/2608.01078v1).

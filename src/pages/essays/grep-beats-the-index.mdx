@@ -1,0 +1,234 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Grep beats the index"
+description: "A flat directory of text files and two tool calls outperformed eight purpose-built memory systems. Seven findings about when you decide what to keep, and the case for the index."
+date: "2026-09-21"
+readingTime: "12 min read"
+---
+
+INGEST LOG — KNOWLEDGE-GRAPH MEMORY, ONE WEB-AGENT TRAJECTORY
+
+Input: a browser session. Steps, action labels, scrolls, a product return.
+Triples retained: "black case has_price $11.99."
+Step indices retained: none.
+Action labels retained: none.
+Ingest status: success.
+Question asked later: which step performed the return, and how many scrolls came before it?
+Retriever able to answer: no. Retriever at fault: also no.
+
+Every field in that log is true, including the one that says success.
+
+In the authors' oracle probe, that system retained enough to answer 10 percent of questions about agentic trajectories. Systems of its kind were built to win multi-session chat benchmarks. Nobody had asked them about a browser.
+
+The evidence was destroyed at ingest, by a process that reported it had worked. That is the note the log has no field for.
+
+## FINDING ONE: NO PURPOSE-BUILT SYSTEM DOMINATED.
+
+A team from Michigan State, George Mason and Purdue evaluated eight representative memory systems this June, long-context, note-based, hierarchical, graph-based and RL-trained, plus one plain harness, across five scenario families: single-turn QA, multi-session chat, questions over agent trajectories, memory stress tests and long-horizon tasks. They tracked token cost and latency alongside accuracy, which most memory papers decline to do.
+
+The best cross-scenario generality came from the harness that stores everything as flat text files and lets the agent retrieve with grep and read.
+
+Two tool calls.
+
+No index.
+
+## FINDING TWO: AN INDEX LOSES THE ANSWER IN TWO DIFFERENT PLACES.
+
+The paper's value is that it separates the failures, because they need different fixes.
+
+The first is representational. A schema chosen at build time silently drops the evidence classes it was not designed for. The knowledge graph is the clean case: entities and relations survive, sequence and action do not, and no query can recover what the ingest threw away.
+
+The second is retrieval, and it is subtler because the evidence survives. One episodic system in the study retained 98 percent of the answer information in its store and still scored poorly. Its router picked a single branch by embedding similarity and returned a compact note. When the answer lived in step-level detail, the note did not carry it, and the answerer never got a second chance to ask.
+
+Picture a filing clerk who reads each incoming letter, writes a one-line summary on an index card, and files the card. The letters go to the basement.
+
+The first failure is the card that never mentioned the postmark.
+
+The second is the clerk who hands you the card, once, and will not go to the basement.
+
+The flat-file harness fixes both by inverting the order of binding. The model sees the actual question first, then composes a retrieval plan for that question over the raw evidence: grep for candidates, read the relevant slice, follow up if what came back is insufficient. Schema commitment moves from a frozen build-time choice to a per-question runtime choice.
+
+Nothing is summarized until someone knows what they are looking for.
+
+·   ·
+
+The oldest tool in this essay has no index at all.
+
+It reads the files, every time, from the top, and prints the lines that match. It builds nothing in advance and predicts nothing about the next question.
+
+It has no schema, so it has never thrown away the thing a later question needed. It is also the least sophisticated program in the essay, which has stopped being an embarrassing sentence.
+
+## FINDING THREE: THE LARGEST LEVER WAS HOW MANY CANDIDATES YOU LET THROUGH.
+
+A Waterloo group asked whether a lexical retriever is enough once the model above it can run a multi-step loop. Their agent is deliberately unglamorous: BM25, plus three tools called retrieve, browse and read. No dense embeddings. No learned reranker.
+
+BROWSECOMP-PLUS, BM25 AND A LOOP
+
+Answer accuracy: 83.1 percent.
+
+Surfaced evidence recall: 94.7 percent.
+
+Tuning BM25 instead of accepting library defaults: accuracy up 18.0 percent, recall up 11.1 percent.
+
+Raising retrieval depth over a shallow setting: recall up a further 25.3 percent.
+
+Dense retriever: not used.
+
+It outperformed released search agents built on dense retrievers.
+
+The mechanism is the part to keep. Single-shot retrieval asks one embedding to bridge the gap between the user's vocabulary and the corpus's. An agent in a loop reads the first results, notices the words the corpus uses, and asks again with those. The agent is the query expansion. What the retriever has to supply in that regime is recall at depth and exact matching on the terms the model just learned, which is what BM25 was always good at.
+
+Depth becomes nearly free for the same reason. In a one-shot pipeline everything you retrieve goes into the prompt, so the depth is capped by the context budget. In a loop the agent browses titles and snippets cheaply and reads only what survives its own filter.
+
+The expensive retrieval model was never the ceiling.
+
+The shallow top-k was.
+
+## FINDING FOUR: THE HARNESS MOVED THE SCORE MORE THAN THE RETRIEVER DID.
+
+A PwC team ran the argument people have been having for months, grep against vector search, and added the variable nobody controls for.
+
+GREP AGAINST VECTOR, 116 LONGMEMEVAL QUESTIONS
+
+Results delivered inline: grep won in every harness and model configuration tested, by as much as 86.2 percent to 62.9.
+
+Results written to files the agent must read: the comparison flipped in five of ten pairs.
+
+Same model, inline grep, custom harness: 93.1 percent.
+
+Same model, inline grep, the vendor's own coding tool: 76.7 percent.
+
+Spread from the harness alone: 16 points, about the size of the entire grep-against-vector effect.
+
+The explanation is context economics. Inline delivery makes every retrieved chunk cost context and compete for attention, which rewards literal precision. File delivery makes retrieval cheap in context and expensive in competence, because the agent has to reliably complete a read, integrate and retry cycle. Vector search's recall only pays when the agent can afford to sift.
+
+Two smaller results in the same paper deserve their own lines. Weaker models showed larger gaps between grep and vector, because the thing that rescues a bad vector hit is query refinement and weaker models do it inconsistently. And accuracy under distractors did not fall smoothly: on one configuration it peaked at 20 distractor sessions, at 90.5 percent.
+
+A retrieval benchmark run on one harness is a benchmark of that harness.
+
+The short version: measure retrieval inside your harness, with your delivery mode, or the number is not about you.
+
+## FINDING FIVE: LAYERING, NOT LOOPING, BOUGHT THE EFFICIENCY.
+
+A USTC group argued that graph and workflow retrieval had been optimising the wrong object: in both, the model is not a participant in the retrieval decision, so the system does not get better when the model does. Their answer exposes retrieval as three tools at three granularities inside a plain reasoning loop. A keyword search that returns only the sentences containing a keyword. A sentence-level semantic search that returns the same kind of snippet. And a chunk read that fetches full text only when the agent has decided it is worth it.
+
+The keyword layer is not pre-indexed at all. Exact matching runs at query time. No inverted index, no knowledge graph.
+
+HOTPOTQA, TOKENS RETRIEVED PER QUESTION
+
+Layered agentic retrieval: 2,737.
+
+Naive retrieval: 5,358.
+
+Graph retrieval: 8,744.
+
+Accuracy of the layered version: higher than both.
+
+The decisive ablation is the one that removes the layers and keeps the loop. With only a single embedding tool, the agent retrieved 56,360 tokens on MuSiQue against 5,663 for the full version, and scored lower, 66.2 against 74.1.
+
+The loop alone was a tenfold bill for a worse answer.
+
+The layers were the saving.
+
+The detail I would copy tomorrow is two lines long. Keep a set of chunk IDs the agent has already read. If it asks for one again, return the literal string "This chunk has been read before" and nothing else. Zero content tokens, and the agent goes looking somewhere new.
+
+## FINDING SIX: THE INDUSTRY ARRIVED FROM THE OTHER SIDE.
+
+Around the same time, a retrieval vendor announced a product with the same shape, and it is worth reading as a marker even after the discount one applies to announcements. Traditional RAG, in their words, "pulls a handful of context fragments, bundles them into a prompt window, and blindly hopes for the best," which breaks for agents that need to interrogate and verify documents mid-task.
+
+Their harness exposes the corpus as four filesystem-style tools.
+
+Hybrid retrieve, vector plus keyword plus reranking, as a high-recall first pass that narrows the search instead of answering it.
+
+List files, so the agent sees the corpus as a map.
+
+Grep within a file, server-side regex against parsed text, to isolate a serial number or an error code without pulling everything that merely resembles it.
+
+Read, to fetch the surrounding context when a top-k chunk cuts off mid-sentence.
+
+Semantic search demotes from "the retrieval system" to one tool among several, with deterministic navigation handling the cases embeddings structurally cannot. Coding agents made the same move a year earlier, when file navigation replaced embedding-indexed code search.
+
+## FINDING SEVEN: THE FAILURES THAT REMAIN ARE NOT RETRIEVAL FAILURES.
+
+The same USTC paper looked at its first hundred errors on MuSiQue. Most were failures in the reasoning chain, and the largest single category was entity confusion.
+
+Better plumbing does not stop a model confusing two people with similar names.
+
+That is the useful ceiling on every result above. Retrieval quality is no longer automatically the binding constraint, which means the binding constraint has moved somewhere else, and one piece of advice applies to all of them: measure surfaced evidence recall separately from answer accuracy, because they fail for different reasons and only the first one is the retriever's fault.
+
+·   ·
+
+Every index is a prediction about which questions will be asked.
+
+The prediction is made on the day the index is built, by someone who has not seen the questions.
+
+Grep makes no prediction. That is the entire advantage, and it looks like laziness right up until the question arrives.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have the usual exits. Each gets its due.
+
+The first explanation was that the benchmark favoured the harness. Agent trajectories are the harness's home ground.
+
+Partly. The paper's own point is that the purpose-built systems were tuned on multi-session chat and looked excellent until the agent produced browser logs. A memory system that wins only on the benchmark it was built for has shown you the benchmark. The five scenario families were the point.
+
+The second explanation was cost. An agentic loop spends several model turns where one-shot retrieval spends a single embedding lookup.
+
+Correct, and the papers say where that matters. For high-volume, low-complexity questions over homogeneous documents, top-k plus a reranker is still the right latency and cost choice. The harness earns its turns when queries are exploratory, when answers span chunk boundaries, or when exact matches matter. Token efficiency and system efficiency are also different numbers: some indexed methods spend their tokens as long chains of small serial calls with cache misses, so wall-clock and GPU contention run far ahead of the token count. And the one controlled comparison of retrieved tokens in this essay, Finding Five, went the other way: the layered agent read half of what naive retrieval did.
+
+The third explanation was that long context makes all of this moot.
+
+Long context is stronger and more cost-competitive than the memory literature assumes, and the paper says so. A heavy index builder cannot recover its preprocessing cost unless many future queries amortize the same store. That is an argument for the flat files, not against them.
+
+**Objection:** So never build an index.
+
+**Reply:** Build one when a stable, high-volume workload against a stable corpus lets you amortize the build, and after you have verified that the schema preserves what your questions probe.
+
+**Objection:** Nobody verifies the second part.
+
+**Reply:** Correct.
+
+The fourth explanation was that the vendor announcement is marketing.
+
+It is. It is also a vendor moving its product to the shape a paper found generalizes best, at about the same time, from the other direction. The convergence is the data. The press release is the packaging.
+
+The fifth explanation was that all of this depends on a strong model.
+
+Much of it does, and the sources are candid about which parts. The Waterloo result is framed on capable models in a loop; a weaker model is a worse reranker and the case for a good retriever returns. The USTC gains largely evaporated on a weak backbone, which won three of five datasets and lost one to a graph method. The PwC result cuts the other way: weaker models gained more from grep, because they refine queries inconsistently and lexical precision covers for it. The honest summary is that the loop needs a capable model and literal matching helps an incapable one.
+
+The sixth explanation was the inversion, and it deserves a full hearing: dense retrieval is right, and this essay mistakes a run of agent-friendly benchmarks for a law.
+
+It is not a strained case. BM25 is weak wherever lexical overlap is absent: cross-lingual corpora, heavy synonymy, medical shorthand, code described in plain language. When results went to files instead of inline, vector search won half the comparisons. Every headline number here comes from a frontier model on a small number of benchmarks. On that reading, grep won on home ground, and a team with a paraphrase-heavy corpus that follows this essay will ship worse retrieval and feel principled about it.
+
+**Objection:** Then the index wins.
+
+**Reply:** Where the words differ, yes.
+
+The evidence that settles it for any given team is the same experiment in every paper above, run on your own corpus: surfaced evidence recall, measured separately from accuracy, inside your harness, with your delivery mode, grep against vector. If vector wins there, it wins, and the failure mode belongs in the same sentence: the team that skips the measurement and adopts whichever side sounded smarter will be wrong in a way its benchmark cannot show it.
+
+## TWO REPOS WHERE THE CLERK HAS TO SHOW THE LETTER
+
+The site has two retrieval systems, and both were built around the second failure mode before the paper named it.
+
+[supplier-risk-rag-agent](https://github.com/AthenaTheOwl/supplier-risk-rag-agent) answers questions about export controls from twenty filing excerpts across ten companies, and every answer has to point at a verbatim span in the source. If it cannot, it refuses. The polite word is citation faithfulness. The useful word is receipts.
+
+[puc-docket-rag](https://github.com/AthenaTheOwl/puc-docket-rag) exists because of what happens without them. Two cost-allocation rules came out of a regulatory docket. One cited page 1, lines 1 to 23. The other cited a chunk identifier of forty zeros that exists nowhere in the filing. The second rule is the clerk's index card with no letter behind it, and the repo's job is to catch that card before it reaches a reader.
+
+Decide what to keep when you know the question.
+
+Until then, keep the letters.
+
+·   ·
+
+INGEST LOG — REMAINING FIELDS
+
+Evidence classes dropped: unknown until a question needs one.
+Questions anticipated at build time: the ones the schema was built for.
+Questions received: the others.
+Ingest status: success.
+
+The log ends there. The letters are in the basement, where someone will need them.
+
+---
+
+Sources: "Exploring Cross-Scenario Generality of Agentic Memory Systems" (https://arxiv.org/abs/2606.04315), June 2026; LlamaIndex, "Announcing Retrieval Harness" (https://www.llamaindex.ai/blog/announcing-retrieval-harness); "Rethinking Agentic Search with Pi-Serini" (https://arxiv.org/abs/2605.10848); "Is Grep All You Need? How Agent Harnesses Reshape Agentic Search" (https://arxiv.org/abs/2605.15184); "A-RAG: Scaling Agentic Retrieval-Augmented Generation via Hierarchical Retrieval Interfaces" (https://arxiv.org/abs/2602.03442).

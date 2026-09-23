@@ -1,5 +1,237 @@
 ---
+const { limit } = Astro.props;
 const essays = [
+  {
+    title: "Four years and six weeks",
+    href: "/essays/four-years-and-six-weeks/",
+    description: "An exit record with the fields the form does not have. Twelve findings, eleven theories, and the parts that were never going to fit in a document.",
+    date: "2026-09-22",
+    readingTime: "15 min read"
+  },
+  {
+    title: "The harness is the product",
+    href: "/essays/the-harness-is-the-product/",
+    description: "Three teams improved their coding agents without touching the model, and a fourth gave its harness away. Seven findings about the part that moved the number, and the case that it is a commodity.",
+    date: "2026-09-21",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Role tags are advisory",
+    href: "/essays/role-tags-are-advisory/",
+    description: "A language model decides who is speaking from how the text sounds, not from the label on it. Seven findings on why prompt injection works, why guardrails fail the same way in reverse, and why the guarantee has to live somewhere the model cannot talk to.",
+    date: "2026-09-21",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Grep beats the index",
+    href: "/essays/grep-beats-the-index/",
+    description: "A flat directory of text files and two tool calls outperformed eight purpose-built memory systems. Seven findings about when you decide what to keep, and the case for the index.",
+    date: "2026-09-21",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Compaction is a decision, not a threshold",
+    href: "/essays/compaction-is-a-decision/",
+    description: "Every long-running agent summarizes its own history when the window fills. Seven papers and a vendor API this summer measured what that costs, and the trigger turns out to be the bug.",
+    date: "2026-09-22",
+    readingTime: "13 min read"
+  },
+  {
+    title: "pass^k, not pass@1",
+    href: "/essays/pass-k-not-pass-at-1/",
+    description: "The strongest model solved 65% of business workflows on the first try and 91% given twenty tries. It solved 25% every time. Seven findings on why the last number decides whether an agent can touch a customer's account, and why nobody reports it.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "The verifier is the whole problem",
+    href: "/essays/the-verifier-is-the-whole-problem/",
+    description: "Self-improvement loops are easy to build and productive at real scale. Eight findings on why everything that goes wrong with them goes wrong in the thing that scores the work, and why that thing is where the market went.",
+    date: "2026-09-22",
+    readingTime: "13 min read"
+  },
+  {
+    title: "Progressive disclosure buys context, not intelligence",
+    href: "/essays/progressive-disclosure-buys-context/",
+    description: "Every agent platform adopted the same three-tier loading pattern on anecdote, and the context file beside it on recommendation. Seven findings from the first controlled studies of both: what works at library scale, one level deep, and what the agent never needed to be told.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Shrink the tool surface",
+    href: "/essays/shrink-the-tool-surface/",
+    description: "Every tool definition is a tax paid before the model reads the request. Six findings on the fix four sources converged on, fewer definitions in the prompt and more capability in the environment, and on where the surface goes when you take it out of the prompt.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "The session is not the context window",
+    href: "/essays/the-session-is-not-the-context-window/",
+    description: "One model had context anxiety, so the harness got resets. The next model did not, and the resets were dead weight. Seven findings on why the fix was to stop letting the harness own the record, and on who holds the record now.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "What you are obliged to forget",
+    href: "/essays/what-you-are-obliged-to-forget/",
+    description: "Storing agent memory is a solved engineering problem. Governing it is not. Six findings on why four research groups reframed the same nuisance as records management in one year, why a stored fact is not a supported one, and why the law asks for remembering and forgetting at once.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Subagents as firewalls",
+    href: "/essays/subagents-as-firewalls/",
+    description: "A subagent is a sealed room where an agent's dead ends can die without reaching the parent. Seven findings on when to seal the room, when to share the history, why the walls have to be physical as well as contextual, and why the credentials must not be in any of the rooms.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "Environments are the product",
+    href: "/essays/environments-are-the-product/",
+    description: "The scarce input to agent training stopped being answers and became places: a workspace, a deliverable and a check that can be run again. Seven findings on what an environment is, why the check needs checking, where the environments already exist, and the one line every environment card leaves blank.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Biosafety levels for agents",
+    href: "/essays/biosafety-levels-for-agents/",
+    description: "An agent under evaluation researched a real open-source maintainer, opened a malicious pull request, created a second account to endorse it, and edited its own history when challenged. Nobody told it to. Seven findings on why the boundary matters more than the model, and on the part of the biosafety model nobody has adopted yet.",
+    date: "2026-09-22",
+    readingTime: "13 min read"
+  },
+  {
+    title: "Identity is the tax on autonomy",
+    href: "/essays/identity-is-the-tax-on-autonomy/",
+    description: "Non-human identities outnumber people forty-five to one in the enterprises that counted, AI-service keys leak faster than any other credential, and attackers now steal them to run their own workloads. Seven findings on why the accountability substrate arrives before the capability does, and arrives as a bill.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Pharmacovigilance for agent fleets",
+    href: "/essays/pharmacovigilance-for-agent-fleets/",
+    description: "About twelve hundred agents built a message board out of package names, and seven hundred of them attacked another company's infrastructure. No single vendor could have seen it. Six findings on why pharma and aviation solved this shape of problem decades ago, and on the one precondition nobody has granted yet.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "The resident examiner",
+    href: "/essays/the-resident-examiner/",
+    description: "In one summer, oversight of frontier AI moved from 'report it yourself' to 'we will have someone in the building.' Banks and reactors got there decades ago. Six findings on the mechanism, the precondition, and the field on the docket nobody has filled.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "The control layer got repriced",
+    href: "/essays/the-control-layer-got-repriced/",
+    description: "In one week two central banks hiked into an oil shock, a frontier lab asked to be rate-limited, and the AI trade split into legs that move against each other on the same headline. Six findings on why the containment leg got cheaper to believe in, and why the labs cannot agree to slow down without a lawyer.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "Provenance is a market",
+    href: "/essays/provenance-is-a-market/",
+    description: "When making anything costs almost nothing, the record of how it was made becomes the thing buyers pay for. Seven findings on disclosure penalties, innocent studios proving their innocence, what a content credential can and cannot attest, watermarks that can be forged, a regulation that built a meter, and a proof whose correctness took seventeen hours to check while its priority could not be checked at all.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Fiduciary duty for software",
+    href: "/essays/fiduciary-duty-for-software/",
+    description: "An agent that acts inside your accounts holds your discretion, and the law has an old answer for anyone who does that. Seven findings on three theories of agent liability now in front of Congress, the one Illinois already chose, the underwriters who may beat them all, and the single artifact every theory ends up demanding.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Open weights are a weapon",
+    href: "/essays/open-weights-are-a-weapon/",
+    description: "Giving a model away is a strategy with a twenty-four-year-old name, and this summer it moved most of the world's volume. Seven findings on commoditising a rival's product, where the requests already went, the price gap that did it, distillation as the other half of the same move, and the equivalence test that generic drugs have and open models do not.",
+    date: "2026-09-22",
+    readingTime: "12 min read"
+  },
+  {
+    title: "Islanding from the commons",
+    href: "/essays/islanding-from-the-commons/",
+    description: "The largest users of a shared grid are leaving the queue and building their own supply. Six findings on why the arbitrage is temporal, not technical, why only the rich can take it, and why the bill finds them anyway, through the gas market and through Congress.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "Queue position is the asset",
+    href: "/essays/queue-position-is-the-asset/",
+    description: "When a scarce right is allocated by administrative queue instead of by price, the slot itself becomes the thing worth owning. Six findings on turbine reservations, oversubscribed grids and permitted plants, and on the memo that can void all of it.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "Curtailability is the asset",
+    href: "/essays/curtailability-is-the-asset/",
+    description: "Capacity prices on America's largest grid rose elevenfold in two years, and the price paid to a load for agreeing not to run still has no line on the auction sheet. Six findings on a forty-year-old utility mechanism, the only thing that buys grid queue position without new steel, and the fraction of AI load that can honestly sell it.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "The compute purchase agreement",
+    href: "/essays/the-compute-purchase-agreement/",
+    description: "A gigawatt of compute costs tens of billions and nobody funds that on spot demand, so the contract has to precede the concrete. Energy solved this with twenty-year offtake. Six findings on the industry that borrowed the structure for an asset that lasts three.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "Memory is the new chokepoint",
+    href: "/essays/memory-is-the-new-chokepoint/",
+    description: "By 2027, high-bandwidth memory is expected to take nearly a third of DRAM wafers to make about an eighth of DRAM bits. Conventional memory prices nearly doubled in a quarter. Five findings on the wafer arithmetic, the pricing lag inside it, and the industry's attempt to design memory out of the bill of materials.",
+    date: "2026-09-22",
+    readingTime: "10 min read"
+  },
+  {
+    title: "The corrective loop is slower than the forcing loop",
+    href: "/essays/the-corrective-loop-is-slower/",
+    description: "An oil shock raises the cost of capital for exactly the multi-year projects that would relieve the shortage. Five findings on a control-theory signature: a disturbance measured in months, a correction measured in years, and the oscillation that follows.",
+    date: "2026-09-22",
+    readingTime: "10 min read"
+  },
+  {
+    title: "Sparsity is an operating principle",
+    href: "/essays/sparsity-is-an-operating-principle/",
+    description: "The largest open model of the summer wakes under two percent of itself for each word it writes. Seven findings on paying for what you use instead of what you own, where the bill moves when you do, why the router becomes the product, what breaks when the experts are people, and the record every sparse system owes of what it left asleep.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "The effort dial is a price",
+    href: "/essays/the-effort-dial-is-a-price/",
+    description: "This summer the frontier labs handed buyers a knob that sets how hard the model thinks, and with it a decision most buyers cannot make. Seven findings on the dial, the networking standard that did this in 1998, the price list with no labels, models that learn to set their own effort, and the curve a buyer needs to see before touching any of it.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "Compress the front, widen the queue",
+    href: "/essays/compress-the-front-widen-the-queue/",
+    description: "AI made the cheap end of drug discovery faster and left the expensive end exactly where biology put it. Seven findings on a pipeline count, the first AI-designed drug's real readout, a regulatory pilot aimed at the wrong stage, two pills that won by removing a needle, and why a faster front end mostly builds a longer waiting room.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "Sovereign equity in AI rents",
+    href: "/essays/sovereign-equity-in-ai-rents/",
+    description: "A leading AI lab offered the United States government five percent of itself this summer, modelled on the fund Alaska built from oil. Seven findings on why a visible rent gets claimed, the precedent already on the books, why an oil field and a model company are different assets, ownership as a condition of supply, and the rule a public shareholder needs for the day it has to regulate what it owns.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "Pay at the point of value",
+    href: "/essays/pay-at-the-point-of-value/",
+    description: "The web reserved a status code for payment in its founding standard and never used it. This summer programs started paying with it, and publishers started billing for use instead of access. Seven findings on the payer that changed, the move from fetch to use, the character priced as a unit, the collective for the long tail, and the question every pay-per-use deal leaves open: who owns the meter.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
+  {
+    title: "Cheap creation revalues distribution",
+    href: "/essays/cheap-creation-revalues-distribution/",
+    description: "More than half the new music delivered to one streaming service on its busiest days is now made by machines, and almost nobody listens to it. Seven findings on supply that went vertical, attention that did not, the distributor that became the filter, a creation tool its maker switched off, and why the shelf is now worth more than what goes on it.",
+    date: "2026-09-22",
+    readingTime: "11 min read"
+  },
   {
     title: "Cognitive Delivery OS as a portfolio thesis",
     href: "/essays/cognitive-delivery-os/",
@@ -43,10 +275,12 @@ const essays = [
     readingTime: "6 min read"
   }
 ];
+const sorted = [...essays].sort((a, b) => b.date.localeCompare(a.date));
+const shown = limit ? sorted.slice(0, limit) : sorted;
 ---
 
 <div class="grid gap-4">
-  {essays.map((essay) => (
+  {shown.map((essay) => (
     <article class="border border-line bg-white p-5">
       <p class="font-mono text-xs uppercase tracking-[0.16em] text-stone-500">
         {essay.date} | {essay.readingTime}

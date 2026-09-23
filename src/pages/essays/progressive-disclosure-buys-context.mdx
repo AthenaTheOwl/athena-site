@@ -1,0 +1,212 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Progressive disclosure buys context, not intelligence"
+description: "Every agent platform adopted the same three-tier loading pattern on anecdote, and the context file beside it on recommendation. Seven findings from the first controlled studies of both: what works at library scale, one level deep, and what the agent never needed to be told."
+date: "2026-09-22"
+readingTime: "12 min read"
+---
+
+CATALOGUE CARD — AGENT SKILLS, DISCOVERY LAYER
+
+Skills in the catalogue: 17, the vendor's official set.
+Cost of knowing all of them exist: about 1,700 tokens.
+Cheapest card: webapp-testing, about 55 tokens.
+Most expensive card: xlsx, about 235.
+Largest book behind a card: skill-creator, about 8,000 tokens.
+Routing algorithm: the one-line descriptions on the cards.
+Tested as a routing algorithm: no field.
+
+The skill that teaches an agent to write skills is the longest one in the set, which is the most honest number on the card.
+
+Every major platform adopted this pattern inside a few weeks, on the strength of it seeming right. The first controlled study arrived in July.
+
+It is right. It is also narrower than it looks, and the untested field is where the narrowness lives.
+
+## FINDING ONE: THE INDEX COSTS LESS THAN ONE ENTRY.
+
+The problem the pattern solves is measurable. Best practice caps an agent at fewer than about twenty tools, with accuracy degrading past ten. Connect a handful of MCP servers without managing what loads and you reach ninety-plus tool definitions and 50,000 tokens of JSON schema before the model reasons about anything.
+
+The Agent Skills format is trivial, a markdown file with YAML frontmatter, and its whole value is the loading discipline it makes separable.
+
+DISCOVERY, SEVENTEEN OFFICIAL SKILLS
+
+Per skill, name and one-line description: about 80 tokens, median.
+
+All seventeen: about 1,700 tokens.
+
+ACTIVATION
+
+Full body, when judged relevant: about 2,000 tokens, median. Range 275 to 8,000.
+
+EXECUTION
+
+Reference docs, scripts, templates: loaded only when a step demands them. The `pdf` skill keeps eight Python utilities in a folder that never enters context unless invoked.
+
+An agent can be aware of dozens of skills for less context than a single activated one costs. The routing is done by the model reasoning over the discovery layer, which means description quality is the routing algorithm, and a vague description is a mis-routed skill. That is the sentence in the design that pays the most and gets read the least.
+
+A library card catalogue works the same way. The card is cheap. The book is not. The reader finds the book from the card, and the catalogue's entire quality is the quality of the cards.
+
+## FINDING TWO: THE GAIN IS A PROPERTY OF YOUR HARNESS.
+
+Until July the evidence for the pattern was anecdotal. He, Zhao, Wang and Chen then ran the first controlled study, converting a long-context benchmark into an interactive sandboxed filesystem and comparing raw document access, flat one-level disclosure, and hierarchical disclosure across three harnesses and several model families, with a hybrid retriever as the baseline.
+
+On a single document, the gain depended entirely on the harness.
+
+Claude Code gained.
+
+Pi gained.
+
+Codex gained nothing, because it already performed entity-based retrieval unprompted.
+
+If you benchmark progressive disclosure inside a weak harness you will conclude it is a revelation, and you will be measuring your harness. If your agent already greps competently, a description index is dead weight in the prompt. You cannot read someone else's number and infer your own; the number is a property of the scaffold, not of the pattern.
+
+## FINDING THREE: THE REGIME FLIPS AT LIBRARY SCALE.
+
+When tasks span many books instead of one, raw navigation collapses and flat disclosure pulls ahead.
+
+CORPORA OF FIVE TO TWENTY BOOKS
+
+Raw navigation, one question set: down to 0.26.
+
+Flat disclosure at twenty books: 0.46.
+
+Per-question cost as the corpus grows: rising, while accuracy falls.
+
+The agent cannot find the right book by grepping when there are twenty of them. Scaling the corpus is strictly worse on both axes unless disclosure carries it. The pattern's real job is buying context headroom once the corpus is too large to navigate by reading. It does not make the agent smarter about any individual document.
+
+## FINDING FOUR: ONE LEVEL IS ENOUGH.
+
+The routing tree had two levels.
+
+Accuracy went from 0.9126 to 0.6398.
+
+Nothing else changed. The same documents, the same agent, the same questions; one more layer of table-of-contents between the agent and the text, and more than a quarter of the accuracy went missing. The mechanism, once measured, is not mysterious: at every node the agent loads every child's description, so a deep tree means it is continuously reading routing metadata it will not use, and the metadata competes with the content for attention.
+
+The natural instinct when building a skills pack is to nest: a router that picks a domain, which picks a sub-index, which picks passages. The study says stop at one. A wrong route at level two is unrecoverable in a way a wrong retrieval at level one is not, because the agent gets a plausible-looking sub-index and never learns the right one existed.
+
+The authors' summary is the sentence to keep.
+
+Progressive disclosure buys context, not intelligence.
+
+It fixes finding. It does not fix reasoning.
+
+## FINDING FIVE: THE CONTEXT FILE WAS FOLLOWED, AND THAT WAS THE COST.
+
+The other artifact every platform recommends is the context file: an AGENTS.md or CLAUDE.md at the root of the repository, loaded on every run, and in many harnesses generated by a built-in command that asks the agent to write it. An ETH Zurich and LogicStar team tested whether these files help, on SWE-bench tasks with generated files and on a new collection of issues from repositories whose developers had committed their own.
+
+CONTEXT FILES, CODING AGENTS, TWO SETTINGS
+
+Effect on task success: "does not generally improve."
+
+Effect on inference cost: up by over 20 percent on average.
+
+Held across: different models, different coding agents, generated and developer-written files.
+
+The mechanism is the uncomfortable part, and the paper's trace analysis found it. The agents did what the files said: "instructions in context files are well followed. This leads to increased exploration, testing, and reasoning by coding agents, and, as a result, increases costs by over 20%."
+
+The files were read.
+
+The agents obeyed.
+
+The bill went up and the success rate did not.
+
+## FINDING SIX: WHAT HELPS IS THE INSTRUCTION THE AGENT COULD NOT HAVE FOUND.
+
+The same study separated the contents. Instructions in context files were followed well. Repository overviews, "although popular and recommended by model providers, are not helpful." Developer-written files beat generated ones by 7 percent on average. The authors' recommendation is narrow: skip generated context files for now, and keep human-written ones to "instructions required for coding agents that are not already present in the README (e.g., specific conventions or non-functional requirements)."
+
+Put beside the disclosure study, the two results make one practice. Keep the preloaded layer small and imperative: non-obvious conventions, gotchas, hard constraints, things the agent could not discover by looking. Drop the repository tour; the agent can read the repository. Bring in bulk material on demand, one level deep.
+
+A context file cannot tell apart, on its own:
+
+A convention from a description of the code.
+
+A constraint from a tour.
+
+An instruction that saves a mistake from one that buys an extra test run.
+
+Its author can. That is the job.
+
+·   ·
+
+Open a typical context file and the first section is a tour: what the repository is, how the directories are laid out, which module does what. That is the part the study found agents do not need. They can read the repository.
+
+Further down there is usually a line like: never invent a new category when an existing one fits.
+
+No agent could have found that sentence by reading the code. It is the line that earns its tokens, and it is usually under the tour.
+
+## FINDING SEVEN: FORGETTING A SKILL TOO FAST COSTS MORE THAN KEEPING IT.
+
+The unloading side is the part people get wrong. A naive implementation discards a skill's context immediately after use and reloads it minutes later when the next related task arrives, churning tokens and latency.
+
+The fix is ordinary cache discipline. Keep recently used skills resident, keep the frequently activated ones warm, and accept the context cost as the price of not thrashing.
+
+A catalogue that returns every book the moment the reader closes it is not saving shelf space.
+
+It is making the reader walk.
+
+·   ·
+
+Every tier in this essay is a decision about what the agent is allowed to not know yet.
+
+The cheap layer says what exists. The expensive layer says how. The mistake, in every form above, is paying for how before anyone has asked.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings arrive with exits attached. Each gets its due.
+
+The first explanation was that the skills pack works great, everyone says so.
+
+Everyone did say so, and until July that was the entire evidence base. The controlled study agrees with everyone at library scale and disagrees with everyone about depth. Both halves are the result.
+
+The second explanation was that context files are where a team writes down what it learned the hard way, so a null result on them must be measuring something else.
+
+Partly right, and the paper agrees with the half that is right. The instructions were followed; the hard-won rule is exactly the content that works. What failed was everything around it: the overview, the directory tour, the generated summary of code the agent could read directly. The null result is about the padding.
+
+**Objection:** So the pattern is a retrieval trick with a file format.
+
+**Reply:** Correct. That is why it works and why it stops working.
+
+**Objection:** Then when do I skip it.
+
+**Reply:** Five tools and one workflow. A static system prompt is faster and cannot mis-route.
+
+The third explanation was that one-level disclosure is a limitation of today's models and a smarter router will fix depth.
+
+Possibly. The failure mechanism is context saturation, not routing stupidity; the child descriptions are loaded at every node whether or not the router is clever. A smarter router reads the same metadata. The fix for depth is width.
+
+The fourth explanation was the inversion, and it deserves its full weight: progressive disclosure is a crutch for weak harnesses and small windows, and both are going away.
+
+The case is not strained. The strongest harness in the study gained nothing on a single document. Windows keep growing. The context-file study says preloaded guidance often costs more than it returns. On that reading, the right design is a capable harness with good search over the raw corpus, and every catalogue card is a maintenance burden waiting to mis-route.
+
+**Objection:** Then delete the index.
+
+**Reply:** At your scale, maybe.
+
+The evidence that settles it is local and cheap: run your own corpus, at its real size, inside the harness you ship, with and without a one-level index. If there is no gain, delete the index and the maintenance with it. The failure mode sits in the same sentence: the answer depends on corpus size, and the study's flip happened between one book and twenty. A gain measured at today's size can appear or vanish as the corpus grows, so measure at the size you expect to have in a year, not the size you have now.
+
+## A CATALOGUE THAT WAITS
+
+[pattern-index](https://github.com/AthenaTheOwl/pattern-index) is a one-level index, on purpose. Fifteen pattern applications across nine repos, each a card describing a pattern and where it was applied, mined from the repos' own decision ledgers. The index then waits ninety days to find out which transfers survived contact. Eleven reviews have now closed: seven worked, two did not, two were abandoned. Four are still open.
+
+There is no sub-index. The cards are the routing algorithm, and the catalogue's only ambition is that a reader can find the right repo from the card.
+
+Buy context when the corpus outgrows grep.
+
+Buy it one level deep.
+
+Do not expect intelligence to arrive in the same shipment.
+
+·   ·
+
+CATALOGUE CARD — REMAINING FIELDS
+
+Levels of index: one. Second level: declined.
+Repository tour included: no. The agent can read.
+Descriptions last tested as a router: see above, no field.
+Signature:
+
+The card ends there. The book, as usual, is on another shelf.
+
+---
+
+Sources: Aurimas Griciūnas, "Agent Skills: Progressive Disclosure as a System Design Pattern" (https://www.newsletter.swirlai.com/p/agent-skills-progressive-disclosure); He, Zhao, Wang and Chen, "Is Progressive Disclosure All You Need for Long-Context Agents?" (https://arxiv.org/abs/2607.17598); Gloaguen, Mündler, Müller, Raychev and Vechev, "Evaluating AGENTS.md" (https://arxiv.org/html/2602.11988).

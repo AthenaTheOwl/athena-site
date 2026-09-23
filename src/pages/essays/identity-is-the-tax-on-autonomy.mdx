@@ -1,0 +1,177 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Identity is the tax on autonomy"
+description: "Non-human identities outnumber people forty-five to one in the enterprises that counted, AI-service keys leak faster than any other credential, and attackers now steal them to run their own workloads. Seven findings on why the accountability substrate arrives before the capability does, and arrives as a bill."
+date: "2026-09-22"
+readingTime: "12 min read"
+---
+
+ACCESS REVIEW — NON-HUMAN IDENTITIES, 2026
+
+Ratio of machine and agent identities to human ones, in the enterprises that counted: about 45 to 1.
+AI-service secrets leaked on public GitHub in 2025: 1,275,105. Change on the year: up 81 percent.
+Secrets found in MCP configuration files: 24,008. Of those, still valid: 2,117.
+Granted: at integration time. Expires: no field.
+Owner: whoever wired the integration.
+Purpose of access: no field.
+
+A human account usually arrives with a manager, a start date and a reason. The machine accounts that now outnumber them often arrive with none of the three.
+
+The missing field is the subject of this essay. Any system granted the power to act on your behalf requires an accountability substrate, scoped credentials, action logs, revocation, and that substrate becomes mandatory infrastructure long before the capability is mature.
+
+It is a tax. It is collected up front. The first material agent-caused financial loss will hard-code the requirement, and insurers and auditors will demand it before regulators do.
+
+## FINDING ONE: THE CREDENTIAL IS THE LOOT NOW.
+
+Anthropic's September threat report, covering operations it disrupted from December 2025 through August 2026, found that AI credentials had become the objective in themselves. A hacktivist campaign ran for a month entirely on stolen API keys. Affiliates of one criminal group, on compromising a target, moved their own attack workloads onto the victim's keys, inheriting the victim's rate limits, billing and reputation.
+
+Endpoint security has a name for using the victim's own tools against them: living off the land. The AI version lives off a metered compute entitlement instead of a binary, and any system that issues fungible, high-value entitlements with weak binding to an identity inherits the attack.
+
+The supply is generous. GitGuardian counted 1,275,105 AI-service secrets exposed on public GitHub in 2025, up 81 percent in a year, and 24,008 unique secrets in MCP configuration files alone, 2,117 of them still valid. It also found that commits made with one AI coding assistant leaked secrets at 3.2 percent against a 1.5 percent baseline, and said plainly that the gap "should not be read as a simple tool failure."
+
+A key checked into a config file has stopped being a secret.
+
+It has become a coupon.
+
+## FINDING TWO: GOVERN WHAT IT MAY DECIDE, NOT HOW CAPABLE IT IS.
+
+The oldest version of the idea is authority tiering, with ancestors in operating-system privilege rings and trading-desk limits. Its newest descendant took effect on 15 July: China's first national framework for agents sorts decisions into three authority tiers, reserved to the user, requiring explicit user authorisation, or autonomous, with mandatory filing and human-override requirements.
+
+The portable mechanism: govern what a system may decide unilaterally, not how capable it is, because authority is auditable in logs and capability is not. Compute thresholds failed as a regulatory primitive. Authority is a configuration field, and a configuration field can be filed, audited and inspected.
+
+A trader with a position limit is governed. A trader with an IQ test is measured.
+
+The failure mode sits beside it, and it is the whole design. Tiering is theatre unless enforced at the point of action. A tier-two agent that can write to a queue read by a tier-three agent has laundered its authority through architecture. Without capability-based enforcement underneath, tiers are a filing exercise, and some of the people drawing them up may be content with that.
+
+·   ·
+
+A hotel key card opens one door, for the nights you paid for.
+
+At checkout it stops working. Nobody at the desk does anything. Nobody has to be brave enough to revoke it.
+
+It is the most widely deployed least-privilege credential in the world, and nobody who uses one has ever called it a security architecture.
+
+## FINDING THREE: BIND AUTHORITY TO THE TASK, AND EXPIRE IT.
+
+Cloud infrastructure learned least privilege the ergonomic way, through ephemeral tokens and policy as code. The transfer to agents is direct: bind authority to a task, not an identity, and expire it by default. Agent runtimes today grant permission at integration time and never revoke it.
+
+The incident data has started to say so. OWASP's 2026 LLM Top 10 moved excessive agency up to third, and for the first time weighted the ranking partly on the incident record: 25 percent from a corpus of 7,714 publicly documented incidents, 6,639 of them classifiable, beside 75 percent from the community vote. The Cyber Resilience Act's reporting duties began on 11 September, with full compliance due in December 2027.
+
+What does not exist yet is the sentence the ranking asks for. There is no widely adopted standard for "this agent may read these 40 rows and call this one endpoint, for nine minutes."
+
+BIND. SCOPE. ISSUE JUST-IN-TIME. ATTRIBUTE EVERY USE.
+
+That is the entire discipline, and it predates agents by a decade.
+
+## FINDING FOUR: THE RISK MOVED FROM THE VENDOR TO THE INTEGRATOR.
+
+Follow the permission, not the model. Models get tools, tools require credentials, credentials carry blast radius, and an agent's worst case becomes its permission set, not its perplexity.
+
+The permission set is granted by whoever wired the MCP server or pasted the API key. That moves the risk surface from the model vendor, who is measured, evaluated and red-teamed, to the integrator, who is not. The harms that incident data now records cluster where scope was over-broad, and the Cyber Resilience Act puts the liability on the manufacturer, which turns a diffuse engineering concern into a balance-sheet item with a named owner.
+
+An access review cannot tell apart:
+
+A credential issued for a task from one issued for a quarter.
+
+An agent that used its permission from an attacker who inherited it.
+
+A scope that was chosen from a scope that was the default.
+
+A key that is still needed from a key nobody remembers creating.
+
+## FINDING FIVE: HUMAN IAM ASSUMES A HUMAN.
+
+The trap in importing the enterprise identity stack is that it was built for employees. Human identity management assumes a person behind each identity who can be held accountable and re-authenticated. Agents have neither property. Bolting human IAM onto agents may produce compliance theatre: a log nobody can interpret, and a revocation that breaks the workflow but not the exposure.
+
+The physical-world version is sharper. A revocable, auditable, least-privilege credential bound to a task is necessary for robot fleets, trading systems, industrial control and medical devices operating under provisional authorisation, and it is not sufficient. Physical actors need real-time safety envelopes, not only access control. An identity design alone can produce systems that are perfectly authorised and still dangerous.
+
+## FINDING SIX: THE LOG IS NOT THE EXPLANATION.
+
+The least crowded opportunity in the whole field is the actuarial data that would underwrite agent liability, and the reason it is least crowded is the failure mode attached to everything else. Audit logs of agent reasoning are not explanations. Logging what an agent did while its why remains uninterpretable produces compliance theatre and a false sense of control.
+
+The honest substrate records the what with enough integrity that nobody can rewrite it, and declines to claim the why.
+
+## FINDING SEVEN: THE TAX ALREADY HAS A PRICE LIST.
+
+The market priced the substrate before the capability arrived.
+
+IDENTITY FOR MACHINES, FILED
+
+Palo Alto Networks' acquisition of CyberArk: completed 11 February 2026, a $25 billion deal, announced as adding "unified security for human, machine and agentic identity."
+
+Palo Alto Networks' acquisition of the agent-security startup Console: $500M, the first real price print for the category.
+
+NIST's AI Agent Standards Initiative: launched 17 February, with a companion concept paper pointing at least privilege, task-scoped privileges and action-level approvals for high-impact decisions.
+
+Agents IDC expects to be actively deployed by 2029: more than one billion, "executing roughly 217 billion actions a day."
+
+Manual credential management at that count: arithmetically impossible.
+
+Nobody will review two hundred and seventeen billion actions a day by hand. That volume either arrives with scoped credentials and a signed record, or arrives without them.
+
+·   ·
+
+Autonomy is a loan of authority.
+
+Every loan has terms: an amount, a purpose, a term, and a way to call it back. The credential is the loan agreement, and most agents are running on a handshake.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that this is a vendor land-grab. Identity platforms, endpoint vendors and a frontier lab's agent-identity product all shipped into the same quarter, and $25 billion changed hands.
+
+Yes. The mechanism does not need any of them. Scoped credentials, expiry, and an attributable action log are properties a team can give its own agents with the tools it already has for its own workloads. The vendors are selling the part that scales. The part that matters fits in a policy file.
+
+The second explanation was that the frontier providers will absorb this natively, leaving third-party brokers as a thin, disintermediated layer.
+
+Possibly. The broker is the thin layer. The ledger of what each credential did is not, because it belongs to the operator and survives a change of provider.
+
+**Objection:** A scope tight enough to be safe is too tight to be useful.
+
+**Reply:** Correct, and the likeliest outcome is that the industry settles on broad scopes plus post-hoc logging, because that is much cheaper to build and much weaker.
+
+**Objection:** Then what is the alternative.
+
+**Reply:** Split discovery from execution. Grant the agent wide read on what exists and narrow write on what it may change, per task, with the write scope expiring when the task does.
+
+The third explanation was that logging is not explanation.
+
+Correct, and it is the sixth finding, not an objection. Log the action with a hash. Do not pretend the hash is a motive.
+
+The fourth explanation was that a revocation that breaks the workflow is a revocation nobody will pull.
+
+That is the strongest objection here, and the answer is procedural: a credential that expires on its own needs nobody brave enough to revoke it. Expiry is revocation that has already happened.
+
+The fifth explanation was the inversion, and it is a reasonable position for most teams today: per-task scoped credentials are over-engineering for agents that mostly read, draft and summarise. Broad scopes and good logs are adequate until something goes wrong, and the providers will ship the rest.
+
+The case holds for a lot of deployments. Most agents are low-stakes. The ledger is the durable part either way. Scoping has a real cost in broken workflows and in engineering time that could have gone into the product.
+
+**Objection:** Nobody has been hurt yet.
+
+**Reply:** Yet.
+
+The evidence that settles it for a given team is a permission diff: for each agent credential, what it could reach against what it used over a month. If used and granted are close, scoping buys little and the inversion wins for that agent. The failure mode belongs in the same sentence, and Finding One is its proof: a permission diff measures the agent's habits, not the grant. An attacker holding the same key inherits everything the key allows, and the affiliates who moved their workloads onto a victim's keys did not restrict themselves to what the victim's agent used to do.
+
+## THE RECEIPT IS THE IDENTITY
+
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) is the sixth finding as code. The receipt proving one agent told another to commit a purchase order is an ed25519 signature over the action hash. Flip one hex digit and it stops verifying. Attribution becomes a property of the action instead of a property of a session that may have been shared, forwarded, or forged, and the ledger records what was signed without claiming to know what was intended.
+
+Give every actor a credential that expires.
+
+Sign every action.
+
+·   ·
+
+ACCESS REVIEW — REMAINING FIELDS
+
+Purpose of access: the task, named.
+Expires: when the task does.
+Every use: signed, attributed, kept.
+Reason for a key in a config file on a public repository: none acceptable.
+
+The review ends there. The key, somewhere, is still valid.
+
+---
+
+Sources: GitGuardian, "The State of Secrets Sprawl 2026" (https://blog.gitguardian.com/the-state-of-secrets-sprawl-2026/); Palo Alto Networks, completion of the CyberArk acquisition (https://www.paloaltonetworks.com/company/press/2026/palo-alto-networks-completes-acquisition-of-cyberark-to-secure-the-ai-era); IDC, "Agentic AI is critical infrastructure" (https://www.idc.com/resource-center/blog/agentic-ai-is-critical-infrastructure/); Anthropic, September 2026 threat intelligence report (https://www.anthropic.com/threat-intelligence-report-september-2026); OWASP LLM Top 10 2026, via Aembit (https://aembit.io/blog/the-owasp-top-10-for-llm-applications-2026-what-changed-and-why-it-matters); China's national framework for AI agents, via MLex (https://www.mlex.com/mlex/articles/2475858/china-unveils-first-national-framework-for-ai-agents-with-tiered-oversight); NIST AI Agent Standards Initiative (https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure); Security Boulevard on the non-human identity ratio (https://securityboulevard.com/2026/07/the-agent-identity-problem-non-human-identities-outnumber-humans-45-to-1-and-ai-agents-are-making-it-worse/).

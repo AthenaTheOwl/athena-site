@@ -1,0 +1,266 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The harness is the product"
+description: "Three teams improved their coding agents without touching the model, and a fourth gave its harness away. Seven findings about the part that moved the number, and the case that it is a commodity."
+date: "2026-09-21"
+readingTime: "12 min read"
+---
+
+CHANGE RECORD — CODING AGENT, TERMINAL BENCH 2.0
+
+Model: unchanged. Weights: untouched.
+Components modified: system prompt, tools, middleware. Three.
+Score before: 52.8 percent. Score after: 66.5 percent.
+Leaderboard position before: top thirty. After: top five.
+Human check on each change: yes, at the apply step.
+Description of change, one line: harness engineering.
+
+The line is accurate. It is also two words standing in for a trace pipeline, a fleet of error-analysis agents, a person at the apply step and 13.7 points.
+
+This is the rest of the line.
+
+## FINDING ONE: THE UNIT OF WORK MOVED FROM THE PROMPT TO THE LOOP.
+
+Addy Osmani named the shift in June: loop engineering. The unit of work is no longer the prompt but the loop, a small system that finds work, hands it to agents, checks the results, records state, and decides what happens next, on a schedule, without you. Boris Cherny put it in the first person: "I don't prompt Claude anymore. I have loops running that prompt Claude... My job is to write loops."
+
+The anatomy has five parts, plus the one people skip.
+
+Automations, which run discovery and triage on a schedule and archive their own empty runs.
+
+Worktrees, so parallel agents cannot edit the same file into each other.
+
+Skills, which encode project knowledge once so the loop stops re-deriving your conventions from zero every morning.
+
+Connectors, so the loop opens the pull request and updates the ticket instead of describing, at length, what it would have done.
+
+Sub-agents, splitting the maker from the checker, because the model that wrote the code grades its own homework with the generosity of a parent at a school play.
+
+And state that survives the run. A markdown file. A ticket board. The model forgets everything. The repo does not.
+
+A machinist would recognize this. The hand makes the part; the fixture decides whether the thousandth part matches the first. Nobody improves a production run by asking the operator to concentrate harder. They build a better jig, and then they stop talking about the operator.
+
+·   ·
+
+Every Friday, the team deleted things.
+
+A team at OpenAI that grew from three engineers to seven spent five months building an internal product with a coding agent, and by their own account nobody typed a line of it by hand. The agent copied whatever it found in the repo, including the bad parts, and drift accumulated the way lint does in a dryer. Their first remedy was a cleanup day: a fifth of the working week, by hand, scraping out what they called AI slop.
+
+It did not scale.
+
+What replaced it was a written set of principles and a background agent that scans for deviations on a cadence and opens small refactor pull requests, most reviewable in under a minute. The prompt stayed the same. The Friday moved into the loop.
+
+## FINDING TWO: THE JIG IS WHERE THE YIELD LIVES.
+
+LangChain's result has the shape of a lab notebook, which is why it is trustworthy.
+
+TERMINAL BENCH 2.0, MODEL HELD FIXED
+
+Before: 52.8 percent.
+
+After: 66.5 percent.
+
+Rank: top thirty to top five.
+
+Knobs turned: three. System prompt, tools, middleware around the model and tool calls.
+
+Weights changed: none.
+
+The engine was a loop, packaged as a skill. Fetch the traces from the last eval run. Spawn parallel error-analysis agents over the failures. Have one agent synthesize the findings into proposed harness changes. Apply the targeted ones. Re-run. They compare it to boosting, each pass aimed at the previous run's mistakes, and they keep a human check in the apply step, because a change that fixes one task will break three others and report success.
+
+The fixes that moved the number are all reusable, and the first one is embarrassing. The most common failure in the traces was an agent writing a solution, re-reading its own code, declaring it fine, and stopping. So they added a checkpoint that intercepts the agent before it exits and tells it to verify against the task spec.
+
+Verify against the spec, not against your own code.
+
+That is the essay in six words. The rest is supporting documentation.
+
+The second fix mapped the directory tree and available tooling at startup and injected it, because agents discovering their own environment get it wrong in ways that are expensive to watch. The same fix injects time-budget warnings, because agents are terrible at time estimation, a trait they share with everyone who has ever given one. The third counted edits per file and, after N edits to the same one, suggested reconsidering. The traces had shown agents producing ten or more small variations of the same broken fix.
+
+Each one confident.
+
+None of them new.
+
+## FINDING THREE: MORE THINKING SCORED LESS.
+
+Then the experiment that should end a certain kind of meeting.
+
+REASONING EFFORT, SAME AGENT, SAME TASKS
+
+Maximum everywhere: 53.9 percent.
+
+High everywhere: 63.6 percent.
+
+Cause of the difference: timeouts.
+
+Allocation that won: maximum for planning and for final verification, one notch down for the implementation in between.
+
+The winning setting has a name, the reasoning sandwich, and the name is the least interesting thing about it. The interesting thing is where the decision lives. The model does not choose its own effort budget. The harness does, per phase, and a harness that spends the maximum everywhere buys a worse score at a higher price.
+
+More thinking is not free.
+
+It is not always thinking, either.
+
+## FINDING FOUR: A SCORE BELONGS TO A MODEL AND A HARNESS, TOGETHER.
+
+The same LangChain scaffolding scored 59.6 percent with a different frontier model, because the improvement loop had been run against one model and not the other. A jig is cut for a specific part. Nobody has ever been surprised by this about jigs.
+
+Vivek Trivedy, also at LangChain, makes the sharper version. His working definition: if you are not the model, you are the harness. His evidence runs in both directions. On Terminal Bench 2.0, the same model inside its vendor's own coding tool scores materially below the same model inside other harnesses. And models and harnesses are now co-trained, which produces overfitting: he cites a patch-editing tool where changing the edit format degrades the model, when a general model should not care which patch format it is handed.
+
+The corollary he refuses is the useful part. The best harness for your task is not necessarily the one the model was post-trained with.
+
+Read that way, a leaderboard row with one name on it has two authors, and a single-name leaderboard cannot tell apart:
+
+A weaker model from a mismatched edit format.
+
+A stronger model from a better-cut jig.
+
+A regression in the weights from a regression in the scaffold.
+
+An upgrade from a harness that finally fit.
+
+## FINDING FIVE: THE DOCS ARE THE SYSTEM OF RECORD.
+
+OpenAI's team took the same idea to the repository itself. Their AGENTS.md is deliberately short, a table of contents pointing into a structured knowledge base: architecture notes, execution plans active and completed, product specs, generated schema docs, one file per concern. The agent starts from a small stable entry point and learns where to look. Linters and continuous integration check that the knowledge base is cross-linked and current. A doc-gardening agent scans for documentation that no longer matches code behaviour and opens fix-up pull requests, which is a job title now.
+
+Their working principle: anything the agent cannot reach in-repo does not exist. The Slack thread where the architecture was settled is invisible to the agent, and to the new hire in three months, and eventually to the people who were in it.
+
+Two of their practices would get a human team a stern email.
+
+They enforce invariants, not implementations, through a rigid layered architecture whose custom linters inject remediation instructions straight into the agent's context. Constraints that feel pedantic for people become multipliers for agents, written once, applied everywhere.
+
+And they relaxed their merge gates. When corrections are cheap and waiting is expensive, blocking is the wrong trade. In a low-throughput team of humans that would be reckless. At three and a half merged pull requests per engineer per day it is arithmetic, and arithmetic does not attend the retrospective.
+
+·   ·
+
+A linter has never been flattered.
+
+It does not know what the change is for, who wrote it, or how late in the day it is. It reads the file, finds the line, and fails it. It cannot be rushed, persuaded, or caught on a Friday.
+
+It is the smallest harness most teams own, and the only reviewer on most of them that has never been tired.
+
+## FINDING SIX: THE STOCK HARNESS IS NOW FREE, WHICH MAKES YOURS THE ONLY ONE THAT DIFFERS.
+
+On 20 August, OpenAI open-sourced Harness under Apache-2.0: the execution engine underneath Codex, including the command-line runner, the SDK and the app-server. It came with a number.
+
+ARC-AGI-3, SAME MODEL
+
+Before harness optimisation: 13.3 percent.
+
+After: 38.3 percent.
+
+Tokens consumed: down sixfold.
+
+Weights changed: none.
+
+The outer loop nearly tripled measured capability and cut token consumption sixfold. Read as strategy, the release is a commoditize-your-complement move. Twelve models from seven providers shipped in August alone; when weights converge, differentiation migrates to context management, decomposition, tool-call discipline, retry policy and verification. An efficient scaffold in every developer's hands lowers token demand per unit of work, which relieves the vendor's own inference constraint, and leaves the remaining edge on the one thing it still controls: a model post-trained for its own tool-use loop.
+
+The launches around it that month were all for things an agent needs and a person got for free. A stateless browser built for agents. A payment flow that resurrects HTTP 402 so an agent can pay per request without an account. A review boundary where a team watches the diff before it ships.
+
+A browser, a wallet, a checkpoint.
+
+None of them is a model.
+
+All of them are toll booths.
+
+Giving away the stock harness is a statement about where the vendor thinks the margin is not. It is also the clearest possible notice to everyone else that the stock harness is now the floor. What sits above the floor is the loop that ran against your traces, and nobody can open-source that for you.
+
+## FINDING SEVEN: THE HARNESS YOU SHIP IS THE ONE THE MODEL WILL BE TRAINED AGAINST.
+
+In August, two releases treated the harness as the unit of composition, from opposite ends.
+
+DeepSeek Harness, a v0.1 developer preview under MIT, loads everything as an interchangeable plugin: model adapters, tool registries, sandboxes, session state, event dispatch, and the agent loop itself. It ships an append-only event log that records every message, tool call, intermediate reasoning state, token count and sub-agent dispatch as one trajectory. It converges with Anthropic's Managed Agents, an independent design: log as the source of truth, loop and hands as swappable parts.
+
+Two teams that did not coordinate drew the same diagram.
+
+That is a stronger signal than either drawing.
+
+Agent Lightning v1.0 attacks the boundary from the training side and names the pattern: harnessed agentic RL. Agents run inside harnesses that own their tools, context and control flow, so training a model without its harness opens a gap between the behaviour you trained and the behaviour you deployed. Their answer is a proxy at the model's API boundary that records prompts, tokens, log-probabilities and responses, which is enough to make an existing, unmodified harness trainable. The cost, stated by the authors: how reward propagates back through a loop the trainer cannot see is an open question.
+
+Costs beside the claims, because both releases come with them. The DeepSeek harness is a preview whose extension contracts may break. A widely repeated star-velocity figure for it has no source. Star counts say nothing about the design; the append-only log and the plugin boundaries do.
+
+The conclusion survives the caveats. The harness you ship is the harness you optimise against, and on Agent Lightning's argument, the harness a model gets trained through.
+
+·   ·
+
+The model is rented. It arrives over an API, it changes when the vendor changes it, and in one month twelve of them shipped from seven providers.
+
+The traces are yours. The eval cases are yours. The state file, the linter rules, the checkpoint that asks whether you verified against the spec: yours.
+
+That is the whole reason. Every finding above is evidence that the part you own is also the part that moves.
+
+## THE EXPLANATIONS AFTERWARD
+
+Seven findings, a handful of teams, and the usual escape routes. Each deserves the work.
+
+The first explanation was that the numbers are self-reported. A million lines, fifteen hundred pull requests, no hand-typed code.
+
+Correct. Discount them. The operating patterns are not numbers, and the OpenAI post says in its own last paragraph that the autonomy "depends heavily on the specific structure and tooling of this repository and should not be assumed to generalize without similar investment." The authors filed their own caveat. It is quoted here so nobody has to.
+
+The second explanation was that the harness is model-specific and will go stale.
+
+Yes. 59.6 percent. LangChain says the guardrails engineer around today's model weaknesses and will likely dissolve as models improve, and Trivedy says some harness features will become dead weight as models absorb planning and self-verification. He also draws the comparison to prompt engineering, which kept being useful long after people predicted its death.
+
+**Objection:** Then why build it.
+
+**Reply:** Because the model that improves does not tell you which parts of the harness it made unnecessary. The loop that cut the jig is the durable asset. The jig is a consumable.
+
+The third explanation was cost. Sub-agents each burn their own model and tool calls, and Osmani says token costs "can vary wildly."
+
+Also yes. Spend the second opinion where a second opinion is worth paying for, and nowhere else. The rule predates agents by some centuries; review has always worked that way, when it worked. The one harness number in this essay that touched the bill moved it down, sixfold, and the one that spent maximum effort everywhere bought a lower score.
+
+The fourth explanation was that a loop running unattended produces comprehension debt, the gap between what exists and what you understand.
+
+It does. Osmani names it. The remedy in all three posts is the same and unglamorous: the state file, the progress log, the knowledge base the linter keeps honest. The loop is allowed to forget. The repo is not.
+
+**Objection:** A loop that says "done" has finished.
+
+**Reply:** A loop that says "done" has made a claim.
+
+The fifth explanation was the inversion, and it can be built without strain: the harness is a commodity and this essay has the title backwards.
+
+The case writes itself from the same sources. OpenAI gave its harness away under Apache-2.0. DeepSeek released one under MIT. What would confirm scaffold commoditization is easy to name: a second lab open-sourcing its harness, after which the moat sits in tool-use post-training and nowhere else. Trivedy expects models to absorb planning and self-verification. On that reading the model is the product, the harness is packaging, and a small shop should take the free one and spend its time elsewhere.
+
+**Objection:** Then the harness is packaging.
+
+**Reply:** Sometimes.
+
+For single-turn structured extraction, most of this is overhead, and Trivedy says so first. Harness work pays when the agent runs long, uses many tools, or operates in an environment you control. The evidence that settles the rest is cheap to collect: take the stock harness, unmodified, and a hill-climbed one, same model, and run both against eval cases drawn from your own failures. If the stock one matches, this essay is wrong for your workload and you should stop reading it. The failure mode sits in the same experiment: a loop hill-climbed against a public benchmark instead of your traces produces a jig cut for someone else's part, and it will look like the inversion winning when it is the test being wrong.
+
+The sixth explanation was that converging designs mean the harness is solved.
+
+Convergence settles the shape: a log, a loop, swappable hands. It says nothing about what the loop should check, which is where every point in Finding Two came from. The diagram is shared. The traces are not.
+
+The seventh explanation was that a vendor's own harness should be best for its own model.
+
+It is a reasonable expectation and the data does not honour it. Trivedy's Terminal Bench comparison runs the other way, and his refusal of the corollary is explicit. The vendor tunes for the average customer. You have one customer.
+
+## WHAT THIS CHANGES FOR A SMALL SHOP
+
+If the harness is where the yield lives, the harness is what you should be building, and two of the repos on this site exist for exactly that reason. Neither has a demo video.
+
+[trace-to-eval-harness](https://github.com/AthenaTheOwl/trace-to-eval-harness) takes a failed run, the fabricated citation, the tool call that should have been blocked, the leaked credential, and freezes it into a checked-in eval case, so the same failure cannot ship twice without a red check. That is Osmani's "record state" and LangChain's "fetch traces," done once so nobody has to remember.
+
+[proof-gate-runner](https://github.com/AthenaTheOwl/proof-gate-runner) is the deterministic checkpoint: typed gates that read the artifact and fail the pull request in half a second, the same way every time, on the fifth AI-authored PR of the day as on the first. It does not get tired. It does not get talked into anything. It has no opinion about the operator.
+
+Both are the fixture.
+
+[News-Bias-Multi-Agent-Pipeline](https://github.com/AthenaTheOwl/News-Bias-Multi-Agent-Pipeline) runs this essay's experiment in miniature. One pipeline builds a framing brief from a set of news articles, with a critic, structured judgments and a verbatim check on every cited span, and it is implemented three ways: plain Python, LangChain and LangGraph. The point of the three, in the repository's words, is that "the framework differences can be inspected without changing the product claim." Same task, same checks. Only the harness changes.
+
+The weights were the same in every result above.
+
+The only thing that differed was the part you are allowed to own.
+
+·   ·
+
+CHANGE RECORD — REMAINING FIELDS
+
+Portable to another model: partly. See 59.6 percent.
+Expected service life: until the next model, which will not say which parts it made unnecessary.
+Owner: whoever runs the loop. The job title has not been posted.
+Reviewed by: a script, in half a second, the only reviewer on the form that has never been tired.
+Signature:
+
+The form stops there. The loop runs on Friday.
+
+---
+
+Sources: Addy Osmani, "Loop Engineering" (https://addyosmani.com/blog/loop-engineering/); LangChain, "Improving Deep Agents with harness engineering" (https://www.langchain.com/blog/improving-deep-agents-with-harness-engineering); OpenAI, "Harness engineering" (https://openai.com/index/harness-engineering/); Vivek Trivedy, "The Anatomy of an Agent Harness" (https://www.langchain.com/blog/the-anatomy-of-an-agent-harness); DeepSeek Harness (https://github.com/deepseek-ai/deepseek-harness); Agent Lightning v1.0 (https://arxiv.org/abs/2608.17528); OpenSourceForU on the Harness release (https://www.opensourceforu.com/2026/08/openai-open-sources-codex-harness/).
