@@ -1,0 +1,158 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The drawer has a test suite"
+description: "Two archived repositories of old practice problems, opened in September 2026 and run. Five findings on the smallest environment there is, the classical toolkit underneath the new one, and what an archive does when nothing checks it."
+date: "2026-09-23"
+readingTime: "7 min read"
+---
+
+ARCHIVE INVENTORY — ONE DRAWER
+
+Contents: ten lab folders from MIT 6.034, fall 2020; twenty-one LeetCode answers.
+Languages: Python, SQL.
+Write-ups: none.
+Second passes: none.
+Grader: removed from HEAD. Old course keys expired; do not add new ones.
+Last opened: September 2026.
+Condition:
+
+This is the note the form has no field for.
+
+## FINDING ONE: A PRACTICE PROBLEM IS THE SMALLEST ENVIRONMENT.
+
+Each of the ten lab folders ships the same three things: a file to fill in, a `tests.py`, and a `tester.py` that runs one against the other and prints a verdict. A LeetCode problem is the same object with the tests hidden: a statement, a submission box, and a judge that says accepted or does not.
+
+That is the whole contract that [Environments are the product](/essays/environments-are-the-product/) describes at scale: an initial workspace, a deliverable, and a verifier. The course built one per week and called it homework.
+
+LAB TESTS PASSED, SEPTEMBER 2026, CURRENT PYTHON
+
+Search: 66 of 66.
+Games: 44 of 44.
+Constraint satisfaction: 84 of 84.
+Bayesian inference: 74 of 74.
+Nearest neighbours and identification trees: 109 of 109.
+Support vector machines: 58 of 58.
+Boosting: 52 of 52.
+
+Six years on, the verifiers still run offline and still agree with the answers.
+
+The deliverables were written by a student.
+
+The verifiers were written by course staff.
+
+## FINDING TWO: THE OLD TOOLKIT NEVER LEFT THE BUILDING.
+
+The labs cover the classical stack in executable form: search, game search, constraint satisfaction, rule systems, nearest neighbours, identification trees, neural nets, support vector machines, Bayes nets, boosting. The README puts the case for keeping them in three sentences. "Search still searches. CSPs still prune. Bayes nets still make hidden assumptions visible."
+
+The newer systems are built on the same parts with larger constants. An agent choosing its next tool call is expanding a node. A vector index answering a query is running nearest neighbours over an embedding. [Grep beats the index](/essays/grep-beats-the-index/) made the argument for the oldest search of all: a flat directory, a string match, and a model deciding where to look next.
+
+The vocabulary moved on. The algorithms kept their jobs.
+
+## FINDING THREE: A CHECK THAT ONLY COUNTS IS STILL A CHECK.
+
+The LeetCode archive holds sixteen Python files and five SQL ones, each named by problem number, "solved once and left where they fell." Its README is candid about the ambition: "The point was never the best solution to problem 135. It was getting 135 to pass and moving on."
+
+It has one piece of running code, `scripts/validate_archive.py`, and CI runs it on every push. Every Python file must parse. Every SQL file must be non-empty and start with a statement it recognises.
+
+VALIDATOR, SEPTEMBER 2026
+
+Output: validated 16 python file(s) and 5 sql file(s).
+Tells a right answer from a wrong one: no.
+Tells a file that disappeared or stopped parsing: yes.
+
+The README's own gloss: "Twenty-one in, twenty-one out. If the count ever drops, something rotted."
+
+It is the weakest check a repository can have.
+
+It runs.
+
+·   ·
+
+Problem 638 is mentioned in the LeetCode colophon and appears nowhere else.
+
+It was never solved. The README files its absence as "its own kind of entry" and moves on.
+
+An archive with a known gap and a note about it is in better order than one that looks complete.
+
+## FINDING FOUR: THE COURSE ARCHIVE ROTTED WHERE NOBODY WAS LOOKING.
+
+The MIT archive has CI as well. It compiles `streamlit_app.py` and any `src`, `scripts` or `tests` directory. The labs live in `Lab0` through `Lab9`, so the workflow compiles the index app and nothing it indexes. It is green.
+
+Running the ten testers by hand on current Python returned seven clean passes and three that were not.
+
+LAB 0 — WARMUP: 63 of 68. The five failures are `NAME`, `COLLABORATORS`, `PYTHON_EXPERIENCE`, `PROGRAMMING_EXPERIENCE` and `HOW_MANY_HOURS_THIS_LAB_TOOK`. The survey answers are not in the archive. The tests that asked who the student was are the only ones that fail.
+
+LAB 4 — RULE-BASED SYSTEMS: fails on import. `utils.py` imports `MutableMapping` from `collections`, one of the deprecated aliases Python 3.10 removed. The bytecode still sitting in three of the folders was compiled by CPython 3.8, which still had the alias.
+
+LAB 7 — NEURAL NETS: `SyntaxError` at line 197. The line reads `<<<<<<< Updated upstream`. Half of a merge conflict was committed, the opening marker without its partner, directly above an empty survey header.
+
+Nothing in the archive changed for the Lab 4 failure. The language moved underneath it.
+
+Lab 7 needed no help from anyone.
+
+## FINDING FIVE: THE LABEL ROTTED FIRST.
+
+The Streamlit app that browses the archive carries a hard-coded table of topics, one per folder. Checked against the first line of each lab file, eight of the ten are wrong, each carrying another folder's topic:
+
+search filed as rule-based systems
+games filed as search
+constraint satisfaction filed as games
+rule-based systems filed as constraint satisfaction
+Bayesian inference filed as nearest neighbours and decision trees
+nearest neighbours filed as neural networks
+neural networks filed as support vector machines
+support vector machines filed as Bayesian inference
+
+The warmup and boosting are correct. The app describes itself as a read-only browser that "indexes the committed lab folders." It does, faithfully, under the wrong names.
+
+The compiler read the table and found it valid Python.
+
+It was.
+
+·   ·
+
+A filing cabinet in a basement outlives the people who knew what the folders meant.
+
+The labels on the drawers are the last thing anyone checks and the first thing a new reader trusts.
+
+Nobody opens a drawer to confirm what the label says. They open it because of what the label says.
+
+## THE EXPLANATIONS AFTERWARD
+
+The first explanation was that this is coursework, and coursework is not worth a test suite.
+
+Correct about the stakes. Nobody depends on a 2020 answer to a constraint-satisfaction lab. The archive is where a verifier's shelf life can be read directly: seven of ten still agree with their answers six years later.
+
+The second explanation was that the LeetCode validator is too weak to count.
+
+Also correct: it cannot fail a wrong answer. The MIT archive has the strong verifiers and the weak CI, and the half-committed merge conflict sat in Lab 7 anyway, because the strong verifiers only run when someone runs them. A check as weak as the LeetCode one, parsing every file on every push, would have failed Lab 7 the day the marker went in.
+
+**Objection:** Nobody runs a 2020 lab in 2026.
+
+**Reply:** Python does.
+
+The third explanation was the inversion, and an archivist would make it. An archive is supposed to be frozen. Running 2020 coursework on a 2026 interpreter measures the present, not the work, and the honest preservation is a pinned environment, not a green badge. On that reading the Lab 4 failure is the archive working as designed and the check is the thing that is wrong.
+
+Part of that holds. The Lab 4 failure belongs to the interpreter, and the evidence that settles it is one run under Python 3.8: if Lab 4 passes there, the archive is intact and only the pin is missing. The other two failures survive any interpreter. A syntax error is a syntax error in 3.8, and no interpreter restores the survey answers. The failure mode of the archivist's position is a pin nobody writes down, which is how Lab 4 got here.
+
+## THE DRAWER
+
+[MIT-AI-Fall20](https://github.com/AthenaTheOwl/MIT-AI-Fall20) holds the ten labs, the testers, and the index app. [leetcode](https://github.com/AthenaTheOwl/leetcode) holds the twenty-one answers and the validator that counts them.
+
+Twenty-one in, twenty-one out.
+
+Ten in, seven out.
+
+·   ·
+
+ARCHIVE INVENTORY — REMAINING FIELDS
+
+Condition: seven labs verified, one pinned to a version nobody wrote down, one holding half a merge.
+Index: eight labels wrong.
+Survey: withdrawn.
+Problem 638: still open.
+Next check: whoever opens the drawer.
+
+---
+
+Sources: MIT-AI-Fall20 (https://github.com/AthenaTheOwl/MIT-AI-Fall20); leetcode (https://github.com/AthenaTheOwl/leetcode); What's New in Python 3.10 (https://docs.python.org/3/whatsnew/3.10.html).

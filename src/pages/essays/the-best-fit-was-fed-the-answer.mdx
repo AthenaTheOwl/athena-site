@@ -1,0 +1,199 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The best fit was fed the answer"
+description: "A 2022 system-dynamics thesis modelled Bitcoin as two machines: one that mines and one that trades. The mining side calibrated honestly at 0.90. The trading side scored 0.998 because it was given the price. Seven findings on what the model found, where it pinned itself to the walls, and the case that there was nothing there to find."
+date: "2026-09-23"
+readingTime: "11 min read"
+---
+
+CALIBRATION REPORT — BTC MARKET PRICE
+
+Optimizer: Powell.
+Simulations run: 902,137.
+Days of data fitted: 4,866.
+R-squared: 0.998.
+Price the model was fitted to: the price.
+Structure driving the price:
+
+That report belongs to a thesis I submitted to MIT's System Design and Management program in May 2022, *Modeling the Trajectory of Bitcoin using System Dynamics*. It built one model with two sides: a production side, where miners add blocks to the chain and are paid in new coins, and a market side, where three kinds of user buy, hold and sell.
+
+The last field is the one the model could not fill, and the thesis says so on page 48.
+
+This is the note the form has no field for.
+
+## FINDING ONE: THE BEST FIT WAS FED THE ANSWER.
+
+The market side matched Bitcoin's price history almost exactly, with an R-squared of 0.998. The same paragraph that reports the number takes it apart: "The main reason for this almost exact matching is that the model is using the price data as input to the calibration as well." The fit was to the day-to-day changes in price, "as opposed to price itself," which "hints at the absence of a structure driving the price itself in the model."
+
+The model listing in the appendix shows the mechanism. A switch hands the price from the data to the model's own market-clearing structure at a set day. The simulation runs for 5,000 days. The switch is set to day 10,000.
+
+The switch was wired.
+
+It was set to a day the run never reached.
+
+## FINDING TWO: THE HONEST FIT WAS THE WORSE ONE.
+
+The production side was calibrated the hard way. Difficulty and hash rate ran on the model's own equations. The price, fees and energy and hardware costs were fed in from data, which is how partial model testing isolates one sector, and the optimizer adjusted thirteen constants until the simulated network hash rate tracked the recorded one. The result was an R-squared of 0.902, which the thesis called "sufficient to capture its behavior."
+
+The calibration report in the repository adds the cost. Across 4,865 days, the residuals correlate at 0.91 from one day to the next. The misses do not scatter around the line. They arrive in long runs, the model early or late for months at a time.
+
+The constants it settled on are the evidence that the structure is real, because nobody told the optimizer what they should be.
+
+CALIBRATED, PRODUCTION SIDE
+
+Cost of energy: about 7.1 cents per unit, near the low end of US commercial rates.
+Miner residence time: about 2,550 days, roughly seven years.
+Mining hardware life: about 1,570 days, inside published estimates of three to five years.
+Return a miner needs before entering: about 13 percent a year.
+
+The lower score is the one that means something.
+
+It was earned.
+
+## FINDING THREE: THE ENGINEERED HALF CALIBRATES BECAUSE SOMEONE WROTE IT DOWN.
+
+The production side is a control system with a published specification. Blocks target ten minutes. Difficulty is re-targeted every 2,016 blocks, and a new difficulty cannot be more than four times or less than a quarter of the last. The block reward halves every 210,000 blocks, roughly every four years, toward a cap of 21 million coins.
+
+Two balancing loops sit on top of it. More computing power makes blocks come faster, so difficulty rises and pulls them back. A higher expected reward draws miners in, their computing power raises the difficulty, and the expected reward per miner falls. The thesis modelled the miners as aggregate units, entrants bringing roughly twice the network's average computing power and leavers taking out around half, because a published estimate of a million individual miners implied 200 TH/s each, "difficult to maintain without sizable capital investment."
+
+Transaction fees turned out to be a rounding error on the incentive, about 1 to 2 percent on average. The miners were paid in new coins.
+
+A thermostat is easy to model.
+
+Somebody published the wiring diagram.
+
+·   ·
+
+From 2015 until April 2020, by Makarov and Schoar's estimate, between 60 and 80 percent of Bitcoin's mining capacity was in China.
+
+In April 2021, after a coal-mine accident, the government shut down electricity across the Xinjiang region, where miners had gathered for cheap coal power. A sizable share of the network went dark and blocks slowed.
+
+The protocol does not read the news. It waited for the next difficulty checkpoint, which arrives by block count, and the blocks were the thing that had slowed.
+
+## FINDING FOUR: THE MARKET HALF PINNED ITSELF TO THE WALLS.
+
+A calibration searches for each constant inside a range the modeller sets. When the best value lands on the edge of that range, the optimizer is saying the answer lies outside the box it was given. On the production side, two of thirteen constants finished on an edge. On the market side, fourteen of forty-three did.
+
+AT THE EDGE OF THE SEARCH, MARKET SIDE
+
+Sensitivity of price to the balance of demand and supply: 0.001, the floor.
+Chartists' maximum holding: 1 BTC, the floor.
+Fundamentalists' entry sensitivity to long-term trends: 4, the ceiling.
+Short-trend averaging time: 7 days, the floor.
+
+The first line is the finding. The thesis reported it plainly: "price is almost insensitive to the demand-supply balance. This merits further investigation."
+
+A market-clearing model concluded that the price did not much care whether the market cleared.
+
+The optimizer was asked where the answer was.
+
+It pointed at the fence.
+
+## FINDING FIVE: THE CROWD REQUIRED THREE HUNDRED PERCENT.
+
+The market side splits users into chartists, who trade on short-run trends, fundamentalists, who hold for the long run, and transacters, who use the coin to pay for things. Each class enters when its expected return beats a reference return, and the calibration chose those references.
+
+REFERENCE RETURN BEFORE ENTERING, PER YEAR
+
+Chartists: 303 percent.
+Fundamentalists: 451 percent.
+Transacters: 340 percent.
+
+AVERAGE TIME IN THE MARKET
+
+Chartists: 16.6 days.
+Fundamentalists: 1,445 days.
+Transacters: 1,605 days.
+
+The thesis allowed that, given the price history, the returns "may not be all that surprising," and still found it hard to believe that users expected the trend to deliver them.
+
+The calibration did not discover investors who demanded 451 percent a year. It found that, fitted to 4,866 days of price history, the model's investors behaved as if they did.
+
+The patient ones set the highest bar.
+
+## FINDING SIX: THE MOST TRANSPARENT LEDGER EVER BUILT CANNOT SAY WHO IS A CHARTIST.
+
+The market side stood on three classes of user, and no dataset could check them. "The size and composition of the users in the market and its historical trend over time aren't known." The split into chartists, fundamentalists and transacters was, in the thesis's words, "conceptual and reasonable but, unfortunately, tricky to match real-world data."
+
+The blockchain records every transfer. Makarov and Schoar's analysis of it shows why that does not help: 90 percent of on-chain transaction volume "is not tied to economically meaningful activities but is the byproduct of the Bitcoin protocol design" and of users' preference for anonymity, and since 2015, 75 percent of the real volume has been linked to exchanges or exchange-like entities.
+
+Most of the trading that would reveal a chartist runs through exchanges, and the chain records their addresses, not their customers.
+
+Every transfer is public.
+
+Nobody's reason is.
+
+## FINDING SEVEN: THE MISSING LOOP WAS BORROWED FROM AN ANALOGY.
+
+The thesis proposed its own repair. Anchor the price to the work: the variable cost of producing one coin. Add the believers, the sum of users and miners, as a second source of value. Together they would "drive price endogenously."
+
+It credited the idea to the whitepaper, which "envisioned the price of BTC to be derived from the work put in to create it." The whitepaper says something smaller. New coins are "analogous to gold miners expending resources to add gold to circulation. In our case, it is CPU time and electricity that is expended."
+
+That is a description of how coins enter circulation. It says nothing about what they should cost. The thesis read an anchor into an analogy (a graduate student's reading, filed with confidence).
+
+The scenarios it proposed next are still the right ones: change the retarget interval, the halving schedule or the cap; subsidise energy or hardware; tax carbon. On the energy case, the thesis's last word was the correct one: "we cannot say for sure unless we can simulate these scenarios."
+
+·   ·
+
+By the account the thesis cites, the first recorded currency was the Mesopotamian shekel, worth about a third of an ounce of silver, around 2500 BC.
+
+Currencies have had nearly five millennia to acquire a structure someone could write down.
+
+This one had a little over a decade, and the part that was written down was the part that calibrated.
+
+## THE EXPLANATIONS AFTERWARD
+
+Each finding has a cheaper reading. Each one gets a hearing.
+
+The first explanation was that system dynamics is the wrong tool for a speculative market. It works in aggregates, stocks and average delays, and a market of traders reacting to each other is the textbook case for modelling individuals.
+
+The market side's failure is consistent with that. The same method, on the same data, in the same model, also calibrated the production side to 0.902 with constants that match outside estimates for energy prices and hardware life. The method did not fail everywhere. It failed in one place and told the modeller which one, which is most of what a model is for.
+
+The second explanation was that the 0.998 is a vanity number and should not have been reported.
+
+It was reported with its own autopsy attached, in the same paragraph.
+
+**Objection:** A 0.998 is a 0.998.
+
+**Reply:** Of the input.
+
+The third explanation was that the pinned constants mean the search ranges were too narrow, and a wider box would have found reasonable values.
+
+Partly correct, and the thesis says it first about the production side: "There is possibly a case to relax some of these limits further to see if a better fit is obtainable." Relaxing the price sensitivity cannot rescue the market structure, though. It sat at 0.001 in a range that ran up to 4. A wider box lets it fall to zero, and a price that ignores supply and demand entirely is a stronger version of the finding.
+
+The fourth explanation was the inversion, and a market sceptic would make it without strain. There was no structure to find. Bitcoin's price over those years was attention and momentum, reflexive and mostly speculative, and the model found exactly that: a price indifferent to supply and demand, entrants demanding several times their money a year, and a trading class that stayed about two and a half weeks. On that reading the pinned parameters are the answer, and adding a cost-of-production loop would be the modeller inventing the fundamentals the market lacked. Makarov and Schoar's picture of a market dominated by exchange trading supports it.
+
+The model already contains the test that settles it. Move the price switch from day 10,000 to a day inside the run, let the market-clearing structure carry the price from there, and compare the path it draws with the recorded one, once without the cost-of-production loop and once with it. If neither version tracks, the sceptic wins and the missing structure was never there. If the cost loop tracks where the plain version drifts, the structure existed and the data had been standing in for it. The failure mode is judging it in-sample: with forty-three constants to tune, almost any loop can be made to fit the history it was tuned on.
+
+**Objection:** Then the thesis never tested its central claim.
+
+**Reply:** Correct. It named the switch.
+
+·   ·
+
+The report files still record their data source by drive letter, `D:\MIT Coursework\Thesis\DataFiles\ConsolidatedData.vdfx`.
+
+The path points at a folder on the machine the calibration ran on.
+
+Anyone rerunning it supplies their own drive D.
+
+## THE MODEL
+
+[MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin](https://github.com/AthenaTheOwl/MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin) holds the Vensim model as submitted, the data-pull script, both calibration runs with their reports (902,137 simulations on the market side, 139,723 on the production side), and a small Streamlit viewer for reading the model's behaviour without Vensim.
+
+The supply side fit because someone had written it down.
+
+The price fit because I had.
+
+·   ·
+
+CALIBRATION REPORT — REMAINING FIELDS
+
+Structure driving the price: proposed, 2022.
+Endogenous switchover for market price: day 10,000 of 5,000.
+Scenarios: listed, not simulated.
+Out-of-sample test: specified above, not run.
+
+---
+
+Sources: *Modeling the Trajectory of Bitcoin using System Dynamics*, SM thesis, MIT System Design and Management, May 2022 (model and data at https://github.com/AthenaTheOwl/MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin); Igor Makarov and Antoinette Schoar, "Blockchain Analysis of the Bitcoin Market," NBER Working Paper 29396 (https://www.nber.org/papers/w29396); Satoshi Nakamoto, "Bitcoin: A Peer-to-Peer Electronic Cash System" (https://bitcoin.org/bitcoin.pdf).
