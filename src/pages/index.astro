@@ -9,23 +9,6 @@ import ProcurementLabEmbed from "../components/ProcurementLabEmbed.astro";
 
 <Base>
   <Hero />
-  <ProcurementLabEmbed />
-  <DoorGrid />
-  <section class="border-b border-line bg-paper py-4">
-    <div class="shell">
-      <p class="text-sm text-stone-600">
-        Different lens?
-        <a class="font-semibold" href="/factory">/factory</a>
-        ·
-        <a class="font-semibold" href="/pmt">/pmt</a>
-        ·
-        <a class="font-semibold" href="/ai-systems">/ai-systems</a>
-        ·
-        <a class="font-semibold" href="/writer-engineer">/writer-engineer</a>
-      </p>
-    </div>
-  </section>
-  <ChipMapEmbed />
   <section class="border-t border-line bg-white py-14 sm:py-16">
     <div class="shell">
       <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -40,4 +23,21 @@ import ProcurementLabEmbed from "../components/ProcurementLabEmbed.astro";
       </div>
     </div>
   </section>
+  <DoorGrid />
+  <section class="border-b border-line bg-paper py-4">
+    <div class="shell">
+      <p class="text-sm text-stone-600">
+        Different lens?{" "}
+        <a class="font-semibold" href="/factory">/factory</a>{" "}
+        ·{" "}
+        <a class="font-semibold" href="/pmt">/pmt</a>{" "}
+        ·{" "}
+        <a class="font-semibold" href="/ai-systems">/ai-systems</a>{" "}
+        ·{" "}
+        <a class="font-semibold" href="/writer-engineer">/writer-engineer</a>
+      </p>
+    </div>
+  </section>
+  <ProcurementLabEmbed />
+  <ChipMapEmbed />
 </Base>

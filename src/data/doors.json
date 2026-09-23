@@ -8,7 +8,7 @@
     "for": {
       "ops": "see how hard constraints survive real dispatch",
       "builder": "fork the OR-tools model layout",
-      "hiring": "evidence of operations-research depth, not just ML"
+      "leads": "operations-research depth, not just ML"
     }
   },
   {
@@ -18,10 +18,10 @@
     "url": "https://github.com/AthenaTheOwl/LLM-evaluation-framework",
     "hook": "an LLM eval framework where quality isn't one number. deterministic rules, stakeholder personas, LLM-as-judge. yaml in, html out, CI gates the whole thing.",
     "for": {
-      "science": "rules, personas, LLM-judge \u2014 three signals, one report",
+      "science": "rules, personas, LLM-judge — three signals, one report",
       "builder": "drop yaml suites in, ship html reports out",
       "ops": "wire CI to fail on regression, not vibes",
-      "hiring": "evidence of eval discipline before it was a trend"
+      "leads": "eval discipline before it was a trend"
     }
   },
   {
@@ -43,7 +43,7 @@
     "name": "semiconductor-e2e-manufacturing-optimization",
     "status": "solved",
     "url": "https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization",
-    "hook": "wafer supply-chain optimization in streamlit. nominal, static-robust, and two-stage adaptive \u2014 compared under monte carlo."
+    "hook": "wafer supply-chain optimization in streamlit. nominal, static-robust, and two-stage adaptive — compared under monte carlo."
   },
   {
     "n": "06",
@@ -57,12 +57,12 @@
     "name": "News-Bias-Multi-Agent-Pipeline",
     "status": "active",
     "url": "https://github.com/AthenaTheOwl/News-Bias-Multi-Agent-Pipeline",
-    "hook": "the same agent pipeline implemented three ways \u2014 static python, langchain, langgraph \u2014 so you can compare frameworks on a real BYOK demo. critic, structured judgments, verbatim citations.",
+    "hook": "the same agent pipeline implemented three ways — static python, langchain, langgraph — so you can compare frameworks on a real BYOK demo. critic, structured judgments, verbatim citations.",
     "for": {
       "builder": "compare static / langchain / langgraph on the same task with shared core",
       "science": "structured Pydantic judgments + verbatim citation verification",
       "ops": "BYOK Streamlit; the heuristic provider runs without keys",
-      "hiring": "evidence of framework judgment, not framework hype"
+      "leads": "framework judgment, not framework hype"
     }
   },
   {
@@ -89,7 +89,7 @@
       "commercial": "read the PRD; see the trust boundaries named upfront",
       "domain": "exception triage from a planner's seat, not a chat window",
       "builder": "fork the spec shape for your own copilot scope",
-      "hiring": "evidence of PMT writing under AI uncertainty"
+      "leads": "PMT writing under AI uncertainty"
     }
   },
   {
@@ -102,7 +102,7 @@
       "curious": "start here; the doors point everywhere else",
       "builder": "read ops/control-plane.md and the 11 schemas",
       "ai-agents": "the contracts a sibling repo's agent must honor",
-      "hiring": "the editorial throughline across the portfolio"
+      "leads": "the editorial throughline across the portfolio"
     }
   },
   {
@@ -128,7 +128,7 @@
       "science": "four-suite eval discipline gates every PR",
       "domain": "ask a supplier-risk question; check the cited passages",
       "builder": "fork the citation-shape schema and abstention rules",
-      "hiring": "evidence of RAG built around receipts, not vibes"
+      "leads": "RAG built around receipts, not vibes"
     }
   },
   {
@@ -163,7 +163,7 @@
       "domain": "see VCG, ADMM, audits as procurement levers, not theorems",
       "science": "mechanism-design pedagogy with the failure modes named",
       "builder": "fork the engine; the authoring sandbox is the demo",
-      "hiring": "evidence of teaching-by-shipping over slide-deck depth"
+      "leads": "teaching-by-shipping over slide-deck depth"
     }
   },
   {
@@ -177,7 +177,7 @@
       "builder": "fork the spec-driven brief workflow",
       "science": "see the eval-as-gate discipline at work",
       "ai-agents": "follow the role files; this is how the brief gets written",
-      "hiring": "evidence of taste plus opinionated discipline plus shipped"
+      "leads": "taste plus opinionated discipline plus shipped"
     }
   },
   {
@@ -190,7 +190,7 @@
       "security": "scan MCP configs before adding tools",
       "builder": "run the CLI against your own mcpServers block",
       "ai-agents": "tool permissions become inspectable before runtime",
-      "hiring": "evidence of AI tool-security judgment"
+      "leads": "AI tool-security judgment"
     }
   },
   {
@@ -203,7 +203,7 @@
       "science": "turn failed traces into repeatable evals",
       "builder": "use the CLI to create regression bundles",
       "ops": "trace to report without an LLM dependency",
-      "hiring": "evidence that agent failures become tests"
+      "leads": "agent failures become tests"
     }
   },
   {
@@ -216,7 +216,7 @@
       "science": "see the possession-value primitives the OS hands you",
       "builder": "fork the source-registry + offline-fixture pattern",
       "ops": "treat a sports analytics surface like any other evaluated system",
-      "hiring": "evidence that eval-loop discipline transfers across domains"
+      "leads": "eval-loop discipline transfers across domains"
     }
   },
   {
@@ -229,7 +229,7 @@
       "ops": "tell a real load buildout from a press release",
       "builder": "fork the evidence-signal scoring layer",
       "energy": "ERCOT queue realness without a subscription",
-      "hiring": "evidence of grid-data judgment, not just modeling"
+      "leads": "grid-data judgment, not just modeling"
     }
   },
   {
@@ -242,7 +242,7 @@
       "security": "prove what an agent did without trusting its logs",
       "builder": "verify a receipt chain with the CLI",
       "ai-agents": "tamper-evident provenance between agents",
-      "hiring": "evidence of applied crypto and provenance design"
+      "leads": "applied crypto and provenance design"
     }
   },
   {
@@ -255,7 +255,7 @@
       "science": "score an LLM system against typed thresholds",
       "builder": "wire it as a PR gate that blocks regressions",
       "ops": "a deterministic eval report, no dashboards",
-      "hiring": "evidence of eval-driven engineering"
+      "leads": "eval-driven engineering"
     }
   }
 ]
