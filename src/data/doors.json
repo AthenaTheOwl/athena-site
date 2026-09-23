@@ -257,5 +257,31 @@
       "ops": "a deterministic eval report, no dashboards",
       "leads": "eval-driven engineering"
     }
+  },
+  {
+    "n": "25",
+    "name": "judge-kappa",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/judge-kappa",
+    "hook": "is this LLM judge fit to grade? chance-corrected agreement with human labels, test-retest, and position-swap flips. saved verdicts in, one exit code out.",
+    "for": {
+      "science": "kappa, not raw agreement: the textbook example scores 0.40",
+      "builder": "gate a judge in CI before it grades anything",
+      "ops": "standard library, no model calls, CSV in",
+      "leads": "judges held to the same bar as the systems they grade"
+    }
+  },
+  {
+    "n": "26",
+    "name": "agent-key-inventory",
+    "status": "active",
+    "url": "https://github.com/AthenaTheOwl/agent-key-inventory",
+    "hook": "the authority an agent session inherits: env keys, cloud profiles, git and registry tokens, ssh keys, MCP servers. names and locations only, never values, diffed against what was used.",
+    "for": {
+      "security": "granted-but-unused credentials, listed monthly",
+      "builder": "run scan, write a usage log, diff",
+      "ops": "exit 1 when unused authority piles up",
+      "leads": "least privilege for agents, measured"
+    }
   }
 ]
