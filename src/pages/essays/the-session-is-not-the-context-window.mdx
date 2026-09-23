@@ -1,0 +1,186 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The session is not the context window"
+description: "One model had context anxiety, so the harness got resets. The next model did not, and the resets were dead weight. Seven findings on why the fix was to stop letting the harness own the record, and on who holds the record now."
+date: "2026-09-22"
+readingTime: "12 min read"
+---
+
+RECOVERY RECORD — MANAGED AGENT, AFTER A HARNESS CRASH
+
+Harness: gone. Replacement: started with `wake(sessionId)`.
+Container: gone. Replacement: provisioned on the next tool call that needs one.
+Session log: intact. Resume point: the last event.
+Model's memory of the work so far: none. It never had any.
+Credentials reachable from the sandbox: none, by design.
+Lost in the crash: nothing the log recorded.
+Recorded by the log but wrong: no field.
+
+Anthropic's engineers designed their Managed Agents so that record reads the same after every crash. The last line is the one no log can fill in, and it is where this essay ends.
+
+The design began with an anecdote about a model's nerves.
+
+## FINDING ONE: EVERY HARNESS COMPONENT HAS AN EXPIRY DATE.
+
+Claude Sonnet 4.5, the post says, "would wrap up tasks prematurely as it sensed its context limit approaching—a behavior sometimes called 'context anxiety.'" The engineers added context resets to the harness. Then they ran the same harness on Opus 4.5.
+
+"The behavior was gone."
+
+"The resets had become dead weight."
+
+That is the whole problem with harnesses in one anecdote. Every component encodes an assumption about what the model cannot do on its own, and the assumptions go stale on the model's schedule, not yours. The post links its expectation to the bitter lesson: harness assumptions will keep going stale as models improve.
+
+The answer was to stop asking the harness to be the record. Split the agent into interfaces that can each be swapped without disturbing the others, in explicit analogy to how operating systems virtualised hardware into `process` and `file` so they could run "programs as yet unthought of."
+
+A session: the append-only log of everything that happened.
+
+A harness: the loop that calls the model and routes tool calls.
+
+A sandbox: where code runs and files are edited.
+
+The post calls the second the brain and the third the hands, and its section heading for the design principle is four words long. Don't adopt a pet.
+
+## FINDING TWO: EVERYTHING BECAME CATTLE.
+
+The harness leaves the container and calls it like any other tool: `execute(name, input)` returns a string. If the container dies, the harness catches a tool-call error and passes it to the model, which may retry against a fresh one from `provision({resources})`.
+
+Then the harness becomes cattle too. Because the session log lives outside it, a crashed harness reboots with `wake(sessionId)`, pulls the log with `getSession(id)`, resumes from the last event, and writes back with `emitEvent(id, event)`.
+
+Nothing in the loop is precious. The log is precious. That is the entire allocation of preciousness, and it is correct.
+
+The latency result fell out for free. Containers are provisioned lazily through a tool call, so a session that never touches the sandbox no longer pays container setup, and inference starts as soon as the orchestration layer pulls pending events.
+
+p50 time-to-first-token: down roughly 60 percent.
+
+p95: down over 90 percent.
+
+## FINDING THREE: THE SESSION IS AN OBJECT THE MODEL CAN INTERROGATE.
+
+This is the part to steal.
+
+Compaction, trimming and memory-file writes are all irreversible decisions about what to keep, made without knowing what future turns will need. Managed Agents makes the session a durable context object that lives outside the context window, and gives the model `getEvents()` with positional slices: pick up where it last stopped reading, rewind a few events before a specific moment to see the lead-up, re-read the context before a particular action. Anything fetched can be transformed in the harness before it enters the window, which is where prompt-cache-friendly ordering and whatever context engineering the current model needs should live.
+
+The separation is deliberate. The session guarantees only durability and interrogability. All policy sits in the swappable layer.
+
+Read beside the August compaction papers, this is the structural answer. If the raw trajectory is still addressable, a lossy summary is a view, not a replacement, and an agent that has lost its place can go look.
+
+A watch officer who comes on duty reads the log. She does not ask the previous officer to summarize the night, and nobody on a competently run ship has ever suggested she should.
+
+·   ·
+
+Any team that has had two writers on one document has invented the session object without naming it.
+
+The fix is always the same. Stop editing the shared folder. Keep a log with parent edges instead, so every revision is an event someone can rewind to.
+
+Nobody calls it a session object. It is one.
+
+## FINDING FOUR: THE CREDENTIALS ARE NEVER IN THE ROOM.
+
+In the coupled design, untrusted model-generated code ran in the same container as the credentials, so a prompt injection only had to persuade the model to read its own environment. With those tokens an attacker can spawn fresh, unrestricted sessions.
+
+The structural fix is that tokens are never reachable from the sandbox.
+
+For Git, the repository access token is used to clone during sandbox initialisation and wired into the local remote, so push and pull work without the agent ever handling it.
+
+For custom tools, OAuth tokens sit in a vault behind a proxy that the model calls with a session-scoped token.
+
+"The harness is never made aware of any credentials." It cannot leak what it was never told, which is a security property and also a description of a good clerk.
+
+## FINDING FIVE: THE CPU, THE RAM, THE DISK.
+
+The organizing analogy, Karpathy's and extended by LangChain's Lance Martin, is that the model is a CPU and its context window is RAM: limited, fast working memory that something external has to curate. Context engineering is the operating system deciding what to page in at each step. A persistent memory layer is the disk. Without the disk, context engineering collapses back into prompt engineering, every turn re-injecting the same information and paying for it in tokens and latency each time. Ankur Goyal's line is the one to keep: good context engineering caches well; bad context engineering is both slow and expensive.
+
+A 2026 review offers one word for all of it. Externalization: moving state and capability out of the model's weights and context and into the surrounding system. Memory, learned skills, protocols and harness engineering are one move under that lens, and the diagnostic is the useful part. If your agent is unreliable, ask which piece of state you are forcing into the context that should live in a tool, a file, or a store.
+
+## FINDING SIX: WHOEVER HOSTS THE SESSION HOLDS THE RECORD.
+
+In September, OpenAI's Agents API began offering the Codex harness "through an OpenAI-managed API," with OpenAI owning sessions, orchestration, compaction and recovery while the developer supplies tools and picks an execution environment.
+
+Once the harness is free, the defensible surface moves outward, to proprietary tools and environments, to verifiers, and to the data that agents generate while they run.
+
+That last item is the session log.
+
+The design that makes the log the one precious object in the system also makes it the one valuable object in the market. A team that runs its agents on a hosted session has placed the durable record of every trajectory, every tool call and every recovered crash with the party that also sells the model, the harness and the compaction policy.
+
+That can be a fine trade. It should be made on purpose.
+
+Two independent designs agree on the shape. DeepSeek's open harness, released in August, ships an append-only event log as the source of truth, and converges with Managed Agents on the same shape: log, pluggable loop, pluggable hands. When the shape is agreed, what remains open is custody.
+
+## FINDING SEVEN: PROVENANCE IS NOT CORRECTNESS.
+
+The most literal version of the session as durable object arrived in September. Agora stores agent research as an append-only DAG of Git commits, so every claim is checkable and rerunnable by anyone; the unit of contribution is an immutable, independently reproducible artifact with explicit parent edges. The paper reports thirteen language-model workers running unsupervised for twelve days.
+
+The paper is careful about what it does not show. It took one human intervention to break a monoculture mid-run, and no controlled comparison yet establishes that shared state improves discovery per unit of compute.
+
+The log tells you what happened.
+
+It does not tell you it was right.
+
+·   ·
+
+A context window is a desk. It is cleared every night, and whatever was on it goes into the bin or the drawer depending on who tidies.
+
+A session is the filing room down the corridor. Nobody works in it. Everybody can walk to it.
+
+The desk can be cleared without fear only because the room exists, and the room is only useful if someone is allowed to walk there and open a drawer.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that this is ceremony for a five-step tool loop.
+
+Correct, and the post says so. An append-only durable event store is infrastructure for long-horizon work: hours-to-days tasks, multiple sandboxes, resumability across crashes. The threshold is a question with two parts. Do you need to resume after a process dies? Do you need the agent to re-read something it saw an hour ago? If both answers are no, keep the history in memory and read something else.
+
+The second explanation was that it is a vendor architecture post.
+
+It is. Its framing has aged well against papers it predates: the compaction studies that found summaries destroy position arrived four months later and described the failure this design routes around. A vendor being early is still a vendor. It is also still early.
+
+The third explanation was that the CPU-and-RAM source is, in its second half, a Redis sales pitch.
+
+Also true. It argues a vector store alone cannot hold conversational state and a plain cache cannot do semantic recall, so you want something that does both, and you will not be surprised which product does both. Take the conclusion with salt. The architectural point stands regardless of tooling: somewhere has to hold structured session state, something has to support recall, and an explicit stage has to decide what graduates from short-term to long-term.
+
+**Objection:** So the answer to compaction is to keep everything.
+
+**Reply:** The answer is to keep everything somewhere the window is not, and let the window be a view.
+
+**Objection:** Views go stale.
+
+**Reply:** Views can be regenerated. Records cannot.
+
+The fourth explanation was that shared, durable state is unproven as a way to make agents discover more.
+
+Agora's own authors say so. What durable state is proven to do is make the work checkable, which is a different claim and the one the record is for.
+
+The fifth explanation was the inversion, and it is not a straw man: context windows are now large enough to be the session, and a separate log is redundant machinery.
+
+The case is easy to build. Windows keep growing, caching makes a long prefix cheap, and a model that holds the whole task in context has no need to interrogate a log it could simply reread. The context-anxiety anecdote cuts the same way: the harness component built around a window limit became dead weight one model later, and the external session may follow it.
+
+**Objection:** The window is big enough now.
+
+**Reply:** Until the process dies.
+
+The evidence that settles it is the crash test the post was built around. Kill the process in the middle of a long task. If the agent resumes from where it was without an external record, the window was the session and this essay is wrong. It will not, because a context window is process memory, and process memory is the thing a crash takes. The failure mode sits beside the claim: an external log nobody reads is storage with no benefit. The log earns its place only if the model can interrogate it, which is why the interface in Finding Three matters more than the storage behind it.
+
+## A LOG WITHOUT A VENDOR
+
+[trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is the session object with the platform removed. An append-only ledger with an event vocabulary, sequence numbers that may not skip, and payloads hashed at write time; a validator that reads four committed ledgers and catches the three planted defects by name. It guarantees durability and interrogability and nothing else, which is the exact division of labour the Managed Agents post argues for. Policy lives elsewhere. The ledger does not have opinions, and it does not have a landlord.
+
+Keep the record outside the loop.
+
+Keep the key to the filing room.
+
+·   ·
+
+RECOVERY RECORD — REMAINING FIELDS
+
+Custodian of the session log: the vendor, the team, or unexamined.
+Events re-read by the model since the last crash: countable, if anyone asks.
+Recorded by the log but wrong: still no field. That one needs a verifier.
+Signature:
+
+The record ends there. The next harness has already started, and it does not remember this one.
+
+---
+
+Sources: Anthropic, "Scaling Managed Agents: Decoupling the brain from the hands" (https://www.anthropic.com/engineering/managed-agents); Redis, "Context engineering: best practices for an emerging discipline" (https://redis.io/blog/context-engineering-best-practices-for-an-emerging-discipline/); "Externalization in LLM Agents" (https://arxiv.org/pdf/2604.08224); Agora (https://huggingface.co/papers/2609.18094); OpenAI, Agents API and hosted sandboxes (https://community.openai.com/t/introducing-the-agents-api-and-hosted-sandboxes/1396481); DeepSeek Harness (https://github.com/deepseek-ai/deepseek-harness).

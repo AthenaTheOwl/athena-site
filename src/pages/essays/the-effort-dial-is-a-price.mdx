@@ -1,0 +1,132 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The effort dial is a price"
+description: "This summer the frontier labs handed buyers a knob that sets how hard the model thinks, and with it a decision most buyers cannot make. Seven findings on the dial, the networking standard that did this in 1998, the price list with no labels, models that learn to set their own effort, and the curve a buyer needs to see before touching any of it."
+date: "2026-09-22"
+readingTime: "11 min read"
+---
+
+SERVICE ORDER — ONE REQUEST
+
+Model: Claude Opus 5.
+Effort: low, medium or high, set by the caller.
+What the setting trades: cost against capability.
+Who sets it: the buyer, request by request.
+How the buyer knows which setting this request needed: no field.
+
+When Anthropic released Opus 5 in July, Fortune led with the dial. "Amid growing concerns from enterprise customers about expensive AI bills," the model lets users "toggle how much effort—low, medium, or high—the model expends completing a task." The company said this lets users balance "between cost and capability."
+
+The dial is a price. The empty line is the reason most buyers will set it wrong.
+
+## FINDING ONE: THE KNOB MOVED TO THE CALLER.
+
+The timing was not an accident. Fortune noted that customers had criticised the previous flagship's "burn rate," the number of tokens it used per task, which "resulted in users blowing through their allotted token budgets or running up large bills." Opus 5, it reported, "comes close" to that model's capabilities "at half the price."
+
+Nine days earlier, Thinking Machines had shipped Inkling, an open-weights model with an effort setting that runs from 0.2 to 0.99. The launch post is frank about why: developers "care as much about efficiency" as about top-effort benchmark scores, and "Cost and latency are often binding constraints in real-world applications." Its own chart has the model matching a rival on an agentic coding benchmark "at roughly a third of the tokens."
+
+For the first time, how hard a model thinks is a parameter the customer sets and pays for, not an internal detail the vendor fixes for everyone.
+
+## FINDING TWO: NETWORKS DID THIS IN 1998.
+
+Internet engineers faced the same problem with packets. RFC 2475, published in December 1998, "defines an architecture for implementing scalable service differentiation in the Internet." Packets are "classified and marked to receive a particular per-hop forwarding behavior," and the expensive work of deciding which class a packet belongs to happens only at the edge: "Sophisticated classification, marking, policing, and shaping operations need only be implemented at network boundaries or hosts."
+
+The design choice is the lesson. The core of the network does not work out what each packet deserves. Something at the edge marks it, and the core honours the mark.
+
+An effort dial is a mark set at the edge. The question the network answered and the model market has not is who does the marking, and on what evidence.
+
+·   ·
+
+A lawyer's hourly rate is an effort dial with the knob on the wrong side of the desk.
+
+The seller decides how long the work takes, and the buyer finds out on the invoice.
+
+The effort dial moves the knob. It does not move the knowledge.
+
+## FINDING THREE: A DIAL IS A PRICE LIST WITH NO LABELS.
+
+Much of professional work is still sold in packages: a standard review, an expedited review, a full audit. Those tiers are crude steps on what is in fact a continuous curve of effort against quality. A model's effort setting exposes the curve directly, and it can be priced because it can be measured per request.
+
+But a price list needs labels. A buyer choosing "medium" is choosing a point on a curve they have never seen, for a request whose difficulty they have not measured. The dial shows the price of each setting. It does not show what each setting buys on this kind of work.
+
+There is a second catch. When revenue rises with effort, the seller's incentive to make the model efficient at low effort gets weaker, because a buyer who needs to turn the dial up pays more.
+
+## FINDING FOUR: DIFFICULTY IS OFTEN KNOWN ONLY AFTERWARDS.
+
+Choosing effort before the work assumes the buyer can tell hard requests from easy ones in advance. Often they cannot. Many tasks look simple until they are attempted, and a request that looks cheap and is hard gets the low setting and fails.
+
+Those failures are not spread evenly. They collect in the tail, in exactly the unusual and high-stakes cases where a wrong answer costs the most. Buyers who cannot judge difficulty will tend to choose too low, and when the answer is wrong they will blame the vendor, not the setting.
+
+## FINDING FIVE: THE MODEL CAN LEARN TO SET ITS OWN DIAL.
+
+If the buyer cannot judge difficulty up front, perhaps the model can. "Learning When to Think," published in August, trains a model to choose its own effort as the first token of its answer: "NoThink," "Short" or "Long." The choice is learned during reinforcement learning "with no separate router."
+
+On a 1.5-billion-parameter model trained on maths problems, the modes emerge without collapsing into one, and "the router sorts problems by difficulty" and not at random. Averaged over three seeds, accuracy on the held-out MATH500 set stays close to the base model's, 0.782 against 0.796, while mean response length falls by 41 percent. On easier problems the savings are larger: a 76 percent token reduction on GSM8K.
+
+That is the effort dial moved inside the model. It is also a small model on maths, where difficulty can be checked exactly, and 1.4 points of lost accuracy is a price too.
+
+## FINDING SIX: THE DEFAULT IS THE PRICE MOST PEOPLE PAY.
+
+Whatever the dial offers, most requests will run at whatever setting nobody changed. So the most consequential pricing decision is the default, and the rule for when a request escalates above it. The menu matters less.
+
+Content delivery networks settled this long ago: serve the common request from the cheap layer and go to the expensive one only on a miss. The model-layer version is the same. Run the median request on the cheap setting or the cheap model, and pay for the expensive one only where the need has been shown. Whoever writes that escalation rule controls the margin.
+
+## FINDING SEVEN: THE ROUTER IS WRONG WHERE IT MATTERS MOST.
+
+Every escalation rule, whether a buyer writes it or a model learns it, makes the same kind of mistake. Its errors are correlated with difficulty. The cases it wrongly marks as easy are the hard ones, because looking easy is what fooled it. One critical case sent down the cheap path can cost more than the savings on a thousand easy ones.
+
+That is why the saving on an average benchmark says little about the saving on a real workload. The average is dominated by the easy cases, where the dial works. The loss is concentrated in the hard ones, where it does not.
+
+## THE EXPLANATIONS AFTERWARD
+
+Each finding has a cheaper explanation. Each one is weighed.
+
+The first explanation was that the dial is a price cut presented as a feature.
+
+In part it is. The launch coverage put the half price beside the dial, and a lower setting is a lower bill. But a price cut applies to everyone. A dial lets each request pay a different price, which is a different kind of product.
+
+The second explanation was that buyers will set the dial to maximum and leave it there.
+
+Some will, until the invoices arrive. The complaints that preceded the dial were about exactly that: budgets exhausted by a model thinking at full effort on work that did not need it.
+
+The third explanation was that the model should set its own effort, so the caller-set dial is a stopgap.
+
+The research points that way, and a model that sorts problems by difficulty is better placed than most buyers to choose. But a model that chooses its own effort is a vendor choosing the size of the customer's bill.
+
+**Objection:** Then let the model choose.
+
+**Reply:** And let the buyer audit.
+
+The fourth explanation was the inversion, and a procurement officer would make it. Pricing by effort rewards the seller for inefficiency: a vendor paid by the reasoning token earns more whenever its model thinks longer. The dial hands the buyer a judgment the buyer cannot make, and the vendor profits from the buyer's uncertainty in both directions, through overpayment when the setting is too high and blame-free failure when it is too low.
+
+Finding Three concedes the incentive. What would disarm it is a published curve.
+
+**Objection:** Then the vendor should publish what each setting buys.
+
+**Reply:** On the buyer's work, not its benchmark.
+
+The evidence that settles it is simple to collect. For a sample of real requests, run each effort setting and record accuracy, cost and latency. If the curve is flat above some setting, everything above it is waste. If accuracy falls steeply below some setting on a class of request, that class needs an escalation rule. Inkling's launch post already draws this curve on public benchmarks. A buyer needs the same curve on their own traffic.
+
+## THE CURVE ON YOUR OWN TRAFFIC
+
+[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) draws that kind of curve for a different choice. It replays recorded production requests for a route against a candidate model, scores quality, cost and latency against the incumbent, and writes a decision record that includes a revert rule: the quality drop, cost rise and latency regression that would undo the change.
+
+Choosing an effort setting is the same decision along a different axis. The candidate is not a new model but the same model at a lower setting, and the test is the same: on these requests, what do we lose, what do we save, and at what point do we turn it back up.
+
+Let the buyer turn the dial.
+
+Show them the curve first.
+
+·   ·
+
+SERVICE ORDER — REMAINING FIELDS
+
+Effort setting: chosen from a curve measured on this route's own requests.
+Default: the lowest setting that holds accuracy on that curve.
+Escalation: when the request class says so, not when the request looks hard.
+Revert rule: written down before the setting changes.
+
+The dial is on the order form now. The curve belongs beside it.
+
+---
+
+Sources: Fortune, "Anthropic debuts Claude Opus 5 with feature that lets users toggle between cost and capability" (https://fortune.com/2026/07/24/anthropic-debuts-claude-opus-5-with-feature-that-lets-users-toggle-between-cost-and-capability/); Thinking Machines, "Inkling: Our Open-Weights Model" (https://thinkingmachines.ai/news/introducing-inkling/); RFC 2475, "An Architecture for Differentiated Services" (https://www.rfc-editor.org/rfc/rfc2475); "Learning When to Think: Adaptive Reasoning for Test-Time Compute Allocation" (https://arxiv.org/abs/2608.20256).

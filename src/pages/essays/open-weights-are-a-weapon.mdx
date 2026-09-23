@@ -1,0 +1,142 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Open weights are a weapon"
+description: "Giving a model away is a strategy with a twenty-four-year-old name, and this summer it moved most of the world's volume. Seven findings on commoditising a rival's product, where the requests already went, the price gap that did it, distillation as the other half of the same move, and the equivalence test that generic drugs have and open models do not."
+date: "2026-09-22"
+readingTime: "12 min read"
+---
+
+MODEL FORMULARY — ONE REQUEST CLASS
+
+Brand: a closed frontier model, priced as the premium tier.
+Generic candidates: open-weight models from DeepSeek, Kimi, MiniMax, GLM and others.
+Cost difference, as claimed by one open-model host: "6x to 20x lower costs."
+Share of requests already on open weights, at one large gateway in June: "nearly a third."
+Equivalence standard between the brand and the generic: no field.
+
+A pharmacy can swap a brand-name drug for a generic because a regulator has measured the two as equivalent. A buyer swapping a closed model for an open one has a vendor's benchmark table and a hunch.
+
+The empty line is where the money in open weights is going to land.
+
+## FINDING ONE: SMART COMPANIES COMMODITISE THEIR COMPLEMENTS.
+
+In 2002 Joel Spolsky explained why large public companies were paying teams of programmers to write software they then gave away. Every product has complements, things bought together with it, and "demand for a product increases when the prices of its complements decrease." His conclusion is bold in the original: "Smart companies try to commoditize their products’ complements."
+
+The companies doing it, he wrote, were doing it "because it’s a good business strategy for them, not because they suddenly stopped believing in capitalism."
+
+An open-weight model is the same move with a larger payload. Release the layer your rival charges for, and value is forced into a layer you control: serving, hardware, data, compliance or distribution.
+
+Whoever sells the thing next to the model wants the model to be free.
+
+## FINDING TWO: THE VOLUME HAS ALREADY MOVED.
+
+TechCrunch's July account of where developers went is blunt. Chinese open-weight models accounted for 41 percent of downloads on Hugging Face this spring, "surpassing U.S. models." On OpenRouter "the top six most popular models are all open models from Chinese firms," with a closed Anthropic model in seventh. At Vercel's AI gateway, "Open models handled nearly a third of AI requests on the platform in June."
+
+The piece is careful about what those platforms miss: they "leave out sessions hosted by major labs, which likely account for the bulk of OpenAI and Anthropic’s usage." The open share is a share of the traffic that had a choice.
+
+That is the traffic that matters for this argument. Hugging Face's chief executive, Clem Delangue, described companies "using many different models, many of which are customized for their specific use case," and said half of the Fortune 500 use Hugging Face to deploy private and open models.
+
+The market has split. Closed models sell as the premium tier. Open weights carry the volume.
+
+## FINDING THREE: THE PRICE GAP IS THE WEAPON.
+
+Together AI, which serves open models, announced an $800 million Series C on one sentence: "companies building with open models routinely achieve 6x to 20x lower costs while maintaining equal or better performance." Its example customer "reduced its inference costs sixfold."
+
+That is a seller's number, and it should be read as one. But a gap of that size does not need to be exact to move a procurement decision. At six times cheaper, a buyer stops asking which model is best and starts asking which requests need the best model at all.
+
+The size of the models no longer protects the incumbents either. Moonshot's Kimi K3 has 2.8 trillion parameters but "activates just 16 of its 896 experts per token, roughly 1.8% of the pool," which is part of why a model that size can be priced to undercut. Tom's Hardware added the caveat that belongs beside every open-model launch: "every published K3 number is a claim made by Moonshot-reported or drawn from API access and can’t be verified until the weights are made public."
+
+·   ·
+
+A pharmacy shelf holds the brand and three generics.
+
+The pharmacist fills the prescription with any of them, because a regulator measured the four and found them the same.
+
+Nobody has measured the models.
+
+## FINDING FOUR: A GENERIC NEEDS AN EQUIVALENCE TEST.
+
+The FDA's standard is specific. A generic medicine "is required to be the same as a brand-name medicine in dosage, safety, effectiveness, strength, stability, and quality," and must be bioequivalent to it. The payoff is specific too: "a single generic competitor can lead to price reductions of 30%, while five generics competing are associated with prices drops of nearly 85%."
+
+Open models have the price drop without the test. Equivalence is claimed by the vendor, measured on benchmarks the vendor chooses, and reported in tables where a gap of half a point can come down to how the test was run.
+
+So a generics market for models cannot work the way the drug market does, with a substitution made on the shelf by someone who does not need to test it. Every buyer has to run the equivalence test themselves, on their own requests, or trust a number that was published to sell the model.
+
+## FINDING FIVE: WHEN THE ARTIFACT IS COPYABLE, VALUE MOVES TO PLACING IT.
+
+After a drug's patent expires, the molecule becomes free to copy overnight, and the money moves from making it to placing it: formulary position, distribution, and the certification that says one copy is as good as another.
+
+The model market is repeating the shape. When thousands of models can serve a request, the valuable decision is which one serves which request, under what cost, quality and compliance policy. That decision belongs to a router, and a router that does its job has to keep per-request cost accounting and a record of why each choice was made.
+
+The weights are the molecule. The router is the pharmacist, and the pharmacist is paid on every prescription.
+
+## FINDING SIX: DISTILLATION IS THE SAME WEAPON, AIMED THE OTHER WAY.
+
+Distillation, as TechCrunch put it in July, is "a common AI training technique in which a smaller model learns from the outputs of a larger one." It is also a way to copy a rival without ever touching its weights. A paper on defending against it states the problem plainly: "competitors can distill proprietary LLM capabilities by simply observing publicly accessible outputs."
+
+On 22 July the White House's technology policy chief accused Moonshot of large-scale distillation against US models, and the Treasury secretary answered on X: "Open source is not open season on American IP." Anthropic had accused Moonshot in February of using 3.4 million Claude exchanges to train its models.
+
+If open weights commoditise a rival's product by giving your own away, distillation commoditises it by taking theirs. Both turn a closed model's expensive capability into a cheap input. The accusations are allegations, and nothing in this essay depends on them being proven. The mechanism works whether or not any one case is.
+
+## FINDING SEVEN: THE DEFENCE DEGRADES THE PRODUCT.
+
+The defensive research is real. DOGe fine-tunes only a model's final layer so that its outputs "are accurate and useful for legitimate users, yet are designed to be misleading for distillation." In its experiments, students trained on those outputs showed "catastrophically reduced performance" while the teacher kept its own.
+
+The catch is in the phrase "legitimate users." A provider cannot see intent. Every defence against extraction is a small, deliberate change to what paying customers receive, and a defence strong enough to stop a determined copier is strong enough to be noticed by an honest one.
+
+A closed model can protect itself from being copied only by becoming slightly worse at being used.
+
+## THE EXPLANATIONS AFTERWARD
+
+Each finding has a kinder reading. Each one is heard.
+
+The first explanation was that open weights are generosity, or ideology.
+
+Spolsky answered this twenty-four years ago for open-source software, and the answer carries over. Some contributors are generous. The companies funding releases at frontier scale are pursuing a strategy, and the useful question about any release is which complement the releaser sells.
+
+The second explanation was that the quality gap will reopen and the closed labs will take the volume back.
+
+Some of it, perhaps. The market TechCrunch describes has already split into tiers: closed models for high-value work, open weights for volume. A reopened gap would widen the premium tier. It would not send back requests that were moved because they never needed the best model.
+
+The third explanation was that sanctions and lawsuits will stop distillation.
+
+They may stop particular companies. They cannot inspect the output of every API call, and the technical defences degrade the product for everyone who is not copying. What remains is deterrence by example, which works on firms within reach of the sanctions and not on the rest.
+
+**Objection:** Then stop serving outputs that can be copied.
+
+**Reply:** Then stop serving.
+
+The fourth explanation was the inversion, and the releasing lab's own shareholders would make it. Commoditising a complement only works if you own the complement. A lab that gives away frontier weights without a serving business, a hardware business or a distribution channel has not attacked anyone's margin. It has destroyed its own and handed the market a free good, and the value goes to whoever sells chips and serving. On that reading, open weights are a weapon mainly for the companies that did not build them.
+
+The case is strong, and Finding Five concedes most of it: value lands with whoever places the model, and that is rarely the lab that trained it.
+
+**Objection:** Then nobody should release.
+
+**Reply:** Unless they own the shelf.
+
+The evidence that settles it is where each releasing lab's revenue comes from a year after release. If it comes from serving, hardware or distribution the lab controls, the release was a weapon. If the lab's revenue falls and its rivals' serving revenue rises, it was a gift.
+
+## THE EQUIVALENCE TEST, PER ROUTE
+
+[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) is the equivalence test a buyer runs because nobody else will. It replays recorded production requests for a route against a candidate model, scores quality, cost and latency against the incumbent, and writes a decision record. Its demonstration replays six customer-support requests, finds the candidate wins five and loses one, and stamps the verdict: swap.
+
+The part that matters is the revert rule it writes beside the verdict before the swap ships: the quality drop, the cost increase and the latency regression that will pull the change back, and the date someone has to look again. A regulator does that for generic drugs. For models, each buyer has to do it route by route.
+
+Give away what your rival sells.
+
+Test every generic before it goes on the shelf.
+
+·   ·
+
+MODEL FORMULARY — REMAINING FIELDS
+
+Equivalence standard: the buyer's own replayed traffic, per route.
+Evidence: a decision record with wins, losses, cost and latency.
+Revert rule: written before the swap, with a date.
+Who certifies it: still nobody outside the buyer.
+
+The shelf is full. The pharmacist is working without a regulator.
+
+---
+
+Sources: Together AI, "Announcing our $800M Series C" (https://www.together.ai/blog/announcing-our-series-c); TechCrunch, "The real AI race may no longer be at the frontier" (https://techcrunch.com/2026/07/14/the-real-ai-race-may-no-longer-be-at-the-frontier-open-models-hugging-face/); Joel Spolsky, "Strategy Letter V" (https://www.joelonsoftware.com/2002/06/12/strategy-letter-v/); Tom's Hardware on Kimi K3 (https://www.tomshardware.com/tech-industry/artificial-intelligence/moonshot-releases-2-8-trillion-parameter-kimi-k3); FDA, "Generic Drug Facts" (https://www.fda.gov/drugs/generic-drugs/generic-drug-facts); TechCrunch, "Treasury threatens sanctions after White House claims Moonshot distilled Anthropic's Fable" (https://techcrunch.com/2026/07/22/treasury-threatens-sanctions-after-white-house-claims-moonshot-distilled-anthropics-fable/); DOGe (https://arxiv.org/abs/2505.19504).

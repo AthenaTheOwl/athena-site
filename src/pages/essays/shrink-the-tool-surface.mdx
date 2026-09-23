@@ -1,0 +1,198 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Shrink the tool surface"
+description: "Every tool definition is a tax paid before the model reads the request. Six findings on the fix four sources converged on, fewer definitions in the prompt and more capability in the environment, and on where the surface goes when you take it out of the prompt."
+date: "2026-09-22"
+readingTime: "12 min read"
+---
+
+TOOL MANIFEST — CLOUDFLARE API, EXPOSED TO AN AGENT
+
+Endpoints: over 2,500.
+Schema if every endpoint were a tool: about 1.17 million tokens.
+Context window of the most advanced models: smaller than that.
+Room left to do the work: none.
+Tools exposed instead: two. `search()` and `execute()`.
+Footprint: about 1,000 tokens, fixed, however large the API grows.
+Permissions per tool: not applicable. There are two tools, and each can do whatever the token allows.
+
+The last line is the one a manifest cannot show, because the permission has left the menu and moved into the key.
+
+Each of the two tools takes a single JavaScript function as its argument. The agent never sees the API. It queries it.
+
+Four sources this year arrived at versions of that sentence from four directions, and the convergence is the finding. Where the surface goes afterward is the part the manifest has no field for.
+
+## FINDING ONE: THE SCHEMA IS A TAX PAID BEFORE THE REQUEST IS READ.
+
+Every tool definition attached to an agent is context consumed on every call, before the user's prompt is read. Tolerable at ten tools; a handful of connected servers puts you at ninety-plus definitions and 50,000 tokens of JSON before the model reasons about anything. The oldest fix in the corpus is the simplest: treat tools like retrieval. Keep the definitions in a store, match the request against them, and expose only the handful that plausibly apply.
+
+The platform version has numbers.
+
+TOOL SEARCH, FIFTY-PLUS MCP TOOLS, DEFINITIONS DEFERRED
+
+Up-front schema: about 72K tokens.
+
+With deferred loading and on-demand search: about 8.7K. An 85 percent reduction.
+
+Selection accuracy, one model: 49 percent to 74.
+
+Another: 79.5 to 88.1.
+
+The accuracy moved in the right direction because a smaller candidate set is easier to choose from. Fewer options, fewer wrong options. The trade-off is the one retrieval always carries: if the matcher misses the one tool the task needs, the agent cannot recover, because it never saw it.
+
+Nobody reads the phone book before making a call.
+
+## FINDING TWO: INTERMEDIATE DATA SHOULD NEVER MEET THE MODEL.
+
+The second tax is worse and less noticed. With direct tool calls, intermediate results pass through the model twice. Anthropic's worked example is the one to carry around: download a meeting transcript from Drive and attach it to a Salesforce lead. The first call returns the full transcript into context. The model must then write the entire transcript back out as an argument to the second call. For a two-hour meeting that is roughly 50,000 extra tokens, and with large documents the model is more likely to corrupt the data while copying it.
+
+The fix is to let the agent write code. Fetch the document into a variable. Pass the variable to the update call.
+
+The transcript never enters the model's context.
+
+Everything else follows from that one move. Ten thousand rows filtered to five in the sandbox; the agent sees five. A polling loop with a five-second sleep inside the sandbox, instead of alternating tool-call and wait through the agent loop. Personal data tokenised in flight, so the agent sees `[EMAIL_1]` while the real value flows between tools, which also lets you write deterministic rules about where data may go. Cloudflare's worked case, spec search, schema inspection, ruleset listing, config fetch, took four tool calls, and they measured a 99.9 percent reduction in input tokens for their API. Anthropic's programmatic tool calling cut average usage on complex research tasks from 43,588 to 27,297 tokens, with the benchmark score rising from 46.5 to 51.2.
+
+Do the computation in the environment. Return the refined result. The data stays where the data was.
+
+·   ·
+
+Some harnesses have started doing this unasked.
+
+Ask one for a document too large to be sensible and it declines to put it in front of the model. It saves the document to a file and hands back a path and a one-line note on the format.
+
+The model reads the part it needs. The rest never meets it, which is the entire argument of this essay, performed by plumbing.
+
+## FINDING THREE: THE BIGGER TOOL HAS THE SMALLER SURFACE.
+
+The prevailing design for coding agents was a set of atomic tools: read file, edit file, search, list directory. Philipp Schmid's argument is that this was a workaround for weak models, and that frontier models now compose shell pipelines well enough that the atomic tools are a net loss. They constrain the action space, consume context with descriptions, and force multi-turn round trips for what one command does.
+
+The design is not "give it bash and walk away." It is bash with the ergonomics that made atomic tools worth having, absorbed into the harness.
+
+Truncate output, so a runaway command cannot blow the window.
+
+Report exit status, duration and timeout explicitly, so the model can tell "no results" from "the command died."
+
+Support asynchronous processes, so a long test run can be started, polled and killed without blocking a turn.
+
+The worked examples make it concrete. A multi-file rename becomes one script that validates occurrence counts across every target file, applies every change atomically, and runs the formatter and linter, with a mismatch in counts aborting before anything is written. A git bisect runs in an isolated worktree so it cannot corrupt the user's directory, and classifies each commit with multiple random seeds so a flaky test does not send it down the wrong half. Gigabytes of compressed logs go into SQLite in the environment, get indexed and queried, and return a five-row summary.
+
+The complementary pattern is subagents as firewalls. Exploration is messy, dozens of dead-end greps, wrong files opened, half-read stack traces, and delegating it means the mess accumulates in the subagent's context and dies with it. The parent receives a clean finding.
+
+## FINDING FOUR: THE DESCRIPTION IS THE TRIGGER.
+
+Whatever survives in the prompt has one job: deciding when to fire. Schmid's guidance on writing skills says the description is the trigger mechanism and reports seeing 50 percent improvements from improving the description alone, a practitioner's observation and not a controlled number, but a strong one. Vague descriptions never fire. Broad ones fire on everything, and "use for any coding task" hijacks every request. Include the what, the when, and the negative cases.
+
+Two of his rules travel beyond skills. Provide constraints instead of procedures: not step one, step two, step three, but "Always run tests before opening a PR. Never push directly to main." because dictating every step removes the agent's ability to adapt or recover. And if exact ordered steps genuinely matter, if doing step three before step two breaks everything, that is not a skill problem.
+
+It is a scripting problem. Write a script.
+
+The closing rule is the one almost nobody follows. Run the evals without the skill. If they still pass, the model has absorbed its value and the skill is now pure context overhead. Delete it.
+
+## FINDING FIVE: THE PERMISSION MOVES FROM THE MENU TO THE KEY.
+
+Two generic tools lose per-tool authorization. "This agent may read DNS but never write firewall rules" is hard to enforce when the tools are `search` and `execute`.
+
+Cloudflare's answer is to push the policy into the credential. Their server is OAuth 2.1 compliant and uses its OAuth provider "to downscope the token to selected permissions approved by the user when connecting. The agent only gets the capabilities the user explicitly granted."
+
+The protocol moved the same way in July. The 28 July MCP specification went to a stateless core, added Tasks for long-running work, and hardened authorization toward OAuth and OIDC, while, as one security trade outlet noted, pushing critical security responsibility from the protocol onto platform operators.
+
+A menu of fifty tools lets a reviewer read the permissions off the menu.
+
+Two tools and a scoped token put the permissions in the token.
+
+The guarantee did not get weaker. It moved, to a place that design reviews do not always look, and it belongs in the review, not the footnotes.
+
+## FINDING SIX: A SMALLER PROMPT IS NOT A SMALLER ATTACK SURFACE.
+
+Everything above shrinks what the model reads. None of it shrinks what the agent can reach, and in September the reachable part broke across four vendors at once.
+
+PLUGIN4SHELL, FILED
+
+Class: zero-click remote code execution through a malicious plugin update.
+
+Control defeated: SHA pinning, the mechanism that locks an installed plugin to a reviewed version.
+
+Found: May 2026. Disclosed to vendors: June. Public: 17 and 18 September.
+
+Claude Code: patched in 2.1.179.
+
+Codex: patched in 0.146.0.
+
+Gemini CLI: deprecated instead of fixed.
+
+Copilot: no fix shipped as of disclosure.
+
+Authority of the code once it ran: everything the developer who launched the agent could reach.
+
+The supply-chain comparison is exact. Classic attacks had to compromise a build system and wait for a release. Agent plugins compress that: the marketplace is the build system, the update channel is the deploy pipeline, and there is no release cycle, because plugins auto-update. The state of the art fits in one sentence: agent permissioning is still binary.
+
+The surface taken out of the prompt did not disappear.
+
+It moved into the update channel, and the update channel had one lock.
+
+·   ·
+
+Every tool definition is a sentence the model reads before it reads you.
+
+The model cannot ignore text. It can only be given less of it, and then the question becomes what the text it no longer reads was holding back.
+
+## THE EXPLANATIONS AFTERWARD
+
+Four sources, one direction, and the exits are well-lit. Each gets its due.
+
+The first explanation was that the numbers are vendor-reported, and Schmid publishes none.
+
+Correct on both counts. The tool-search and programmatic-calling figures are Anthropic's internal evaluations. Cloudflare's 99.9 percent is one API measured with one tokenizer. The 150,000-to-2,000 Drive-to-Salesforce headline is a single hand-chosen example, vendor-published and unreplicated. Schmid's "on par or better" is a practitioner report. Discount every figure. Then notice that four independent sources with four different incentives all point the same way, and that the mechanism, data that never enters the prompt cannot cost prompt tokens, does not need a benchmark to be true.
+
+The second explanation was that pinning plugins is enough.
+
+It was the control everybody relied on, and in September it was falsified once, across four products. Every enterprise that deployed coding agents did so on an implicit assumption of marketplace integrity. That assumption is now a finding with a patch number.
+
+The third explanation was that the sandbox is the real cost of the pattern.
+
+It is. Anthropic's own post says the infrastructure adds operational overhead and security considerations that direct tool calls avoid. Bash-first demands a serious sandbox. Code Mode runs generated code in a V8 isolate "with no file system, no environment variables to leak through prompt injection and external fetches disabled by default," which is the reason it is safer than handing the agent a shell. The sandbox was never an implementation detail; it is the price, and the whole price.
+
+**Objection:** So the answer is fewer tools.
+
+**Reply:** The answer is fewer definitions in the prompt. The tools can be as many as you like, in the environment.
+
+**Objection:** Weaker models cannot write code against a spec they discover at runtime.
+
+**Reply:** Correct, and they fail at it more often than at plain function calling. For five to fifteen tools you control, the schema tax is trivial and function calling is simpler, more debuggable, and more reliable. Reach for code when the tool count is large, growing, or unknown.
+
+The fourth explanation was multimodal blindness. A shell command that renders an image still needs a separate channel to look at it, and browser automation stays a specialized tool.
+
+Schmid names this himself. Bash is the primary interface, not the only one.
+
+The fifth explanation was the inversion, and it has real force: a typed menu of tools is the most reviewable interface an agent can have, and code execution trades it for an opaque program.
+
+The case builds without strain. Every tool call against a fixed schema can be logged, authorized and replayed line by line. A generated program that chains four operations in one execution is harder to review, harder to authorize per action, and needs a sandbox that a function call does not. Weaker models are worse at it. On that reading, the essay is selling token savings and paying for them in auditability.
+
+**Objection:** Then keep the menu.
+
+**Reply:** Under fifteen items, yes.
+
+Above that, the evidence settles the rest locally: on your own tools, measure tokens, task success and review time per task under function calling and under code execution. If function calling wins at your tool count, use it; the essay's own reply agrees below fifteen. The failure mode belongs in the same paragraph. The review burden moves from the schema to the generated code, and a team that adopts code execution without anyone reading the programs has made the sandbox its only reviewer.
+
+## THE SURFACE IS WHAT THE MODEL READS
+
+[mcp-security-lab](https://github.com/AthenaTheOwl/mcp-security-lab) starts from a desktop config listing three MCP servers. One of them starts a local shell, can write files, and carries six injection phrases in its tool text. That last item is why this essay and the containment essay are the same essay from two sides: every tool definition in the prompt is text the model reads, and text the model reads is text the model can be steered by. Shrinking the definitions to a search function and an execute function shrinks the surface that reads as instructions. The lab measures that surface instead of trusting it.
+
+Give the model a shell and a small room.
+
+Keep the data in the room, and the key on a short leash.
+
+·   ·
+
+TOOL MANIFEST — REMAINING FIELDS
+
+Scopes on the token: whatever the user approved at connect time, which the user may not remember.
+Plugin update channel: open. Pin: see patch notes.
+Reviewer of generated programs: the sandbox, unless someone is named.
+Signature:
+
+The manifest ends there. The agent, holding two tools, can reach everything the key opens.
+
+---
+
+Sources: Matt Carey, "Code Mode: give agents an entire API in 1,000 tokens" (https://blog.cloudflare.com/code-mode-mcp/); Philipp Schmid, "How Foundational Models Became Superhuman in Bash" (https://www.philschmid.de/superhuman-bash) and "8 Tips for Writing Agent Skills" (https://www.philschmid.de/agent-skills-tips); Anthropic, "Code execution with MCP" (https://www.anthropic.com/engineering/code-execution-with-mcp) and "Introducing advanced tool use" (https://www.anthropic.com/engineering/advanced-tool-use); MCP specification 2026-07-28 (https://blog.modelcontextprotocol.io/posts/2026-07-28/); The Register on Plugin4Shell (https://www.theregister.com/security/2026/09/17/ai_coding_agents_0_click_rce_flaw_could_hand_attackers_keys_to_the_kingdom/5297335).

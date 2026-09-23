@@ -1,0 +1,164 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Provenance is a market"
+description: "When making anything costs almost nothing, the record of how it was made becomes the thing buyers pay for. Seven findings on disclosure penalties, innocent studios proving their innocence, what a content credential can and cannot attest, watermarks that can be forged, a regulation that built a meter, and a proof whose correctness took seventeen hours to check while its priority could not be checked at all."
+date: "2026-09-22"
+readingTime: "12 min read"
+---
+
+PROVENANCE RECORD — ONE TRAILER
+
+Asset: a live-action reveal trailer for a strategy game, Humankind 2.
+Shown: the Gamescom pre-show.
+Accusation: AI slop, from viewers, immediately.
+Defence: filmed at Nu Boyana Film Studios in Sofia, with behind-the-scenes footage to follow.
+Signed record of how the trailer was made: no field.
+
+The studio had real actors, real sets and a real film studio. What it did not have was a way to prove any of it before the accusation spread. Kotaku's summary of the moment was that some developers are now "perceived as guilty until proven innocent."
+
+The missing line is a product. Somebody is going to sell it.
+
+## FINDING ONE: WHEN MAKING IS FREE, THE RECEIPT IS WHAT IS SCARCE.
+
+Supply is no longer the constraint. One industry report put new games released worldwide in 2025 at 225,000, "an average of 617 new games going online per day."
+
+Game Oracle, an industry research platform, read the mandatory AI disclosure statements on all 16,554 titles released on Steam between January and November 2025. About 21 percent disclosed some form of AI use. Across 9,879 paid games, using first-month review counts as a proxy for sales, games using AI received "about 53% fewer reviews in their first month than similar titles that don't use AI."
+
+The study's author hedged honestly: "due to the unmeasured effects of marketing, skill, resources, and experience, our results could still be biased." And then did not hedge: "for many developers the effect of using AI is currently a net negative."
+
+That is a market putting a price on a process attribute, separately from how good the product is. Organic food and fair-trade coffee have been priced the same way for decades. The difference is that nobody can inspect a file the way they can inspect a farm.
+
+## FINDING TWO: A SELF-REPORTED LABEL IS PRICED BEFORE IT IS CHECKED.
+
+Steam's disclosure is a statement the developer writes. Kotaku notes that several developers did not disclose AI use on Steam "until they've been caught."
+
+So the 53 percent is a penalty on the honest. A studio that discloses pays it. A studio that hides pays nothing until someone finds out, and the ones who are found out apologise and promise to remove the assets, as the developers of Crimson Desert did.
+
+A label that is self-reported and never enforced turns into noise, and a market built on noise does not clear. If every studio calls its work "AI-assisted, human-directed," the phrase carries no information at all.
+
+·   ·
+
+The word "organic" on a market stall costs nothing to paint.
+
+The certificate behind it costs an inspection, a fee, and the chance of failing.
+
+Only one of them is worth a premium.
+
+## FINDING THREE: THE INNOCENT PAY FIRST.
+
+The Humankind 2 case is the new pattern. The penalty for being suspected fell on a studio that had done nothing to disclose, and clearing its name cost a clarification, a promise of proof and a news cycle. Kotaku ran a follow-up under the headline "The AI Panic Is Forcing Developers To Prove Their Trailers Were Made By Humans."
+
+When the cost of an accusation lands on people who did nothing wrong, provenance stops being a compliance cost and becomes something they will pay for. What they need is proof at the moment of capture, checkable by someone who is not an expert.
+
+The market is asking for content credentials without knowing the name.
+
+## FINDING FOUR: A CREDENTIAL PROVES THE CHAIN. IT DOES NOT PROVE THE SCENE.
+
+The name exists. The C2PA standard, published as Content Credentials, binds a signed record of an asset's origin and edits to the asset itself. Its own explainer is careful about what that record means.
+
+Content Credentials "do not provide value judgments about whether a given set of provenance data is 'true'," only whether it is well-formed, untampered and signed by someone on a trusted list. In the explainer's words, "provenance information alone cannot tell you whether the digital content is true, accurate or factual."
+
+The record can be incomplete. An asset cropped in a tool that does not write credentials loses that step from its history.
+
+The record can be removed. The standard's answer is "durable" credentials, which pair a cryptographic hash with a soft binding such as a watermark. The soft binding lets a stripped record be found again in cloud storage.
+
+And the signer vouches only for what the signer said. Assertions gathered from elsewhere are carried along but not attributed to the signer.
+
+A real camera pointed at a staged scene produces a perfect credential. Provenance proves capture, not truth, and anyone selling it as more is selling the wrong thing.
+
+·   ·
+
+A notary stamps who signed, and when.
+
+What the contract says is somebody else's problem.
+
+That is the whole service, and it is worth paying for.
+
+## FINDING FIVE: A WATERMARK IS EVIDENCE UNTIL SOMEONE ATTACKS IT.
+
+Text watermarks have a useful property called radioactivity. A student model trained on a watermarked teacher's outputs inherits the watermark, which makes unauthorised distillation detectable in principle.
+
+The same paper that describes the property attacks it. Paraphrasing the training data before distillation, or neutralising the watermark at inference afterwards, "thoroughly eliminate inherited watermarks," and the second method does it while keeping the transferred knowledge and at low cost.
+
+A second paper goes further in both directions. Its method trains one student that scrubs the watermark and another that forges it.
+
+Scrubbing means a copier escapes. Forging is worse: a watermark that can be planted can be used to accuse someone of copying who never did. A provenance claim that can be forged is worth less than no claim, because it looks like evidence.
+
+## FINDING SIX: THE REGULATOR BUILT THE METER.
+
+Article 50 of the EU AI Act came into force on 2 August 2026. Providers of systems that generate synthetic audio, images, video or text must ensure the outputs "are marked in a machine-readable format and detectable as artificially generated or manipulated", with the solutions robust and reliable "as far as this is technically feasible".
+
+A breach can cost up to 15 million euro or 3 percent of worldwide annual turnover, whichever is higher, and the transitional period for machine-readable marking ends on 2 December 2026.
+
+Rights holders moved in the same season. Warner Music's chief executive told analysts in August that the company's licensing deals with Suno, Stability AI, KLAY and Udio would "contribute materially to our subscription streaming revenue growth starting in fiscal ’27", a year that began on 1 October 2026. A German court had ruled on 31 July that Suno infringed copyright by training on compositions.
+
+The argument that ties these together is simple. A rights holder with only an injunction has a lever and no meter. Marking and attribution make per-use counting possible, and once use can be counted, a lawsuit can become a royalty: a recurring line instead of a one-time settlement. A compliance cost would then have built the cash register for a new kind of revenue.
+
+The timing fits the argument. Nothing yet shows that marking is what made those deals possible, and the next finding is about how much that distinction matters.
+
+## FINDING SEVEN: CORRECTNESS HAS A CHECKER. PRIORITY DOES NOT.
+
+On 8 September OpenAI published a proof that the Navier–Stokes equations can develop a singularity in finite time, one of the Millennium Prize Problems. Its agents reached the result "about 88 hours after the first agents were launched", in a group of "on the order of 10,000 concurrent agents." Then: "Lean formalization and verification took an additional 17 hours." The company published both the write-up and the formal proof, and said it does "not intend to claim the Millennium Prize" for the result.
+
+Correctness was settled by a machine in under a day. Quanta noted the one step that still needs a person: guaranteeing "that the statement being shown to be true in Lean is logically equivalent to what mathematicians set out to prove."
+
+Priority was another matter. OpenAI's post says its effort began on 1 September "after hearing a rumor" connected to Tristan Buckmaster of NYU and Levent Alpöge of Anthropic, who announced related results twelve hours earlier. To show its agents had not used their work, OpenAI offered its own investigation: Buckmaster's prompts to its coding tool over the preceding two months "could not have influenced the system in any way, including through training."
+
+There is no checker for that sentence. There is a company's statement about its own logs.
+
+That is where the market is. Checking whether something is true has become cheap. Establishing where it came from, what it saw and who got there first is still done on trust, and trust is the thing that became scarce.
+
+## THE EXPLANATIONS AFTERWARD
+
+Every finding has a weaker cause available. Each gets a hearing.
+
+The first explanation was that the disclosure penalty is a quality penalty in disguise.
+
+The study cannot rule it out, and says so. Games that use AI may be cheaper, rushed or made by less experienced teams, and players may be punishing that. The authors' own reading splits the effect: roughly neutral for low-budget beginners, harmful for "potential hits from experienced teams" through what they call an "AI stigma." Either way, the label moved sales, which is all a market needs.
+
+The second explanation was that audiences will stop caring once AI output is good enough.
+
+Possibly. But the money in this essay comes from rights holders who want use counted, regulators who want outputs marked, and studios who need a way to clear their names. None of those depends on how a player feels about a trailer.
+
+The third explanation was that watermarks will always be broken, so provenance will fail.
+
+Watermarks alone will. The standards do not rely on them alone. C2PA treats the watermark as a pointer back to a signed record, not as the proof. The signature is the proof, and forging it means stealing a key, which no amount of model training does.
+
+**Objection:** Then the unsigned are suspect.
+
+**Reply:** Which is the problem the standard itself warns about.
+
+The fourth explanation was the inversion, and an independent creator would make it. Provenance is a market, but what it prices is the signer. Every credential ends at a key and a trust list, and whoever keeps the list decides whose work counts as authentic. Unsigned work, from a small studio, a hobbyist or a witness filming on an old phone, gets treated as fake by default. On that reading, a provenance market is a toll on authorship collected by whoever holds the keys.
+
+The standard's authors saw it coming. Asked whether people should distrust media without credentials, their answer is "Maybe." The explainer adds that it is not the intention of the specification "to create a two-tier media ecosystem."
+
+**Objection:** Then sign everything.
+
+**Reply:** With whose key?
+
+The evidence that settles it is how the signing is governed. A provenance market that stays open has published trust lists, cheap or free keys for individuals, and platforms that treat a missing credential as unknown and not as guilty. A closed one has a few certificate issuers, paid signing and ranking that punishes the unsigned. Both are possible from the same specification. Which one we get will be decided by the people who run the trust lists, not by the cryptography.
+
+## THE RECEIPT FOR MACHINE WORK
+
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) is a provenance record for what agents do, not for pictures. When one organisation's agent tells another's to commit a purchase order, the receipt is eight fields of JSON and an ed25519 signature over the action's canonical hash, chained to the receipt before it. "Flip one hex digit of the action hash and the ed25519 signature stops verifying."
+
+It is deliberately narrow in the way this essay argues provenance should be. The receipt carries none of the business payload. A regulator can replay it and learn that the action happened, and in what order, without seeing what was bought. It proves the chain. Whether the purchase was wise is somebody else's problem.
+
+Sign the chain.
+
+Do not mistake it for the scene.
+
+·   ·
+
+PROVENANCE RECORD — REMAINING FIELDS
+
+Signed at capture: yes, by the camera, before anyone has an opinion.
+What the signature attests: who captured it, when, and every edit since.
+What it does not attest: that the scene is true.
+Missing credential: read as unknown, not as guilty.
+
+The trailer would have needed all four lines on the day it aired. The studio had none of them, and had to argue instead.
+
+---
+
+Sources: Kotaku, "Here Are The Opening Night Live Games You Can Ignore Because Of GenAI Slop" (https://kotaku.com/opening-night-live-2026-genai-slop-games-geoff-keighley-2000728477); Yahoo Tech on the Game Oracle study (https://tech.yahoo.com/gaming/articles/games-generative-ai-receive-53-161529902.html); 36Kr on the 2026 game industry report (https://eu.36kr.com/en/p/3849938143329161); C2PA, Content Credentials Explainer (https://spec.c2pa.org/specifications/specifications/2.2/explainer/Explainer.html); "Can LLM Watermarks Robustly Prevent Unauthorized Knowledge Distillation?" (https://arxiv.org/abs/2502.11598); CDG-KD (https://arxiv.org/html/2504.17480); EU AI Act Article 50 (https://artificialintelligenceact.eu/article/50/); Praxikon on Article 50 enforcement (https://www.aiactblog.nl/en/posts/article-50-enforcement-fines-ai-act-2026); Music Business Worldwide on Warner Music's AI deals (https://www.musicbusinessworldwide.com/warner-music-expects-ai-music-deals-to-boost-subscription-streaming-revenue-from-late-2026/); OpenAI, "On the Navier–Stokes Millennium Prize Problem" (https://openai.com/index/navier-stokes-solution/); Quanta Magazine (https://www.quantamagazine.org/ai-has-solved-one-of-maths-1-million-millennium-prize-problems-20260908/).

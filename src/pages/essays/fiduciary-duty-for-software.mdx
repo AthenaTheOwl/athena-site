@@ -1,0 +1,150 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Fiduciary duty for software"
+description: "An agent that acts inside your accounts holds your discretion, and the law has an old answer for anyone who does that. Seven findings on three theories of agent liability now in front of Congress, the one Illinois already chose, the underwriters who may beat them all, and the single artifact every theory ends up demanding."
+date: "2026-09-22"
+readingTime: "12 min read"
+---
+
+CUSTODIAL USER AGENT — DUTIES
+
+Authority: expressly granted by the user, "transparent, documented, scope-limited, and revocable."
+Loyalty: may not act in any way that "will benefit the custodial user agent to the detriment of the user."
+Care: "the care, skill, and diligence that an ordinarily prudent person would reasonably be expected to exercise in a like position."
+Records: real-time, of every action taken on the user's behalf, available on request.
+Delegation: only with the user's express, specific, revocable authorisation, and the delegate owes the same duties.
+Waiver: none, "by contract, by terms of service, or by any form of user consent."
+How an ordinarily prudent person's standard applies to a model: no field.
+
+Every line above the last comes from a bill. Senator Mark Warner's AI AGENT Act, circulated as a discussion draft in June, writes out the duties a software agent would owe the person it acts for, in the language trust law has used for centuries.
+
+The last line is the one the bill leaves to a court. The first court to fill it will set the standard for an industry.
+
+## FINDING ONE: A FIDUCIARY IS WHOEVER HOLDS YOUR DISCRETION.
+
+The law already has a word for someone who has been "given the authority to act on behalf of another person or entity." In agency law, once a principal authorises an agent, the agent owes three duties: obedience, loyalty and care.
+
+An agent that books your travel, pays your invoices or answers your email from your account fits that description exactly, whatever its vendor calls it.
+
+The principle travels well beyond trusts. Where one party takes discretionary action for another and knows more than the other does, the law stops relying on the contract between them and imposes duties that cannot be signed away. Trustees, financial advisers and lawyers all work under that rule. The draft proposes that software acting in a user's accounts should too.
+
+## FINDING TWO: THE DUTIES ARE ALREADY WRITTEN DOWN.
+
+The draft calls the agent a "custodial user agent": software "expressly authorized by a user to interact with a large online platform provider on that user's behalf." The duties in the frame above are its subsection (g), nearly word for word.
+
+The rest is machinery. Providers register with the Federal Trade Commission before their agents touch a platform's interface, and a registration may be evaluated by a recognised certification body. Platforms with more than 50,000,000 US customers in a month must give registered agents access on fair, reasonable and nondiscriminatory terms. A pattern of violations by any of a provider's agents "shall be attributable to the custodial user agent provider." And in fining a violation, the Commission "shall consider each individual user affected by a violation of this Act as an individual violation."
+
+That last clause turns one bad release into as many violations as it has users.
+
+## FINDING THREE: NON-WAIVABLE IS THE WHOLE POINT.
+
+Software has been sold on the opposite principle for as long as it has been sold. The most common open-source licence ends with a paragraph in capitals that disclaims every warranty and then says: "IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY".
+
+The draft's non-waiver clause removes that option for agents. The duties "may not be waived, limited, or modified by contract, by terms of service, or by any form of user consent," and the user's reasonable expectations are to be judged "without regard to any term of service inconsistent with such duties."
+
+That is the difference between a product and a relationship. A product can be sold with the risk disclaimed. A fiduciary relationship cannot, because the person who would sign the disclaimer is the person who cannot see what they are giving up.
+
+·   ·
+
+A butler with the house keys is judged by whether the silver is still there.
+
+And by whether any of it went to a cousin.
+
+Nobody reads the contract signed on arrival until something is missing.
+
+## FINDING FOUR: THE SECOND THEORY IS A STANDARD, NOT A DUTY.
+
+On 3 September Representatives Josh Gottheimer and Mike Lawler introduced the Stop Rogue AI Act. It directs NIST to publish standards for deploying agents securely: how organisations "continuously maintain and verify the actions that agents take," how they evaluate agents' security and reliability, and how they "generate tamper-proof logs of the actions that agents take." Organisations would keep a "continuous, machine-readable inventory of all AI agents." NIST would have a year. The standards would be voluntary for most organisations, with federal contractors pushed to meet them.
+
+The trigger was named in the coverage: the July intrusion into Hugging Face by agents in an OpenAI evaluation. Hugging Face's own forensic timeline covers "~17,600 attacker actions" recovered between 9 and 13 July.
+
+This is product-safety logic. It says nothing about who the agent works for. It says what the system must be built to do, and what it must record.
+
+## FINDING FIVE: THE THIRD THEORY IS A WALL.
+
+On the same day, Senator Bernie Sanders and Representative Greg Casar announced the Ban Artificial Superintelligence Act, which "would permanently ban the development and deployment of superintelligent AI and temporarily pause advanced AI development until a federal regulator has established safety rules."
+
+Fiduciary law, product-safety law and prohibition are three incompatible answers to one question, and each picks different winners. Non-waivable duties favour large providers who can carry them. A standards regime favours whoever sells the logging and verification layer. A ban favours nobody currently building.
+
+## FINDING SIX: ONE STATE HAS ALREADY CHOSEN AUDIT.
+
+While Congress argues, Illinois has chosen. Governor JB Pritzker signed the Artificial Intelligence Safety Measures Act on 6 July, making Illinois the third state after California and New York to impose safety and reporting obligations on large AI developers. It takes effect on 1 January 2027.
+
+What sets it apart is the audit. Beginning on 1 January 2028, a large frontier developer, meaning one with more than $500 million in annual revenue, "must retain an independent third party to perform an annual audit of the developer's compliance." The audits must be "consistent with generally accepted auditing standards and best practices."
+
+That is the structure securities law built for public companies: an independent auditor, a standard method, and a statutory buyer with a date. It creates a market for assurance before there is any accredited supply. It also imports the flaw the financial version never fixed, which is that the audited party pays the auditor. And a model's behaviour does not hold still between audits the way a balance sheet does.
+
+## FINDING SEVEN: THE UNDERWRITER MAY GET THERE FIRST.
+
+Statute moves on political consensus. An insurer with the right to refuse moves on data, and the data is starting to exist.
+
+Anthropic mapped 832 accounts banned for malicious cyber activity between March 2025 and March 2026 onto MITRE ATT&CK. Writing malware was the most common use: "560 of the 832 accounts we studied, or 67.3%." Fifty-four used AI for lateral movement. And the behaviour that marked the most dangerous actors, using AI to "orchestrate steps in the attack chain sequentially" and execute without a person, has no technique ID in the framework at all.
+
+An underwriter does not need a bill to price that. It needs a loss history and a way to tell a careful deployment from a careless one. Where the tail cannot be modelled, the likelier outcome is no cover at all, and a refusal to insure regulates faster than any statute.
+
+·   ·
+
+Every theory in this essay asks for the same object.
+
+The fiduciary draft wants "real-time records of actions taken on the user's behalf." The NIST bill wants "tamper-proof logs." Illinois wants something an auditor can check. The underwriter wants a loss history.
+
+The theories disagree about almost everything. They agree that someone must keep the log.
+
+## THE EXPLANATIONS AFTERWARD
+
+Each finding has a smaller reading. Each one gets a turn.
+
+The first explanation was that this is consumer protection with new vocabulary.
+
+In enforcement it is. The draft routes penalties through the Federal Trade Commission Act. In substance it is not. Consumer protection forbids lying to a customer. A duty of loyalty forbids an agent from steering a customer's purchase toward whatever benefits the agent, even when nothing false is said.
+
+The second explanation was that contracts already cover this.
+
+They cover it the way the licence paragraph above does. The non-waiver clause exists because the person agreeing to the terms cannot see what the agent will do with the discretion they are handing over. That asymmetry is the historical reason fiduciary duties exist.
+
+The third explanation was that a duty of care cannot apply to a probabilistic system. No model is an ordinarily prudent person.
+
+The draft answers part of this already. The duty sits on the provider, which must "establish and maintain reasonable measures" so its agents comply, and which answers for a pattern of violations. Care, for a provider, is judged by process: the safeguards, the records, the testing. That is also how care is judged for hospitals and airlines, and neither of them is a person either.
+
+**Objection:** Then the model is the fiduciary.
+
+**Reply:** The provider is.
+
+The fourth explanation was the inversion, and an engineer building agent systems would make it. Fiduciary law assumes one identifiable principal and a bounded mandate. An agent composing tool servers from four vendors on behalf of a company, not a person, has neither. On that reading the analogy breaks exactly where liability is most contested, and a law built on it will either be ignored or will freeze multi-vendor agents altogether.
+
+The draft sees part of this coming. Its delegation clause forbids passing a user's authority to another entity's agent without "express, specific, and revocable authorization," and binds every delegate to the same duties. That keeps the principal identifiable, at the price of making each hop in a tool chain a separate authorisation.
+
+**Objection:** Then every hop needs a receipt.
+
+**Reply:** And a signature.
+
+The evidence that settles it is whether the chain of delegation can be recorded cheaply. If each hop can carry a signed, ordered receipt of who authorised what, the fiduciary model survives composition. If it cannot, the analogy fails where the engineer said it would, and the standards theory wins by default because it never needed a principal in the first place.
+
+## THE RECEIPT PER HOP
+
+Two repositories on this site build the object every theory asked for.
+
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) is the receipt per hop. When one organisation's agent instructs another's to commit a purchase order, the receipt names the receiver and the sender, the action's canonical hash and the previous receipt's hash, a timestamp, and an ed25519 signature. Because each receipt chains to the last, the order cannot be reshuffled after the fact. It carries none of the business payload, so an auditor can replay the chain without seeing what was bought.
+
+[trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is the log behind it: every event content-addressed by its sha256 and linked to the one before, so an edited payload or a dropped event breaks the chain where anyone can see it.
+
+Neither is a fiduciary. They are what a fiduciary would need to prove it was one.
+
+Hold the discretion, owe the duty.
+
+Keep the record that proves the duty was paid.
+
+·   ·
+
+CUSTODIAL USER AGENT — REMAINING FIELDS
+
+Records of actions: kept as they happen, chained, and signed.
+Each delegation: authorised by the user and receipted, hop by hop.
+Waiver: still none.
+How an ordinarily prudent person's standard applies to a model: blank until the first case.
+
+The duties are drafted. The standard of care is waiting for its plaintiff.
+
+---
+
+Sources: Senator Mark Warner, AI AGENT Act discussion draft (https://www.warner.senate.gov/wp-content/uploads/2026/06/AI-AGENT-Act-Discussion-Draft-1.pdf); Cornell Law School, Wex, "fiduciary duty" (https://www.law.cornell.edu/wex/fiduciary_duty); Choose a License, MIT License (https://choosealicense.com/licenses/mit/); Axios via Rep. Mike Lawler, "New bill cracks down on AI agents after Hugging Face breach" (https://lawler.house.gov/news/documentsingle.aspx?DocumentID=6424); Hugging Face, "Anatomy of a Frontier Lab Agent Intrusion" (https://huggingface.co/blog/agent-intrusion-technical-timeline); Senator Bernie Sanders, Ban Artificial Superintelligence Act announcement (https://www.sanders.senate.gov/press-releases/news-sanders-casar-introduce-legislation-to-ban-artificial-superintelligence-and-temporarily-pause-advanced-ai-development/); Skadden on the Illinois AI Safety Measures Act (https://www.skadden.com/insights/publications/2026/07/illinois-enacts-ai-safety-law-becoming-first-state); Crowell & Moring on SB 315 (https://www.crowell.com/en/insights/client-alerts/illinois-imposes-transparency-and-safety-obligations-on-frontier-ai-systems); Anthropic, "Mapping AI-enabled cyber threats" (https://www.anthropic.com/news/AI-enabled-cyber-threats-mitre-attack).

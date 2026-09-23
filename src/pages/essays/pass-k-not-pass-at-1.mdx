@@ -1,0 +1,226 @@
+---
+layout: ../../layouts/Essay.astro
+title: "pass^k, not pass@1"
+description: "The strongest model solved 65% of business workflows on the first try and 91% given twenty tries. It solved 25% every time. Seven findings on why the last number decides whether an agent can touch a customer's account, and why nobody reports it."
+date: "2026-09-22"
+readingTime: "12 min read"
+---
+
+SCORECARD — STRONGEST MODEL, 507 STATEFUL BUSINESS WORKFLOWS, 20 ATTEMPTS EACH
+
+Solved on the first attempt: 65.36 percent. The number nearly everyone reports.
+Solved at least once in twenty: 91.12 percent.
+Solved all twenty times: 25.25 percent.
+Failed trials that still ended with well-formed tool calls and a clean termination: many.
+Can it be left alone with a customer's account: no field.
+
+That last field is this essay.
+
+The agent finished tidily.
+
+It called real tools with well-formed arguments.
+
+It produced the wrong world.
+
+That is the failure Microsoft's Thinkingbox team saw most often when they ran 507 stateful business workflows, refunds, bookings, insurance claims, internal IT requests, against a range of models, twenty times each. The spread is the finding. A 91 says the capability is nearly there: a correct trajectory exists and the model can find it. A 25 says the reliability is nowhere close. For anything with irreversible side effects, the number that matters for deployment is the one nobody reports.
+
+## FINDING ONE: CAPABILITY IS ONE SUCCESS. RELIABILITY IS EVERY SUCCESS.
+
+The distinction has a precedent. On τ-bench's retail tasks, GPT-4o scored about 61 percent pass@1 and under 25 percent pass^8, which means that across eight runs the chance of at least one failure was near three in four. A Northern Kentucky team built a framework around that: benchmarks measure whether a system can succeed once, production requires that it succeed consistently across thousands of invocations, and the two diverge as tasks get longer.
+
+Their 23,392 episodes across four duration buckets found the decay is universal and faster than geometric. If each step failed independently you could predict the long-horizon rate from the short one. The observed rate is worse, because errors are positively correlated. Once an agent makes a bad tool call or forms a wrong hypothesis, it tends to persist.
+
+A plumber who fixes the leak nineteen times in twenty is not ninety-five percent of a plumber, because on the twentieth visit he also turns off the gas on his way out. The householder does not experience an average.
+
+## FINDING TWO: RANKINGS INVERT WITH LENGTH.
+
+Two results from the same framework should change how anyone reads a leaderboard.
+
+Duration is not difficulty. A document task that takes a human 45 to 60 minutes may need four to eight tool calls; a software task of the same human duration needs 15 to 25. Human-estimated duration and agent-relevant complexity are close to orthogonal. Bucket an eval suite by expected tool calls, not by how long the task would take you.
+
+And the order changes as the tasks lengthen.
+
+VALIDATION RUN, SAME TEN-MODEL FIELD
+
+400B mixture-of-experts model, short tasks: ranked 8th.
+
+Same model, long tasks: ranked last, at 0.00 pass@1.
+
+Model that beat it on long-horizon reliability: a 12B dense model with 33 times fewer parameters.
+
+Another model: a U-shaped curve, worse at medium length than at long, which would mislead anyone who evaluated only at medium.
+
+A leaderboard measured at one length is a leaderboard of that length.
+
+## FINDING THREE: THE GRADING IS THE DESIGN.
+
+Thinkingbox scores nothing about the response. It runs the agent against isolated tool sessions, extracts the side effects, and executes task-specific checks over the terminal backend state, written to accept any valid trajectory while rejecting wrong, missing, or extra effects.
+
+An agent that reaches the right state by an unusual route passes.
+
+An agent that issues the correct refund and also cancels the subscription fails.
+
+No trajectory-similarity judge would have caught the second one, because the trajectory looked fine.
+
+FAILURE SIGNATURES, AVERAGED ACROSS TWELVE MODELS
+
+Tool usage: 79.9 percent.
+
+Wrong state update: 9.4 percent.
+
+Incomplete user resolution: 7.5 percent.
+
+No state-changing action at all: 3.2 percent.
+
+## FINDING FOUR: THE AGENT CONTINUES AS THOUGH THE FAILED ACTION HAD SUCCEEDED.
+
+The authors are explicit that the tool-usage category is not mostly malformed calls. A typical failing trace contains a tool error, a failed precondition, or an unsuccessful lookup, after which the agent fails to repair the workflow, and "in some cases, it continues as though the failed action had succeeded."
+
+That is the false-success failure, observed in the wild, and it moves the engineering budget. The effort belongs in error-recovery paths and post-action verification, not in tool schema polish.
+
+It also quietly invalidates a good deal of production monitoring. Many failed trials show clean termination and valid state-changing actions, so the signals most dashboards watch cannot tell apart:
+
+A clean termination from a completed task.
+
+A valid tool call from a correct one.
+
+A refund issued from a refund issued plus a cancelled subscription.
+
+A failed lookup from one the agent decided to remember as a success.
+
+The cheapest change is a single log line: for every tool error, record whether the trajectory repaired it, ignored it, or proceeded as if it had succeeded. That ratio is a leading indicator of production incidents, and it costs nothing to start counting.
+
+·   ·
+
+A linter has a pass^k equal to its pass@1, for any k you like, because it is a regular expression and a loop.
+
+Run it twenty times on the same file and it fails the same line twenty times.
+
+That is the least interesting property a piece of software can have, and it is the one every agent in this essay lacks.
+
+## FINDING FIVE: THE SECOND PROMPT IS WHERE IT BREAKS.
+
+Single-turn benchmarks have a second blind spot: the container is discarded. EvoCode-Bench keeps it. Twenty-six tasks over 227 sequential rounds in five domains, one persistent workspace per task, specifications that extend, correct, and deliberately reverse earlier requirements, and a cumulative test suite that checks everything to date. Break something from round three and you fail now.
+
+Round one: 46.7 percent pass.
+
+Round ten: 7.7 percent.
+
+The strongest single-turn model, at 78.9 percent, dropped to third in multi-turn at 44.0.
+
+Across model tiers, clean-slate scores overstated multi-turn scores by 1.4 to 4 times.
+
+Over 57 percent of multi-turn failures happen on rounds the same model solves easily from clean code. That is an interference effect, not a capability ceiling: agents rarely fail to build the new feature, they fail because building it broke something old, and they did not re-verify.
+
+The failure signature stratifies by tier, which makes it a diagnostic.
+
+Lower-tier agents fail by omission, in 87 to 90 percent of their failures. They do not do part of what was asked.
+
+Mid-tier agents leave stale code beside new code when a spec changes, 28.6 percent.
+
+Top-tier agents refactor confidently and take out a dependency they did not check. For them, regressions are 35 percent of failures by round two.
+
+The weaker the model, the less it does. The stronger the model, the more it undoes.
+
+The mitigation is almost embarrassingly low-tech. Agents that maintained a persistent requirements document more than doubled their success rate.
+
+Structure beat capability. Nobody at the frontier was pleased.
+
+## FINDING SIX: THE METRIC IS TWO YEARS OLD AND STILL NOT THE ONE ON THE CARD.
+
+pass^k was not invented this summer. The τ-bench paper from Sierra, in June 2024, proposed it by name, "defined as the chance that all k i.i.d. task trials are successful, averaged across tasks," for "real-world agent tasks requiring reliability and consistency like customer service." The same paper graded by comparing "the database state at the end of a conversation with the annotated goal state."
+
+The metric and the grading method arrived together, in one paper, with an open benchmark attached.
+
+Two years later a Microsoft benchmark had to make the same argument from the beginning, and pass^k was still the number nobody reports.
+
+The likelier story is duller than resistance. It measured something unflattering, at k times the cost, and the other number was already on the card.
+
+## FINDING SEVEN: BINARY SCORING THROWS AWAY MOST OF THE SIGNAL.
+
+EvoCode's authors found a detail in their own failures. Agents often achieved more than 80 percent assertion accuracy on rounds scored as complete failures.
+
+A round that passes four assertions in five and breaks one old requirement is a failure, correctly, for deployment. It is also a narrow and specific failure, and an all-or-nothing score files it next to a round that did nothing at all.
+
+Pass or fail is the right shape for a release gate.
+
+It is the wrong shape for learning why.
+
+The reliability framework makes the same move with a graded degradation score: every task decomposed into three to six subtasks with criticality weights, so a run that fixes the bug and breaks the tests is distinguishable from one that never found the bug. A pass^k column says whether to ship. The partial-credit column says where to look.
+
+·   ·
+
+Every number above is a question about supervision.
+
+A system that must be watched every time costs a person for every run. A system that must be watched some of the time costs a person for an unknown share of runs, and the share is unknown precisely because nobody ran it twenty times.
+
+pass^k is the column that says how many people.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings invite the usual exits. Each gets its due.
+
+The first explanation was that pass^k at k=20 is twenty times the eval spend.
+
+Correct. So run five on a stratified subset for continuous monitoring and twenty on a small gold set before a release. The Thinkingbox authors say the same.
+
+**Objection:** Twenty is excessive.
+
+**Reply:** Five.
+
+A number you cannot afford to compute weekly is still a number you can afford to compute before a customer meets the agent.
+
+The second explanation was that side-effect grading needs an environment you can snapshot and reset, which is easy for a database and hard for anything calling third-party services.
+
+Also correct. The usual answer is a recorded or simulated tool layer, which then needs its own fidelity checks. The cost is real and the alternative is grading the transcript, which Finding Three says measures the wrong artifact.
+
+The third explanation was that a persistent memory hurts. The reliability paper found an episodic scratchpad injected into every turn hurt long-horizon performance for every one of the ten models it tested, and EvoCode found a persistent document doubled success. One of these must be wrong.
+
+Neither. The difference is what gets written and when. A task-scoped artifact the agent re-reads deliberately, a spec, a feature list, a progress log, buys orientation for a bounded cost. An unstructured note store taxes every turn to save observations of unproven value. The evidence is against the naive version, not against externalized state.
+
+The fourth explanation was that pass@k is the right number for interactive work, because users retry.
+
+For some work it is, and τ-bench says so in the same paragraph that introduces pass^k: pass@k, the chance that at least one of k trials succeeds, is the measure of discovery, of an agent finding a solution when it is given more attempts. When a person reviews every output, a code suggestion or a draft, the model gets many tries and the person picks. The distinction the paper draws is the one this essay keeps: discovery tolerates failures you can discard, and an agent acting on a customer's account produces failures you cannot.
+
+**Objection:** A low pass^k does not say why.
+
+**Reply:** No. Pair it with the failure signatures, or you have a frightening number and no lever.
+
+The fifth explanation was the inversion, which the essay owes: pass^k is the wrong unit because nobody deploys a bare model, and it punishes variance the deployed system already absorbs.
+
+The case builds itself. Production agents run inside harnesses with retries, verifiers and human review. EvoCode's own authors call their fail-stop design a limitation, since real agents get to recover. Scores above 80 percent on "failed" rounds say the binary cut is harsh. On that reading, the bare-model pass^k is a lab number, and the number that matters is the pass rate of the whole system after its safety nets.
+
+That is correct as far as it goes, and it names its own test. Measure pass^k of the system you ship, retries and verifiers included, across k runs of the same task. If that number is high, the bare-model figure is irrelevant and this essay has been arguing with a straw column. The failure mode belongs in the same sentence: a retry on an irreversible action is not free. A retried refund is a second refund. The system-level pass^k only rescues you where the safety net runs before the side effect, not after it.
+
+## WHERE THE METRIC COMES FROM
+
+None of this is new to the disciplines that count failures for a living. Aviation, nuclear, and industrial safety abandoned average-case metrics for failure taxonomies decades ago: instrument the failure distribution, classify the modes, intervene mid-execution instead of after.
+
+The reliability paper's cleverest instrument is that kind of monitor: a sliding-window entropy over the last five tool calls, which rises when tool use loses its strategy, read, write, read, search, with a spike marking the transition from coherent-but-wrong progress to incoherent looping. The models with the best long-horizon scores also had the highest meltdown rates, because they attempt ambitious strategies, and those are the episodes where a context reset is most likely to recover value. Weaker models emit steady, low-entropy sequences that never spike and never finish.
+
+## RUN IT TWENTY TIMES
+
+The change these papers ask for is cheap to state. Run every eval task k times and report the fraction that pass every time beside the mean. Grade on the diff of backend state before and after, and assert against extra effects as well as missing ones. Log every tool error and whether the trajectory repaired it, ignored it, or proceeded as if it had succeeded.
+
+[LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) already grades the way Thinkingbox does: forty-six cases in six suites, and a refund answer can pass its JSON shape and still fail the safety reviewer, because the runner keeps those failures separate instead of folding them into one score. What it does not yet report is pass^k. Every case runs once. Adding the repeated-run column is the next change to that repo, and until it lands, its numbers are capability numbers.
+
+[sports-prediction-os](https://github.com/AthenaTheOwl/sports-prediction-os) makes the same argument about football. Arsenal drew Liverpool 2-2, and the scoreline calls it even. Liverpool built 2.13 expected goals and Arsenal 1.49, which the repository sums up as "Same scoreline, different luck." A single result is one sample of a process. The project reads shot quality instead of the outcome, which is what pass^k does for an agent: it stops judging the run by the one result it happened to produce.
+
+pass@1 tells you whether the thing can be done.
+
+pass^k tells you whether you can stop watching.
+
+·   ·
+
+SCORECARD — REMAINING FIELDS
+
+Runs per task, as reported: one.
+Tool errors repaired, ignored, or treated as success: not counted.
+State of the backend after the tidy finish: not diffed.
+Signed off by: a person, who will now have to watch it.
+
+The card ends there. The agent, as ever, terminated cleanly.
+
+---
+
+Sources: One Success Isn't Reliability: Thinkingbox (https://arxiv.org/abs/2608.19741); Beyond pass@1: A Reliability Science Framework for Long-Horizon LLM Agents (https://arxiv.org/abs/2603.29231); EvoCode-Bench (https://arxiv.org/abs/2605.24110) and Philipp Schmid's write-up (https://www.philschmid.de/evocode-bench); τ-bench (https://arxiv.org/html/2406.12045).

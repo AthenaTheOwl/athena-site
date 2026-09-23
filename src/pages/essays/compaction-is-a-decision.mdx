@@ -1,0 +1,237 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Compaction is a decision, not a threshold"
+description: "Every long-running agent summarizes its own history when the window fills. Seven papers and a vendor API this summer measured what that costs, and the trigger turns out to be the bug."
+date: "2026-09-22"
+readingTime: "13 min read"
+---
+
+CONTEXT EVENT — APPWORLD, ADAPTATION STEP 61
+
+Operation: full rewrite of the accumulated context, by the model, as on every step.
+Context before: 18,282 tokens. Accuracy before: 66.7.
+Context after: 122 tokens. Accuracy after: 57.1.
+Accuracy of the same system before it had learned anything: 63.7.
+Rewrite status: completed.
+Knowledge lost: no such field.
+
+A team from Stanford, SambaNova and Berkeley let a model maintain its own accumulated context, rewriting the whole of it at each adaptation step, and one rewrite erased everything the system had learned and then some. They named the failure context collapse and were careful to say it belongs to no particular method: it is "a fundamental risk of end-to-end context rewriting with LLMs," in which accumulated knowledge "can be abruptly erased instead of preserved."
+
+Every production agent does a version of this on a schedule. Accumulate tokens until some fraction of the window is crossed, summarize everything so far into a note, continue from the note.
+
+The trigger is a number.
+
+The cost, the papers below found, is structural. That mismatch is the note the event log has no field for.
+
+## FINDING ONE: THE SUMMARY LOSES POSITION, NOT FACTS.
+
+The prevailing mental model of compaction is lossy compression: summarize the history, lose some facts, accept the trade. A Nokia and University of Virginia team argued the model is wrong in a way that matters, because a raw trajectory is not a bag of facts. Its ordered sequence of actions and observations is what anchors where the agent is, what it has already done, and whether it should stop. A summary flattens that directed process into a declarative account, and even when every entity and progress label survives, the agent can lose its place: replaying completed actions, or continuing past the point where it should have terminated.
+
+They chose their benchmark so the usual excuse would not apply. AppWorld is refetchable; any earlier observation can be recovered by querying the app state again. If compaction hurts there, it is not because facts were destroyed.
+
+RETAINED-CONTEXT BUDGETS OF 16K, 8K AND 4K
+
+Summary-based compaction: matched or slightly beaten by first-in-first-out truncation.
+
+Tightest budget only: summarization 72.8 percent, truncation 42.2.
+
+Both: below the full-context reference.
+
+Truncation, for all its crudeness, keeps the recent action-observation continuity intact. Repeated summary replacement erodes it. The terminal-completion probe makes the mechanism concrete: hold the task, environment and decision point fixed, sample ten next actions under each rendering, and at the tightest budget the summary condition terminated in 44.6 percent of samples against 77.2 for truncation. The deficit is worst precisely where the agent should stop, because a summarized agent keeps acting.
+
+Picture a bookkeeper whose ledger fills. She copies the closing balances onto a fresh page and burns the old one. The balances are right. What she has lost is whether the last entry was a debit she had already posted or one she was about to, and the fresh page cannot tell her.
+
+## FINDING TWO: FORTY PERCENT OF THE TIME IT FIRES, IT DESTROYS A CORRECT ANSWER.
+
+A Johns Hopkins and Apple team logged what happens to the answer across twelve fixed-interval summarization calls on a competition-math benchmark.
+
+Wrong to correct: 1,486.
+
+Correct to wrong: 1,009.
+
+Compaction was a net gain that was also actively destroying correct intermediate results about 40 percent of the time it fired. An oracle that skipped summarization only when the current answer was already correct, same schedule otherwise, reached 52.9 percent against 41.4 for fixed-interval and 38.9 for no compaction. Eleven and a half points of headroom, available purely from better timing, from an oracle that decides only whether, not when.
+
+Their fix, SelfCompact, moves the decision from the scaffold into the model, and it has exactly two pieces: a compaction tool the model can call like any other, and a rubric saying fire when a sub-task has resolved or the trajectory is converging, hold when mid-derivation or stuck. Neither works alone. Open-weight models given the tool without the rubric call it reflexively at useless moments or never; the rubric without the tool cannot act. Together, with no fine-tuning, it beat no-compaction by up to 18.1 points on math and 5 to 9 on agentic search, and it was cheaper than doing nothing despite the extra probe call, because after a summary every later token attends to something short. Per-question cost on one search benchmark fell 67 percent.
+
+Knowing how to compress a trajectory is a generation skill, and frontier models have it.
+
+Knowing when compressing is safe is a self-monitoring skill, and unprompted models do not.
+
+A paragraph of guidance closes the gap. The right trigger for forgetting is semantic, not numeric.
+
+## FINDING THREE: THE KNOB IS NOT CONNECTED TO ANYTHING.
+
+There is a second, independent problem, and a Penn State team measured it directly. As input grows 48 times, from 2k to 96k tokens, the average summary grows about three times.
+
+Tokens retained at 2k input: 47.9 percent.
+
+At 16k: 12.7 percent.
+
+At 96k: 3.1 percent.
+
+Switching the instruction from concise to maximally detailed barely moves the curve. Their explanation is a trained length prior: models learned on document-summary corpora where the reference summary runs half a page, and they revert to that regardless of source length. A 500-token summary of a 96k-token context keeps under 1 percent of it, and no prompt engineering fixes that. The effect held across four backbones, dense and mixture-of-experts, reasoning and not. Ten compaction calls on an identical snapshot produced summaries whose length varied by 21.5 to 42.0 percent, so some of the run-to-run wobble in benchmark numbers is the model receiving a different context.
+
+The context-collapse authors had named the same pull from the other direction the previous autumn. They called it brevity bias: "the tendency of optimization to collapse toward short, generic prompts," which drops domain insight in exchange for a concise summary.
+
+Two groups, two methods, one direction.
+
+Shorter.
+
+The Penn State paper found the cost is also paid in time. At a 16k threshold on HotpotQA, compaction fired 15 times per run and consumed 62.4 percent of end-to-end wall time on the smallest backbone. The step that throws the information away is also the slowest step in the run.
+
+## FINDING FOUR: THE MOST TEMPTING TOKENS TO CUT ARE THE ONES THAT HOLD THE PROTOCOL.
+
+Most compression work targets the user turn or the retrieved documents. An August paper went after the system side: the persistent instructions that specify tools, arguments, policies and recovery behaviour. That block is large and constant across every turn, which makes it the most tempting target for token reduction.
+
+The benchmark is verified against the environment instead of scored by similarity: nine independently built control contexts, three task families, six budgets, 15,525 runs.
+
+SYSTEM-PROMPT COMPRESSION, TASK SUCCESS
+
+Full context: 93.8 percent.
+
+At 75 percent retained, generic rewriting: 92.7. Section-based: 92.4.
+
+At 35 percent retained, section-based: 47.0. Obligation-aware: 39.0. Generic rewriting: 19.9.
+
+Below 25 percent retained: executable protocols fragile across the board.
+
+The curve is flat and then falls off a cliff between half and a third, and the failures do not look like worse reasoning. They surface as tool-execution and action-parsing errors, malformed calls from an agent whose protocol specification got clipped, which an answer-quality judge will not see. Reliability also varied across control contexts, so a compressor that is safe on your support prompt may be unsafe on your finance one.
+
+There is a cheaper answer. A static system prompt is exactly what prompt caching is for, and caching the full block is strictly better than compressing it, at no cost in reliability.
+
+Compress the part that changes.
+
+Cache the part that does not.
+
+## FINDING FIVE: SELECTION LOSES TO GENERATION, AND BOTH LOSE TO A DATA STRUCTURE.
+
+Context compaction now has a formal treatment, as two games: a selector that keeps a subset of existing history items under a token budget, and a generator that may write any bounded message. Selection is strictly weaker, needing on the order of log n more budget for the same error on some query families. An agent that compacts by keeping the most relevant messages verbatim is structurally behind one that writes a new artifact in denser form. Drop-the-oldest-and-keep-the-tagged is the selection game, and no relevance scorer closes the gap.
+
+The case study should make builders uncomfortable. The authors probed a vendor's compaction endpoint on simple set-membership queries over 15,000 items, was item X in the history, and found error rates near random, worse than a Bloom filter of the same size. They read it as evidence that a language model is an inefficient encoder for some query classes, and that the question "have I already visited this URL / tried this fix / seen this file" belongs in a set, a Bloom filter, or a SQLite table in the working directory.
+
+Not in the hope that the summary kept it.
+
+·   ·
+
+Every shift handover note is a compaction. The outgoing shift writes down what the incoming one needs: the open items, what was checked, what is still pending.
+
+The note is usually right about every item on it.
+
+What it drops is whatever the writer had stopped noticing by the end of a long day, which is exactly what the reader cannot know to ask about.
+
+Nobody is careless. It is what a summary is.
+
+## FINDING SIX: THE COMPACTOR IS A PARAMETER, AND MOST TEAMS SHIP THE DEFAULT.
+
+If compaction is where information is lost, the next thing to ask is whether the compactor should be learned. One July paper trained it as part of the policy, so a trajectory alternates execution segments and summary segments that all share the final task reward.
+
+COMPACTION TRAINED INTO THE POLICY
+
+SWE-bench Verified, 30B model: 56.0 percent, 5.5 points over the same model compacting at inference time.
+
+SWE-bench Verified, 106B model: 66.8 percent, up 7.0.
+
+A trained 64k context: matched an untrained 128k one.
+
+Swapping only the summarizing agent, everything else held fixed: 6.5 points.
+
+The last line is the one for people who cannot train anything. The compaction prompt is a first-class tunable, and it is usually the one line of the harness nobody has looked at since it was pasted in.
+
+The counter-proposal the same digest filed beside it treats memory as a streaming clustering problem instead of a generation problem. It reached 83 percent of full-context quality at 32 percent of the token cost, and its ablations attribute roughly half the gain to how retrieved chunks are laid out in the prompt, which is the cheapest thing in this essay to try. The costs sit beside it: the advantage lived in a narrow band of budgets, and a plain BM25 baseline tied it on the secondary benchmark.
+
+## FINDING SEVEN: A MANAGED HARNESS IS A COMPACTION POLICY YOU DID NOT WRITE.
+
+In September OpenAI's Agents API gave applications "access to the Codex harness through an OpenAI-managed API," with the vendor owning sessions, orchestration, compaction and recovery while the developer supplies tools and picks an execution environment.
+
+That is a reasonable product and a large transfer of judgment. Everything above says the timing and the method of compaction decide what the agent still knows, and a managed loop makes both decisions on the vendor's schedule, tuned for the vendor's average customer.
+
+A policy written for everyone cannot tell apart:
+
+A resolved sub-task from a derivation half done.
+
+A list of visited URLs from a paragraph about visiting some.
+
+A completed action from one the agent was about to take.
+
+A cheap moment to forget from the most expensive one.
+
+Every harness-efficiency result should carry the failure mode in the same breath as the saving: compaction is lossy, and savings that look free in aggregate benchmarks can show up as silent failures on the long tail, which is exactly where enterprise value concentrates.
+
+·   ·
+
+Forgetting is not the failure. Everything that runs long has to forget, and a record that forgets nothing becomes a file nobody reads in full.
+
+The failure is forgetting on a schedule written by someone who never saw the work.
+
+## THE EXPLANATIONS AFTERWARD
+
+Seven findings, one direction, and the usual routes out. Each gets its due.
+
+The first explanation was that AppWorld is refetchable, so the truncation result is a special case.
+
+Correct, and the paper says so first. Where a discarded observation is gone forever, summarization should beat truncation much earlier. The rule survives: over a corpus the agent can re-query, lean on truncation plus refetch; over streaming input, summarize, and keep a verbatim recency window.
+
+The second explanation was that the rubric is hand-tuned scaffolding, not a drop-in.
+
+Yes. Its authors say so, and the probe only pays for itself where the serving stack reuses the KV prefix. The evidence is for the shape of the decision, not for a particular paragraph of text.
+
+**Objection:** Most operators cannot rewrite their scaffold's trigger.
+
+**Reply:** Then shape the trajectory so the safe moments and the counter's moments coincide. Finish a file. Close a sub-task. Write a handoff note. When the counter fires, let it fire at a boundary where forgetting is cheap.
+
+**Objection:** That is a workaround.
+
+**Reply:** It is. It is also what checkpoints have always been for.
+
+The third explanation was that the theory paper's set-membership probe is a worst case chosen to make a point.
+
+It is, and the authors say it is. An agent that keeps its "have I seen this" list in a summary will still, eventually, answer that question at chance.
+
+The fourth explanation was that better models will summarize better.
+
+The length prior is a property of the training corpus, not of scale; it held across four backbones from 8 billion to 120 billion parameters, dense and mixture-of-experts, reasoning and not. The knob may get connected eventually. It is not connected now.
+
+The fifth explanation was that a managed API will do this better than a small team can.
+
+On average, probably. The vendor sees more trajectories than anyone and can tune its trigger on all of them. The trouble is the word average. The failures in this essay concentrate on the long tail and at the decision to stop, and a policy tuned on everyone's median trajectory is tuned away from exactly those.
+
+The sixth explanation was the inversion, and it deserves the full weight: compaction is a transitional problem, and this essay is fussing over a constraint that is dissolving.
+
+The case is not strained. Windows keep growing. Caching makes a large static prefix cheap. The context-collapse paper's own remedy is to let the context grow, not to shrink it better. The clustering paper's gains lived in a narrow budget band, and a keyword baseline tied it. On that reading, the right strategy is to buy a bigger window, cache what does not change, and stop reading compaction papers.
+
+**Objection:** Then compaction goes away.
+
+**Reply:** Not yet.
+
+The evidence that would settle it is specific: measure, on your own long-running tasks, how often a compaction event precedes a repeated action or a missed stop, and whether that rate falls as the window grows. If it falls toward zero, the inversion wins and this essay is a period piece. The failure mode sits in the same paragraph. Long windows degrade before they fill, which is why harnesses compact in the first place, and the trained 64k context that matched an untrained 128k one says horizon can be bought with training as well as with tokens. The constraint may dissolve. It has not dissolved in any of the numbers above.
+
+## KEEP THE LEDGER
+
+The context-collapse team's architectural answer was to stop rewriting. Represent accumulated context as itemized entries, each with an identifier and counters for how often it helped or harmed. Have the model emit compact deltas. Let "lightweight, non-LLM logic" do the merging, so past knowledge is structurally preserved instead of trusted to survive a rewrite.
+
+Never let a model rewrite an accumulated artifact wholesale. Append and edit in place.
+
+That rule is a schema, and [trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is one. Its validator reads four committed ledgers, one clean and three each carrying a planted defect, an event type off the vocabulary, a sequence number that skips, a payload edited after its hash was taken, and catches all three by name. A summary produced at a compaction boundary can sit beside such a ledger as a view. It cannot replace it, because the ledger's sequence numbers are exactly the position the summary loses, and its hashes are exactly the guarantee that nothing was rewritten on the way to the fresh page.
+
+Compact when the work has a boundary, not when the counter says so.
+
+Answer membership questions from a structure, not a summary.
+
+The counter knows how full the window is.
+
+It has never known what was in it.
+
+·   ·
+
+CONTEXT EVENT — REMAINING FIELDS
+
+Decision made by: a token counter, or on a managed API, someone else's token counter.
+Position in task after the event: see summary. Summary does not say.
+Actions repeated since the event: not logged.
+Signature:
+
+The log ends there. The agent, by every account in this essay, kept going.
+
+---
+
+Sources: Agentic Context Engineering (https://arxiv.org/abs/2510.04618); TRACE (https://arxiv.org/abs/2608.06503); Self-Compacting Language Model Agents (https://arxiv.org/abs/2606.23525); Parallel Context Compaction for Long-Horizon LLM Agent Serving (https://arxiv.org/abs/2605.23296); Context Compaction Theory (https://arxiv.org/abs/2608.01326); Control Under Compression (https://arxiv.org/abs/2608.01056); CompactionRL (https://arxiv.org/abs/2607.05378); Compact-Memory LLM Agents (https://arxiv.org/abs/2609.04915); OpenAI, Agents API and hosted sandboxes (https://community.openai.com/t/introducing-the-agents-api-and-hosted-sandboxes/1396481).
