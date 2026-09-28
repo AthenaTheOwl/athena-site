@@ -1,4 +1,4 @@
-# Portfolio health — 2026-09-21
+# Portfolio health — 2026-09-28
 
 ## Deploys
 
@@ -17,32 +17,32 @@
 | athena-site | https://athena-site-six.vercel.app | `Portfolio doors`, `entry points` | PASS |
 | chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | `chip-supply-chain-map` | PASS |
 | supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | `streamlit` | PASS |
-| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W37` | PASS |
+| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W38` | PASS |
 
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 118 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 50 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 9 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 125 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 57 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 7 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 7 | ✅ |
-| chip-supply-chain-map | 0 | ✅ |
-| supplier-risk-rag-agent | 9 | ✅ |
-| ai-field-brief | 9 | ✅ |
-| procurement-negotiation-lab | 9 | ✅ |
-| ai-supply-chain-copilot-prd | 0 | ✅ |
-| mcp-security-lab | 16 | ✅ |
-| trace-to-eval-harness | 0 | ✅ |
-| sports-prediction-os | 16 | ✅ |
-| dispatch-optimizer | 77 | ✅ |
-| LLM-evaluation-framework | 0 | ✅ |
-| News-Bias-Multi-Agent-Pipeline | 86 | ✅ |
+| athena-site | 4 | ✅ |
+| chip-supply-chain-map | 7 | ✅ |
+| supplier-risk-rag-agent | 4 | ✅ |
+| ai-field-brief | 7 | ✅ |
+| procurement-negotiation-lab | 5 | ✅ |
+| ai-supply-chain-copilot-prd | 7 | ✅ |
+| mcp-security-lab | 23 | ✅ |
+| trace-to-eval-harness | 7 | ✅ |
+| sports-prediction-os | 23 | ✅ |
+| dispatch-optimizer | 84 | ✅ |
+| LLM-evaluation-framework | 4 | ✅ |
+| News-Bias-Multi-Agent-Pipeline | 93 | ⚠️ |
 
 ## Starforge cluster forks
 
@@ -58,7 +58,7 @@
 
 ## Manifest drift
 
-- doors.json: 24 entries ✅
+- doors.json: 26 entries ✅
 
 ## CDCP status
 
@@ -83,4 +83,4 @@ Required models: claude-sonnet-4-6
 Verify at: https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 
 ---
-All critical checks passed.
+**1 critical issue(s) detected.** See sections above.
