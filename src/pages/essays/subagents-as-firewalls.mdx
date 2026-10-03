@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "Subagents as firewalls"
 description: "A subagent is a sealed room where an agent's dead ends can die without reaching the parent. Seven findings on when to seal the room, when to share the history, why the walls have to be physical as well as contextual, and why the credentials must not be in any of the rooms."
 date: "2026-09-22"
-readingTime: "11 min read"
+readingTime: "10 min read"
 ---
 
 DELEGATION RECORD — ONE PARENT, THREE SUBAGENTS
@@ -37,7 +37,7 @@ A good research assistant comes back with one page.
 
 They read forty papers to write it. The forty papers are not on the page, and nobody wants them to be.
 
-The page is the product. The forty papers are the firewall doing its job.
+The page is the product.
 
 ## FINDING TWO: START WITH A FUNCTION CALL.
 
@@ -141,7 +141,7 @@ Schmid concedes it for coordination: four agents today may be one agent tomorrow
 
 The third explanation was that forking is always the better deal because caching makes it cheap.
 
-It is cheaper in the single-worker case and wrong in two others. A fan-out of forked researchers copies the parent's whole history once per researcher, and a forked verifier inherits the reasoning it was supposed to check.
+It is cheaper in the single-worker case, and the case does not generalise. Caching lowers the price of re-sending the parent's history; it does not remove it, so a fan-out pays that discounted prefix once per researcher and the bill grows with the headcount. The verifier's problem was never a price: an independent reading is what the fork gives away, and no cache rate buys it back.
 
 **Objection:** Then isolate everything.
 

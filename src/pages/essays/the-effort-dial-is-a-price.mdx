@@ -1,15 +1,15 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "The effort dial is a price"
-description: "This summer the frontier labs handed buyers a knob that sets how hard the model thinks, and with it a decision most buyers cannot make. Seven findings on the dial, the networking standard that did this in 1998, the price list with no labels, models that learn to set their own effort, and the curve a buyer needs to see before touching any of it."
+description: "This summer the frontier labs turned the knob that sets how hard the model thinks into the headline of a release, and handed buyers a decision most of them cannot make. Seven findings on the dial, the networking standard that did this in 1998, the price list with no labels, models that learn to set their own effort, and the curve a buyer needs to see before touching any of it."
 date: "2026-09-22"
-readingTime: "11 min read"
+readingTime: "8 min read"
 ---
 
 SERVICE ORDER — ONE REQUEST
 
 Model: Claude Opus 5.
-Effort: low, medium or high, set by the caller.
+Effort: low, medium, high, xhigh or max, set by the caller.
 What the setting trades: cost against capability.
 Who sets it: the buyer, request by request.
 How the buyer knows which setting this request needed: no field.
@@ -24,7 +24,7 @@ The timing was not an accident. Fortune noted that customers had criticised the 
 
 Nine days earlier, Thinking Machines had shipped Inkling, an open-weights model with an effort setting that runs from 0.2 to 0.99. The launch post is frank about why: developers "care as much about efficiency" as about top-effort benchmark scores, and "Cost and latency are often binding constraints in real-world applications." Its own chart has the model matching a rival on an agentic coding benchmark "at roughly a third of the tokens."
 
-For the first time, how hard a model thinks is a parameter the customer sets and pays for, not an internal detail the vendor fixes for everyone.
+Anthropic's own effort parameter shipped with Opus 4.5 in November 2025, so the knob itself was eight months old. What July changed is its position in the pitch: the setting became the headline of a release and the answer to a billing complaint. How hard a model thinks is a line item the customer picks and pays for, request by request.
 
 ## FINDING TWO: NETWORKS DID THIS IN 1998.
 
@@ -54,7 +54,7 @@ There is a second catch. When revenue rises with effort, the seller's incentive 
 
 Choosing effort before the work assumes the buyer can tell hard requests from easy ones in advance. Often they cannot. Many tasks look simple until they are attempted, and a request that looks cheap and is hard gets the low setting and fails.
 
-Those failures are not spread evenly. They collect in the tail, in exactly the unusual and high-stakes cases where a wrong answer costs the most. Buyers who cannot judge difficulty will tend to choose too low, and when the answer is wrong they will blame the vendor, not the setting.
+Buyers who cannot judge difficulty will tend to choose too low, and when the answer is wrong they will blame the vendor, not the setting.
 
 ## FINDING FIVE: THE MODEL CAN LEARN TO SET ITS OWN DIAL.
 
@@ -76,6 +76,14 @@ Every escalation rule, whether a buyer writes it or a model learns it, makes the
 
 That is why the saving on an average benchmark says little about the saving on a real workload. The average is dominated by the easy cases, where the dial works. The loss is concentrated in the hard ones, where it does not.
 
+·   ·
+
+The thermostat in a rented office has a lock box over it and one person with the key.
+
+The building logs the setting. It never logs what the room needed.
+
+Nobody argues with the log.
+
 ## THE EXPLANATIONS AFTERWARD
 
 Each finding has a cheaper explanation. Each one is weighed.
@@ -96,9 +104,9 @@ The research points that way, and a model that sorts problems by difficulty is b
 
 **Reply:** And let the buyer audit.
 
-The fourth explanation was the inversion, and a procurement officer would make it. Pricing by effort rewards the seller for inefficiency: a vendor paid by the reasoning token earns more whenever its model thinks longer. The dial hands the buyer a judgment the buyer cannot make, and the vendor profits from the buyer's uncertainty in both directions, through overpayment when the setting is too high and blame-free failure when it is too low.
+The fourth explanation was the inversion, and an engineer who has run the measurement would make it. The curve this essay asks for does not hold still. An effort curve is measured against one model version, one prompt and one traffic mix, and all three move: a release recalibrates the levels, a prompt edit shifts the whole line, and last month's requests are not this month's. On that reading the buyer who measures is paying for a snapshot that expires, and the buyer who sets the dial high and negotiates a rate per million tokens comes out ahead.
 
-Finding Three concedes the incentive. What would disarm it is a published curve.
+The recalibration is real, and the vendor documents it: Anthropic's effort guidance tells callers who carried settings over from an earlier model to run a fresh sweep instead of reusing them. The missing number is the decay rate. If a measured curve still picks the same setting a month and a model version later, the measurement pays for itself. If it does not, the answer is to re-run it on a schedule.
 
 **Objection:** Then the vendor should publish what each setting buys.
 
@@ -108,9 +116,7 @@ The evidence that settles it is simple to collect. For a sample of real requests
 
 ## THE CURVE ON YOUR OWN TRAFFIC
 
-[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) draws that kind of curve for a different choice. It replays recorded production requests for a route against a candidate model, scores quality, cost and latency against the incumbent, and writes a decision record that includes a revert rule: the quality drop, cost rise and latency regression that would undo the change.
-
-Choosing an effort setting is the same decision along a different axis. The candidate is not a new model but the same model at a lower setting, and the test is the same: on these requests, what do we lose, what do we save, and at what point do we turn it back up.
+[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) draws that curve. It replays a route's recorded requests at each effort setting, scores quality, cost and latency against the incumbent, and names the cheapest setting that clears the route's own revert thresholds: the quality drop, cost rise and latency regression that would undo the change. The published run uses synthetic variants of the recorded candidate for the low and high settings, so it shows the mechanism and not a measurement. The test on real traffic is the same one: on these requests, what do we lose, what do we save, and at what point do we turn it back up.
 
 Let the buyer turn the dial.
 
@@ -129,4 +135,4 @@ The dial is on the order form now. The curve belongs beside it.
 
 ---
 
-Sources: Fortune, "Anthropic debuts Claude Opus 5 with feature that lets users toggle between cost and capability" (https://fortune.com/2026/07/24/anthropic-debuts-claude-opus-5-with-feature-that-lets-users-toggle-between-cost-and-capability/); Thinking Machines, "Inkling: Our Open-Weights Model" (https://thinkingmachines.ai/news/introducing-inkling/); RFC 2475, "An Architecture for Differentiated Services" (https://www.rfc-editor.org/rfc/rfc2475); "Learning When to Think: Adaptive Reasoning for Test-Time Compute Allocation" (https://arxiv.org/abs/2608.20256).
+Sources: Fortune, "Anthropic debuts Claude Opus 5 with feature that lets users toggle between cost and capability" (https://fortune.com/2026/07/24/anthropic-debuts-claude-opus-5-with-feature-that-lets-users-toggle-between-cost-and-capability/); Anthropic, "Effort" (https://platform.claude.com/docs/en/build-with-claude/effort); Thinking Machines, "Inkling: Our Open-Weights Model" (https://thinkingmachines.ai/news/introducing-inkling/); RFC 2475, "An Architecture for Differentiated Services" (https://www.rfc-editor.org/rfc/rfc2475); "Learning When to Think: Adaptive Reasoning for Test-Time Compute Allocation" (https://arxiv.org/abs/2608.20256).

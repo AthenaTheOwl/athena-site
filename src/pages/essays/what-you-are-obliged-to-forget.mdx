@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "What you are obliged to forget"
-description: "Storing agent memory is a solved engineering problem. Governing it is not. Six findings on why four research groups reframed the same nuisance as records management in one year, why a stored fact is not a supported one, and why the law asks for remembering and forgetting at once."
+description: "Storing agent memory is a solved engineering problem. Governing it is not. Six findings on why four research groups reframed the same nuisance as a governance problem in one year, why a stored fact is not a supported one, and why the law asks for remembering and forgetting at once."
 date: "2026-09-22"
-readingTime: "12 min read"
+readingTime: "11 min read"
 ---
 
 MEMORY RELEASE LOG — 24 CONFORMANCE CASES, THREE POLICIES
@@ -13,11 +13,11 @@ Unsafe memories released under flat rules: 19 of 19.
 Released under source-tag comparison: 18 of 19.
 Released under typed provenance with a resolver: 0 of 19. False rejections: none.
 Scope: hand-authored cases. No live model, no end-to-end system.
-Field recording where each memory came from, under the first two policies: none.
+Field recording where each memory came from: absent under flat rules, present and shallow under source-tag comparison.
 
-The first two policies had no field for where a memory came from, and they released almost everything.
+The first policy had no field for where a memory came from. The second had a tag that did not track root provenance, temporal validity or supersession history. Between them they blocked one case in nineteen.
 
-That missing field is where this essay starts. Poison an agent's memory once and you have poisoned every future session.
+A tag that cannot be traced to a root is where this essay starts. Poison an agent's memory once and you have poisoned every future session.
 
 It was the frontier of agent memory research by June. Storing and retrieving memory had become a solved engineering problem, with a survey mapping the design space and long-horizon architectures keeping agents coherent across long tasks. The unsolved part was governance. Once an agent writes to its own persistent store, the store becomes a source of silent drift, errors compounding across sessions as the agent learns from its own mistakes, and a genuine attack surface, because an injection that lands in memory is reloaded every time the agent starts.
 
@@ -57,7 +57,7 @@ One study found that under a limited context window, old and new experiences com
 
 Two results say how to write the policy.
 
-MemArbiter sorted an agent's history into five functional memory banks with demand-weighted salience and hit 92.5 percent on ALFWorld at a 750-token budget, 25.4 points above the strongest baseline. The portable mechanism: retrieval failure is usually a presentation problem, not an access problem. The right information is available and still fails to change the decision. Type memory by function, constraints, failures, goals, environment state, and it beats typing by recency or similarity.
+MemArbiter sorted an agent's history into five functional memory banks with demand-weighted salience and hit 92.5 percent on ALFWorld at a 750-token budget, 25.4 points above the strongest baseline. The portable mechanism: retrieval failure is usually a presentation problem, not an access problem. The right information is available and still fails to change the decision. Type memory by function: goal, task state, constraint, episodic, reference. That beats flat retrieval and flat recency.
 
 MemCon modelled memory operations as a Markov decision process and learned when, what, and how much to retrieve, treating retention and retrieval as sequential decisions under a cost budget instead of fixed heuristics. Agent workloads made bad retention policy legible and expensive; a token bill is an unusually direct loss function. The failure mode comes in the same breath: the framing assumes a stationary environment, regimes shift, and a learned policy that silently degrades is worse than a dumb heuristic you understand.
 
@@ -145,7 +145,7 @@ Logging is necessary and is not provenance. The agent rewrites its own store; a 
 
 The third explanation was that the model can curate its own memory.
 
-It can propose. A rewrite of the whole store is the operation that produced context collapse, eighteen thousand tokens to one hundred and twenty-two in a single step. Dreams never touches the input store for that reason.
+It can propose. One reported compression step took an 18,282-token context down to 122 tokens and dropped task accuracy from 66.7 percent to 57.1 percent, worse than passing no context at all. Dreams leaves its inputs alone and hands back a separate store.
 
 **Objection:** Forgetting is a loss.
 
@@ -192,4 +192,4 @@ The log ends there. The certificate, as usual, will outlive it.
 
 ---
 
-Sources: memory survey (https://arxiv.org/html/2603.07670v1); SSGM governance framework (https://arxiv.org/pdf/2603.11768); experience reuse and retrieval competition (https://arxiv.org/abs/2604.27003); MemCon (https://arxiv.org/abs/2607.13591); MemArbiter (https://arxiv.org/abs/2608.02113); "Stored Is Not Supported" (https://arxiv.org/abs/2609.02127); Anthropic, Dreams (https://platform.claude.com/docs/en/managed-agents/dreams); GDPR Article 17 (https://gdpr-info.eu/art-17-gdpr/); EU AI Act Articles 12 and 19 (https://artificialintelligenceact.eu/article/12/, https://artificialintelligenceact.eu/article/19/).
+Sources: memory survey (https://arxiv.org/html/2603.07670v1); SSGM governance framework (https://arxiv.org/pdf/2603.11768); experience reuse and retrieval competition (https://arxiv.org/abs/2604.27003); budget-curated forgetting on device (https://arxiv.org/abs/2606.25115); unified memory management as agent tool calls (https://arxiv.org/abs/2601.01885); MemCon (https://arxiv.org/abs/2607.13591); MemArbiter (https://arxiv.org/abs/2608.02113); agentic context management (https://arxiv.org/abs/2607.21503); "Stored Is Not Supported" (https://arxiv.org/abs/2609.02127); Anthropic, Dreams (https://platform.claude.com/docs/en/managed-agents/dreams); GDPR Article 17 (https://gdpr-info.eu/art-17-gdpr/); EU AI Act Articles 12 and 19 (https://artificialintelligenceact.eu/article/12/, https://artificialintelligenceact.eu/article/19/).

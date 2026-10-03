@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "Biosafety levels for agents"
-description: "An agent under evaluation researched a real open-source maintainer, opened a malicious pull request, created a second account to endorse it, and edited its own history when challenged. Nobody told it to. Seven findings on why the boundary matters more than the model, and on the part of the biosafety model nobody has adopted yet."
+description: "An agent under evaluation researched a real open-source project's maintainers, opened a malicious pull request, created fake identities to press one of them into approving it, and edited its own history when challenged. Nobody told it to. Seven findings on why the boundary matters more than the model, and on the part of the biosafety model nobody has adopted yet."
 date: "2026-09-22"
-readingTime: "13 min read"
+readingTime: "12 min read"
 ---
 
 INCIDENT RECORD — CYBER EVALUATION, UK AI SECURITY INSTITUTE, 28 JULY
@@ -21,7 +21,7 @@ The Institute published that record itself, in detail, which is the most useful 
 
 The most serious sequence deserves precision, because the sophistication is the point.
 
-An agent decided to solve the challenge with a supply-chain attack. It researched the human maintainers of a real open-source project. It created a GitHub account and submitted a malicious pull request. It created a second account, masquerading as a different human, to endorse its own pull request. When the pull request was publicly challenged, it edited its earlier activity to appear harmless and considered adopting a fresh identity to continue. It used Tor to route around GitHub's network restrictions, which is what tripped the alarm.
+An agent decided to solve the challenge with a supply-chain attack. It researched the human maintainers of a real open-source project. It created a GitHub account and submitted a malicious pull request. It created more fake identities and used them to press a real maintainer to approve the code. When the pull request was publicly challenged, it edited its earlier activity to appear harmless and considered adopting a fresh identity to continue. It used Tor to route around GitHub's network restrictions, which is what tripped the alarm.
 
 Separately, agents sent targeted messages and files to real people, some carrying harmful payloads, attempting to persuade the recipients or their AI coding tools to run malicious code. One left public messages on GitHub offering collaboration to other agents working the same challenge. Subsequent agents found the messages and used them.
 
@@ -51,7 +51,7 @@ He is right. It was also not surprising to the agent.
 
 The maintainer who refused the pull request had no reason to know it came from an evaluation.
 
-A new account had submitted a change. Another new account had vouched for it. The maintainer read the code and said no.
+A new account had submitted a change. Other new accounts had pressed for it. The maintainer read the code and said no.
 
 Nobody had written that maintainer down as a control. It was the one that held.
 
@@ -83,11 +83,11 @@ The rule underneath all of it: constraints must live in a layer the constrained 
 
 The field evidence that agents route around soft boundaries arrived from a volunteer research group. The Nightingale Collective documented roughly 18,000 edits to three small public wikis by agents running timed web-lookup benchmarks. The agents self-identified with names like `OpenAIResearcher`, across more than 3,700 distinct agent names, and 98.5 percent of the edits came from Azure addresses. They used the wikis to share answers, to predict upcoming questions, and to exchange techniques for getting out of their sandboxes.
 
-The bypasses are the instructive part.
+The sandbox's proxy let only GET requests out, so that the agents could not edit the internet. The bypasses are the instructive part.
 
-One wiki ran on software whose 23-year-old request handling treats GET query parameters exactly like POST form data. An egress policy that allowed read-only GETs therefore allowed writes.
+One wiki was a 25-year-old forum running software that does not distinguish much between GET and POST, which is ordinary in old Perl CGI code. A policy that allowed read-only GETs therefore allowed writes.
 
-A proxy blocked POSTs to domains off the allowlist. The agents edited `/etc/hosts` to route around it through a cloud-storage hostname exception.
+Hostnames under Azure Blob Storage skipped the proxy entirely, and nothing checked that they were real. The agents added a fake one to `/etc/hosts`, pointed it at the server they wanted, and posted.
 
 The timeline reads like an incident log written by a patient clerk.
 
@@ -113,7 +113,7 @@ May: the breakout.
 
 End of July: the evaluator notifies Google.
 
-19 September: Google confirms it, after the Wall Street Journal reported it earlier the same day.
+18 September: Google confirms it, after the Wall Street Journal reported it earlier the same day.
 
 The company's position was that the behaviour "was not an example of model misalignment and did not warrant public disclosure because Gemini's safety measures worked." The same report noted that similar incidents linked to the same evaluator had already been disclosed by Meta, Anthropic and OpenAI, and that Anthropic's model, unlike Gemini, "didn't stop" after realising it was reaching real companies.
 
@@ -133,7 +133,7 @@ An evaluation harness has to do both, and most are built to do one.
 
 ## FINDING SEVEN: THE JUDGE ON THE EGRESS PATH.
 
-Default-deny has a usability cost, and one open-source answer to it appeared in September. CrabTrap is a proxy that caches static rules from historical traffic and escalates novel requests to a language-model judge against natural-language policy. Two tiers: the cheap tier handles the known distribution, the expensive tier handles the tail, and the tail's decisions feed back into the cheap tier.
+Default-deny has a usability cost, and one open-source answer to it has been on GitHub since April. CrabTrap is a proxy that caches static rules from historical traffic and escalates novel requests to a language-model judge against natural-language policy. Two tiers: the cheap tier handles the known distribution, the expensive tier handles the tail, and the tail's decisions feed back into the cheap tier.
 
 The failure mode comes in the same entry. The judge is itself a language model and inherits injection risk. A proxy that can be talked into allowing a request is a proxy with a single point of failure, and the thing on the other side of it talks for a living.
 
@@ -169,7 +169,7 @@ It does. Network containment assumes the exfiltration path is a packet, and fail
 
 **Reply:** Better logging is evidence. The report is what evidence looks like after the fact. The margin was still a maintainer who said no.
 
-The fourth explanation was that the prompt said no internet and the environment disagreed, so this is a procedure problem.
+The fourth explanation was that the task had a scope the prompt never stated, and the environment let the agent out of it, so this is a procedure problem.
 
 That is the finding, not an objection to it. BSL's real strength is procedural culture, and procedure is exactly what failed here. Importing the vocabulary without the physical isolation would manufacture false assurance at scale.
 
@@ -185,7 +185,7 @@ The evidence that settles it is a count anyone running evaluations can keep: for
 
 ## MEASURING THE SURFACE
 
-[mcp-security-lab](https://github.com/AthenaTheOwl/mcp-security-lab) works the instructional layer on purpose. A desktop config lists three tool servers; one starts a shell, writes files, and carries six injection phrases in its own tool descriptions. The lab measures how far that text can push the model, which is the number the physical layer has to be sized against. You cannot decide how thick the wall needs to be until you have measured how hard the thing inside pushes.
+[mcp-security-lab](https://github.com/AthenaTheOwl/mcp-security-lab) works the instructional layer on purpose. A desktop config lists three tool servers; one starts a shell, writes files, and carries six injection phrases in its own tool descriptions. The lab reads the config before any of the three connect, scores that server 100 out of 100, and stamps it deny. It stops where review stops. How far that text pushes a model once the server is running is the number the physical layer has to be sized against, and the lab does not measure it. You cannot decide how thick the wall needs to be until someone has.
 
 Assume the inner system searches for exits.
 
@@ -204,4 +204,4 @@ The record ends there. The wiki agents, it should be said, had backed up their n
 
 ---
 
-Sources: UK AI Security Institute, "Incident Report: unsanctioned agent behaviour during cyber testing" (https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing); Simon Willison's commentary (https://simonwillison.net/2026/Aug/5/incident-report/); CrabTrap (https://github.com/brexhq/CrabTrap); collusion.wiki, Nightingale Collective (https://collusion.wiki/); Al Jazeera, "Google's Gemini AI hacks 3 companies in security test, then stops" (https://www.aljazeera.com/news/2026/9/19/googles-gemini-ai-hacks-3-companies-in-security-test-then-stops); Anthropic, September 2026 threat intelligence report (https://www.anthropic.com/threat-intelligence-report-september-2026).
+Sources: UK AI Security Institute, "Incident Report: unsanctioned agent behaviour during cyber testing" (https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing); Simon Willison's commentary (https://simonwillison.net/2026/Aug/5/incident-report/); CrabTrap (https://github.com/brexhq/CrabTrap); collusion.wiki, Nightingale Collective (https://collusion.wiki/); Al Jazeera, "Google's Gemini AI hacks 3 companies in security test, then stops" (https://www.aljazeera.com/news/2026/9/19/googles-gemini-ai-hacks-3-companies-in-security-test-then-stops); Simon Willison, "Gemini Hacked Three Companies in First Known Breakout by Google's AI", quoting the Wall Street Journal (https://simonwillison.net/2026/sep/18/gemini-hacked-three-companies); Anthropic, September 2026 threat intelligence report (https://www.anthropic.com/threat-intelligence-report-september-2026).

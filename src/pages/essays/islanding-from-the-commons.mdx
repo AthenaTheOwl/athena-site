@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "Islanding from the commons"
 description: "The largest users of a shared grid are leaving the queue and building their own supply. Six findings on why the arbitrage is temporal, not technical, why only the rich can take it, and why the bill finds them anyway, through the gas market and through Congress."
 date: "2026-09-22"
-readingTime: "11 min read"
+readingTime: "9 min read"
 ---
 
 INTERCONNECTION QUEUE — ERCOT, AUGUST 2026
@@ -22,7 +22,7 @@ The arbitrage is temporal, not technical.
 
 When a shared resource has a multi-year queue, privately provisioning a worse version of it is rational if time-to-revenue dominates efficiency. That is the whole mechanism, and it does not care about the resource.
 
-The deals came in every fuel. Generation built at the data-centre fence line, with the grid as backup. A nuclear startup and a chipmaker announcing reactor-powered compute. A hyperscaler contracting geothermal to skip the line. Co-locate generation with load and a multi-year queue becomes a controllable siting problem.
+The deals came in every fuel. Gas turbines at the data-centre fence line, with the grid as backup. In July 2026 the reactor startup Aalo Atomics and the AI-infrastructure firm Crusoe announced a 10-megawatt microreactor at Idaho National Laboratory powering a modular data centre in 2027, with 50-megawatt pods at Crusoe sites by the end of 2029. In September, Google signed 396 megawatts of geothermal out of Fervo's Cape Station in Utah, delivery from 2028, for a data centre that does not exist yet. Co-locate generation with load and a multi-year queue becomes a controllable siting problem.
 
 The name for it is islanding. When a shared utility congests, the largest users defect to dedicated supply and internalise the cost, and the pattern has cousins everywhere the commons is slow: private 5G against carrier spectrum, on-premises inference against congested API tiers, captive water and cooling.
 
@@ -74,7 +74,7 @@ It did not leave the gas market.
 
 On Wednesday 16 September, the House passed a bill directing state utility regulators to consider rules requiring data centres to cover the higher costs of their large-scale power use. The vote was 417 to 3. It still needs the Senate.
 
-A near-unanimous vote on a bill that only asks states to consider something is a signal, and the signal is aimed at the thirty-plus state legislatures already moving data-centre bills, some of them floating moratoria and several revisiting tax credits.
+A near-unanimous vote on a bill that only asks states to consider something is a signal, and the signal is aimed at the states already legislating. More than 300 data-centre bills were filed across thirty-plus legislatures in the first six weeks of 2026. New York, South Dakota and Oklahoma filed moratorium bills. Virginia, Georgia and Oklahoma moved to cut the credits that brought the campuses in.
 
 The arbitrage exists because the queue is mispriced, and queues get repriced politically. Every bypass is a bet that the repricing arrives after the plant is paid off. The asset has political duration, not legal duration: a rule change can void it, and rule changes arrive once the arbitrage is visible enough to embarrass someone.
 
@@ -104,13 +104,9 @@ The queue gets shorter for everyone behind you, and the fixed cost of the grid i
 
 The findings have their exits. Each gets its due.
 
-The first explanation was that this is cost-shifting dressed as infrastructure.
+The first explanation was that the queue is partly phantom. SemiAnalysis counted 311 of the 410 GW then sitting in the ERCOT large-load queue as phantom, so much of the observed scarcity would clear on its own, and the bypass premium may be paying to avoid congestion that was never coming.
 
-Yes. The defector's economics work partly because someone else's rate base absorbs the fixed cost of the grid it left, and Finding Four says it can push costs onto others even from outside the grid. The honest version of the thesis was never that islanding is efficient, only that it is fast, and that speed is currently worth more than efficiency to the people who can afford it.
-
-The second explanation was that the queue is partly phantom. Most projects in interconnection queues eventually withdraw, so much of the observed scarcity would clear on its own, and the bypass premium may be paying to avoid congestion that was never coming.
-
-Also correct, and unanswerable from inside the queue. A phantom queue and a real one look identical to the applicant in year three. The bypass is insurance against not knowing which one you are in, and insurance is usually overpriced to the people who never claim.
+Correct, and unanswerable from inside the queue. A phantom queue and a real one look identical to the applicant in year three. The bypass is insurance against not knowing which one you are in, and insurance is usually overpriced to the people who never claim.
 
 **Objection:** Then islanding is a bet on continued dysfunction.
 
@@ -120,15 +116,15 @@ Also correct, and unanswerable from inside the queue. A phantom queue and a real
 
 **Reply:** The medium one, until a regulator decides otherwise, and the tell is embarrassment.
 
-The third explanation was that the mechanism is about electricity and the analogies are decoration.
+The second explanation was that the mechanism is about electricity and the analogies are decoration.
 
-When a shared regulated resource is rationed by queue position instead of price, the highest-value user pays a large premium to leave the queue, accepting worse unit economics for better schedule certainty. Dedicated clinical trial sites. Private port terminals. Captive fab capacity. Private spectrum. The list is the same buyer with a different queue.
+When a shared regulated resource is rationed by queue position instead of price, the highest-value user pays a premium to leave the queue, accepting worse unit economics for better schedule certainty. Electricity is where that premium is visible, because the queue, the rate case and the docket are all public. In clinical trial sites, port berths and fab capacity the same shape is a prediction and not yet a finding: nobody publishes the wait, so nobody can price the bypass. The analogy earns its place only where a regulator posts the queue.
 
-The fourth explanation was that federal permitting policy explicitly encourages on-site generation, so the political risk is lower than this essay implies.
+The third explanation was that federal permitting policy explicitly encourages on-site generation, so the political risk is lower than this essay implies.
 
 Federal policy encourages it. Ratepayers vote in states, and the House vote says Congress has noticed which electorate matters. The two are not the same, and the one with the utility commission is the one that sets the rate.
 
-The fifth explanation was the inversion, and it is the grid operator's view: islanding is a temporary distortion that reform is about to remove. If FERC's large-load rules give flexible loads interconnection studies in sixty days, the queue stops being the binding constraint for anyone willing to curtail, and the islands built to escape it become stranded, expensive, and fuelled by gas.
+The fourth explanation was the inversion, and it is the grid operator's view: islanding is a temporary distortion that reform is about to remove. If FERC's large-load rules give flexible loads interconnection studies in sixty days, the queue stops being the binding constraint for anyone willing to curtail, and the islands built to escape it become stranded, expensive, and fuelled by gas.
 
 That outcome is plausible, and the docket is asking exactly that question.
 
@@ -163,4 +159,4 @@ The record ends there. The island, it should be said, is still connected to the 
 
 ---
 
-Sources: Utility Dive on the Texas interconnection pause (https://www.utilitydive.com/news/texas-hits-pause-data-center-interconnections/827046/); Day Pitney on FERC's PJM co-location order (https://www.daypitney.com/alert-federal-energy-regulatory-commission-orders-major-pjm-tariff-reforms-for-co-located-load-and-behind-the-meter-generation); FERC, Interconnection of Large Loads, Docket RM26-4 (https://www.ferc.gov/rm26-4); Power Engineering on Oracle's SMR design (https://www.power-eng.com/nuclear/smrs/oracle-designing-data-center-to-be-powered-by-trio-of-small-modular-reactors/); Energy Innovation in Utility Dive on behind-the-meter gas and bills (https://www.utilitydive.com/news/data-centers-raise-energy-bills-not-for-reason-you-think/822205/); the Inquirer on the House vote (https://www.inquirer.com/politics/nation/house-bill-data-center-energy-costs-20260917.html); Epoch on the compute crunch (https://epoch.ai/gradient-updates/is-a-compute-crunch-coming); Crunchbase on fence-line generation (https://news.crunchbase.com/venture/biggest-funding-rounds-ai-energy-biotech-joulent/).
+Sources: Utility Dive on the Texas interconnection pause (https://www.utilitydive.com/news/texas-hits-pause-data-center-interconnections/827046/); Day Pitney on FERC's PJM co-location order (https://www.daypitney.com/alert-federal-energy-regulatory-commission-orders-major-pjm-tariff-reforms-for-co-located-load-and-behind-the-meter-generation); FERC, Interconnection of Large Loads, Docket RM26-4 (https://www.ferc.gov/rm26-4); Power Engineering on Oracle's SMR design (https://www.power-eng.com/nuclear/smrs/oracle-designing-data-center-to-be-powered-by-trio-of-small-modular-reactors/); Energy Innovation in Utility Dive on behind-the-meter gas and bills (https://www.utilitydive.com/news/data-centers-raise-energy-bills-not-for-reason-you-think/822205/); the Inquirer on the House vote (https://www.inquirer.com/politics/nation/house-bill-data-center-energy-costs-20260917.html); MultiState on 2026 state data-centre legislation (https://www.multistate.us/insider/2026/2/20/state-data-center-legislation-in-2026-tackles-energy-and-tax-issues); Epoch on the compute crunch (https://epoch.ai/gradient-updates/is-a-compute-crunch-coming); Crusoe and Aalo Atomics on the Idaho microreactor (https://crusoe.ai/newsroom/crusoe-and-aalo-atomics-form-strategic-partnership-with-goal-of-deploying-first-nuclear-powered-ai-factory/); Power Engineering on the Google–Fervo geothermal PPA (https://www.power-eng.com/renewables/geothermal/fervo-energy-and-google-ink-largest-ever-geothermal-ppa-to-power-data-centers/).

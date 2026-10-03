@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "Grep beats the index"
 description: "A flat directory of text files and two tool calls outperformed eight purpose-built memory systems. Seven findings about when you decide what to keep, and the case for the index."
 date: "2026-09-21"
-readingTime: "12 min read"
+readingTime: "11 min read"
 ---
 
 INGEST LOG — KNOWLEDGE-GRAPH MEMORY, ONE WEB-AGENT TRAJECTORY
@@ -146,7 +146,7 @@ Grep within a file, server-side regex against parsed text, to isolate a serial n
 
 Read, to fetch the surrounding context when a top-k chunk cuts off mid-sentence.
 
-Semantic search demotes from "the retrieval system" to one tool among several, with deterministic navigation handling the cases embeddings structurally cannot. Coding agents made the same move a year earlier, when file navigation replaced embedding-indexed code search.
+Semantic search demotes from "the retrieval system" to one tool among several, with deterministic navigation handling the cases embeddings structurally cannot.
 
 ## FINDING SEVEN: THE FAILURES THAT REMAIN ARE NOT RETRIEVAL FAILURES.
 
@@ -154,7 +154,7 @@ The same USTC paper looked at its first hundred errors on MuSiQue. Most were fai
 
 Better plumbing does not stop a model confusing two people with similar names.
 
-That is the useful ceiling on every result above. Retrieval quality is no longer automatically the binding constraint, which means the binding constraint has moved somewhere else, and one piece of advice applies to all of them: measure surfaced evidence recall separately from answer accuracy, because they fail for different reasons and only the first one is the retriever's fault.
+That is the useful ceiling on every result above. Retrieval quality is no longer automatically the binding constraint: the paper's own accounting moves the bottleneck to "found documents but reasoned incorrectly."
 
 ·   ·
 
@@ -194,7 +194,7 @@ It is. It is also a vendor moving its product to the shape a paper found general
 
 The fifth explanation was that all of this depends on a strong model.
 
-Much of it does, and the sources are candid about which parts. The Waterloo result is framed on capable models in a loop; a weaker model is a worse reranker and the case for a good retriever returns. The USTC gains largely evaporated on a weak backbone, which won three of five datasets and lost one to a graph method. The PwC result cuts the other way: weaker models gained more from grep, because they refine queries inconsistently and lexical precision covers for it. The honest summary is that the loop needs a capable model and literal matching helps an incapable one.
+Much of it does, and the sources are candid about which parts. The Waterloo result is framed on capable models in a loop; a weaker model is a worse reranker and the case for a good retriever returns. The USTC gains narrowed on a weak backbone: the layered system led on three of five datasets and lost 2WikiMultiHopQA to a graph method, 60.2 against 64.7. The PwC result cuts the other way: weaker models gained more from grep, because they refine queries inconsistently and lexical precision covers for it. The honest summary is that the loop needs a capable model and literal matching helps an incapable one.
 
 The sixth explanation was the inversion, and it deserves a full hearing: dense retrieval is right, and this essay mistakes a run of agent-friendly benchmarks for a law.
 

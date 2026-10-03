@@ -1,14 +1,14 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "The resident examiner"
-description: "In one summer, oversight of frontier AI moved from 'report it yourself' to 'we will have someone in the building.' Banks and reactors got there decades ago. Six findings on the mechanism, the precondition, and the field on the docket nobody has filled."
+description: "In one summer, oversight of frontier AI moved from 'report it yourself' to 'we will have someone in the building.' Banks and reactors got there decades ago. Five findings on the mechanism, the precondition, and the field on the docket nobody has filled."
 date: "2026-09-22"
-readingTime: "11 min read"
+readingTime: "9 min read"
 ---
 
 DOCKET — OVERSIGHT OF FRONTIER AI, SUMMER 2026
 
-June: a presidential action on covered frontier models gives the government privileged access to assess dual-use risk before release. Mechanism: pre-release review.
+2 June: a presidential action directs the design of a voluntary framework under which developers may give the government access to covered frontier models for up to 30 days before release, with the designation threshold set by a classified cyber-capability benchmark. Mechanism: pre-release review, if the developer agrees.
 1 July: an export-licence requirement on two frontier models is lifted after the lab agrees to "proactively detect and address security risks associated with the models" and to inform the government of "malicious activity." Mechanism: self-reporting.
 3 September: an FDA pilot lets generative-AI medical devices reach patients before they are authorised. Mechanism: release under observation.
 4 September: the federal auto-safety regulator opens a probe into nearly 1,000 driverless vehicles, the day after commercial deployment began, examining the basis for the manufacturer's certification. Mechanism: self-certification, questioned afterward.
@@ -23,7 +23,7 @@ The unfilled field is the oldest problem in supervision, and it is where this es
 
 The July arrangement is bonded self-regulation in its classic form: the regulator stops inspecting every unit and mandates an internal detect-and-report loop, with consequences attached. HACCP for food. Suspicious-activity reports for banks. Security reporting for models.
 
-The summer's incidents made the case against relying on it from two directions. Self-reporting surfaces failures only after economic damage, because the reporter is the last party with an incentive to look and the first with an incentive to wait. And self-evolving agent systems break the older assumption underneath every audit regime: that evaluating the finished artifact tells you what it will do.
+The summer's incidents made the case against relying on it from two directions. Self-reporting surfaces failures only after economic damage, because the reporter is the last party with an incentive to look and the first with an incentive to wait. And an agent system that edits its own tools and prompts between releases breaks the older assumption underneath every audit regime: that evaluating the finished artifact tells you what it will do.
 
 A point-in-time audit of a system that rewrites itself between audits is a photograph of a river.
 
@@ -49,21 +49,21 @@ The inspection report is not the valuable part. The valuable part is that everyo
 
 ## FINDING THREE: RELEASE, THEN CONFIRM, WITH A DEADLINE.
 
-By September the FDA was "provisionally allowing some developers to launch their products on the market," with four devices recently accepted into a pilot called TEMPO that lets them reach patients before authorisation, under observation. The transfer to agents is exact. When a technology's failure modes appear only in deployment, replace gate-then-release with release-then-monitor, and make the monitoring the evidentiary record. Regulators now have the internal capacity to process continuous telemetry instead of periodic filings, which is the first time that sentence has been true.
+By September the FDA was "provisionally allowing some developers to launch their products on the market," with four devices recently accepted into a pilot called TEMPO that lets them reach patients before authorisation, under observation. The transfer to agents is exact. When a technology's failure modes appear only in deployment, replace gate-then-release with release-then-monitor, and make the monitoring the evidentiary record. TEMPO's participants have to collect, monitor and report real-world performance data on the device's intended use, which makes the agency a consumer of running telemetry instead of periodic filings.
 
 The companion pattern is accelerated approval, and it carries the fix for the obvious abuse. Separate the decision to permit from the decision to confirm, and make confirmation binding with a deadline. For AI deployment: release on benchmark surrogates, with binding real-world outcome reporting within twelve months.
 
-The failure mode is the same in both regimes, and it is documented. Unenforced confirmatory obligations turn staged approval into approval with extra steps. "Temporary under observation" has a way of becoming permanent regardless of what the observation shows, and without withdrawal teeth the surrogate becomes the endpoint.
+The failure mode is the same in both regimes. Unenforced confirmatory obligations turn staged approval into approval with extra steps. "Temporary under observation" has a way of becoming permanent regardless of what the observation shows, and without withdrawal teeth the surrogate becomes the endpoint.
 
 ## FINDING FOUR: "WHO CERTIFIED THIS?" IS THE MOST VALUABLE POSITION IN THE STACK.
 
 The day after Tesla began commercial deployment of its two-seat Cybercab in Austin, the federal auto-safety regulator opened a probe into nearly 1,000 of them. The vehicle "lacks permanently attached conventional manual controls, including a steering wheel, brake pedal, accelerator pedal and mirrors," and the agency said it would examine the basis for the company's certification against federal safety standards.
 
-When a system removes the human control surface, the question of who certified it becomes the binding constraint on deployment, and therefore the most valuable position in the stack. Computer-use agents and driverless vehicles both removed the human in the loop inside the same eighteen months. The probe is that question being asked one day late.
+When a system removes the human control surface, the question of who certified it becomes the binding constraint on deployment, and therefore the most valuable position in the stack. Computer-use agents and driverless vehicles have both removed the human in the loop, and only one of the two has a certification regime that can ask who signed off. The probe is that question being asked one day late.
 
 The older version is regulatory qualification as a moat: get a regulator to accept your tool as a standard, so adoption is driven by de-risking instead of raw performance. It is narrow and slow, and a tool blessed for one use confers no halo elsewhere.
 
-And the moat has a precise downside. Certification regimes calcify around whoever's architecture arrives first, locking in a technically inferior design for a decade. The existing exemption path for vehicles without manual controls, capped at 2,500 vehicles per manufacturer, is the shape of that lock-in forming.
+And the moat has a precise downside. Certification regimes calcify around whoever's architecture arrives first, locking in a technically inferior design for a decade. The existing exemption path for vehicles without manual controls, Part 555, is capped at 2,500 vehicles per manufacturer in any twelve-month period, and a renewable annual allowance is the shape of that lock-in forming.
 
 ## FINDING FIVE: THE INSTITUTION NEEDS PEOPLE WHO DO NOT EXIST YET.
 
@@ -73,13 +73,15 @@ The credentialing and training pipeline for evaluators does not exist. Neither d
 
 A resident examiner without those tools is a person with a badge and a chair.
 
-A resident examiner who is one of forty qualified people in the world has a scarcity problem, and scarcity is where capture starts.
+A resident examiner drawn from a pool that small has a scarcity problem, and scarcity is where capture starts.
 
 ·   ·
 
 Every entry on the docket is a different answer to one question: who is in the room when the thing goes wrong.
 
-In June the answer was nobody until release. By September it was somebody with a desk. The answers moved closer to the room one incident at a time.
+In June the answer was a reviewer the developer could decline. By September it was somebody with a desk and a badge that worked.
+
+The answer moved one incident at a time, and it moved toward the room.
 
 ## THE EXPLANATIONS AFTERWARD
 
@@ -142,4 +144,4 @@ The docket ends there. The desks, the badges and the laptops were promised for t
 
 ---
 
-Sources: Dario Amodei, "We Must Pace the Frontier" (https://darioamodei.com/post/we-must-pace-the-frontier); TechCrunch on the plan (https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier/); Al Jazeera on the lifted export restrictions (https://www.aljazeera.com/economy/2026/7/1/us-lifts-restrictions-on-powerful-ai-models-fable-mythos-anthropic-says); White House, presidential action on covered frontier models (https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/); STAT on the FDA TEMPO pilot (https://www.statnews.com/2026/09/03/tempo-fda-pilor-generative-ai-medical-device-regulation/); CNBC on the Cybercab probe (https://www.cnbc.com/2026/09/04/us-auto-safety-regulator-opens-probe-into-nearly-1000-tesla-cybercabs.html).
+Sources: Dario Amodei, "We Must Pace the Frontier" (https://darioamodei.com/post/we-must-pace-the-frontier); TechCrunch on the plan (https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier/); Al Jazeera on the lifted export restrictions (https://www.aljazeera.com/economy/2026/7/1/us-lifts-restrictions-on-powerful-ai-models-fable-mythos-anthropic-says); White House, presidential action on covered frontier models (https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/); STAT on the FDA TEMPO pilot (https://www.statnews.com/2026/09/03/tempo-fda-pilor-generative-ai-medical-device-regulation/); CNBC on the Cybercab probe (https://www.cnbc.com/2026/09/04/us-auto-safety-regulator-opens-probe-into-nearly-1000-tesla-cybercabs.html); FDA on the TEMPO pilot's real-world performance reporting (https://www.fda.gov/news-events/press-announcements/fda-launches-tempo-first-its-kind-digital-health-pilot-expand-access-chronic-disease-technologies); 49 U.S.C. 30113 on the exemption cap (https://www.law.cornell.edu/uscode/text/49/30113).

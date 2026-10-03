@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "The drawer has a test suite"
 description: "Two archived repositories of old practice problems, opened in September 2026 and run. Five findings on the smallest environment there is, the classical toolkit underneath the new one, and what an archive does when nothing checks it."
 date: "2026-09-23"
-readingTime: "7 min read"
+readingTime: "6 min read"
 ---
 
 ARCHIVE INVENTORY — ONE DRAWER
@@ -84,7 +84,7 @@ LAB 0 — WARMUP: 63 of 68. The five failures are `NAME`, `COLLABORATORS`, `PYTH
 
 LAB 4 — RULE-BASED SYSTEMS: failed on import. `utils.py` imported `MutableMapping` from `collections`, one of the deprecated aliases Python 3.10 removed. The bytecode still sitting in three of the folders was compiled by CPython 3.8, which still had the alias.
 
-LAB 7 — NEURAL NETS: `SyntaxError` at line 197. The line read `<<<<<<< Updated upstream`. Half of a merge conflict was committed, the opening marker without its partner, directly above an empty survey header.
+LAB 7 — NEURAL NETS: `SyntaxError` at line 197. The line read `<<<<<<< Updated upstream`. Half of a merge conflict was committed, the opening marker without its partner, three lines above an empty survey header.
 
 Nothing in the archive changed for the Lab 4 failure. The language moved underneath it.
 
@@ -133,7 +133,7 @@ Also correct: it cannot fail a wrong answer. The MIT archive has the strong veri
 
 The third explanation was the inversion, and an archivist would make it. An archive is supposed to be frozen. Running 2020 coursework on a 2026 interpreter measures the present, not the work, and the honest preservation is a pinned environment, not a green badge. On that reading the Lab 4 failure is the archive working as designed and the check is the thing that is wrong.
 
-Part of that holds. The Lab 4 failure belongs to the interpreter, and the evidence that settles it is one run under Python 3.8: if Lab 4 passes there, the archive is intact and only the pin is missing. The other two failures survive any interpreter. A syntax error is a syntax error in 3.8, and no interpreter restores the survey answers. The failure mode of the archivist's position is a pin nobody writes down, which is how Lab 4 got here.
+Part of that holds. The Lab 4 failure belongs to the interpreter, and the repair settles it: one import line moved from `collections` to `collections.abc` and the lab passes. The student's work was intact and only the pin was missing. The other two failures survive any interpreter. A syntax error is a syntax error in 3.8, and no interpreter restores the survey answers. The failure mode of the archivist's position is a pin nobody writes down, which is how Lab 4 got here.
 
 ## THE DRAWER
 

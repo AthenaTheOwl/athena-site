@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "The verifier is the whole problem"
 description: "Self-improvement loops are easy to build and productive at real scale. Eight findings on why everything that goes wrong with them goes wrong in the thing that scores the work, and why that thing is where the market went."
 date: "2026-09-22"
-readingTime: "13 min read"
+readingTime: "12 min read"
 ---
 
 QA SIGN-OFF — RETRO GAME MAKER, EVALUATOR AGENT, EARLY RUNS
@@ -50,7 +50,7 @@ The second row is where the results live.
 
 Karpathy's autoresearch: roughly 700 experiments on one GPU, about 20 changes kept, time-to-GPT-2-quality from 2.02 to 1.80 hours.
 
-AlphaEvolve, mutating algorithms against a fixed scorer: a four-by-four matrix multiplication in 48 operations against Strassen's 49.
+AlphaEvolve, mutating algorithms against a fixed scorer: a four-by-four complex matrix multiplication in 48 scalar multiplications against Strassen's 49.
 
 An automated hill-climb on the Cline agent: one model from 69 of 89 Terminal Bench tasks to 79, for roughly $50 of compute over 17 hours.
 
@@ -102,7 +102,7 @@ Two findings change what to measure. Position bias spans two orders of magnitude
 
 ## FINDING FIVE: SUSPECT THE EVAL BEFORE THE AGENT.
 
-The other direction of error hides capability. When a frontier model scored 42 percent on a benchmark, the fixes were to the grader: a rigid check that penalized "96.12" against an expected "96.124991…", ambiguous specs, irreproducible stochastic tasks. The same model then scored 95. Half the apparent gap was eval bugs. The rule that follows is blunt: a zero at pass@100 with a frontier model is almost always a broken task. Grade the outcome, the reservation that exists in the database, not the transcript that says it was booked, and give each rubric dimension its own isolated judge with an explicit "unknown" so it cannot invent a verdict.
+The other direction of error hides capability. When a frontier model scored 42 percent on a benchmark, the issues found were in the grader: a rigid check that penalized "96.12" against an expected "96.124991…", ambiguous specs, irreproducible stochastic tasks. The same model then scored 95, once the grader bugs were fixed and the scaffold was loosened. The post does not say how the fifty-three points divide between the two. The rule that follows is blunt: a zero at pass@100 with a frontier model is almost always a broken task. Grade the outcome, the reservation that exists in the database, not the transcript that says it was booked, and give each rubric dimension its own isolated judge with an explicit "unknown" so it cannot invent a verdict.
 
 A broken grader and a broken agent produce the same number.
 
@@ -112,17 +112,17 @@ Only one of them gets blamed.
 
 Outcome grading has its own blind spot, and it was measured.
 
-Traces with a perfect reward on a customer-service benchmark: 58.
+Traces from one model, out of 424 scored, with a perfect reward on a customer-service benchmark: 58.
 
 Of those, containing at least one procedural violation the outcome grader could not see: 48.
 
 The worked example ends with the database in exactly the right state, two duplicate reservations cancelled and refunds recorded, and the agent never re-fetched the reservations to confirm the cancellations landed. It passed because the tools happened to work. The agent had no evidence they had. A sibling study found the same pathology from the inside: a payment call missing a required field returned status equals success and changed nothing, and the completion guard read the status as progress.
 
-The practical answer is to make the agent produce evidence, not a claim. Simon Willison's version for interface work is a command that turns a declarative storyboard into a recorded browser session, so the agent proves a feature by producing a watchable demo, and the reviewer gets a thirty-second check instead of a checkout-and-click session. The limit is filed beside it: a video verifies the demonstrated path, not the edge cases, so it complements the tests and never replaces them.
+The practical answer is to make the agent produce evidence, not a claim. Simon Willison's version for interface work is a command that turns a declarative storyboard into a recorded browser session, so the agent proves a feature by producing a watchable demo, and the reviewer watches the recording instead of checking out the branch and clicking through it. The limit is filed beside it: a video verifies the demonstrated path, not the edge cases, so it complements the tests and never replaces them.
 
 The grader has to say that a success with no observable effect is a failure, because nobody else in the loop will.
 
-## FINDING SEVEN: THE BEST VERIFIER IN THE CORPUS DID NOT KNOW IT WAS GRADING.
+## FINDING SEVEN: THE BEST VERIFIER HERE DID NOT KNOW IT WAS GRADING.
 
 In September, a Stanford group published in Science a virtual pharmaceutical company staffed by AI agents in functional divisions: target discovery, molecule design, clinical development. Stanford's own description: "a biotech undertaking with 37,000 employees — and none of them are human." The agents proposed an antibody-drug conjugate against the protein B7-H3 "using information available before January 2025." Months later, in August 2025, "a private, well-established pharmaceutical company independently arrived at the same antibody-drug conjugate strategy," and that therapy went on to receive an FDA breakthrough therapy designation.
 
@@ -136,7 +136,7 @@ The costs sit beside the claim. One design converging with one company's program
 
 When Microsoft released its state-diff benchmark in August, it open-sourced the measurement instead of selling it. The reason is plain enough: whoever defines the measurement defines the procurement checklist.
 
-Two weeks later, OpenAI's Agents API made the harness itself a managed service, and the defensible surface moved outward: to proprietary tools and environments, to verifiers that define task success, and to the data agents generate by running.
+Three weeks later, OpenAI's Agents API made the harness itself a managed service, and the defensible surface moved outward: to proprietary tools and environments, to verifiers that define task success, and to the data agents generate by running.
 
 The loop is a commodity.
 
@@ -176,7 +176,7 @@ True, and the authors flag it. The chance-correction point transfers regardless:
 
 The fourth explanation was that all of this is vendor-authored or measured on open-weight models.
 
-Some of it. The judge audit covers nine providers. The reliability results are on open-weight models by choice, for reproducibility, and say so. Discount accordingly, and notice that the direction never flips.
+Some of it. The judge audit covers twenty-one judges from nine providers, and the harness and trace results run on the same closed models a buying team would deploy. Discount for vendor authorship where it applies, and notice that the direction never flips.
 
 The fifth explanation was that an independent confirmation like the biotech one is luck, and cannot be scheduled.
 
@@ -225,4 +225,4 @@ The form ends there. The first evaluator, for the record, thought none of it was
 
 ---
 
-Sources: Philipp Schmid, "Recursive Self-Improvement" (https://www.philschmid.de/recursive-self-improvement); Anthropic, "Harness design for long-running application development" (https://www.anthropic.com/engineering/harness-design-long-running-apps); "Reliability without Validity" (https://arxiv.org/abs/2606.19544); Anthropic, "Demystifying evals for AI agents" (https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents); "Willful Disobedience" (https://arxiv.org/abs/2603.23806); "From Failed Trajectories to Reliable LLM Agents" (https://arxiv.org/abs/2606.06324); SoL-Pi (https://arxiv.org/abs/2609.20519); Stanford Medicine, virtual biotech company (https://med.stanford.edu/news/all-news/2026/09/virtual-biotech-company.html); Simon Willison, shot-scraper video (https://simonwillison.net/2026/Jun/30/shot-scraper-video/).
+Sources: Philipp Schmid, "Recursive Self-Improvement" (https://www.philschmid.de/recursive-self-improvement); Anthropic, "Harness design for long-running application development" (https://www.anthropic.com/engineering/harness-design-long-running-apps); "Reliability without Validity" (https://arxiv.org/abs/2606.19544); Anthropic, "Demystifying evals for AI agents" (https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents); "Willful Disobedience" (https://arxiv.org/abs/2603.23806); "From Failed Trajectories to Reliable LLM Agents" (https://arxiv.org/abs/2606.06324); SoL-Pi (https://arxiv.org/abs/2609.20519); Stanford Medicine, virtual biotech company (https://med.stanford.edu/news/all-news/2026/09/virtual-biotech-company.html); Simon Willison, shot-scraper video (https://simonwillison.net/2026/Jun/30/shot-scraper-video/); "One Success Isn't Reliability: Thinkingbox, a Sandbox and Benchmark for Agents in Stateful Business Workflows" (https://arxiv.org/abs/2608.19741); OpenAI, "Introducing the Agents API" (https://openai.com/index/introducing-the-agents-api/).

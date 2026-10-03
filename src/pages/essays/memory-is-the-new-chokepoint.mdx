@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "Memory is the new chokepoint"
 description: "By 2027, high-bandwidth memory is expected to take nearly a third of DRAM wafers to make about an eighth of DRAM bits. Conventional memory prices nearly doubled in a quarter. Five findings on the wafer arithmetic, the pricing lag inside it, and the industry's attempt to design memory out of the bill of materials."
 date: "2026-09-22"
-readingTime: "10 min read"
+readingTime: "8 min read"
 ---
 
 WAFER ALLOCATION — DRAM, TOP THREE SUPPLIERS
@@ -36,9 +36,9 @@ That is a strange sentence, and it is the correct one.
 
 A server memory module and an HBM stack start as the same kind of wafer.
 
-Whichever one pays more per wafer gets the next one. The fab does not have a view on AI. It has a price list.
+Whichever one pays more per wafer gets the next one.
 
-The wafer does not know it is in a chokepoint. It only knows its price.
+The fab does not have a view on AI. It has a price list.
 
 ## FINDING TWO: THE PRICE LAGGED THE SHORTAGE, AND THE WAFERS FOLLOW THE PRICE.
 
@@ -56,9 +56,9 @@ That is how a chokepoint behaves when its price is set once a year and its compe
 
 The durable advantage was never securing more of the scarce input. It is removing the input from the bill of materials.
 
-The silicon version arrived first: inference chips built on SRAM with no external DRAM, and fixed-function transformer ASICs. The general form is a screening rule, and it is the most portable idea in this essay. Screen every AI-adjacent supply chain for the input with the steepest price curve, then fund the team eliminating it. Water-free cooling in drought regions. Lithium-free grid storage as battery demand outruns supply. Rare-earth-free motors for robotics.
+The silicon version arrived first: inference parts that hold the whole model in SRAM and ship with no external DRAM, and transformer-only ASICs that buy the saving by giving up the ability to run anything else. The general form is a screening rule, and it is the most portable idea in this essay. Screen every AI-adjacent supply chain for the input with the steepest price curve, then fund the team eliminating it. Water-free cooling, in a jurisdiction that bills withdrawal and not consumption.
 
-The failure mode is arithmetic, not doubt. Designing out an input usually costs performance on some other axis, and if the shortage resolves faster than your product cycle, you are left holding an architecture optimised for a constraint that no longer binds. Memory capacity is already responding.
+The failure mode is arithmetic, not doubt. Designing out an input usually costs performance on some other axis, and if the shortage resolves faster than your product cycle, you are left holding an architecture optimised for a constraint that no longer binds. Bit supply is already responding, by process migration instead of new cleanrooms, because a cleanroom takes longer to build than the shortage may last.
 
 You can be early to the wrong scarcity as easily as to the right one.
 
@@ -66,11 +66,11 @@ You can be early to the wrong scarcity as easily as to the right one.
 
 Three responses appeared within weeks of each other, all of them versions of spending something other than memory.
 
-Compress the weights. Ternary weights map to minus one, zero and one, replacing most floating-point multiplies with additions, and what was a mobile technique became a datacentre margin lever. Several papers converged on it this year, and a ternary 27-billion-parameter model trended with 1.9 million downloads. The caveat travels with it: reasoning models degrade disproportionately under aggressive quantisation, and adoption remains limited.
+Compress the weights. Ternary weights map to minus one, zero and one, replacing most floating-point multiplies with additions, and what was a mobile technique became a datacentre margin lever. Several papers converged on it this year, and Prism ML's ternary 27-billion-parameter Bonsai passed 3.8 million downloads on Hugging Face by October 2026. The caveat travels with it: reasoning models degrade disproportionately under aggressive quantisation, and adoption remains limited.
 
-Page the weights. Keep the cold majority on cheap storage, predict the hot minority, and hide the fault latency, which is demand paging from operating systems pointed at mixture-of-experts inference. One implementation faults in experts so that a 35-billion-parameter model fits in three gibibytes. It works now because of a price ratio, not a breakthrough: DRAM inventory under ten days made memory the priced resource and storage bandwidth the cheap one. The failure mode is the same ratio running backwards, because a DRAM glut collapses the advantage.
+Page the weights. Keep the cold majority on cheap storage, predict the hot minority, and hide the fault latency, which is demand paging from operating systems pointed at mixture-of-experts inference. One implementation predicts the next layer's expert routing a token ahead and serves a 35-billion-parameter model inside three gibibytes of active memory, at twenty tokens a second. It works now because of a price ratio, not a breakthrough: supplier DRAM inventories that TrendForce calls "extremely low" made memory the priced resource and storage bandwidth the cheap one. The failure mode is the same ratio running backwards, because a DRAM glut collapses the advantage.
 
-Design for the constrained tier first. Quantisation-aware training builds the artifact around the cheapest deployment target's constraints instead of building the premium version and degrading it, and it held at 2.8 trillion parameters, so it is no longer a small-model compromise. The limit of the analogy is honest: it works because neural networks are massively overparameterised and noise-tolerant, and most physical systems have no equivalent slack.
+Design for the constrained tier first. Quantisation-aware training builds the artifact around the cheapest deployment target's constraints instead of building the premium version and degrading it. Kimi K3 shipped 2.8 trillion parameters with MXFP4 weights and MXFP8 activations trained that way, so it is no longer a small-model compromise. The limit of the analogy is honest: it works because neural networks are massively overparameterised and noise-tolerant, and most physical systems have no equivalent slack.
 
 ## FINDING FIVE: THE TIERING IDEA IS OLDER THAN THE SHORTAGE.
 
@@ -98,7 +98,7 @@ It is, and part of the response is price, not steel: suppliers are expected to m
 
 The second explanation was that quantisation and paging make the shortage a non-event.
 
-They make it survivable at a quality cost nobody has measured on the workloads that matter. Reasoning models degrade disproportionately under aggressive quantisation. The quality cost of storage-backed inference is not yet measured on long-horizon agentic tasks. Both techniques are hedges priced in a currency, model quality, that the buyer cannot see on the invoice.
+They make it survivable at a quality cost nobody has measured on the workloads that matter. On mathematics and coding tasks, the ScaleQ-1.58 authors report that the prior best ternary method collapses outright under conventional calibration. The quality cost of storage-backed inference is not yet measured on long-horizon agentic tasks. Both techniques are hedges priced in a currency, model quality, that the buyer cannot see on the invoice.
 
 **Objection:** Then the techniques are a trap.
 
@@ -110,7 +110,7 @@ They make it survivable at a quality cost nobody has measured on the workloads t
 
 The third explanation was that architectural immunity is the real answer, so memory-free silicon wins.
 
-Only while the shortage lasts. The argument for designing the input out carries its own warning: you may end up holding an architecture optimised for a constraint that resolved. The screening rule survives the objection; any particular chip may not.
+Only while the shortage lasts, and a chip's clock runs slower than a contract's. The screening rule survives because it reruns every cycle against whatever is repricing then; a taped-out architecture survives only if the constraint it removed still binds on the day it ships.
 
 The fourth explanation was the inversion, and Finding Two hands it the ammunition: the memory crunch is partly a contract problem, not a physical one. HBM's annual pricing let it fall behind conventional DRAM for a quarter; once the 2027 contracts reprice, the suppliers rebalance their wafers and conventional prices normalise. On that reading, designing memory out of the bill of materials is solving a pricing lag with silicon.
 
@@ -145,4 +145,4 @@ The allocation ends there. The fab, as ever, has no opinion about AI.
 
 ---
 
-Sources: TrendForce, "Rapid Contract Price Surge Drives 1Q26 DRAM Industry Up 81% QoQ" (https://www.trendforce.com/presscenter/news/20260601-13070.html); TrendForce, "Tight DRAM Supply Gives Suppliers Greater Pricing Power in HBM" (https://www.trendforce.com/presscenter/news/20260602-13074.html); CAT-Q (https://arxiv.org/html/2606.26650v1); TWLA (https://arxiv.org/html/2606.13054v1); Sherry (https://arxiv.org/html/2601.07892v1); ScaleQ-1.58 (https://arxiv.org/html/2608.01078v1).
+Sources: TrendForce, "Rapid Contract Price Surge Drives 1Q26 DRAM Industry Up 81% QoQ" (https://www.trendforce.com/presscenter/news/20260601-13070.html); TrendForce, "Tight DRAM Supply Gives Suppliers Greater Pricing Power in HBM" (https://www.trendforce.com/presscenter/news/20260602-13074.html); CAT-Q (https://arxiv.org/html/2606.26650v1); TWLA (https://arxiv.org/html/2606.13054v1); Sherry (https://arxiv.org/html/2601.07892v1); ScaleQ-1.58 (https://arxiv.org/html/2608.01078v1); Edge0 (https://arxiv.org/abs/2609.18063); Kimi K3 model card (https://huggingface.co/moonshotai/Kimi-K3); Ternary Bonsai 2 27B (https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf).

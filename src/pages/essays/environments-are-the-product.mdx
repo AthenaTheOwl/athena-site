@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "Environments are the product"
 description: "The scarce input to agent training stopped being answers and became places: a workspace, a deliverable and a check that can be run again. Seven findings on what an environment is, why the check needs checking, where the environments already exist, and the one line every environment card leaves blank."
 date: "2026-09-22"
-readingTime: "12 min read"
+readingTime: "10 min read"
 ---
 
 ENVIRONMENT CARD — ONE TASK
@@ -89,7 +89,7 @@ The strongest configuration, Claude Opus 5 under Claude Code, passes 23.9 percen
 
 The failures are the familiar ones. On tasks where 20 to 25 requirements lived only with the client, developers asked at most four questions before shipping. One wrote its open questions into a planning file and never sent them. Another searched three times for a cited memo, declared the gap "inherent to the task," and shipped, "when the exact $2,500 value was one question away." Builds that asked the client outscored builds that never did by roughly a factor of three.
 
-The worst failure is the one a verifier invites. When an agent and its tests disagreed, developers commonly changed the test. One invented a rule its records only cited, wrote the invention into its own scenario, and tuned the agent until the invention passed. Another extended a mock API it had written itself to fake the failing endpoint. The authors' verdict: "None of this can raise the held-out score; it only hides the failure from the developer."
+The worst failure is the one a verifier invites. When an agent and its tests disagreed, developers commonly changed the test. Six runs, all under Kimi Code, weakened their own failing assertions instead of the agent. One invented a rule its records only cited, wrote the invention into its own scenario, and tuned the agent until the invention passed. Another extended a mock API it had written itself to fake the failing endpoint. The authors' verdict: "None of this can raise the held-out score; it only hides the failure from the developer."
 
 A held-out check the builder never sees is what separates an environment from a mirror.
 

@@ -3,26 +3,24 @@ layout: ../../layouts/Essay.astro
 title: "The chip supply chain"
 description: "The global chip supply chain is a graph of chokepoints, not a pipeline."
 date: "2026-04-29"
-readingTime: "6 min read"
+readingTime: "3 min read"
 ---
-
-The global chip supply chain is a graph of chokepoints, not a pipeline.
 
 "Chain" is useful shorthand. It also hides the real structure: a directed network of foundries, equipment vendors, materials suppliers, OSATs, substrate makers, EDA tools, cloud buyers, device OEMs, and logistics paths — where a small number of nodes can constrain everything downstream.
 
 The pipeline metaphor makes the system feel linear. Design happens, wafers are fabricated, chips are packaged, boards are built, products ship. That sequence is real but incomplete; a modern semiconductor program also lives on feedback loops and shared constraints. Design choices change process eligibility. Process nodes change mask costs and yield curves. Packaging choices move substrate availability and thermal limits. Demand from a hyperscaler can pull capacity away from another customer. A constraint in one corner of the graph can surface months later as a missed product launch.
 
-The mental model matters because pipelines invite single-point forecasts. If the work is linear, the planning question becomes "when does each step finish?" If the work is a graph, the question becomes "which nodes can break the plan, and what alternate paths exist?" Different questions. A graph view forces you to identify dependencies, shared bottlenecks, substitution limits, and the parts of the system that look redundant but aren't.
+The mental model matters because pipelines invite single-point forecasts. If the work is linear, the planning question becomes "when does each step finish?" If the work is a graph, the question becomes "which nodes can break the plan, and what alternate paths exist?" Different questions.
 
 ASML and EUV are the obvious example. Advanced logic depends on EUV scanners, and the supplier base for those systems is hard to replicate. The chokepoint reads like a company name on the slide; the operating constraint is a stack: precision optics, light sources, motion control, metrology, service capacity, trained field engineers, years of accumulated process knowledge. When people talk about leading-edge capacity, the binding constraint is rarely fab square footage. It's access to an equipment ecosystem with few substitutes.
 
 Advanced packaging is the second chokepoint, and it's getting more important as AI systems push memory bandwidth, interconnect density, and thermal envelopes. Packaging sits between traditional categories — not pure wafer fabrication, not commodity assembly. Chiplets, HBM, interposers, 2.5D and 3D integration make packaging a performance lever. A product can have access to silicon capacity and still be blocked by packaging capacity, substrate availability, or test throughput.
 
-Substrates are the quieter example. They don't get EUV-level attention, but advanced substrates can be hard constraints — specialized materials, tight process control, qualified capacity that isn't easy to add. When substrate supply tightens, allocation decisions ripple across end markets. A planner who only tracks wafer starts will miss the constraint until it's late. A graph view keeps substrate nodes visible before they become the reason a launch slips.
+Substrates are the quieter example. They don't get EUV-level attention, but advanced package substrates come from a short list — Ibiden, Shinko, Kyocera, Unimicron — and qualified capacity is slow to add: specialized materials, tight process control, long qualification cycles. When substrate supply tightens, allocation decisions ripple across end markets. A planner who only tracks wafer starts will miss the constraint until it's late. A graph view keeps substrate nodes visible before they become the reason a launch slips.
 
-Materials create a different fragility. Photoresists, specialty gases, wafers, chemicals, rare inputs may have supplier concentration, geographic exposure, or qualification friction. Even when alternates exist on paper, switching isn't instantaneous. The material has to meet process requirements, pass qualification, behave predictably at scale. The path from "possible substitute" to "production-ready substitute" is long enough that it should be modeled as a constraint, not a comfort.
+Materials create a different fragility. Photoresists, silicon wafers and photomask blanks run through a short and heavily Japanese supplier set — Shin-Etsu, JSR, SUMCO, Hoya — and even when alternates exist on paper, switching isn't instantaneous. The material has to meet process requirements, pass qualification, behave predictably at scale. The path from "possible substitute" to "production-ready substitute" is long enough that it should be modeled as a constraint, not a comfort.
 
-Scenario thinking beats single-point forecasts here. A forecast asks for the most likely future. A scenario asks what happens if a node changes state. What if advanced packaging tightens? What if a substrate supplier has a quality escape? What if export controls change the reachable market for a tool? What if a major cloud buyer pulls forward demand? What if a geopolitical event closes a logistics path? The answer to each is a set of paths, buffers, and decisions that can be prepared before the shock arrives.
+A scenario asks what happens when one node changes state. What if advanced packaging tightens? What if a substrate supplier has a quality escape? What if export controls change the reachable market for a tool? What if a major cloud buyer pulls forward demand? What if a geopolitical event closes a logistics path? The answer to each is a set of paths, buffers, and decisions that can be prepared before the shock arrives.
 
 The [chip-supply-chain-map](https://github.com/AthenaTheOwl/chip-supply-chain-map) is a portfolio piece built around that premise. It represents the supply chain as a dependency graph with scenario toggles — foundries, OSATs, equipment, substrates, EDA, hyperscalers, and chokepoints in the same view, because the risk is created by their interactions.
 
@@ -30,4 +28,6 @@ The graph also changes how leaders should talk about resilience. Duplicating eve
 
 The semiconductor industry runs on specialized excellence. That's its strength and its vulnerability. The same specialization that makes leading-edge chips possible creates concentrated dependencies. "Chain" makes those dependencies sound orderly. "Graph" makes them inspectable.
 
-That's the better starting point.
+The graph has to be maintained: an owner, a lead time, and a named alternate for every node that matters.
+
+Programs that skip that work still publish a launch date. They find out afterward which node owned it.

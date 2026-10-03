@@ -3,14 +3,14 @@ layout: ../../layouts/Essay.astro
 title: "Curtailability is the asset"
 description: "Capacity prices on America's largest grid rose elevenfold in two years, and the price paid to a load for agreeing not to run still has no line on the auction sheet. Six findings on a forty-year-old utility mechanism, the only thing that buys grid queue position without new steel, and the fraction of AI load that can honestly sell it."
 date: "2026-09-22"
-readingTime: "11 min read"
+readingTime: "8 min read"
 ---
 
 CAPACITY AUCTION — PJM
 
 Clearing price, 2024/25 delivery year: $28.92 per megawatt-day.
 Clearing price, 2026/27: $329.17 per megawatt-day.
-Share of the 2025/26 price increase the market monitor attributed to data centres: 63 percent, about $9.3 billion recovered from customers.
+Increase in 2025/26 auction revenue the market monitor attributed to data-centre load alone: $9.3 billion.
 Data-centre-related charges across the last four auctions: nearly half of $63.6 billion.
 Price paid to a large load for agreeing not to run at the peak: no field.
 
@@ -52,7 +52,7 @@ Everything else in the queue is a transformer with a delivery date, or a turbine
 
 ## FINDING THREE: TRAINING IS INTERRUPTIBLE. INFERENCE IS NOT.
 
-Model training is the most schedule-elastic gigawatt-scale process ever built. Long assumed to be must-run baseload, training clusters turn out to have hours of deferrable work; the constraint is coordination, not physics, and the orchestration layers that can act on grid signals now exist.
+Training was long assumed to be must-run baseload. The clusters carry hours of deferrable work, and the constraint is coordination, not physics. Orchestration software that pauses or slows low-priority jobs on a grid signal has now run on real hardware, at a size Finding Five reports.
 
 Inference serves live users and cannot pause.
 
@@ -88,9 +88,9 @@ The idea and its caveat belong in the same paragraph every time. A curtailment t
 
 ## FINDING SIX: DEMAND RESPONSE, POINTED AT COGNITION.
 
-When a resource is capacity-constrained and expansion has a multi-year lead time, price flexibility instead of rationing access, and let consumers self-select into interruptible tiers. Every layer of the AI stack became supply-constrained with two-to-five-year lead times at once.
+When a resource is capacity-constrained and expansion has a multi-year lead time, price flexibility instead of rationing access, and let consumers self-select into interruptible tiers. Accelerators, memory and grid interconnection are all rationed by lead time at once.
 
-The effort dial on a frontier model is already this: a cheaper, slower tier for work that can wait. Interruptible memory tiers and curtailable-versus-firm API rate limits are the plausible next targets.
+The batch tier on a frontier API is already this: a cheaper, slower queue for work that can wait. Interruptible memory tiers and curtailable-versus-firm API rate limits are the plausible next targets.
 
 The failure mode is the same as on the grid. Demand response works when load is genuinely deferrable, and a vendor that sells "flexible" capacity to inherently inflexible workloads will discover its curtailment credits are a fiction.
 
@@ -140,7 +140,7 @@ The evidence that settles it is a tranche-by-tranche comparison: for each block 
 
 [grid-silicon](https://github.com/AthenaTheOwl/grid-silicon) starts from the gap this essay is about. A data centre is announced as 1,200 megawatts. One hundred twenty are energised. The other 1,080 live on a form, and the repo scores the difference. Curtailability is the price of moving a megawatt from the form to the wire without waiting for the transformer, and a scorer that cannot see the flexibility tier cannot see why two identical announcements energise at different speeds.
 
-[power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) works the contract side: three hyperscalers want power off the same 1,000-megawatt reactor, and none will tell the others what it needs or what it would pay. Curtailability is a term in that contract, and a buyer who can credibly sell the right not to run is bidding with an asset the other two do not have.
+[power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) works the contract side: three hyperscalers want power off the same 1,000-megawatt reactor, and none will tell the others what it needs or what it would pay. The auction clears megawatts and scores how flat the combined load shape is. It has no curtailability term. A buyer who can credibly sell the right not to run is bidding an asset the mechanism cannot price, and the other two do not have.
 
 Sell the right not to run.
 
@@ -159,4 +159,4 @@ The sheet ends there. The smelter, as ever, knew exactly how much it could give.
 
 ---
 
-Sources: IEEFA on PJM capacity prices (https://ieefa.org/resources/projected-data-center-growth-spurs-pjm-capacity-prices-factor-10); Utility Dive on the market monitor's findings (https://www.utilitydive.com/news/pjm-data-centers-capacity-auction-imm-bowring/825626/); Day Pitney on FERC's PJM co-location order (https://www.daypitney.com/alert-federal-energy-regulatory-commission-orders-major-pjm-tariff-reforms-for-co-located-load-and-behind-the-meter-generation); FERC, Interconnection of Large Loads, Docket RM26-4 (https://www.ferc.gov/rm26-4); "Flexible Training Workloads in Large-Scale AI Data Centers for Transient-Stability Support" (https://arxiv.org/abs/2608.30901).
+Sources: IEEFA on PJM capacity prices (https://ieefa.org/resources/projected-data-center-growth-spurs-pjm-capacity-prices-factor-10); Utility Dive on the market monitor's findings (https://www.utilitydive.com/news/pjm-data-centers-capacity-auction-imm-bowring/825626/); Monitoring Analytics, Market Monitor Report to the PJM Members Committee, June 25, 2025 (https://www.pjm.com/-/media/DotCom/committees-groups/committees/mc/2025/20250625-web/item-02---imm-report.pdf), citing Analysis of the 2025/2026 RPM Base Residual Auction, Part G Revised (https://www.monitoringanalytics.com/reports/Reports/2025/IMM_Analysis_of_the_20252026_RPM_Base_Residual_Auction_Part_G_20250603_Revised.pdf); Day Pitney on FERC's PJM co-location order (https://www.daypitney.com/alert-federal-energy-regulatory-commission-orders-major-pjm-tariff-reforms-for-co-located-load-and-behind-the-meter-generation); FERC, Interconnection of Large Loads, Docket RM26-4 (https://www.ferc.gov/rm26-4); Utility Dive on the PJM Board's large-load decision (https://www.utilitydive.com/news/pjm-board-backstop-capacity-auction-data-center-curtailment/826347/); "Flexible Training Workloads in Large-Scale AI Data Centers for Transient-Stability Support" (https://arxiv.org/abs/2608.30901); "Power-Flexible AI Data Centers: A New Paradigm for Grid-Responsive Compute" (https://arxiv.org/abs/2606.25098).

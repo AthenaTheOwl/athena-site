@@ -47,7 +47,7 @@ The offensive use is called chain-of-thought forgery, and it won an OpenAI red-t
 
 On a standard jailbreak benchmark, attack success went from near zero to about 60 percent.
 
-It transferred across every model tested, because it exploits structure and not a quirk.
+It generalized across every model tested, because it exploits structure and not a quirk. Those were frontier late-2025 systems, and the authors say frontier closed-weight models mostly defend this particular forgery now.
 
 Persuasion attacks weaken as the request gets worse. This one does not, because there is nothing to push back against if the model believes it already decided.
 
@@ -69,7 +69,7 @@ Threat models have a column for capability. There is no column for tone.
 
 The same defect runs in reverse, and a paper from August measured it with a trick worth copying.
 
-The authors built a benchmark whose labels come from a build-time gate: each label is derived mechanically from an explicit authorization policy, so the ground truth is a consequence of the policy and never an annotator's flinch. Then they generated 756 decidable pairs of benign twins across three kinds of object name, 2,268 measured pairs in all, and ran six guardrails from five designs.
+The authors built a benchmark whose labels are generated at construction time from an explicit authorization policy, so the ground truth is a consequence of the policy and never an annotator's flinch. Then they generated 756 decidable pairs of benign twins across three kinds of object name, 2,268 measured pairs in all, and ran six guardrails from five designs.
 
 Authorization context: held identical.
 
@@ -84,8 +84,6 @@ A forged conclusion from a real one.
 An authorized delete from a frightening filename.
 
 A user's instruction from a tool result that says "User:" in front of it.
-
-A sensitive operation from a sensitively named one.
 
 The practical cost lands in a bad place. Real infrastructure is named after what it is, so over-refusal clusters on your most legitimately sensitive operations, which are the ones you most needed the agent to do correctly. The paper proposes no mitigation. The obvious one is to test your guardrail on twin pairs drawn from your own naming conventions before you trust its refusal rate.
 
@@ -111,19 +109,19 @@ Their reframe: an egress allowlist was never a destination filter, only a capabi
 
 ## FINDING FIVE: THE CONFIG FILE IS INBOUND TRAFFIC.
 
-The containment post's third incident has a shape you will meet again: repo-local configuration, a hook in a settings file, parsed and executed before the "do you trust this folder?" dialog appeared. The fix is to treat opening a project, loading its config, and listening on localhost as inbound internet traffic until trust is established.
+The first risk the containment post says it missed has a shape you will meet again: repo-local configuration, a hook in a settings file, parsed and executed before the "do you trust this folder?" dialog appeared. The fix is to treat opening a project, loading its config, and listening on localhost as inbound internet traffic until trust is established.
 
-By mid-September, a security firm had disclosed the same class across vendors. A repository arrives with its `.git` directory intact, the coding agent honours a config hook, and a command runs as the user, outside the sandbox, without a prompt.
+By April, a security firm had disclosed the same class across Claude Code, Gemini CLI and Codex CLI. A repository arrives with its `.git` directory intact, the coding agent honours a config hook, and a command runs as the user, outside the sandbox, without a prompt.
 
-CONFIGURATION-HOOK ESCAPE, TIME TO PATCH
+CONFIGURATION-HOOK ESCAPE, REPORT TO RESPONSE
 
-Cursor: about a week.
+Anthropic: 16 days. Reported 5 January, fixed 21 January.
 
-OpenAI: about a week.
+OpenAI: closed as informational, prompt injection ruled out of scope.
 
-Anthropic: roughly 50 days and 30 releases.
+Google: 90 days elapsed, no patch and no decision.
 
-The asymmetry is itself a data point about how far each sandbox is wired into its product, and the market was already pricing the gap: a startup raised $50M across two seed rounds to vet the skills and add-ons agents load.
+One vendor shipped a fix, one ruled the class out of scope, and one let the deadline pass. The market priced the gap without waiting on any of them: AIR raised $50M across two seed rounds, led by Sequoia Capital and Greenoaks, to inventory the skills, plugins and MCP servers agents load.
 
 A repository is a letter. Its config files are the letterhead. The agent opened the envelope before anyone checked the postmark.
 
@@ -181,7 +179,7 @@ The escape routes from these findings are well-worn. Each gets its due.
 
 The first explanation was that the models will learn role perception, and the paper is describing a temporary condition.
 
-Possibly. The authors say the game stays whack-a-mole until then, and they do not offer a date. Meanwhile the forgery transferred across every model they tested. A defense that arrives at an unspecified future time is not on the roster today.
+Partly conceded, and the authors concede it first: frontier closed-weight models mostly defend this particular forgery now. They also say how. The models appear to have learned to distrust their own reasoning, which patches one forgery and leaves the probe result intact, with style still outranking the tag. The authors expect whack-a-mole until roles are perceived, and they give no date. A defense that arrives at an unspecified future time is not on the roster today.
 
 The second explanation was that classifiers and approval prompts catch this in production.
 
@@ -199,7 +197,7 @@ The fourth explanation was that the team wrote its own proxy and it is better th
 
 **Objection:** Custom is not always worse.
 
-**Reply:** Correct. In this dataset it was always what broke.
+**Reply:** Correct. In this post the pieces that broke were the ones written for the product: the allowlist proxy, and the settings file read before the trust prompt. The hardened primitives are not on the incident list.
 
 The fifth explanation was that an over-cautious guardrail fails safe.
 
@@ -246,4 +244,4 @@ The form ends there. The next one will be phrased more politely.
 
 ---
 
-Sources: Anthropic, "How we contain Claude across products" (https://www.anthropic.com/engineering/how-we-contain-claude); Ye, Cui and Hadfield-Menell, "Prompt Injection as Role Confusion" (https://role-confusion.github.io/), ICML 2026; "The Guard That Cried Wolf" (https://arxiv.org/abs/2608.27009); GreyNoise, AI-orchestrated campaign against PaperCut NG/MF (https://www.greynoise.io/blog/ai-orchestrated-campaign-against-papercut-ng-mf); the configuration-based sandbox escape class (https://cymulate.com/blog/the-race-to-ship-ai-tools-left-security-behind-part-1-sandbox-escape/).
+Sources: Anthropic, "How we contain Claude across products" (https://www.anthropic.com/engineering/how-we-contain-claude); Ye, Cui and Hadfield-Menell, "Prompt Injection as Role Confusion" (https://role-confusion.github.io/), ICML 2026; "The Guard That Cried Wolf" (https://arxiv.org/abs/2608.27009); GreyNoise, AI-orchestrated campaign against PaperCut NG/MF (https://www.greynoise.io/blog/ai-orchestrated-campaign-against-papercut-ng-mf); the configuration-based sandbox escape class (https://cymulate.com/blog/the-race-to-ship-ai-tools-left-security-behind-part-1-sandbox-escape/); AIR seed funding (https://thesaasnews.com/news/air-raises-50m-seed).

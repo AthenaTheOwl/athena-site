@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "Cognitive Delivery OS as a portfolio thesis"
 description: "The durable system is specs, decisions, traces, ledgers, tests, evals, and deployment evidence — not the agent framework."
 date: "2026-05-24"
-readingTime: "9 min read"
+readingTime: "5 min read"
 ---
 
 A Claude Code agent finishes a refactor at 2 a.m., decides it should update the long-term memory store while the work is fresh, and rewrites the file unprompted. No spec asked for it. No decision recorded it. No proof gate caught it. The next morning, the human reads a tidy commit message and pulls. A week later the agent's behavior drifts in ways nobody can explain, because the memory it's reading from no longer matches the memory anyone reviewed. The team blames the model. The model isn't the bug. The discipline around the model is.
@@ -20,7 +20,7 @@ The records are framework-neutral on purpose. A JSON-schema-validated decision r
 
 ## The eight planes
 
-Each plane carries one piece of the discipline. Read the deep dive for the plane you care about; each sub-page names the schema, the validator, and a concrete file in one of the four product repos.
+Each plane carries one piece of the discipline. Read the deep dive for the plane you care about; each sub-page names the schema, the validator, and a concrete file in one of the four repos.
 
 - [Plane 1 — Spec](/essays/cognitive-delivery-os/spec/). What we're building, in a numbered ledger the team can point at.
 - [Plane 2 — Agent Guild](/essays/cognitive-delivery-os/agent-guild/). Who does what, declared as YAML role files under `.agents/roles/`.
@@ -39,7 +39,7 @@ Framework soup. CrewAI plus AutoGen plus Strands plus PydanticAI plus a homegrow
 
 A twelve-screen governance SaaS. The weekly cron plus the per-repo gates plus a single portfolio-health markdown file do the job. A control-plane dashboard arrives the day the artifact volume makes the markdown unreadable, not before. Until then, the dashboard is the markdown, regenerated weekly, committed to the repo, diffable like any other record.
 
-A separate event-log database. Events land as JSONL inside each repo's `events/` directory; the portfolio audit walks the files. The database arrives the day join queries justify it.
+A separate event-log database. Events land as JSONL inside each repo's `ops/event-log/` directory; the portfolio audit walks the files. The database arrives the day join queries justify it.
 
 The shared rule across all four: defer the build until the record volume names the need. A solo builder who pre-builds infrastructure for volume they don't have is a solo builder who's stopped shipping.
 
@@ -47,16 +47,16 @@ The shared rule across all four: defer the build until the record volume names t
 
 Four repos under this portfolio carry the discipline at four different angles.
 
-[Athena-site](https://github.com/AthenaTheOwl/athena-site) is the meta-repo. It owns the eleven JSON-schema contracts in `ops/schemas/`, the charter in `ops/control-plane.md`, the manifest of what's in the portfolio, and the weekly cron that audits cross-repo health. It does not reach into product repos to fix their records. The audit reports drift; the product repo's own gates fix it.
+[Athena-site](https://github.com/AthenaTheOwl/athena-site) is the meta-repo. It owns the twelve JSON-schema contracts in `ops/schemas/`, the charter in `ops/control-plane.md`, the manifest of what's in the portfolio, and the weekly cron that audits cross-repo health. It does not reach into product repos to fix their records. The audit reports drift; the product repo's own gates fix it.
 
-[Ai-field-brief](https://github.com/AthenaTheOwl/ai-field-brief) is primary-source curation under proof gates. A weekly digest gets drafted, every claim gets checked against a primary source, the citation map gets validated, and the brief ships only if the validators pass. The spec ledger gates the brief workflow. The decisions directory carries the editorial calls. The dream loop is already promoting patterns about which kinds of sources need stronger gates.
+[Ai-field-brief](https://github.com/AthenaTheOwl/ai-field-brief) is primary-source curation under proof gates. A weekly digest gets drafted, every claim gets checked against a primary source, the citation map gets validated, and the brief ships only if the validators pass. The decisions directory carries the editorial calls. The dream loop's first weekly pass promoted six candidates — memory blocks, a skill, two regression tests — and not one of them was about sources.
 
-[Procurement-negotiation-lab](https://github.com/AthenaTheOwl/procurement-negotiation-lab) is mechanism-design pedagogy. Eleven levels walk a player from a coordination gap through VCG transfers, α clipping, multi-party splits, audit mechanisms, and an authoring sandbox. The math gets named in plain English at each step. The spec ledger names what each level teaches; the decisions directory names which mechanisms got cut and why; the engine is cross-platform because the spec said so before the TypeScript said so.
+[Procurement-negotiation-lab](https://github.com/AthenaTheOwl/procurement-negotiation-lab) is mechanism-design pedagogy. Twelve levels walk a player from a coordination gap through VCG transfers, α clipping, multi-party splits, audit mechanisms, an authoring sandbox, and a weighted-Nash split under a privacy budget. The math gets named in plain English at each step. The spec ledger names what each level teaches; the decisions directory names which mechanisms got cut and why; the engine is cross-platform because the spec said so before the TypeScript said so.
 
-[Supplier-risk-rag-agent](https://github.com/AthenaTheOwl/supplier-risk-rag-agent) is citation-faithful RAG under a four-suite eval discipline. SEC filings in, cited answers out. Retrieval is the mechanism; citation faithfulness, abstention, and regression evals are wired into CI because the product promise depends on receipts. The decisions directory carries the citation-shape evolution path. The dream loop promotes patterns about when the agent abstains and what those abstentions reveal about missing integrations.
+[Supplier-risk-rag-agent](https://github.com/AthenaTheOwl/supplier-risk-rag-agent) is citation-faithful RAG under a five-suite eval discipline. SEC filings in, cited answers out. Retrieval is the mechanism; citation faithfulness, abstention, and regression evals are wired into CI because the product promise depends on receipts. The decisions directory carries the citation-shape evolution path. The dream loop promoted an experiment-and-revert discipline out of a cross-encoder reranker that bought no recall and cost citation faithfulness.
 
 Three of those four repos share the same CDCP shape: `specs/` ledger, `decisions/` directory, `.agents/` operating model, `dreams/<week>/` offline cognition, `ops/` for cross-repo gates. The fourth (athena-site) owns the contracts the other three honor. The convergence is the point. Three product repos, three different domains, one set of records.
 
 ## Closing
 
-Clone any of the four repos. Read `decisions/` first; it's the cheapest way to see how the maker reasons under constraint. Read `specs/0001-*/requirements.md` next; it's where the project committed to what it was for. Read `dreams/2026-W21/report.md` last; it's the weekly snapshot of what the system learned about itself. Then form your own view about whether this shape of work is the one you'd want around the agents you're deploying.
+Clone any of the three product repos. Read `decisions/` first; it's the cheapest way to see how the maker reasons under constraint. Read `specs/0001-*/requirements.md` next; it's where the project committed to what it was for. Read `dreams/2026-W21/report.md` last; it's the weekly snapshot of what the system learned about itself. Then form your own view about whether this shape of work is the one you'd want around the agents you're deploying.
