@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "The session is not the context window"
 description: "One model had context anxiety, so the harness got resets. The next model did not, and the resets were dead weight. Seven findings on why the fix was to stop letting the harness own the record, and on who holds the record now."
 date: "2026-09-22"
-readingTime: "12 min read"
+readingTime: "10 min read"
 ---
 
 RECOVERY RECORD — MANAGED AGENT, AFTER A HARNESS CRASH
@@ -64,7 +64,7 @@ The separation is deliberate. The session guarantees only durability and interro
 
 Read beside the August compaction papers, this is the structural answer. If the raw trajectory is still addressable, a lossy summary is a view, not a replacement, and an agent that has lost its place can go look.
 
-A watch officer who comes on duty reads the log. She does not ask the previous officer to summarize the night, and nobody on a competently run ship has ever suggested she should.
+A watch officer who comes on duty reads the log. The outgoing officer's account of the night is useful; the log is what decides when the two disagree.
 
 ·   ·
 
@@ -88,13 +88,13 @@ For custom tools, OAuth tokens sit in a vault behind a proxy that the model call
 
 ## FINDING FIVE: THE CPU, THE RAM, THE DISK.
 
-The organizing analogy, Karpathy's and extended by LangChain's Lance Martin, is that the model is a CPU and its context window is RAM: limited, fast working memory that something external has to curate. Context engineering is the operating system deciding what to page in at each step. A persistent memory layer is the disk. Without the disk, context engineering collapses back into prompt engineering, every turn re-injecting the same information and paying for it in tokens and latency each time. Ankur Goyal's line is the one to keep: good context engineering caches well; bad context engineering is both slow and expensive.
+Karpathy's line is that an LLM is the kernel process of a new operating system. LangChain's Lance Martin took it down a level: the model is the CPU and its context window is the RAM, limited, fast working memory that something external has to curate. Context engineering is the operating system deciding what to page in at each step. A persistent memory layer is the disk. Without the disk, context engineering collapses back into prompt engineering, every turn re-injecting the same information and paying for it in tokens and latency each time. Ankur Goyal's line is the one to keep: good context engineering caches well; bad context engineering is both slow and expensive.
 
 A 2026 review offers one word for all of it. Externalization: moving state and capability out of the model's weights and context and into the surrounding system. Memory, learned skills, protocols and harness engineering are one move under that lens, and the diagnostic is the useful part. If your agent is unreliable, ask which piece of state you are forcing into the context that should live in a tool, a file, or a store.
 
 ## FINDING SIX: WHOEVER HOSTS THE SESSION HOLDS THE RECORD.
 
-In September, OpenAI's Agents API began offering the Codex harness "through an OpenAI-managed API," with OpenAI owning sessions, orchestration, compaction and recovery while the developer supplies tools and picks an execution environment.
+In September, OpenAI's Agents API opened the Codex harness as a service "fully managed by OpenAI." OpenAI handles the orchestration, the long-running sessions and the context management; the developer controls the agent's capabilities and brings or picks the sandbox.
 
 Once the harness is free, the defensible surface moves outward, to proprietary tools and environments, to verifiers, and to the data that agents generate while they run.
 
@@ -164,7 +164,7 @@ The evidence that settles it is the crash test the post was built around. Kill t
 
 ## A LOG WITHOUT A VENDOR
 
-[trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is the session object with the platform removed. An append-only ledger with an event vocabulary, sequence numbers that may not skip, and payloads hashed at write time; a validator that reads four committed ledgers and catches the three planted defects by name. It guarantees durability and interrogability and nothing else, which is the exact division of labour the Managed Agents post argues for. Policy lives elsewhere. The ledger does not have opinions, and it does not have a landlord.
+[trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is the session object with the platform removed. An append-only ledger with an event vocabulary, sequence numbers that may not skip, and payloads hashed at write time; a validator that reads four committed ledgers and catches the three planted defects by name. It guarantees ordering and tamper-evidence, and lists storage and replay as gaps v0.1 does not close: the ledgers are files you write yourself. Policy lives elsewhere, which is the division of labour the Managed Agents post argues for. The ledger does not have opinions, and it does not have a landlord.
 
 Keep the record outside the loop.
 

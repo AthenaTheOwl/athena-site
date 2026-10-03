@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "pass^k, not pass@1"
 description: "The strongest model solved 65% of business workflows on the first try and 91% given twenty tries. It solved 25% every time. Seven findings on why the last number decides whether an agent can touch a customer's account, and why nobody reports it."
 date: "2026-09-22"
-readingTime: "12 min read"
+readingTime: "11 min read"
 ---
 
 SCORECARD — STRONGEST MODEL, 507 STATEFUL BUSINESS WORKFLOWS, 20 ATTEMPTS EACH
@@ -22,7 +22,7 @@ It called real tools with well-formed arguments.
 
 It produced the wrong world.
 
-That is the failure Microsoft's Thinkingbox team saw most often when they ran 507 stateful business workflows, refunds, bookings, insurance claims, internal IT requests, against a range of models, twenty times each. The spread is the finding. A 91 says the capability is nearly there: a correct trajectory exists and the model can find it. A 25 says the reliability is nowhere close. For anything with irreversible side effects, the number that matters for deployment is the one nobody reports.
+That is the failure the Thinkingbox authors saw most often when they ran 507 stateful business workflows, refunds, bookings, insurance claims, internal IT requests, against twelve models, twenty times each. The spread is the finding. A 91 says the capability is nearly there: a correct trajectory exists and the model can find it. A 25 says the reliability is nowhere close. For anything with irreversible side effects, the number that matters for deployment is the one nobody reports.
 
 ## FINDING ONE: CAPABILITY IS ONE SUCCESS. RELIABILITY IS EVERY SUCCESS.
 
@@ -122,7 +122,7 @@ Top-tier agents refactor confidently and take out a dependency they did not chec
 
 The weaker the model, the less it does. The stronger the model, the more it undoes.
 
-The mitigation is almost embarrassingly low-tech. Agents that maintained a persistent requirements document more than doubled their success rate.
+The mitigation is almost embarrassingly low-tech. Tasks whose specification sat in a project file the agent could re-read averaged 50.1 on the multi-turn metric, about 2.4 times the mean of tasks whose requirements arrived only in conversation.
 
 Structure beat capability. Nobody at the frontier was pleased.
 
@@ -132,15 +132,15 @@ pass^k was not invented this summer. The τ-bench paper from Sierra, in June 202
 
 The metric and the grading method arrived together, in one paper, with an open benchmark attached.
 
-Two years later a Microsoft benchmark had to make the same argument from the beginning, and pass^k was still the number nobody reports.
+Two years later a benchmark with Microsoft on the author list had to make the same argument from the beginning, and pass^k was still the number nobody reports.
 
 The likelier story is duller than resistance. It measured something unflattering, at k times the cost, and the other number was already on the card.
 
 ## FINDING SEVEN: BINARY SCORING THROWS AWAY MOST OF THE SIGNAL.
 
-EvoCode's authors found a detail in their own failures. Agents often achieved more than 80 percent assertion accuracy on rounds scored as complete failures.
+EvoCode scores a round pass or fail, and its own failure taxonomy shows what that discards. A round can fail by missing an active requirement, by a tooling error, by a regression, by leaving stale code beside new code, or by losing the thread.
 
-A round that passes four assertions in five and breaks one old requirement is a failure, correctly, for deployment. It is also a narrow and specific failure, and an all-or-nothing score files it next to a round that did nothing at all.
+Five different repairs, one word.
 
 Pass or fail is the right shape for a release gate.
 
@@ -162,19 +162,19 @@ The findings invite the usual exits. Each gets its due.
 
 The first explanation was that pass^k at k=20 is twenty times the eval spend.
 
-Correct. So run five on a stratified subset for continuous monitoring and twenty on a small gold set before a release. The Thinkingbox authors say the same.
-
-**Objection:** Twenty is excessive.
-
-**Reply:** Five.
+Correct. So run five on a stratified subset for continuous monitoring and twenty on a small gold set before a release. That split is this essay's, not the paper's. Thinkingbox runs twenty throughout, and pays for it.
 
 A number you cannot afford to compute weekly is still a number you can afford to compute before a customer meets the agent.
+
+**Objection:** A task with two defensible end states scores a low pass^k and blames the agent.
+
+**Reply:** Then the task is the defect. Thinkingbox writes its checks to accept any valid trajectory, and a task that cannot name its valid ones is not ready to be graded.
 
 The second explanation was that side-effect grading needs an environment you can snapshot and reset, which is easy for a database and hard for anything calling third-party services.
 
 Also correct. The usual answer is a recorded or simulated tool layer, which then needs its own fidelity checks. The cost is real and the alternative is grading the transcript, which Finding Three says measures the wrong artifact.
 
-The third explanation was that a persistent memory hurts. The reliability paper found an episodic scratchpad injected into every turn hurt long-horizon performance for every one of the ten models it tested, and EvoCode found a persistent document doubled success. One of these must be wrong.
+The third explanation was that a persistent memory hurts. The reliability paper found an episodic scratchpad injected into every turn hurt long-horizon performance for every one of the ten models it tested, and EvoCode found tasks with a re-readable spec file scored about 2.4 times the conversational ones. One of these must be wrong.
 
 Neither. The difference is what gets written and when. A task-scoped artifact the agent re-reads deliberately, a spec, a feature list, a progress log, buys orientation for a bounded cost. An unstructured note store taxes every turn to save observations of unproven value. The evidence is against the naive version, not against externalized state.
 
@@ -188,13 +188,13 @@ For some work it is, and τ-bench says so in the same paragraph that introduces 
 
 The fifth explanation was the inversion, which the essay owes: pass^k is the wrong unit because nobody deploys a bare model, and it punishes variance the deployed system already absorbs.
 
-The case builds itself. Production agents run inside harnesses with retries, verifiers and human review. EvoCode's own authors call their fail-stop design a limitation, since real agents get to recover. Scores above 80 percent on "failed" rounds say the binary cut is harsh. On that reading, the bare-model pass^k is a lab number, and the number that matters is the pass rate of the whole system after its safety nets.
+The case builds itself. Production agents run inside harnesses with retries, verifiers and human review. EvoCode's own authors call their fail-stop design a limitation, since real agents get to recover. A round failed for leaving stale code beside new code is closer to shipping than one that never implemented the requirement, and the binary cut prints them the same. On that reading, the bare-model pass^k is a lab number, and the number that matters is the pass rate of the whole system after its safety nets.
 
 That is correct as far as it goes, and it names its own test. Measure pass^k of the system you ship, retries and verifiers included, across k runs of the same task. If that number is high, the bare-model figure is irrelevant and this essay has been arguing with a straw column. The failure mode belongs in the same sentence: a retry on an irreversible action is not free. A retried refund is a second refund. The system-level pass^k only rescues you where the safety net runs before the side effect, not after it.
 
 ## WHERE THE METRIC COMES FROM
 
-None of this is new to the disciplines that count failures for a living. Aviation, nuclear, and industrial safety abandoned average-case metrics for failure taxonomies decades ago: instrument the failure distribution, classify the modes, intervene mid-execution instead of after.
+Reliability engineering has counted failures this way for decades: enumerate the modes, weight them by consequence, and instrument for the transition instead of the average.
 
 The reliability paper's cleverest instrument is that kind of monitor: a sliding-window entropy over the last five tool calls, which rises when tool use loses its strategy, read, write, read, search, with a spike marking the transition from coherent-but-wrong progress to incoherent looping. The models with the best long-horizon scores also had the highest meltdown rates, because they attempt ambitious strategies, and those are the episodes where a context reset is most likely to recover value. Weaker models emit steady, low-entropy sequences that never spike and never finish.
 
@@ -202,7 +202,7 @@ The reliability paper's cleverest instrument is that kind of monitor: a sliding-
 
 The change these papers ask for is cheap to state. Run every eval task k times and report the fraction that pass every time beside the mean. Grade on the diff of backend state before and after, and assert against extra effects as well as missing ones. Log every tool error and whether the trajectory repaired it, ignored it, or proceeded as if it had succeeded.
 
-[LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) already grades the way Thinkingbox does: forty-six cases in six suites, and a refund answer can pass its JSON shape and still fail the safety reviewer, because the runner keeps those failures separate instead of folding them into one score. What it does not yet report is pass^k. Every case runs once. Adding the repeated-run column is the next change to that repo, and until it lands, its numbers are capability numbers.
+[LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) already grades the way Thinkingbox does: forty-six cases in six suites, and a refund answer can pass its JSON shape and still fail the safety reviewer, because the runner keeps those failures separate instead of folding them into one score. It reports the repeated-run column now. `--repeat 3` prints pass@1, pass@3 and pass^3 side by side, and `--min-pass-hat-k 1.0` exits non-zero when any case fails on one attempt in three. The flaky refund case in its own fixture passes, fails, passes.
 
 [sports-prediction-os](https://github.com/AthenaTheOwl/sports-prediction-os) makes the same argument about football. Arsenal drew Liverpool 2-2, and the scoreline calls it even. Liverpool built 2.13 expected goals and Arsenal 1.49, which the repository sums up as "Same scoreline, different luck." A single result is one sample of a process. The project reads shot quality instead of the outcome, which is what pass^k does for an agent: it stops judging the run by the one result it happened to produce.
 
@@ -223,4 +223,4 @@ The card ends there. The agent, as ever, terminated cleanly.
 
 ---
 
-Sources: One Success Isn't Reliability: Thinkingbox (https://arxiv.org/abs/2608.19741); Beyond pass@1: A Reliability Science Framework for Long-Horizon LLM Agents (https://arxiv.org/abs/2603.29231); EvoCode-Bench (https://arxiv.org/abs/2605.24110) and Philipp Schmid's write-up (https://www.philschmid.de/evocode-bench); τ-bench (https://arxiv.org/html/2406.12045).
+Sources: One Success Isn't Reliability: Thinkingbox, v1 and v2 (https://arxiv.org/abs/2608.19741v1); later revisions report a stronger field and a higher pass^20; Beyond pass@1: A Reliability Science Framework for Long-Horizon LLM Agents (https://arxiv.org/abs/2603.29231); EvoCode-Bench (https://arxiv.org/abs/2605.24110) and Philipp Schmid's write-up (https://www.philschmid.de/evocode-bench); τ-bench (https://arxiv.org/html/2406.12045).

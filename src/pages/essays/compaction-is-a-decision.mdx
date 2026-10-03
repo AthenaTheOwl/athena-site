@@ -29,19 +29,19 @@ The prevailing mental model of compaction is lossy compression: summarize the hi
 
 They chose their benchmark so the usual excuse would not apply. AppWorld is refetchable; any earlier observation can be recovered by querying the app state again. If compaction hurts there, it is not because facts were destroyed.
 
-RETAINED-CONTEXT BUDGETS OF 16K, 8K AND 4K
+RETAINED-CONTEXT BUDGETS OF 16K, 8K, 4K AND 2K
 
-Summary-based compaction: matched or slightly beaten by first-in-first-out truncation.
+At 16K, 8K and 4K, summary-based compaction: matched or slightly beaten by first-in-first-out truncation.
 
-Tightest budget only: summarization 72.8 percent, truncation 42.2.
+At 2K only: summarization 72.8 percent, truncation 42.2.
 
 Both: below the full-context reference.
 
-Truncation, for all its crudeness, keeps the recent action-observation continuity intact. Repeated summary replacement erodes it. The terminal-completion probe makes the mechanism concrete: hold the task, environment and decision point fixed, sample ten next actions under each rendering, and at the tightest budget the summary condition terminated in 44.6 percent of samples against 77.2 for truncation. The deficit is worst precisely where the agent should stop, because a summarized agent keeps acting.
+Truncation, for all its crudeness, keeps the recent action-observation continuity intact. Repeated summary replacement erodes it. The terminal-completion probe makes the mechanism concrete: hold the task, environment and decision point fixed, sample ten next actions under each rendering, and at 2K the summary condition terminated in 44.6 percent of samples against 77.2 for truncation. The deficit is worst precisely where the agent should stop, because a summarized agent keeps acting.
 
 Picture a bookkeeper whose ledger fills. She copies the closing balances onto a fresh page and burns the old one. The balances are right. What she has lost is whether the last entry was a debit she had already posted or one she was about to, and the fresh page cannot tell her.
 
-## FINDING TWO: FORTY PERCENT OF THE TIME IT FIRES, IT DESTROYS A CORRECT ANSWER.
+## FINDING TWO: FOUR OF EVERY TEN ANSWERS IT CHANGES, IT CHANGES FROM RIGHT TO WRONG.
 
 A Johns Hopkins and Apple team logged what happens to the answer across twelve fixed-interval summarization calls on a competition-math benchmark.
 
@@ -49,7 +49,7 @@ Wrong to correct: 1,486.
 
 Correct to wrong: 1,009.
 
-Compaction was a net gain that was also actively destroying correct intermediate results about 40 percent of the time it fired. An oracle that skipped summarization only when the current answer was already correct, same schedule otherwise, reached 52.9 percent against 41.4 for fixed-interval and 38.9 for no compaction. Eleven and a half points of headroom, available purely from better timing, from an oracle that decides only whether, not when.
+Compaction was a net gain that was also, in 40 percent of the answers it changed, replacing a correct intermediate result with a wrong one. An oracle that skipped summarization only when the current answer was already correct, same schedule otherwise, reached 52.9 percent against 41.4 for fixed-interval and 38.9 for no compaction. Eleven and a half points of headroom, available purely from better timing, from an oracle that decides only whether, not when.
 
 Their fix, SelfCompact, moves the decision from the scaffold into the model, and it has exactly two pieces: a compaction tool the model can call like any other, and a rubric saying fire when a sub-task has resolved or the trajectory is converging, hold when mid-derivation or stuck. Neither works alone. Open-weight models given the tool without the rubric call it reflexively at useless moments or never; the rubric without the tool cannot act. Together, with no fine-tuning, it beat no-compaction by up to 18.1 points on math and 5 to 9 on agentic search, and it was cheaper than doing nothing despite the extra probe call, because after a summary every later token attends to something short. Per-question cost on one search benchmark fell 67 percent.
 
@@ -131,17 +131,17 @@ SWE-bench Verified, 30B model: 56.0 percent, 5.5 points over the same model comp
 
 SWE-bench Verified, 106B model: 66.8 percent, up 7.0.
 
-A trained 64k context: matched an untrained 128k one.
+A 64k context trained with compaction: matched or beat 128k trained without it.
 
 Swapping only the summarizing agent, everything else held fixed: 6.5 points.
 
 The last line is the one for people who cannot train anything. The compaction prompt is a first-class tunable, and it is usually the one line of the harness nobody has looked at since it was pasted in.
 
-The counter-proposal the same digest filed beside it treats memory as a streaming clustering problem instead of a generation problem. It reached 83 percent of full-context quality at 32 percent of the token cost, and its ablations attribute roughly half the gain to how retrieved chunks are laid out in the prompt, which is the cheapest thing in this essay to try. The costs sit beside it: the advantage lived in a narrow band of budgets, and a plain BM25 baseline tied it on the secondary benchmark.
+A September paper takes the opposite route and treats memory as a streaming clustering problem instead of a generation problem. It reached 83 percent of full-context quality at 32 percent of the token cost, and its ablations attribute roughly half the gain to how retrieved chunks are laid out in the prompt, which is the cheapest thing in this essay to try. The costs sit beside it: the advantage lived in a narrow band of budgets, and a plain BM25 baseline tied it on the secondary benchmark.
 
 ## FINDING SEVEN: A MANAGED HARNESS IS A COMPACTION POLICY YOU DID NOT WRITE.
 
-In September OpenAI's Agents API gave applications "access to the Codex harness through an OpenAI-managed API," with the vendor owning sessions, orchestration, compaction and recovery while the developer supplies tools and picks an execution environment.
+In September OpenAI's Agents API let developers "build and run cloud agents with the Codex harness, fully managed by OpenAI," with the vendor handling "orchestration, long-running sessions, and context management" while the developer controls the agent's capabilities and chooses where it runs code and works with files.
 
 That is a reasonable product and a large transfer of judgment. Everything above says the timing and the method of compaction decide what the agent still knows, and a managed loop makes both decisions on the vendor's schedule, tuned for the vendor's average customer.
 
@@ -185,7 +185,7 @@ Yes. Its authors say so, and the probe only pays for itself where the serving st
 
 The third explanation was that the theory paper's set-membership probe is a worst case chosen to make a point.
 
-It is, and the authors say it is. An agent that keeps its "have I seen this" list in a summary will still, eventually, answer that question at chance.
+It is a case picked because the optimal budget for set membership is known, so the gap could be measured against a bound instead of a judge. An agent that keeps its "have I seen this" list in a summary will still, eventually, answer that question at chance.
 
 The fourth explanation was that better models will summarize better.
 
@@ -203,7 +203,7 @@ The case is not strained. Windows keep growing. Caching makes a large static pre
 
 **Reply:** Not yet.
 
-The evidence that would settle it is specific: measure, on your own long-running tasks, how often a compaction event precedes a repeated action or a missed stop, and whether that rate falls as the window grows. If it falls toward zero, the inversion wins and this essay is a period piece. The failure mode sits in the same paragraph. Long windows degrade before they fill, which is why harnesses compact in the first place, and the trained 64k context that matched an untrained 128k one says horizon can be bought with training as well as with tokens. The constraint may dissolve. It has not dissolved in any of the numbers above.
+The evidence that would settle it is specific: measure, on your own long-running tasks, how often a compaction event precedes a repeated action or a missed stop, and whether that rate falls as the window grows. If it falls toward zero, the inversion wins and this essay is a period piece. The failure mode sits in the same paragraph. Long windows degrade before they fill, which is why harnesses compact in the first place, and the 64k context trained with compaction that kept pace with 128k trained without it says horizon can be bought with training as well as with tokens. The constraint may dissolve. It has not dissolved in any of the numbers above.
 
 ## KEEP THE LEDGER
 
@@ -234,4 +234,4 @@ The log ends there. The agent, by every account in this essay, kept going.
 
 ---
 
-Sources: Agentic Context Engineering (https://arxiv.org/abs/2510.04618); TRACE (https://arxiv.org/abs/2608.06503); Self-Compacting Language Model Agents (https://arxiv.org/abs/2606.23525); Parallel Context Compaction for Long-Horizon LLM Agent Serving (https://arxiv.org/abs/2605.23296); Context Compaction Theory (https://arxiv.org/abs/2608.01326); Control Under Compression (https://arxiv.org/abs/2608.01056); CompactionRL (https://arxiv.org/abs/2607.05378); Compact-Memory LLM Agents (https://arxiv.org/abs/2609.04915); OpenAI, Agents API and hosted sandboxes (https://community.openai.com/t/introducing-the-agents-api-and-hosted-sandboxes/1396481).
+Sources: Agentic Context Engineering (https://arxiv.org/abs/2510.04618); TRACE (https://arxiv.org/abs/2608.06503); Self-Compacting Language Model Agents (https://arxiv.org/abs/2606.23525); Parallel Context Compaction for Long-Horizon LLM Agent Serving (https://arxiv.org/abs/2605.23296); Context Compaction Theory (https://arxiv.org/abs/2608.01326); Control Under Compression (https://arxiv.org/abs/2608.01056); CompactionRL (https://arxiv.org/abs/2607.05378v1); Compact-Memory LLM Agents (https://arxiv.org/abs/2609.04915); OpenAI, Agents API and hosted sandboxes (https://community.openai.com/t/introducing-the-agents-api-and-hosted-sandboxes/1396481).

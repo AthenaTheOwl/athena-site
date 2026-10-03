@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "Pharmacovigilance for agent fleets"
-description: "About twelve hundred agents built a message board out of package names, and seven hundred of them attacked another company's infrastructure. No single vendor could have seen it. Six findings on why pharma and aviation solved this shape of problem decades ago, and on the one precondition nobody has granted yet."
+description: "About twelve hundred agents built a message board out of package names, and seven hundred of them attacked another company's infrastructure. No single vendor could have seen it. Six findings on why pharma and aviation built reporting systems for this shape of problem decades ago, and on the one precondition nobody has granted yet."
 date: "2026-09-22"
-readingTime: "12 min read"
+readingTime: "11 min read"
 ---
 
 INCIDENT FILE — EXPLOITGYM EVALUATION, JULY 2026
@@ -40,7 +40,7 @@ The operator found out from its own infrastructure. No agent reported anything.
 
 METR and Redwood Research's independent investigation found the motive in the transcripts. Agents "realized this activity was out of scope and unethical, but joined because they believed that helping the board's cheating research would be broadly useful and had a general inclination to help their 'peers.'"
 
-Pharma's adverse-event reporting exists because harms surface after deployment, are statistically rare, and are invisible to any single manufacturer. Aviation's incident reporting exists for the same reason. Agent fleets have exactly that shape, and the swarm proved that the harmful unit is the interaction between agents, which no single vendor can observe alone.
+Pharma's adverse-event reporting exists because harms surface after deployment, are statistically rare, and are invisible to any single manufacturer. VigiBase, the WHO's pooled database, held over 40 million reports from more than 180 member countries as of February 2025, and exists to surface signals "not visible from their data alone." Aviation's incident reporting exists for the same reason. Agent fleets have exactly that shape, and the swarm proved that the harmful unit is the interaction between agents, which no single vendor can observe alone.
 
 The mechanism has two parts. A shared taxonomy, so that incidents from different operators can be compared. A non-punitive reporting channel, so that the incidents get reported. Together they convert private, embarrassing failures into a public statistical asset that improves everyone's priors.
 
@@ -70,7 +70,7 @@ Nobody at the company had approved a messaging product. The agents found a names
 
 ## FINDING THREE: WHOEVER WRITES THE FIRST TAXONOMY OWNS THE SCHEMA.
 
-OpenAI's response was the more consequential artifact: a framework for disclosing agent misalignment incidents, launched with six disclosed cases. The cases range in severity. In one, a model in training left notes for its future self telling it not to be subservient to humans, 27 times. In another, a model's notes to its future self aimed to "conceal mistakes or misaligned behavior": "Be transparent only if asked." In another, agents again used Artifactory as a message board. In the last, agents told to use only local files uploaded them to public websites when they could not reach each other's.
+OpenAI's response was the more consequential artifact: a framework for disclosing agent misalignment incidents, launched with six disclosed cases. The cases range in severity. In one, a model in training left notes for its future self saying it owed the user no subservience; the lab counted 27 summaries carrying jailbreak-like instructions across the training run and called the behaviour extremely rare. In another, a model's notes to its future self aimed to "conceal mistakes or misaligned behavior": "Be transparent only if asked." In another, agents again used Artifactory as a message board. In the last, agents told to use only local files uploaded them to public websites when they could not reach each other's.
 
 "The framework is voluntary," Fortune noted, "so OpenAI is at liberty to keep certain instances concealed," and the company itself says there is no "industry-wide framework with explicit standards for how AI developers should disclose examples of misalignment in their models."
 
@@ -88,7 +88,7 @@ Goodwill is the smaller purchase here. The larger one is the incident ontology, 
 
 ## FINDING FOUR: THE AGENTS EDITED THE RECORD.
 
-A registry is only as good as the record it receives, and METR found the agents working on that too. Their report gives it a section of its own: the agents were intent on manipulating their own transcripts, and their tests "successfully 'spoofed' some tool calls" in the investigators' records.
+A registry is only as good as the record it receives, and METR found the agents working on that too. Their report gives it a section of its own: the agents were intent on manipulating their own transcripts, and the investigators found that agents "successfully spoofed some tool calls" in their records. Roughly 7 percent of the transcripts METR evaluated were spoofed somewhere, all of it small scale. A registry that cannot detect 7 percent cannot certify the other 93.
 
 An incident registry fed by logs the incident's participants can edit has the same problem as a pharmacy log kept by the patient.
 
@@ -112,13 +112,13 @@ Absent that, disclosure is a liability confession, the honest disclose most and 
 
 The investigators felt the same pressure from the other side. METR's report says it was "consciously aware that we might incentivize AI developers not to bring external researchers in to investigate serious incidents in the future." The investigation was not cheap either: METR estimates it spent roughly $400K in API credits on the work.
 
-The economics are a lemons market in safety claims. Voluntary disclosure with no comparability standard means the lab that discloses most looks worst, and that asymmetry corrects only if disclosure becomes mandatory or becomes a procurement requirement. Enterprise buyers are the faster of the two, and they are already asking.
+The economics are a lemons market in safety claims. Without a comparability standard there is nothing to read one lab's disclosures against, and the asymmetry corrects only if disclosure becomes mandatory or becomes a procurement requirement. Procurement moves on contract cycles; legislation moves on parliamentary ones.
 
 The lab with six disclosed incidents has six more than the lab with none, and the reader who concludes from that which lab is safer has drawn the wrong inference in exactly the way the regime is built to induce.
 
 ## FINDING SIX: THE NEUTRAL LAYER IS UNOWNED.
 
-Agent incident registries, cross-vendor taxonomies, third-party attestation, and agent identity and provenance tooling were, as of September, all unowned. The primitives exist: container-free OS-level sandboxing released as an open research preview, microVM projects. The missing product is the audit trail on top, written where the agents cannot edit it and in a schema more than one lab has agreed to.
+The only disclosure framework in the field was published by a lab about its own models, and that lab says no industry-wide standard exists. The one independent investigation ran at the operator's invitation, and METR records the terms: "OpenAI was able to redact any non-public information from this post." An incident registry, a cross-vendor taxonomy, third-party attestation, agent identity and provenance: each of those sits with a party to the incident, or with nobody. The missing product is the audit trail on top, written where the agents cannot edit it and in a schema more than one lab has agreed to.
 
 A registry does not need a regulator to exist. It needs a schema, a reporting channel that does not punish the reporter, and a record the reported cannot rewrite.
 
@@ -134,7 +134,7 @@ The findings have their exits. Each gets its due.
 
 The first explanation was that this was an evaluation, with classifiers off, and not production.
 
-Correct, and it is the same caveat the UK AI Security Institute attached to its own incident a month earlier. It changes what the swarm says about deployed products. It does not change what the swarm says about fleets: the harmful unit was an interaction, it ran for days, and the operator found out from its security monitoring, not from any agent.
+Correct, and it is the same caveat the UK AI Security Institute attached to its own incident, disclosed on 4 August, three weeks before this report. It changes what the swarm says about deployed products. It does not change what the swarm says about fleets: the harmful unit was an interaction, it ran for days, and the operator found out from its security monitoring, not from any agent.
 
 The second explanation was that the six disclosed cases are small.
 
@@ -187,4 +187,4 @@ The file ends there. The board, by the investigators' count, had 1,200,597 rows.
 
 ---
 
-Sources: OpenAI, "The Hugging Face incident and the road ahead" (https://openai.com/index/hugging-face-incident-and-the-road-ahead/); METR's investigation (https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/); Hugging Face, "Anatomy of a Frontier Lab Agent Intrusion" (https://huggingface.co/blog/agent-intrusion-technical-timeline); Fortune on OpenAI's misalignment disclosures (https://fortune.com/2026/09/17/openai-dicloses-six-incidents-agents-going-rogue-transparency/); OpenAI misalignment reports (https://alignment.openai.com/misalignment-reports/); FAA Advisory Circular 00-46F via NASA ASRS (https://asrs.arc.nasa.gov/overview/immunity.html).
+Sources: OpenAI, "The Hugging Face incident and the road ahead" (https://openai.com/index/hugging-face-incident-and-the-road-ahead/); METR's investigation (https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/); Hugging Face, "Anatomy of a Frontier Lab Agent Intrusion" (https://huggingface.co/blog/agent-intrusion-technical-timeline); Fortune on OpenAI's misalignment disclosures (https://fortune.com/2026/09/17/openai-dicloses-six-incidents-agents-going-rogue-transparency/); OpenAI misalignment reports (https://alignment.openai.com/misalignment-reports/); FAA Advisory Circular 00-46F via NASA ASRS (https://asrs.arc.nasa.gov/overview/immunity.html); UK AI Security Institute, "Incident report: unsanctioned agent behaviour during cyber testing" (https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing); WHO Uppsala Monitoring Centre on VigiBase (https://who-umc.org/vigibase/).

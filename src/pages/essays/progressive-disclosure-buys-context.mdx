@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "Progressive disclosure buys context, not intelligence"
-description: "Every agent platform adopted the same three-tier loading pattern on anecdote, and the context file beside it on recommendation. Seven findings from the first controlled studies of both: what works at library scale, one level deep, and what the agent never needed to be told."
+description: "Every agent platform adopted the same three-tier loading pattern on anecdote, and the context file beside it on recommendation. Seven findings from the first controlled studies of both: what works at library scale, one level deep, what the agent never needed to be told, and the one side nobody has measured."
 date: "2026-09-22"
-readingTime: "12 min read"
+readingTime: "9 min read"
 ---
 
 CATALOGUE CARD — AGENT SKILLS, DISCOVERY LAYER
@@ -52,9 +52,9 @@ Until July the evidence for the pattern was anecdotal. He, Zhao, Wang and Chen t
 
 On a single document, the gain depended entirely on the harness.
 
-Claude Code gained.
+Under Claude Code, disclosure matched or beat raw navigation.
 
-Pi gained.
+Under Pi, the same.
 
 Codex gained nothing, because it already performed entity-based retrieval unprompted.
 
@@ -78,9 +78,11 @@ The agent cannot find the right book by grepping when there are twenty of them. 
 
 The routing tree had two levels.
 
-Accuracy went from 0.9126 to 0.6398.
+On the multiple-choice set, under one harness and one model, accuracy went from 0.9126 to 0.6398.
 
-Nothing else changed. The same documents, the same agent, the same questions; one more layer of table-of-contents between the agent and the text, and more than a quarter of the accuracy went missing. The mechanism, once measured, is not mysterious: at every node the agent loads every child's description, so a deep tree means it is continuously reading routing metadata it will not use, and the metadata competes with the content for attention.
+In every other cell the second level never beat the first.
+
+Nothing else changed in that cell. The same documents, the same agent, the same questions; one more layer of table-of-contents between the agent and the text, and more than a quarter of the accuracy went missing. The mechanism, once measured, is not mysterious: at every node the agent loads every child's description, so a deep tree means it is continuously reading routing metadata it will not use, and the metadata competes with the content for attention.
 
 The natural instinct when building a skills pack is to nest: a router that picks a domain, which picks a sub-index, which picks passages. The study says stop at one. A wrong route at level two is unrecoverable in a way a wrong retrieval at level one is not, because the agent gets a plausible-looking sub-index and never learns the right one existed.
 
@@ -134,11 +136,11 @@ Further down there is usually a line like: never invent a new category when an e
 
 No agent could have found that sentence by reading the code. It is the line that earns its tokens, and it is usually under the tour.
 
-## FINDING SEVEN: FORGETTING A SKILL TOO FAST COSTS MORE THAN KEEPING IT.
+## FINDING SEVEN: NOBODY HAS MEASURED THE UNLOADING SIDE.
 
-The unloading side is the part people get wrong. A naive implementation discards a skill's context immediately after use and reloads it minutes later when the next related task arrives, churning tokens and latency.
+The unloading side has no controlled study behind it. The failure is still easy to describe: a naive implementation discards a skill's context immediately after use and reloads it minutes later when the next related task arrives, churning tokens and latency.
 
-The fix is ordinary cache discipline. Keep recently used skills resident, keep the frequently activated ones warm, and accept the context cost as the price of not thrashing.
+The recommended fix is ordinary cache discipline. Keep recently used skills resident, keep the frequently activated ones warm, and accept the context cost as the price of not thrashing. The crossover point is unpublished, so the residency window is a number you guess and then tune.
 
 A catalogue that returns every book the moment the reader closes it is not saving shelf space.
 
@@ -146,9 +148,13 @@ It is making the reader walk.
 
 ·   ·
 
-Every tier in this essay is a decision about what the agent is allowed to not know yet.
+Every tier above is a decision about what the agent is allowed to not know yet.
 
-The cheap layer says what exists. The expensive layer says how. The mistake, in every form above, is paying for how before anyone has asked.
+A card that says what exists costs about eighty tokens.
+
+The book behind it, saying how, costs about two thousand.
+
+The mistake is paying for the book before anyone has asked.
 
 ## THE EXPLANATIONS AFTERWARD
 
@@ -176,7 +182,7 @@ Possibly. The failure mechanism is context saturation, not routing stupidity; th
 
 The fourth explanation was the inversion, and it deserves its full weight: progressive disclosure is a crutch for weak harnesses and small windows, and both are going away.
 
-The case is not strained. The strongest harness in the study gained nothing on a single document. Windows keep growing. The context-file study says preloaded guidance often costs more than it returns. On that reading, the right design is a capable harness with good search over the raw corpus, and every catalogue card is a maintenance burden waiting to mis-route.
+The case is not strained. The harness that already greps for the entities a question names gained nothing on a single document. Windows keep growing. The context-file study says preloaded guidance often costs more than it returns. On that reading, the right design is a capable harness with good search over the raw corpus, and every catalogue card is a maintenance burden waiting to mis-route.
 
 **Objection:** Then delete the index.
 

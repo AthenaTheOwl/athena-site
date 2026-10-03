@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "Shrink the tool surface"
 description: "Every tool definition is a tax paid before the model reads the request. Six findings on the fix four sources converged on, fewer definitions in the prompt and more capability in the environment, and on where the surface goes when you take it out of the prompt."
 date: "2026-09-22"
-readingTime: "12 min read"
+readingTime: "11 min read"
 ---
 
 TOOL MANIFEST — CLOUDFLARE API, EXPOSED TO AN AGENT
@@ -24,7 +24,7 @@ Four sources this year arrived at versions of that sentence from four directions
 
 ## FINDING ONE: THE SCHEMA IS A TAX PAID BEFORE THE REQUEST IS READ.
 
-Every tool definition attached to an agent is context consumed on every call, before the user's prompt is read. Tolerable at ten tools; a handful of connected servers puts you at ninety-plus definitions and 50,000 tokens of JSON before the model reasons about anything. The oldest fix in the corpus is the simplest: treat tools like retrieval. Keep the definitions in a store, match the request against them, and expose only the handful that plausibly apply.
+Every tool definition attached to an agent is context consumed on every call, before the user's prompt is read. Tolerable at ten tools; Anthropic's own five-server example is 58 definitions and about 55,000 tokens of JSON before the model reasons about anything. The oldest fix is also the simplest: treat tools like retrieval. Keep the definitions in a store, match the request against them, and expose only the handful that plausibly apply.
 
 The platform version has numbers.
 
@@ -94,7 +94,7 @@ Two generic tools lose per-tool authorization. "This agent may read DNS but neve
 
 Cloudflare's answer is to push the policy into the credential. Their server is OAuth 2.1 compliant and uses its OAuth provider "to downscope the token to selected permissions approved by the user when connecting. The agent only gets the capabilities the user explicitly granted."
 
-The protocol moved the same way in July. The 28 July MCP specification went to a stateless core, added Tasks for long-running work, and hardened authorization toward OAuth and OIDC, while, as one security trade outlet noted, pushing critical security responsibility from the protocol onto platform operators.
+The protocol moved the same way in July. The 28 July MCP specification went to a stateless core, added Tasks for long-running work, and hardened authorization toward OAuth and OIDC, while, as SecurityWeek wrote in June against the release candidate, pushing critical security responsibility from the protocol onto the developers and platform operators who implement it.
 
 A menu of fifty tools lets a reviewer read the permissions off the menu.
 
@@ -120,11 +120,11 @@ Codex: patched in 0.146.0.
 
 Gemini CLI: deprecated instead of fixed.
 
-Copilot: no fix shipped as of disclosure.
+Copilot: no fix from Microsoft. GitHub says the attack does not reach its own marketplace, because it refuses branch names shaped like commit hashes (the researchers note Copilot also installs from marketplaces on Bitbucket).
 
 Authority of the code once it ran: everything the developer who launched the agent could reach.
 
-The supply-chain comparison is exact. Classic attacks had to compromise a build system and wait for a release. Agent plugins compress that: the marketplace is the build system, the update channel is the deploy pipeline, and there is no release cycle, because plugins auto-update. The state of the art fits in one sentence: agent permissioning is still binary.
+The supply-chain comparison is exact. Classic attacks had to compromise a build system and wait for a release. Agent plugins compress that: the marketplace is the build system, the update channel is the deploy pipeline, and there is no release cycle, because plugins auto-update. Plugin authority has no middle setting. A plugin is installed and runs with everything the developer can reach, or it is not installed.
 
 The surface taken out of the prompt did not disappear.
 
@@ -142,11 +142,11 @@ Four sources, one direction, and the exits are well-lit. Each gets its due.
 
 The first explanation was that the numbers are vendor-reported, and Schmid publishes none.
 
-Correct on both counts. The tool-search and programmatic-calling figures are Anthropic's internal evaluations. Cloudflare's 99.9 percent is one API measured with one tokenizer. The 150,000-to-2,000 Drive-to-Salesforce headline is a single hand-chosen example, vendor-published and unreplicated. Schmid's "on par or better" is a practitioner report. Discount every figure. Then notice that four independent sources with four different incentives all point the same way, and that the mechanism, data that never enters the prompt cannot cost prompt tokens, does not need a benchmark to be true.
+Correct on both counts. The tool-search and programmatic-calling figures are Anthropic's internal evaluations. Cloudflare's 99.9 percent is one API measured with one tokenizer. The 150,000-to-2,000 Drive-to-Salesforce headline is a single hand-chosen example, vendor-published and unreplicated. Schmid's "on par or better" is a practitioner report. Discount every figure. Then notice who is pointing. Cloudflare sells the sandbox the pattern needs. Anthropic bills by the token and published a method for spending fewer of them. Schmid sells nothing and reports the same direction with no numbers at all. And the mechanism, data that never enters the prompt cannot cost prompt tokens, does not need a benchmark to be true.
 
 The second explanation was that pinning plugins is enough.
 
-It was the control everybody relied on, and in September it was falsified once, across four products. Every enterprise that deployed coding agents did so on an implicit assumption of marketplace integrity. That assumption is now a finding with a patch number.
+It was the control everybody relied on, and it never checked its own work. The agent checks out the pinned commit and never verifies the checkout landed there, so the pin reads as honored while the code is someone else's. In September it was falsified once, across four products. Every enterprise that deployed coding agents did so on an implicit assumption of marketplace integrity. That assumption is now a finding with a patch number.
 
 The third explanation was that the sandbox is the real cost of the pattern.
 
@@ -158,7 +158,7 @@ It is. Anthropic's own post says the infrastructure adds operational overhead an
 
 **Objection:** Weaker models cannot write code against a spec they discover at runtime.
 
-**Reply:** Correct, and they fail at it more often than at plain function calling. For five to fifteen tools you control, the schema tax is trivial and function calling is simpler, more debuggable, and more reliable. Reach for code when the tool count is large, growing, or unknown.
+**Reply:** Correct, and none of the sources measures the gap. The mechanism is enough on its own: a discovered spec has to be read and compiled against, while a tool schema arrives pre-parsed. For five to fifteen tools you control, the schema tax is trivial and function calling is simpler to debug. Reach for code when the tool count is large, growing, or unknown.
 
 The fourth explanation was multimodal blindness. A shell command that renders an image still needs a separate channel to look at it, and browser automation stays a specialized tool.
 
@@ -195,4 +195,4 @@ The manifest ends there. The agent, holding two tools, can reach everything the 
 
 ---
 
-Sources: Matt Carey, "Code Mode: give agents an entire API in 1,000 tokens" (https://blog.cloudflare.com/code-mode-mcp/); Philipp Schmid, "How Foundational Models Became Superhuman in Bash" (https://www.philschmid.de/superhuman-bash) and "8 Tips for Writing Agent Skills" (https://www.philschmid.de/agent-skills-tips); Anthropic, "Code execution with MCP" (https://www.anthropic.com/engineering/code-execution-with-mcp) and "Introducing advanced tool use" (https://www.anthropic.com/engineering/advanced-tool-use); MCP specification 2026-07-28 (https://blog.modelcontextprotocol.io/posts/2026-07-28/); The Register on Plugin4Shell (https://www.theregister.com/security/2026/09/17/ai_coding_agents_0_click_rce_flaw_could_hand_attackers_keys_to_the_kingdom/5297335).
+Sources: Matt Carey, "Code Mode: give agents an entire API in 1,000 tokens" (https://blog.cloudflare.com/code-mode-mcp/); Philipp Schmid, "How Foundational Models Became Superhuman in Bash" (https://www.philschmid.de/superhuman-bash) and "8 Tips for Writing Agent Skills" (https://www.philschmid.de/agent-skills-tips); Anthropic, "Code execution with MCP" (https://www.anthropic.com/engineering/code-execution-with-mcp) and "Introducing advanced tool use" (https://www.anthropic.com/engineering/advanced-tool-use); MCP specification 2026-07-28 (https://blog.modelcontextprotocol.io/posts/2026-07-28/); Kevin Townsend, "New Enterprise-Ready MCP Specification Brings New Security Challenges" (https://www.securityweek.com/new-enterprise-ready-mcp-specification-brings-new-security-challenges/); The Register on Plugin4Shell (https://www.theregister.com/security/2026/09/17/ai_coding_agents_0_click_rce_flaw_could_hand_attackers_keys_to_the_kingdom/5297335).

@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "Identity is the tax on autonomy"
 description: "Non-human identities outnumber people forty-five to one in the enterprises that counted, AI-service keys leak faster than any other credential, and attackers now steal them to run their own workloads. Seven findings on why the accountability substrate arrives before the capability does, and arrives as a bill."
 date: "2026-09-22"
-readingTime: "12 min read"
+readingTime: "9 min read"
 ---
 
 ACCESS REVIEW — NON-HUMAN IDENTITIES, 2026
@@ -53,7 +53,7 @@ It is the most widely deployed least-privilege credential in the world, and nobo
 
 ## FINDING THREE: BIND AUTHORITY TO THE TASK, AND EXPIRE IT.
 
-Cloud infrastructure learned least privilege the ergonomic way, through ephemeral tokens and policy as code. The transfer to agents is direct: bind authority to a task, not an identity, and expire it by default. Agent runtimes today grant permission at integration time and never revoke it.
+Cloud infrastructure learned least privilege the ergonomic way, through ephemeral tokens and policy as code. The transfer to agents is direct: bind authority to a task, not an identity, and expire it by default. The default in most agent integrations is still a permission granted once, at wiring time, on a form with no expiry field.
 
 The incident data has started to say so. OWASP's 2026 LLM Top 10 moved excessive agency up to third, and for the first time weighted the ranking partly on the incident record: 25 percent from a corpus of 7,714 publicly documented incidents, 6,639 of them classifiable, beside 75 percent from the community vote. The Cyber Resilience Act's reporting duties began on 11 September, with full compliance due in December 2027.
 
@@ -87,7 +87,7 @@ The physical-world version is sharper. A revocable, auditable, least-privilege c
 
 ## FINDING SIX: THE LOG IS NOT THE EXPLANATION.
 
-The least crowded opportunity in the whole field is the actuarial data that would underwrite agent liability, and the reason it is least crowded is the failure mode attached to everything else. Audit logs of agent reasoning are not explanations. Logging what an agent did while its why remains uninterpretable produces compliance theatre and a false sense of control.
+Audit logs of agent reasoning are not explanations. Logging what an agent did while its why remains uninterpretable produces a record and a false sense of control. The loss data an underwriter would need to price agent liability runs on the what. Motive is not one of the columns.
 
 The honest substrate records the what with enough integrity that nobody can rewrite it, and declines to claim the why.
 
@@ -99,7 +99,7 @@ IDENTITY FOR MACHINES, FILED
 
 Palo Alto Networks' acquisition of CyberArk: completed 11 February 2026, a $25 billion deal, announced as adding "unified security for human, machine and agentic identity."
 
-Palo Alto Networks' acquisition of the agent-security startup Console: $500M, the first real price print for the category.
+Palo Alto Networks' acquisition of Console, whose agents reset passwords and granted app access: $500M in cash and stock, reported by two people with knowledge of the deal. Terms disclosed by the companies: none.
 
 NIST's AI Agent Standards Initiative: launched 17 February, with a companion concept paper pointing at least privilege, task-scoped privileges and action-level approvals for high-impact decisions.
 
@@ -135,13 +135,13 @@ Possibly. The broker is the thin layer. The ledger of what each credential did i
 
 **Reply:** Split discovery from execution. Grant the agent wide read on what exists and narrow write on what it may change, per task, with the write scope expiring when the task does.
 
-The third explanation was that logging is not explanation.
+The third explanation was that interpretability will catch up, and an agent's reasoning trace will be a usable explanation within a few model generations.
 
-Correct, and it is the sixth finding, not an objection. Log the action with a hash. Do not pretend the hash is a motive.
+Assume it does. The substrate does not change. A trace that can be read is also a trace that can be edited after the fact. Log the action with a hash, chain it, and let the interpretability work argue about the why on top of a record it cannot alter.
 
 The fourth explanation was that a revocation that breaks the workflow is a revocation nobody will pull.
 
-That is the strongest objection here, and the answer is procedural: a credential that expires on its own needs nobody brave enough to revoke it. Expiry is revocation that has already happened.
+That is the strongest objection here, and the answer is procedural. A credential with an expiry needs no decision from anyone on the day it stops working. Expiry is revocation that has already happened.
 
 The fifth explanation was the inversion, and it is a reasonable position for most teams today: per-task scoped credentials are over-engineering for agents that mostly read, draft and summarise. Broad scopes and good logs are adequate until something goes wrong, and the providers will ship the rest.
 
@@ -174,4 +174,4 @@ The review ends there. The key, somewhere, is still valid.
 
 ---
 
-Sources: GitGuardian, "The State of Secrets Sprawl 2026" (https://blog.gitguardian.com/the-state-of-secrets-sprawl-2026/); Palo Alto Networks, completion of the CyberArk acquisition (https://www.paloaltonetworks.com/company/press/2026/palo-alto-networks-completes-acquisition-of-cyberark-to-secure-the-ai-era); IDC, "Agentic AI is critical infrastructure" (https://www.idc.com/resource-center/blog/agentic-ai-is-critical-infrastructure/); Anthropic, September 2026 threat intelligence report (https://www.anthropic.com/threat-intelligence-report-september-2026); OWASP LLM Top 10 2026, via Aembit (https://aembit.io/blog/the-owasp-top-10-for-llm-applications-2026-what-changed-and-why-it-matters); China's national framework for AI agents, via MLex (https://www.mlex.com/mlex/articles/2475858/china-unveils-first-national-framework-for-ai-agents-with-tiered-oversight); NIST AI Agent Standards Initiative (https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure); Security Boulevard on the non-human identity ratio (https://securityboulevard.com/2026/07/the-agent-identity-problem-non-human-identities-outnumber-humans-45-to-1-and-ai-agents-are-making-it-worse/).
+Sources: GitGuardian, "The State of Secrets Sprawl 2026" (https://blog.gitguardian.com/the-state-of-secrets-sprawl-2026/); Palo Alto Networks, completion of the CyberArk acquisition (https://www.paloaltonetworks.com/company/press/2026/palo-alto-networks-completes-acquisition-of-cyberark-to-secure-the-ai-era); IDC, "Agentic AI is critical infrastructure" (https://www.idc.com/resource-center/blog/agentic-ai-is-critical-infrastructure/); Anthropic, September 2026 threat intelligence report (https://www.anthropic.com/threat-intelligence-report-september-2026); OWASP LLM Top 10 2026, via Aembit (https://aembit.io/blog/the-owasp-top-10-for-llm-applications-2026-what-changed-and-why-it-matters); China's national framework for AI agents, via MLex (https://www.mlex.com/mlex/articles/2475858/china-unveils-first-national-framework-for-ai-agents-with-tiered-oversight); NIST AI Agent Standards Initiative (https://www.nist.gov/news-events/news/2026/02/announcing-ai-agent-standards-initiative-interoperable-and-secure); TechCrunch on the Console price (https://techcrunch.com/2026/09/02/palo-alto-networks-paid-500m-for-thrive-backed-console-sources-say/); Security Boulevard on the non-human identity ratio (https://securityboulevard.com/2026/07/the-agent-identity-problem-non-human-identities-outnumber-humans-45-to-1-and-ai-agents-are-making-it-worse/).

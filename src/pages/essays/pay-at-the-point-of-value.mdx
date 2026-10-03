@@ -1,9 +1,9 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "Pay at the point of value"
-description: "The web reserved a status code for payment in its founding standard and never used it. This summer programs started paying with it, and publishers started billing for use instead of access. Seven findings on the payer that changed, the move from fetch to use, the character priced as a unit, the collective for the long tail, and the question every pay-per-use deal leaves open: who owns the meter."
+description: "The web reserved a status code for payment in its founding standard and never used it. This year programs started paying with it, and publishers started billing for use instead of access. Seven findings on the payer that changed, the move from fetch to use, the character priced as a unit, the collective for the long tail, and the question every pay-per-use deal leaves open: who owns the meter."
 date: "2026-09-22"
-readingTime: "11 min read"
+readingTime: "8 min read"
 ---
 
 INVOICE — ONE ANSWER
@@ -14,7 +14,7 @@ Rate: a share of revenue, split evenly between the AI company and the publisher.
 Measured by: an attribution model the AI company built.
 Audited by: no field.
 
-That invoice is assembled from two things that happened this summer: a licensing deal between the News/Media Alliance and an AI company called Bria, and Cloudflare's move to let publishers charge for use. Every line on it is a step forward for publishers.
+That invoice is assembled from two things that happened this year: a licensing deal between the News/Media Alliance and an AI company called Bria, reported in March, and Cloudflare's move in July to let publishers charge for use. Every line on it is a step forward for publishers.
 
 The last line is the one that decides whether the other lines are true.
 
@@ -30,7 +30,7 @@ Payment at the level of a single request has been proposed for as long as there 
 
 Programs do not mind deciding. An agent that needs one dataset, one simulation run or one article can pay for exactly that and move on. The new payer has no identity to verify, no credit history and no way to dispute a charge, and it does not need any of them for a request that costs a fraction of a cent.
 
-That opens metering to anything with a high cost per call and a low value per call: licensed datasets, instrument time, satellite tasking, curated corpora.
+That opens metering to units too small to write a contract around: one query against a licensed dataset, an hour of instrument time, a single satellite pass, one article out of a paywalled archive.
 
 It also removes the protections that made card payments safe for people. There is no chargeback for a program. An agent stuck in a retry loop, or one that has been compromised, can spend a budget in minutes, and the whole design assumes the payer is honest and competent.
 
@@ -52,13 +52,13 @@ The songwriter has never seen the station's logbook.
 
 ## FINDING FOUR: ADVERTISING AND MUSIC GOT HERE FIRST.
 
-Media industries have made this move before. Advertising shifted from paying for impressions toward paying for actions. Recorded music shifted from selling units to collecting a royalty per stream. In each case the intermediary could observe the moment value was created, and pricing at that moment ended an argument about access.
+Media industries have made this move before, and each time the count stayed with the party that could see the event. Advertising shifted from paying for impressions toward paying for actions, and the ad network kept the log. Recorded music shifted from selling units to a royalty per stream, and the service kept the play count. The fight that followed each shift was over the log, not the rate.
 
 The AI version became possible for a specific reason. An answer engine can log which sources it used for an answer. Once that log exists, a payment can attach to it.
 
 ## FINDING FIVE: THE ASSET BREAKS INTO UNITS.
 
-Usage pricing also changes what is being sold. The Los Angeles Times estimated, as reported in coverage of Google's talks with Hollywood studios, that Google "could pay a studio such as Disney / Pixar about $40 million for the right to generate outputs using one copyrighted character."
+Pricing by use also changes what counts as a unit. The Los Angeles Times estimated, as reported in coverage of Google's talks with Hollywood studios, that Google "could pay a studio such as Disney / Pixar about $40 million for the right to generate outputs using one copyrighted character." That figure is a flat fee for a right, not a price per generation. The unit moved before the meter did.
 
 A character was once licensed as part of a film, a franchise or a merchandise deal. Here it is priced alone, as a unit a model can call. The same unbundling can reach a voice apart from a performance, a style apart from a portfolio, a single stem apart from a song.
 
@@ -70,13 +70,13 @@ Large publishers can negotiate their own deals. Small ones cannot, because the c
 
 That is the structure performing-rights organisations built for songwriters: aggregate thousands of small holders into one counterparty so that licensing is worth anyone's time.
 
-Collectives carry their own history. They can become gatekeepers that block the licensing they were created to enable.
+Collectives carry their own history. ASCAP and BMI have operated under Justice Department consent decrees since 1941, entered because the aggregation that made licensing possible also handed each of them market power over the licence.
 
 ## FINDING SEVEN: WHOEVER OWNS THE METER OWNS THE PRICE.
 
 Read the Bria terms again. The 50-50 split is "based on an attribution model that Bria developed," which Bria also uses to determine "how much of a publisher's content was used for a given AI output." The payer measures the usage it pays for.
 
-Nothing here singles out Bria. The same shape runs through every pay-per-use arrangement in this essay: the party that observes the moment of value is the party that pays for it, and it has every reason to count low.
+Nothing here singles out Bria. The shape recurs wherever the payer also keeps the count, and in the Bria deal it does: one party builds the attribution model, applies it to its own outputs, and pays out the result, with every reason to count low. Cloudflare's arrangement splits those roles. It sits beneath the AI companies as the common layer, and the publisher who opts in with Ceramic gets the per-use record back. Two deals, two meters. Only one of them is readable by the party being paid.
 
 The other side has its own incentive. Once appearing in an answer is billable, appearing in answers becomes something to optimise. Profound, which "builds marketing software to help brands appear in AI search results," raised $180 million this month at a $1.8 billion valuation.
 
@@ -88,7 +88,7 @@ Each finding has a skeptical reading. Each gets its hearing.
 
 The first explanation was that micropayments always fail, and these will too.
 
-They failed with people. The person deciding was the obstacle, and programs remove that obstacle. What remains is fraud and runaway spending, which are real problems and are problems of a different kind.
+They failed with people. The person deciding was one obstacle, and programs remove it. The account and the card processor were the other: x402 asks for neither, and the server settles the charge on-chain. What remains is fraud and runaway spending, which are problems of a different kind.
 
 The second explanation was that this is licensing with a new name.
 
@@ -111,6 +111,8 @@ Finding Seven concedes the mechanism. The dispute is over whether it can be fixe
 **Reply:** Or someone neither of them owns.
 
 The evidence that settles it is whether the usage records can be checked by the party being paid. If every billable use produces a record the payee can verify, that the cited passage exists and that the answer used it, the meter can be audited and the inversion loses. If the payee receives only a total, the payer's model is the price.
+
+Both deals in this essay are already scored against that test. Cloudflare's returns the record; Bria's returns a share and a model. Nothing new had to be invented to tell them apart.
 
 ## THE CITATION GATE
 
@@ -137,4 +139,4 @@ The invoice is cheaper to send than it has ever been. It is still only as honest
 
 ---
 
-Sources: IETF, RFC 9110, "HTTP Semantics" (https://www.rfc-editor.org/rfc/rfc9110.html); Cloudflare, x402 documentation (https://developers.cloudflare.com/agents/agentic-payments/x402/); Cloudflare press release on Pay Per Use (https://www.cloudflare.com/press/press-releases/2026/cloudflare-allows-the-agentic-internet-to-flourish-with-a-simple-philosophy-your-content-your-rules/); TechCrunch, "Cloudflare's new policy pushes AI companies to pay for publishers' content" (https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/); coverage of Google's Hollywood licensing talks, citing the Los Angeles Times (https://ua.news/en/technologies/google-imovirno-obgovoriuie-litsenziyi-na-kontent-gollivudskikh-studii-dlia-shi-the-verge); Digiday on the News/Media Alliance–Bria deal (https://digiday.com/media/news-media-alliance-signs-ai-licensing-deal-to-unlock-recurring-rag-revenue-for-small-and-mid-sized-publishers/); TechCrunch on Profound's Series D (https://techcrunch.com/2026/09/15/aeo-startup-profound-hits-unicorn-valuation-raises-180m-series-d-7-months-after-last-round/).
+Sources: IETF, RFC 9110, "HTTP Semantics" (https://www.rfc-editor.org/rfc/rfc9110.html); Cloudflare, x402 documentation (https://developers.cloudflare.com/agents/agentic-payments/x402/); Cloudflare press release on Pay Per Use (https://www.cloudflare.com/press/press-releases/2026/cloudflare-allows-the-agentic-internet-to-flourish-with-a-simple-philosophy-your-content-your-rules/); TechCrunch, "Cloudflare's new policy pushes AI companies to pay for publishers' content" (https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/); coverage of Google's Hollywood licensing talks, citing the Los Angeles Times (https://ua.news/en/technologies/google-imovirno-obgovoriuie-litsenziyi-na-kontent-gollivudskikh-studii-dlia-shi-the-verge); Digiday on the News/Media Alliance–Bria deal (https://digiday.com/media/news-media-alliance-signs-ai-licensing-deal-to-unlock-recurring-rag-revenue-for-small-and-mid-sized-publishers/); US Department of Justice, Antitrust Division, ASCAP/BMI consent decree review (https://www.justice.gov/atr/ascap-bmi-decree-review); TechCrunch on Profound's Series D (https://techcrunch.com/2026/09/15/aeo-startup-profound-hits-unicorn-valuation-raises-180m-series-d-7-months-after-last-round/).

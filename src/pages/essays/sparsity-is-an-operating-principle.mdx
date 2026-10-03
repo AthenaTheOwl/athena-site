@@ -3,7 +3,7 @@ layout: ../../layouts/Essay.astro
 title: "Sparsity is an operating principle"
 description: "The largest open model of the summer wakes under two percent of itself for each word it writes. Seven findings on paying for what you use instead of what you own, where the bill moves when you do, why the router becomes the product, what breaks when the experts are people, and the record every sparse system owes of what it left asleep."
 date: "2026-09-22"
-readingTime: "11 min read"
+readingTime: "10 min read"
 ---
 
 CAPACITY LEDGER — ONE MODEL
@@ -34,9 +34,11 @@ Nobody complains that most of the books are closed. The catalogue is the clever 
 
 ## FINDING TWO: THE CONSTRAINED PARTY INVENTS THE EFFICIENCY.
 
-Tom's Hardware ran its K3 story under a headline that included the phrase "as China works around U.S. compute limits." A lab with less compute than its rivals has a stronger reason to build a model that spends less of it per step.
+Tom's Hardware ran its K3 story under a headline that included the phrase "as China works around U.S. compute limits." The same report charts MiniTriton, a Triton-like compiler K3 built from scratch, against Triton on an Nvidia L20, "the cut-down Ada-based card sold into China under U.S. export rules." Bank of America analysts, in a note cited by CNBC, said K3 shows that pre-training at scale plus architectural work can still deliver step-change gains despite compute constraints. A lab with less compute than its rivals has a stronger reason to build a model that spends less of it per step.
 
 Scarcity produces selectivity, and selectivity travels. The workaround a constrained party builds out of necessity becomes an efficiency upgrade for everyone else once it works.
+
+What the report cannot show is that the constraint produced the architecture. The 2017 paper framed its gate as a way to buy capacity, with no shortage to work around, and Moonshot's own kernel benchmark ran on an H200 the blog never locates. The constraint picked the idea up and pushed it further than its inventors needed to.
 
 That is the uncomfortable half of any control on inputs. It can slow a rival and teach them to need less.
 
@@ -100,7 +102,7 @@ The 2017 paper framed it as capacity, not cost: a thousand times more capability
 
 The second explanation was that cheaper hardware will bring dense designs back.
 
-For some systems it will. The memory-streaming tricks depend on today's price ratios, and a memory glut would weaken them. The capacity argument does not depend on prices. A system that can hold a thousand specialists and call four will always be able to know more per unit of work than one that must call all of them.
+For some systems it will. Streaming experts off storage earns its keep only while a gigabyte of RAM costs more than a gigabyte of SSD and the prerouter can hide the fetch; cheaper memory removes the fetch, not the gate. What a price change cannot touch is the arithmetic of breadth: 896 experts held, 16 awake per token. Cheaper hardware lowers both bills and leaves that count where it was. A system that can hold a thousand specialists and call four will always be able to know more per unit of work than one that must call all of them.
 
 The third explanation was that latent reasoning will replace chain-of-thought, since it is so much cheaper.
 
@@ -128,7 +130,7 @@ No repository on this site routes experts. The nearest ones apply the same idea 
 
 That is sparsity applied to the adversary. The design assumes that bad luck, like computation, arrives in a few places at a time, and it prices the hedge accordingly. Its two-stage variant adds the other half of the principle: commit to the wafers first, then decide the rest after yield is observed, when there is something to route on.
 
-[world-food-program-robust-simulator](https://github.com/AthenaTheOwl/world-food-program-robust-simulator) shows what that second half is worth. It plans food relief for 77,000 people under price spikes, route closures and budget cuts, in a scenario based on a Syria food-assistance exercise. The nominal plan costs $31,046 a day. The plan protected to 95 percent costs $35,565. The two-stage plan, which pairs contracts with flexibility and settles part of the decision after prices are seen, costs $28,201, less than either.
+[world-food-program-robust-simulator](https://github.com/AthenaTheOwl/world-food-program-robust-simulator) runs that second half on a harder problem. It plans food relief for 77,000 people under price spikes, route closures and budget cuts, in a scenario based on a Syria food-assistance exercise. The nominal plan costs $31,046 a day. The plan protected to 95 percent costs $35,565. The two-stage plan, which pairs contracts with flexibility and settles part of the decision after prices are seen, costs $28,201, less than either. The $28,201 bundles two effects: the discount on the contracts and the value of deciding later. The repo's own notes say so. It shows the pair beating a static plan, not the price of patience on its own.
 
 [Robust-Facility-Location](https://github.com/AthenaTheOwl/Robust-Facility-Location) asks the same question of warehouses. It solves a facility network four ways, stress-tests each plan against Monte Carlo demand, and lets the reader watch how the cost of protection changes as Γ, the budget of inputs allowed to go wrong together, grows.
 
