@@ -104,11 +104,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ops/portfolio-health.md ops/portfolio-status.md ops/evidence-quorum-report.md ops/dec-graphs ops/dec-coverage-report.md
+          # ops/portfolio-health.md is an input to the Factory Q&A index, so a
+          # report change leaves src/data/factory-qa-index.json stale and turns the
+          # lint job red until someone regenerates it by hand. Regenerate it here,
+          # in the same commit as the reports that invalidated it.
+          python scripts/factory_qa_index.py
+          git add ops/portfolio-health.md ops/portfolio-status.md ops/evidence-quorum-report.md ops/dec-graphs ops/dec-coverage-report.md src/data/factory-qa-index.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "audit: weekly portfolio health + status + evidence quorum + DEC graphs + coverage"
+            git commit -m "audit: weekly portfolio health + status + evidence quorum + DEC graphs + coverage + QA index"
             git push
           fi
 
