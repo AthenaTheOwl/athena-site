@@ -115,7 +115,7 @@ repos:
     status: workshop
     fork_check: true
 
-  - { name: dispatch-optimizer, door: "01", status: active }
+  - { name: dispatch-optimizer, door: "01", status: solved }
   - { name: LLM-evaluation-framework, door: "02", status: active }
   - { name: MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin, door: "03", status: solved }
   - { name: world-food-program-robust-simulator, door: "04", status: solved }
@@ -123,8 +123,12 @@ repos:
   - { name: Robust-Facility-Location, door: "06", status: solved }
   - name: News-Bias-Multi-Agent-Pipeline
     door: "07"
-    status: active
-    notes: "deployment exists but redirects to Streamlit authentication; public access is not verified"
+    status: solved
+    # The Streamlit deployment is public and reachable. An earlier note here
+    # read a 303 on the initial GET as an authentication wall; that redirect is
+    # how Streamlit Community Cloud hands out a session, and httpx following it
+    # gets 200. Finished exhibit, so `solved` rather than `active`.
+    notes: "public Streamlit deployment; finished exhibit, no further commits expected"
 
   - { name: MIT-AI-Fall20, door: "08", status: drawer }
   - { name: leetcode, door: "09", status: drawer }

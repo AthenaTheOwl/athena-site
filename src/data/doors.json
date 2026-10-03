@@ -2,7 +2,7 @@
   {
     "n": "01",
     "name": "dispatch-optimizer",
-    "status": "active",
+    "status": "solved",
     "url": "https://github.com/AthenaTheOwl/dispatch-optimizer",
     "hook": "vehicle dispatch optimization with operational constraints. python, OR-tools.",
     "for": {
@@ -55,7 +55,7 @@
   {
     "n": "07",
     "name": "News-Bias-Multi-Agent-Pipeline",
-    "status": "active",
+    "status": "solved",
     "url": "https://github.com/AthenaTheOwl/News-Bias-Multi-Agent-Pipeline",
     "hook": "the same agent pipeline implemented three ways — static python, langchain, langgraph — so you can compare frameworks on a real BYOK demo. critic, structured judgments, verbatim citations.",
     "for": {
