@@ -275,7 +275,13 @@ def build_index() -> dict[str, Any]:
             raise FileNotFoundError(source)
         raw = path.read_bytes()
         source_hash.update(source.encode("utf-8"))
-        source_hash.update(raw)
+        # Hash over LF-normalised bytes. Git stores these sources with LF and checks
+        # them out with CRLF on Windows, so hashing the raw bytes gave a different
+        # digest on a Windows working tree than in Linux CI — the index was current
+        # locally and stale in CI at the same time, and `--check` could never be
+        # satisfied from both. The chunk text is already newline-agnostic; only this
+        # digest was byte-sensitive.
+        source_hash.update(raw.replace(b"\r\n", b"\n"))
         if source == "src/data/factory-snapshot.json":
             snapshot_generated_at = json.loads(raw.decode("utf-8")).get(
                 "generated_at", "unknown"

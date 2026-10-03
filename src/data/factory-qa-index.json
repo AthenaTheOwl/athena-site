@@ -10102,7 +10102,7 @@
   "generated_at": "2026-08-02T06:22:37.658553Z",
   "schema_version": 1,
   "source": "scripts/factory_qa_index.py",
-  "source_hash": "e8b1a4e6f5f280451e7e934696d5c9ac21de3c08509c78fba1d9c480a467992f",
+  "source_hash": "e5373d69f026b0dae09b5314fa07aaab35a03a7746446bfb01667107793b8870",
   "sources": [
     "src/data/factory-snapshot.json",
     "ops/portfolio-manifest.yml",
