@@ -1,4 +1,4 @@
-# Portfolio health — 2026-09-28
+# Portfolio health — 2026-10-03
 
 ## Deploys
 
@@ -17,32 +17,30 @@
 | athena-site | https://athena-site-six.vercel.app | `Portfolio doors`, `entry points` | PASS |
 | chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | `chip-supply-chain-map` | PASS |
 | supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | `streamlit` | PASS |
-| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W38` | PASS |
+| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W40` | PASS |
 
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 125 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 57 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 7 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 130 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 61 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 4 | ✅ |
-| chip-supply-chain-map | 7 | ✅ |
-| supplier-risk-rag-agent | 4 | ✅ |
-| ai-field-brief | 7 | ✅ |
-| procurement-negotiation-lab | 5 | ✅ |
-| ai-supply-chain-copilot-prd | 7 | ✅ |
-| mcp-security-lab | 23 | ✅ |
-| trace-to-eval-harness | 7 | ✅ |
-| sports-prediction-os | 23 | ✅ |
-| dispatch-optimizer | 84 | ✅ |
-| LLM-evaluation-framework | 4 | ✅ |
-| News-Bias-Multi-Agent-Pipeline | 93 | ⚠️ |
+| athena-site | 0 | ✅ |
+| chip-supply-chain-map | 0 | ✅ |
+| supplier-risk-rag-agent | 0 | ✅ |
+| ai-field-brief | 0 | ✅ |
+| procurement-negotiation-lab | 0 | ✅ |
+| ai-supply-chain-copilot-prd | 11 | ✅ |
+| mcp-security-lab | 0 | ✅ |
+| trace-to-eval-harness | 0 | ✅ |
+| sports-prediction-os | 28 | ✅ |
+| LLM-evaluation-framework | 9 | ✅ |
 
 ## Starforge cluster forks
 
@@ -83,4 +81,4 @@ Required models: claude-sonnet-4-6
 Verify at: https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 
 ---
-**1 critical issue(s) detected.** See sections above.
+All critical checks passed.
