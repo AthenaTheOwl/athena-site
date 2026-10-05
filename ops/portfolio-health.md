@@ -1,4 +1,4 @@
-# Portfolio health — 2026-10-03
+# Portfolio health — 2026-10-05
 
 ## Deploys
 
@@ -23,24 +23,24 @@
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 130 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 61 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 132 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 64 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 2 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 0 | ✅ |
-| chip-supply-chain-map | 0 | ✅ |
-| supplier-risk-rag-agent | 0 | ✅ |
-| ai-field-brief | 0 | ✅ |
-| procurement-negotiation-lab | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 11 | ✅ |
-| mcp-security-lab | 0 | ✅ |
-| trace-to-eval-harness | 0 | ✅ |
-| sports-prediction-os | 28 | ✅ |
-| LLM-evaluation-framework | 9 | ✅ |
+| athena-site | 2 | ✅ |
+| chip-supply-chain-map | 2 | ✅ |
+| supplier-risk-rag-agent | 2 | ✅ |
+| ai-field-brief | 2 | ✅ |
+| procurement-negotiation-lab | 2 | ✅ |
+| ai-supply-chain-copilot-prd | 14 | ✅ |
+| mcp-security-lab | 2 | ✅ |
+| trace-to-eval-harness | 2 | ✅ |
+| sports-prediction-os | 30 | ✅ |
+| LLM-evaluation-framework | 11 | ✅ |
 
 ## Starforge cluster forks
 
@@ -52,7 +52,7 @@
 
 ## Royal Road
 
-- https://www.royalroad.com/fiction/149065/starforge-canticles — ⏭️ skipped (HTTP 404; likely anti-bot block; check manually)
+- https://www.royalroad.com/fiction/149065/starforge-canticles — ⏭️ skipped (HTTP 403; likely anti-bot block; check manually)
 
 ## Manifest drift
 

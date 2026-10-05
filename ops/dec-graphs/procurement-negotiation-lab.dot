@@ -41,6 +41,7 @@ digraph dec_chains_procurement_negotiation_lab {
   "DEC-SDK-001-library-boundary-wraps-engine-before-code-move" [shape=box, style=solid];
   "DEC-SDK-002-public-api-three-operations" [shape=box, style=solid];
   "DEC-SDK-003-module-demo-before-app-integration" [shape=box, style=solid];
+  "DEC-SDK-004-sensitivity-recommendations-use-ratified-qualification-rule" [shape=box, style=solid];
   "DEC-STUDY-001-tutorial-as-plain-english-companion" [shape=box, style=solid];
   "DEC-FACTORY-008-factory-run-evidence-cross-checks" -> "DEC-FACTORY-007-factory-emits-conformant-run-evidence" [label="amends"];
   "DEC-FACTORY-009-factory-replay-command" -> "DEC-FACTORY-008-factory-run-evidence-cross-checks" [label="amends"];
