@@ -7656,17 +7656,17 @@
       ]
     },
     {
-      "id": "10fb8e6b3d83",
+      "id": "92178f357524",
       "locator": "lines 24-28",
       "order": 118,
       "path": "ops/portfolio-health.md",
-      "snippet": "| Repo | Path | Age (days) | Threshold | Status | |---|---|---|---|---| | chip-supply-chain-map | src/data/nodes.csv | 139 | 180 | \u2705 | | supplier-risk-rag-agent | reports/baseline_eval_report.html | 71 | 90 | \u2705 | | ai-field-brief | briefs/INDEX.md | 9 | 14 | \u2705 |",
+      "snippet": "| Repo | Path | Age (days) | Threshold | Status | |---|---|---|---|---| | chip-supply-chain-map | src/data/nodes.csv | 140 | 180 | \u2705 | | supplier-risk-rag-agent | reports/baseline_eval_report.html | 71 | 90 | \u2705 | | ai-field-brief | briefs/INDEX.md | 9 | 14 | \u2705 |",
       "title": "Portfolio health \u2014 2026-10-12 > File freshness",
       "tokens": [
         "10",
         "12",
-        "139",
         "14",
+        "140",
         "180",
         "2026",
         "2026-10-12",
@@ -7724,16 +7724,17 @@
       ]
     },
     {
-      "id": "af551885cfc3",
+      "id": "ffd692b9f279",
       "locator": "lines 32-43",
       "order": 119,
       "path": "ops/portfolio-health.md",
-      "snippet": "| Repo | Last commit (days ago) | Status | |---|---|---| | athena-site | 7 | \u2705 | | chip-supply-chain-map | 9 | \u2705 | | supplier-risk-rag-agent | 9 | \u2705 | | ai-field-brief | 9 | \u2705 | | procurement-negotiation-lab | 9 | \u2705 | | ai-supply-chain-copilot-prd | 21 | \u2705 | | mcp-security-lab | 9 | \u2705 | | trace-to-eval-harness | 9 | \u2705 | | sports-prediction-os | 37 | \u2705 | | LLM-evaluation-framework | 18 | \u2705 |",
+      "snippet": "| Repo | Last commit (days ago) | Status | |---|---|---| | athena-site | 0 | \u2705 | | chip-supply-chain-map | 9 | \u2705 | | supplier-risk-rag-agent | 9 | \u2705 | | ai-field-brief | 9 | \u2705 | | procurement-negotiation-lab | 0 | \u2705 | | ai-supply-chain-copilot-prd | 21 | \u2705 | | mcp-security-lab | 9 | \u2705 | | trace-to-eval-harness | 9 | \u2705 | | sports-prediction-os | 37 | \u2705 | | LLM-evaluation-framework | 19 | \u2705 |",
       "title": "Portfolio health \u2014 2026-10-12 > Stale active repos (threshold: 90d)",
       "tokens": [
+        "0",
         "10",
         "12",
-        "18",
+        "19",
         "2026",
         "2026-10-12",
         "21",
@@ -7741,7 +7742,6 @@
         "32-43",
         "37",
         "43",
-        "7",
         "9",
         "90d",
         "active",
@@ -10086,7 +10086,7 @@
   "generated_at": "2026-08-02T06:22:37.658553Z",
   "schema_version": 1,
   "source": "scripts/factory_qa_index.py",
-  "source_hash": "70acfefde1a8a64e1c6d1b86fcd9bc9be33c175902a1a9a7cc6edc7947986b14",
+  "source_hash": "9b4693c677a18a3a5e0f79e3b4f05222b260924cfb583e7ed21c479cc0f6e226",
   "sources": [
     "src/data/factory-snapshot.json",
     "ops/portfolio-manifest.yml",

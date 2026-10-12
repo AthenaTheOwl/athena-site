@@ -23,7 +23,7 @@
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 139 | 180 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 140 | 180 | ✅ |
 | supplier-risk-rag-agent | reports/baseline_eval_report.html | 71 | 90 | ✅ |
 | ai-field-brief | briefs/INDEX.md | 9 | 14 | ✅ |
 
@@ -31,16 +31,16 @@
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
-| athena-site | 7 | ✅ |
+| athena-site | 0 | ✅ |
 | chip-supply-chain-map | 9 | ✅ |
 | supplier-risk-rag-agent | 9 | ✅ |
 | ai-field-brief | 9 | ✅ |
-| procurement-negotiation-lab | 9 | ✅ |
+| procurement-negotiation-lab | 0 | ✅ |
 | ai-supply-chain-copilot-prd | 21 | ✅ |
 | mcp-security-lab | 9 | ✅ |
 | trace-to-eval-harness | 9 | ✅ |
 | sports-prediction-os | 37 | ✅ |
-| LLM-evaluation-framework | 18 | ✅ |
+| LLM-evaluation-framework | 19 | ✅ |
 
 ## Starforge cluster forks
 
