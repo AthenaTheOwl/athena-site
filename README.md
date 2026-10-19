@@ -1,6 +1,6 @@
 # athena-site
 
-Sixty-eight public repositories do not fit in a row of GitHub pins. This site gives them a front door: 24 curated entry points for the strongest work, a complete `/labs` catalog, and a `/factory` view backed by the portfolio's checked-in control-plane evidence.
+Sixty-eight public repositories do not fit in a row of GitHub pins. This site gives them a front door: 26 curated entry points for the strongest work, a complete `/labs` catalog, and a `/factory` view backed by the portfolio's checked-in control-plane evidence.
 
 The home page also embeds two working systems. `procurement-negotiation-lab` turns mechanism-design choices into an interactive negotiation, while `chip-supply-chain-map` makes the semiconductor graph inspectable without opening a notebook.
 
@@ -31,7 +31,7 @@ python -m pytest -q
 
 ## How public state is maintained
 
-- `src/data/doors.json` owns the 24 curated entry points.
+- `src/data/doors.json` owns the 26 curated entry points.
 - `src/data/portfolio.json` and `src/data/connections.json` drive the full labs catalog and its cross-repo links.
 - `src/data/live-urls.json` separates a deploy target from a verified live URL.
 - `ops/portfolio-manifest.yml` defines the repos covered by the weekly health audit.
