@@ -1,0 +1,171 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The date is the first fact"
+description: "Old news comes back dressed as new, and a reader who cannot date an input pays for the same story twice. Six findings on a weekly AI brief that dates every candidate against its primary, how much of one week's news had already happened, a biotech that opened sevenfold higher on five-month-old research, and an airline that lost three quarters of its price in an hour to a six-year-old story."
+date: "2026-10-20"
+readingTime: "8 min read"
+---
+
+CANDIDATE LEDGER — ONE WEEK OF DAILY DIGESTS, 3 TO 9 OCTOBER 2026
+
+Candidate links presented as this week's news: 85.
+Dated before 3 October by their own primaries: 54.
+Undated, or off the subject: 24.
+Inside the window and on the subject: 7.
+Already covered by the same brief the week before: 3.
+Date each candidate was first seen: the digest's date.
+Date each candidate was first published: no field.
+
+Fifty-four of the eighty-five failed on one fact before anyone read the claim they carried.
+
+The fact was when.
+
+## FINDING ONE: MOST OF THIS WEEK HAD ALREADY HAPPENED.
+
+[ai-field-brief](https://github.com/AthenaTheOwl/ai-field-brief) is a weekly brief on AI engineering. For the week of 3 to 9 October it mined 85 candidate links from seven daily digest issues, each one presented as current. Before reading any claim, it re-read each candidate's date from the primary itself: a GitHub release's published time, the first-version submission line on an arXiv paper, a page's own publication date or dateline.
+
+Fifty-four were dated before the window opened. Twenty-four more had no date or were not about the subject. Seven survived.
+
+I re-dated the papers myself. Forty-seven of the 85 links point at a paper on arXiv or Hugging Face, and arXiv's own record puts the first version of 37 of them before 3 October.
+
+The oldest was a survey first posted on 2 September 2025. It was on its fifth version when a digest offered it as news, thirteen months later.
+
+Nineteen of the early papers carried October identifiers. An arXiv number names the month. The window opened on the third.
+
+The claim had not been checked yet.
+
+The date had already failed.
+
+## FINDING TWO: THE FEED REPEATS ITSELF.
+
+Three of the fifty-four were things this brief had covered the week before, "presented again as news," in the issue's own words. Two had been picks: the PACE preprint, first posted on 1 October, and a LangChain post on building a model router, dated the same day. The third, Cloudflare's Clef decision models, had been a scout row.
+
+A digest that does not keep its back issues cannot tell repetition from news. The repetition arrives with a fresh date, because the date belongs to the digest.
+
+The cheapest staleness check needs no fetch at all. Compare the candidate against your own last issue.
+
+·   ·
+
+Newspapers kept a morgue: clippings filed by subject, each one dated.
+
+A reporter checked it before writing anything, to learn whether the paper had already run the story.
+
+The morgue held no opinion on whether the story was true. It only knew when the paper had last said it.
+
+## FINDING THREE: THE PAGE AND THE FEED DISAGREE ABOUT WHEN.
+
+The same week, a separate sweep of 42 vendor and practitioner blogs and changelogs found 13 more posts dated before the window. Some of them reached the sweep through feeds that carried later dates than the pages they pointed at.
+
+A feed date is written by whoever handled the item last. A version date works the same way. One of the October candidates was a paper on recursive self-improvement of agent harnesses, first posted on 21 September. Its third version went up on 4 October, inside the window. A reader keyed on the latest version would have called it this week's paper. The brief keys on the first.
+
+This is how dates get laundered. Nobody lies. Each hop records when it touched the item, and the reader takes the newest stamp as the oldest fact.
+
+[Provenance is a market](/essays/provenance-is-a-market/) argued that a content credential proves the chain of custody and says nothing about the scene. A feed date is the weaker case. It vouches for the last hop only.
+
+## FINDING FOUR: THE NUMBER TRAVELS AND THE SOURCE STAYS HOME.
+
+The issue before, covering 26 September to 2 October, met the same shape inside the posts that did pass. Two agent-permission figures were circulating that week: 53 percent of organisations had had AI agents exceed their intended permissions, and 47 percent had a security incident involving an agent in the past year.
+
+Both came from a Cloud Security Alliance survey released on 16 April.
+
+The relaying posts were in the window. The number inside them was five months old, and the posts did not print its date.
+
+The brief found the pattern three times more in the same issue. A Hugging Face writeup rested on a paper dated 27 August. An agent-collusion incident was retold from reporting dated 4 September. A run of routing posts built on a launch dated 15 September. None became a pick.
+
+A relay is dated by when it relays.
+
+The number keeps its own date, and leaves it at home.
+
+## FINDING FIVE: MARKETS HAVE PRICED STALE NEWS AS NEW.
+
+On Sunday 3 May 1998, the front page of The New York Times carried a story about two drugs from Judah Folkman's laboratory that shrank tumours in mice. EntreMed, the small company developing them, had closed at about 12 dollars on the Friday. On Monday it opened near 85 and closed near 52.
+
+The research had appeared in Nature on 27 November 1997, five months earlier, and had been reported at the time, including in the Times itself. Gur Huberman and Tomer Regev studied the episode in The Journal of Finance in 2001. They found the stock stayed above 30 for three more weeks, with enthusiasm spreading to other biotech stocks, and read the rise as attention, not information.
+
+Sevenfold at the open, on news a reader of Nature could have bought in November.
+
+The airline is the faster case. In September 2008 a 2002 Chicago Tribune story about United's bankruptcy filing surfaced on the website of a sister paper. By The Register's account the page carried no date stamp, so the news index stamped it with the day it was found. A research firm's summary reached Bloomberg's terminals at about 11 in the morning. UAL had opened at $12.30. Within the hour it traded at $3. Trading was halted, the headline was explained, and the stock closed at $10.92. The paper's owner and the search company each said the other had moved the story.
+
+Paul Tetlock measured the general case in 2011. He scored each news story's staleness by how closely its text matched the ten stories before it about the same firm. Prices moved less on stale stories, but a stale-news day predicted a partial reversal the following week, and the reversal was larger where individual investors traded most.
+
+The market paid for the 1997 research twice.
+
+It paid for the 2002 filing twice too, and the second bill came due in an hour.
+
+## FINDING SIX: COUNT BY WHEN YOU SAW IT, NOT WHEN IT WAS PUBLISHED.
+
+Everything above uses the publication clock, to keep old items out. There is a second clock, and it keeps the record honest about itself.
+
+[source-decay-ledger](https://github.com/AthenaTheOwl/source-decay-ledger) scores the brief's sources by how many published items each one produced in the last ninety days. Every item-to-source edge goes into an append-only ledger with the time it was appended. Its decision record DEC-SDL-002 names the trap: backfilling a missing brief can add an old publication to today's ledger, and a score claimed as of an earlier date must not count that observation before it existed. The old scorer bounded the window on one side only.
+
+I ran the regression in a scratch copy with the upper bound taken out. At a cutoff where one row existed, it counted two. With bounds on both sides of the append time, it counts one.
+
+The record says it plainly: "Publication date and observation date answer different questions."
+
+The St. Louis Fed has kept both clocks since 2006. ALFRED, the St. Louis Fed's archive of every earlier version of every series in FRED, keeps each release beside its revisions. Its fifteenth-anniversary post used January 2008 employment. The first estimate, released on 1 February 2008, was a loss of 17,000 jobs. On 7 March it became a loss of 22,000. By the vintage of 5 March 2021 it was a gain of 11,000.
+
+Anyone grading a decision made that February has to grade it against minus 17,000. The Fed's post says why the old vintages matter: they "tell the story of what information was known at the time."
+
+·   ·
+
+Every claim carries two dates.
+
+One says when it was true. The other says when you learned it.
+
+A record that keeps only one of them will, sooner or later, be read as the other.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that old news is still news to a reader who missed it.
+
+Correct, and the brief says so by keeping its out-of-window finds in a dated note. A republication labelled as one costs nothing. The damage is in the label "this week," because a reader who trusts it stops checking.
+
+The second explanation was cost. Dating every candidate against its primary means opening every primary.
+
+It means reading one field on a page you would open anyway, before reading the rest. In the measured week that one field removed 54 of 85 candidates.
+
+**Objection:** A date check proves nothing about whether the claim is true.
+
+**Reply:** It proves whether the claim is the one you were told you were getting.
+
+The third explanation was that markets correct. EntreMed fell back. UAL closed above $10.
+
+Both did, eventually and partly. Huberman and Regev argue the attention left a permanent rise in share prices, and Tetlock's reversal took a week. A correction is the second payment, made by whoever bought at the first price.
+
+The fourth explanation was the inversion, and an editor would make it: the date is the least interesting fact about a claim. A true finding from April is still true in October, and a brief that throws out everything older than seven days is measuring its own freshness, not the world. On that reading the window is vanity and the 54 were discarded evidence.
+
+The case is strong. The 53 percent figure did not get less true between April and September.
+
+**Objection:** Then drop the window.
+
+**Reply:** Keep the window and print the date.
+
+The evidence that settles it is the second clock. If an old claim is still useful, it belongs in the record under its own date, with the day it was seen beside it, and the reader decides what a five-month-old survey is worth. What the inversion cannot defend is the claim arriving undated under a new one. That is the version the market paid for twice.
+
+## TWO CLOCKS
+
+[ai-field-brief](https://github.com/AthenaTheOwl/ai-field-brief) keeps the publication clock. Every candidate is dated from its primary before its claim is read, and every out-of-window find is written down with its real date instead of thrown away.
+
+[source-decay-ledger](https://github.com/AthenaTheOwl/source-decay-ledger) keeps the observation clock. A score as of a date counts only what had been seen by that date, bounded on both sides.
+
+Date the claim before you check it.
+
+Write down when you saw it, separately.
+
+·   ·
+
+CANDIDATE LEDGER — REMAINING FIELDS
+
+Date first published: read from the primary.
+Date first seen: kept beside it.
+Already covered here: checked against last week's issue.
+Counted as of: the cutoff, bounded on both sides.
+Survived: 7.
+
+The ledger ends there. The fifty-four are filed under the dates they already had.
+
+---
+
+Sources: ai-field-brief, 2026-W41 and 2026-W40 briefs (https://github.com/AthenaTheOwl/ai-field-brief); source-decay-ledger, DEC-SDL-002 (https://github.com/AthenaTheOwl/source-decay-ledger); arXiv API records for the W41 paper candidates (https://export.arxiv.org/api/query); Cloud Security Alliance, press release of 16 April 2026 (https://cloudsecurityalliance.org/press-releases/2026/04/16/more-than-half-of-organizations-experience-ai-agent-scope-violations-cloud-security-alliance-study-finds); Huberman and Regev, "Contagious Speculation and a Cure for Cancer: A Nonevent that Made Stock Prices Soar," Journal of Finance 56(1), February 2001 (https://ideas.repec.org/a/bla/jfinan/v56y2001i1p387-396.html); Boehm, Folkman, Browder and O'Reilly, Nature 390, 27 November 1997 (https://doi.org/10.1038/37126); National Association of Science Writers on the Kolata story (https://www.nasw.org/sites/default/files/sciencewriters/html/sprsu98tex/kolata.htm); The Register, 10 September 2008 (https://www.theregister.com/2008/09/10/online_news_farce_drops_united_stock/); Tetlock, "All the News That's Fit to Reprint: Do Investors React to Stale Information?," Review of Financial Studies 24(5), 2011 (https://ideas.repec.org/a/oup/rfinst/v24y2011i5p1481-1512.html); St. Louis Fed, "ALFRED at 15: Archiving FRED data since 2006," 8 April 2021 (https://fred.stlouisfed.org/blog/2021/04/alfred-at-15-archiving-fred-data-since-2006/).
