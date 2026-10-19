@@ -1,0 +1,186 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Roll the same dice"
+description: "Two dispatchers worked the same thirty simulated days and the batch one drove 23 km a day less, inside a day-to-day swing four times that size; over three hundred days the gap shrank to 5. Seven findings on common random numbers, the correlation that pays for them, the case where they buy nothing, and the model evals that are the same experiment under another name."
+date: "2026-10-20"
+readingTime: "9 min read"
+---
+
+COMPARISON RECORD — TWO DISPATCH POLICIES, THIRTY SIMULATED DAYS
+
+Drivers per day: 12. Orders per day: 40.
+Greedy dispatcher, distance driven: 594 km a day, standard deviation 99.
+Batch dispatcher, distance driven: 571 km a day, standard deviation 87.
+Gap: 23 km a day, in the batch dispatcher's favour.
+Both policies drove the same thirty days: yes.
+Correlation between them on the same day: 0.83.
+Correlation printed beside the gap:
+
+That last field is this essay.
+
+A comparison between two policies is a subtraction, and a subtraction carries two noise terms. Give the policies different days and the noise of both days lands in the answer. Give them the same days and most of it cancels, because a hard day is hard for both.
+
+Simulation people call this common random numbers. Stout and Goldie's [tutorial](https://pmc.ncbi.nlm.nih.gov/articles/PMC2761656/) describes it as "synchronized random numbers across model runs to induce correlation in model output thereby making differences easier to distinguish." Model evaluators call it a paired comparison. It is one subtraction under two names.
+
+## FINDING ONE: THE WORLD IS LOUDER THAN THE POLICY.
+
+[dispatch-optimizer](https://github.com/AthenaTheOwl/dispatch-optimizer) simulates a day of courier dispatch across a city's hospitals, clinics and labs. A greedy policy takes the next feasible driver and order. A batch policy solves a minimum-cost assignment over every five-minute epoch. The thirty days are the repository's high-volume cohort: twelve drivers, forty orders, seeds 300 to 329.
+
+Each seed draws a day. When each order arrives, where it is picked up, what it carries and when it is due. Where each driver starts, what they drive, whether it is refrigerated, which certifications they hold, which shift they work.
+
+Travel time is not drawn. The route evaluator has a sampled mode reserved for stochastic travel, and today it falls back to the expected time. These days have no traffic. The noise is the shape of the day's work.
+
+That alone moves the greedy dispatcher's daily distance by a standard deviation of 99 km. The policy gap is 23.
+
+Four to one, against the thing being measured.
+
+## FINDING TWO: PAIRING CANCELS THE WORLD.
+
+A long day for one dispatcher was a long day for the other. The correlation across the thirty days was 0.83.
+
+The variance of a difference is the two variances added, minus twice their covariance. On independent days the daily difference would swing with a standard deviation of 132 km. On the same days it swung by 55. The variance ratio is 5.7.
+
+PAIRED AGAINST UNPAIRED, SAME THIRTY DAYS
+
+Standard error of the 23 km gap, paired: 10 km.
+Standard error, if the days had been independent: 24 km.
+Days needed to put 23 km 1.96 standard errors from zero, paired: 23.
+Days per policy needed on separate worlds: 127.
+
+None of that cost an extra run. The scenario bank hands each seed to both solvers, so the comparison was paired the moment it ran.
+
+## FINDING THREE: ONE UNPAIRED RUN GOT THE SIGN WRONG.
+
+The same days carry a second metric: the share of orders the dispatcher managed to assign.
+
+Paired, the batch dispatcher assigned 2.75 points more, with a standard error of 0.48. It did better on 21 days, tied on 8 and did worse on 1.
+
+Then I ran it once unpaired. Greedy on seeds 300 to 329, batch on seeds 330 to 359. Same code, same size of experiment. The batch dispatcher assigned 0.67 points fewer, standard error 2.23.
+
+The wrong sign, inside an error bar wide enough to hide it.
+
+Across three hundred paired days the answer is 3.03 points in the batch dispatcher's favour. Neither dispatcher misbehaved in the unpaired run. The thirty days the batch dispatcher drew were harder.
+
+## FINDING FOUR: PAIRING CANCELS THE WORLD, NOT THE SAMPLE.
+
+Then I ran three hundred days, seeds 300 to 599, both policies on each.
+
+THREE HUNDRED PAIRED DAYS
+
+Distance gap: 5.4 km a day, standard error 3.2.
+95 percent interval: 11.6 km shorter to 0.8 km longer.
+Days the batch dispatcher drove less: 167 of 300.
+Orders assigned, batch over greedy: 3.03 points, standard error 0.20.
+
+The 23 km was a lucky draw. Its own paired interval, 3.2 to 42.8 km in the batch dispatcher's favour, held the long-run answer with 2 km to spare. The interval was honest. The point estimate made the headline, and the headline was luck.
+
+I replayed the thirty-day experiment twenty thousand times from that pool. Paired, the estimates scattered with a standard deviation of 9.6 km and landed on the wrong side of zero 29 percent of the time. Unpaired, they scattered by 28.0 and landed wrong 43 percent of the time.
+
+Pairing cut the scatter to about a third. It did not make thirty days enough to see five kilometres. At a gap of 5.4 km that takes 395 paired days, or 3,167 days per policy on separate worlds.
+
+What three hundred days do settle is the finding the thirty had right: the batch dispatcher assigns about one more order in forty, and drives no more than a kilometre further a day to do it.
+
+·   ·
+
+Race two sprinters on different afternoons and the wind picks the winner.
+
+Race them in adjacent lanes and the wind is in both clocks.
+
+Nobody calls the second one a variance-reduction technique. It is called a race.
+
+## FINDING FIVE: THE CLOSER THE POLICIES, THE MORE PAIRING PAYS.
+
+[world-food-program-robust-simulator](https://github.com/AthenaTheOwl/world-food-program-robust-simulator) plans one day of food procurement for about 77,000 displaced people, on a simplified network from a Syria case study. Commodity prices are the random part. I compared the plan that is cheapest at expected prices with the plan built to hold its stated cost on 95 percent of price draws, over 5,000 draws.
+
+Both plans buy at the same prices, so a dear day is dear for both. The correlation is 0.98.
+
+SAME 5,000 PRICE DRAWS AGAINST INDEPENDENT ONES
+
+Standard deviation of the daily cost difference, paired: $577.
+Unpaired: $3,792.
+Variance ratio: 43.
+Realized cost gap, paired: $200 a day, standard error $8.
+Realized cost gap, one unpaired run: $292, standard error $54.
+
+Near neighbours share almost all their noise, and the comparisons that matter most are usually between near neighbours.
+
+It also splits the premium. The 95 percent plan states a cost of $35,565 against $31,046, a premium of $4,518. The realized gap on the same draws is $200. The other 96 percent is budget held against prices that, on average, did not arrive, and on 36 percent of draws the cautious plan was the cheaper one. A decision costs $200. A reserve costs the rest, and only the paired run can say which is which to the nearest $8.
+
+## FINDING SIX: PAIRING BUYS NOTHING WHEN ONE SIDE IS FLAT.
+
+[Robust-Facility-Location](https://github.com/AthenaTheOwl/Robust-Facility-Location) chooses which of eight candidate facilities to open for thirty customers whose demand is uncertain. The nominal plan opens two. A robust plan with an uncertainty budget of three opens three. Both face the same 300 demand draws.
+
+The robust plan's cost barely moves: standard deviation 0.166. The nominal plan's moves by 53.5.
+
+Paired standard deviation of the difference: 53.41. Unpaired: 53.46. Variance ratio: 1.002.
+
+The covariance can never exceed the product of the two standard deviations. When one side is flat there is nothing shared to cancel. The correlation here is 0.29, and it would buy nothing at 1.
+
+What pairing still buys is the record of which draw did what. The robust plan was cheaper on 7 of the 300 draws, and they are exactly the 7 where the nominal plan could not meet demand. On the other 293 the robust plan cost more, by a median of 3.44. The average says the robust plan saves 3.92. The paired record says it pays a small premium on almost every draw and is rescued on seven.
+
+Stout and Goldie name this second dividend: common random numbers allow "counterfactual-like analyses with direct computation of statistics at the individual level." No variance was cut. The sentence above could not have been written without it.
+
+## FINDING SEVEN: A MODEL EVAL IS THE SAME EXPERIMENT.
+
+Swap the days for questions.
+
+Evan Miller's [Adding Error Bars to Evals](https://arxiv.org/abs/2411.00640) opens on the claim that "evaluations are experiments." Its paired analysis says the variance shrinks "if the two models have some amount of agreement on which questions are “easy” and which questions are “hard”." That is the 0.83 under another name. Miller calls paired differences "a “free” reduction in estimator variance when comparing two models," recommends "the paired version of the standard error estimate wherever practicable," and asks reports to include "pairwise differences, pairwise standard errors, and score correlations."
+
+[supplier-risk-rag-agent](https://github.com/AthenaTheOwl/supplier-risk-rag-agent) writes the design down as DEC-EVL-004. Every experiment runs the same four eval suites on baseline and variant and declines to trust the last CI report for the baseline because "The CI baseline drifts as the corpus and code evolve." Its first experiment, a cross-encoder reranker, moved citation faithfulness from 1.000 to 0.933. That is one case in fifteen, and the same fifteen on both arms, so the delta is one case that flipped, not the gap between two samples.
+
+[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) replays six recorded customer-support requests against the incumbent model and the candidate. The candidate wins five. On trace-cs-003 it pointed to the export menu and left out the admin access condition. The six are test fixtures, not live traffic, and their quality scores correlate at 0.15, so pairing narrows the spread hardly at all: a variance ratio of 1.2. The per-request table survives anyway. A regression with a trace ID is a ticket. A regression inside an average is a rumour.
+
+## THE EXPLANATIONS AFTERWARD
+
+*The first explanation was that this is a textbook idea.*
+
+It is. Simulation courses have taught common random numbers for decades, and Stout and Goldie's 2008 tutorial measured an 82 percent cut in the variance of differences in a cancer model, against 71 percent from a sample ten times larger. The idea is old. The column is what goes missing. A scorecard row that prints two means and a delta reads the same whether the days were shared or not.
+
+*The second explanation was that shared draws can mislead.*
+
+**Objection:** Tie the two arms to the same randomness and one bad draw biases both.
+
+**Reply:** It biases both the same way, which is what the subtraction removes. The real hazard is a synchronization the world does not have. Stout and Goldie warn that where little evidence supports a shared cause, "synchronizing random numbers is not desired and could lead to incorrect conclusions."
+
+**Objection:** And when the arms consume randomness differently?
+
+**Reply:** Then the streams drift apart and the pairing quietly ends. dispatch-optimizer avoids that today because the day is drawn before either policy runs and travel is deterministic. Its own paired-stress note says that when travel shocks arrive, they "must be drawn once per seed and shared." Per seed and per leg, not per call, or the two dispatchers will drive through different traffic.
+
+*The third explanation was the inversion, and a statistician would make it.*
+
+Pairing narrows the error bar, and a narrow error bar on thirty days invites a confident headline. The 23 km was that headline. The one unpaired run found 29.8 km with a standard error of 28.0, no difference detected, which sits closer to the three-hundred-day answer of 5.4.
+
+**Objection:** Then the noisy method was the honest one.
+
+**Reply:** It was the vague one. Its interval was wide enough to hold the truth and also a 25 km gap the other way. The paired interval held the truth too, at a third of the width. Both were honest. Only one was useful.
+
+The evidence that settles it is what gets printed. A point estimate from either method misleads. An interval from the paired method, with the correlation that produced it, does not. The failure mode sits beside the claim: 23 km was the point, and the interval said anywhere from 3 to 43.
+
+## SAME SEED, BOTH ARMS
+
+The method fits on a card. Give both arms the same draw: the same seed, the same questions, the same recorded requests. Report the difference, its paired standard error, the correlation, and the count of wins, ties and losses by unit. When the correlation is low or one side is flat, say that pairing bought nothing, and keep the per-unit table, because it still names the losses.
+
+[pass^k, not pass@1](/essays/pass-k-not-pass-at-1/) asked for the same task run k times. This asks for the same task run on both. [The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) said to suspect the eval before the agent. Check the draw first.
+
+Same seed.
+
+Both arms.
+
+Print the correlation.
+
+·   ·
+
+COMPARISON RECORD — REMAINING FIELDS
+
+Correlation printed beside the gap: 0.83.
+Paired standard error at thirty days: 10 km.
+Days needed at the thirty-day gap: 23 paired, 127 unpaired.
+Gap after three hundred days: 5.4 km, interval −11.6 to +0.8.
+Finding that held: about one more order assigned in forty.
+Travel times: fixed. When they move, drawn once per seed.
+
+The record ends there. Both dispatchers, for now, roll the same dice.
+
+---
+
+Sources: N. K. Stout and S. J. Goldie, "Keeping the Noise Down: Common Random Numbers for Disease Simulation Modeling," Health Care Management Science 11(4), 2008 (https://pmc.ncbi.nlm.nih.gov/articles/PMC2761656/); E. Miller, "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations," 2024 (https://arxiv.org/abs/2411.00640); dispatch-optimizer (https://github.com/AthenaTheOwl/dispatch-optimizer); world-food-program-robust-simulator (https://github.com/AthenaTheOwl/world-food-program-robust-simulator); Robust-Facility-Location (https://github.com/AthenaTheOwl/Robust-Facility-Location); supplier-risk-rag-agent (https://github.com/AthenaTheOwl/supplier-risk-rag-agent); modelswap-replay (https://github.com/AthenaTheOwl/modelswap-replay).
