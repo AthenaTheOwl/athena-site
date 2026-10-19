@@ -108,7 +108,7 @@ A switching value is a distance, and a distance means nothing without a ruler. I
 
 [judge-kappa](https://github.com/AthenaTheOwl/judge-kappa) measures that wobble for model judges. Its five-run example asks one pairwise judge the same twenty questions five times. Six of the twenty items change label in at least one run, and the share of "A" verdicts moves by as much as 0.10 between runs. Decision record DEC-JK-002 turns that into a gate: a score sitting 0.02 from its threshold fails, because 0.02 is inside the judge's own noise.
 
-The same judge agrees with the human labels at a kappa of 0.833 and with itself at 0.913. It passes both checks and is still unfit to decide a contest that close. [The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) makes the general case for the thing doing the scoring.
+The same judge agrees with the human labels at a kappa of 0.833 and with itself at 0.913. It passes both checks and is still unfit to decide a contest that close. [The ruler fails its own gate](/essays/the-ruler-fails-its-own-gate/) runs the same gauge on a public benchmark's judge, and [The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) makes the general case for the thing doing the scoring.
 
 Every switching value is half of a comparison. The other half is how far the input moves when nobody touches it. A fragility index smaller than the dropout count, in more than half the trials. A gate margin of 0.02 against a floor of 0.10. A grid weight that flips the site at plus 39 percent, if nobody can say whether it belongs nearer 2.4 or 3.4.
 
