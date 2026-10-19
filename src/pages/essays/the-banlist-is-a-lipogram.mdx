@@ -1,0 +1,160 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The banlist is a lipogram"
+description: "A style guide you can read drifts, and a constraint you can run holds. Six findings on a voice gate that fails a pull request on one banned cadence, an Oulipo deck whose noun list is the rule, an aerospace word list whose working group dates from 1983, and the edition number every constraint needs."
+date: "2026-10-20"
+readingTime: "9 min read"
+---
+
+VOICE GATE — ONE REPOSITORY, MAIN BRANCH, OCTOBER 2026
+
+Phrases that fail the check: 49.
+Phrases that warn: 20. A warning also exits non-zero.
+Sentence shapes, written as regular expressions: 18. Seven apply only to the weekly briefs.
+Files scanned: 286. Hits: none.
+Runs on: every pull request to main.
+Escape hatch: a label typed on the offending line, where the reviewer reads it.
+Edition number: no field.
+
+That is the voice gate in [ai-field-brief](https://github.com/AthenaTheOwl/ai-field-brief), a weekly brief drafted with agents in the loop. Its style guide opens with the reason it was written down at all. The voice used to live in the prompt, and in the guide's words, that pattern "let it drift." An instruction in a prompt is advisory, which [Role tags are advisory](/essays/role-tags-are-advisory/) argued about a different kind of label.
+
+A style guide you can read drifts. A constraint you can run holds, for as long as everyone runs the same one.
+
+The last line of the record is the subject of this essay.
+
+## FINDING ONE: ONE HIT FAILS THE CHECK.
+
+The gate is a single Python file. It reads every public page the brief ships, line by line, and tests each line against its rules: 80 on every page, 87 inside the briefs. A match prints the file, the line number and the rule, and the script exits with an error. There is no score and no threshold. A warning counts the same as a failure unless someone passes a flag to say otherwise, and CI never passes it.
+
+That severity is the design. A style guide that grades on a curve gets read as advice, and advice loses to a deadline every week. A check that fails on one hit gets read as a rule, because the pull request stays red until the line changes.
+
+The exception is just as strict about where it lives. To keep a banned phrase, the writer types an allow label on the same line, naming the rule it overrides. The waiver sits in the text, beside the thing it waives.
+
+Run on main on 19 October, and again on the review branch opened that day: 286 files, no hits.
+
+## FINDING TWO: BAN THE CADENCE, NOT ONLY THE WORD.
+
+Forty-nine words and phrases is the easy half. Every writer knows the vocabulary of a press release, and a model drops a listed word after one correction.
+
+The harder half is shape. The style guide names four structural tells, and the one it lists first is the antithetical reversal: a sentence that says what something lacks, then a sentence that says what it has instead. One reversal reads as emphasis. Three on a page read as a machine. The gate encodes it as a pattern: a negated *is* or *was*, up to eighty characters, a full stop or a dash, then a fresh *it is* or *that's*. Seven of the 18 structural rules hunt some version of that contrast.
+
+A word list cannot teach the ear what the pattern sounds like. So the guide carries five before-and-after pairs, each taken from a real brief, each with the rewrite that should have shipped. Two of the five notes carry the same instruction: lead with the number.
+
+Pointed at the style guide itself, the gate finds three failures. One is the guide's closing remark that humour cannot be linted, phrased in the exact reversal the guide bans. The guide sits outside the gate's target list, which is the only reason the repository is green.
+
+That exemption is correct. A rulebook has to mention what it forbids. Perec's novel without the letter e is called *La Disparition*, and the title keeps the rule. The author's name on the cover carries four e's.
+
+This essay has the same problem, and handles it by describing the banned shapes instead of quoting them.
+
+·   ·
+
+A lipogram is the simplest constraint there is. One letter, gone.
+
+It is also the easiest to check. Search the manuscript for the letter. Any hit fails.
+
+Perec wrote a novel inside that check.
+
+## FINDING THREE: A CONSTRAINT CAN GENERATE AS WELL AS FORBID.
+
+The Oulipo, the workshop of potential literature that Perec joined in 1967, treated constraint as an engine. Its catalogue defines the lipogram plainly: a text in which the author forbids himself one letter, sometimes several. *La Disparition*, published in 1969, is written entirely without the e.
+
+At one of the group's first meetings, on 13 February 1961, Jean Lescure set out S+7: replace every noun in an existing text with the seventh noun after it in a given dictionary.
+
+[oulipo-memory-deck](https://github.com/AthenaTheOwl/oulipo-memory-deck) runs that swap on eight cards with a forty-noun list.
+
+the kettle sits on the stove.
+the drawer sits on the spoon.
+
+Nobody would write the second sentence. Somebody now has to explain it. The player writes a vignette of 40 to 80 words that does, and the deck keeps models out of that step on purpose. Its README gives the reason: if a model writes the vignette, "the swap is just decoration."
+
+The banlist works the same way, in miniature. Forbid the reversal and the writer has to find the claim the reversal was decorating. The style guide's procedure starts there: read the section, then write its underlying claim in one sentence.
+
+## FINDING FOUR: THE ORDER OF THE WORD LIST IS THE RULE.
+
+The definition has a phrase that is easy to skip: a given dictionary. The swap is a function of the list, in the order it is written.
+
+I sorted the deck's forty nouns alphabetically in a scratch copy and re-ran the eight cards. All 16 substitutions changed. The kettle line became "the pan sits on the antenna." The window line, which reads "the speaker faces the bowl" under the shipped order, became "the button faces the chair."
+
+Adding one noun at the top of the list is gentler and still costs something. Five of the 16 substitutions changed: the five whose seventh step runs past the end of the list and wraps back to the start.
+
+A sort adds no word and removes no word. The deck's method note, dated 18 October, puts it in one sentence: "Sorting the list for neatness is therefore a content change with a larger effect than its diff suggests."
+
+The deck already pins its edition. An index file records the SHA-256 hash of the noun list, and the loader refuses a list that does not match. With the sorted list in place, all eight cards failed validation on the hash before a single swap ran.
+
+The Oulipo's own definition specifies a given dictionary. The hash is how a repository says which one.
+
+## FINDING FIVE: AEROSPACE GOT HERE FIRST.
+
+In 1983 a working group formed to develop AECMA Simplified English, a controlled language for aircraft maintenance manuals. The first release came in 1986, and that year the airline industry's specification for technical publications made it a requirement. The standard's own history gives the driver: a request from the airlines, 80 percent of them based outside English-speaking countries. Misread instructions can cause accidents.
+
+It is now ASD-STE100, Simplified Technical English, Issue 9, released on 15 January 2025. It has two parts. Fifty-three writing rules in nine sections govern word choice, grammar, sentence structure and style. A dictionary of about 900 approved words gives each word one meaning and one part of speech, and lists about 1,200 words that are off the list, with suggested alternatives. The standard chose *start*, and set aside *begin*, *commence*, *initiate* and *originate*.
+
+Every element of the voice gate is there, four decades earlier. Rules for sentence shape as well as vocabulary. A word list with the replacement printed beside the banned word. A requirement written into the industry's specifications, so the constraint binds before anyone argues about taste.
+
+And an issue number. Issue 9 refined more than half of the 53 rules and updated 555 dictionary entries. A manual is written to an issue, and anyone reading it can ask which one.
+
+·   ·
+
+A maintenance manual is read by a mechanic at night, in a hangar, in a second language, with a torque wrench in one hand.
+
+Nobody in that hangar wants the writer's voice.
+
+They want the same word for the same thing on every page, in every manual, from every supplier.
+
+## FINDING SIX: A FLOOR THAT TENANTS CAN RAISE AND NEVER LOWER.
+
+[brief-matrix](https://github.com/AthenaTheOwl/brief-matrix) runs the same brief loop for more than one publisher out of one repository. Each tenant gets its own sections, sources and voice overrides. All of them share one banlist of 24 terms. The municipal-budget tenant adds a term of its own, *kitchen-table*.
+
+An override that tries to remove a shared term is rejected at load. I wrote one in a scratch copy, a minus sign in front of *robust*, and ran the validator. It answered "voice override attempts to remove shared banlist term 'robust'. Overrides may only extend." and exited with an error.
+
+A floor is the right shape for a shared style. Each publisher can be stricter. None can be looser, and none can be looser quietly.
+
+The floor holds inside one repository. Across repositories there is no floor and no edition: thirty-seven repositories in this portfolio carry a file named voice_lint.py, and on main no two are byte-identical. Even the three repositories in this essay disagree about *robust*. The brief fails it only when *solution* follows. The multi-tenant gate fails it outright. The deck bans it as a marketing word. Under the multi-tenant gate, the name of [robust-siting-lab](https://github.com/AthenaTheOwl/robust-siting-lab) fails. Under the deck's rules, the hyphen saves it.
+
+A floor nobody can lower is worth little if every building pours its own.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that voice is taste, and taste cannot be compiled.
+
+The brief's guide agrees, near its end: the script catches the structural patterns, and the funny is left to the writer. A lint sets a floor. Nobody asks it to set the ceiling, and the five calibration pairs are there for the ceiling. [The drawer has a test suite](/essays/the-drawer-has-a-test-suite/) made the same case for a check that only counts files: weak, cheap, and running.
+
+The second explanation was that banning words breeds euphemism. Writers route around the list with synonyms, and the prose gets worse in a new direction.
+
+Some of that happens. It is the reason the gate bans shapes, and the reason STE prints the approved word beside every rejected one. A synonym slips past a word list. A reversal built from new words still trips the pattern.
+
+**Objection:** A model will learn to pass the gate and write badly anyway.
+
+**Reply:** Then the gate held the floor. The pairs work on the rest.
+
+The third explanation was the inversion, and a tools engineer would make it gladly. Prose linting is solved. Vale describes itself as "a command-line tool that brings code-like linting to prose," keeps its rules in style files apart from the engine, and lists teams at large companies among its users. A hand-rolled regex file per repository is the cost of ignoring it.
+
+The case is strong. The engine is a commodity, and nothing in this essay depends on whose engine runs the check. What the inversion leaves alone is the edition. A style file is still a rulebook somebody wrote, and a rulebook needs an issue number for the same reason the deck's dictionary does. As [The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) put it for a different loop, everything that goes wrong goes wrong in the thing that scores the work.
+
+**Objection:** Then version the banlist like a dependency.
+
+**Reply:** Yes. That is the whole recommendation.
+
+## THE ISSUE NUMBER
+
+Write the style as a constraint you can run. Ban shapes as well as words. Calibrate the ear with before-and-after pairs from your own drafts. Pin the edition with a hash. Share one floor, and let each publisher raise it. Then enforce it like a test: one hit, red.
+
+Oulipo showed that a constraint produces prose. Aerospace showed that it keeps a reader safe. Both wrote down which edition they meant.
+
+·   ·
+
+VOICE GATE — REMAINING FIELDS
+
+Edition: named, numbered and hashed.
+Shared floor: one, imported by every repository that writes in this voice.
+Tenants may add: yes. Tenants may remove: rejected at load.
+The rulebook itself: exempt, with its mentions marked.
+Next check: every pull request.
+
+The record ends there. The cover, as Perec's did, is allowed its e's.
+
+---
+
+Sources: ai-field-brief (https://github.com/AthenaTheOwl/ai-field-brief), brief-matrix (https://github.com/AthenaTheOwl/brief-matrix) and oulipo-memory-deck (https://github.com/AthenaTheOwl/oulipo-memory-deck), counts and runs taken on main and on the 19 October review branch of each, which agree; Oulipo, Lipogramme (https://www.oulipo.net/fr/contraintes/lipogramme); Oulipo, S+7 (https://www.oulipo.net/fr/contraintes/s7); Oulipo, Georges Perec (https://www.oulipo.net/fr/oulipiens/gp); ASD-STE100, About STE (https://asd-ste100.org/about_STE.html); ASD-STE100, earlier About page with the start example (https://www.asd-ste100.org/about.html); tcworld, ASD-STE100 Issue 9 (https://www.tcworld.info/news/asd-ste100-issue-9-setting-a-standard-for-technical-documentation); Vale (https://vale.sh/).
