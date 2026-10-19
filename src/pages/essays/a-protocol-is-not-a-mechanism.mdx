@@ -1,0 +1,173 @@
+---
+layout: ../../layouts/Essay.astro
+title: "A protocol is not a mechanism"
+description: "The new agent-commerce standards fix how agents talk, authorize and check out, and leave out the rule that settles the deal: six findings on a lab where changing only that rule moves joint value from $21,350 to $35,000, on splitting the difference, on a price that never settles, and on the first offer as a mechanism nobody chose."
+date: "2026-10-20"
+readingTime: "9 min read"
+---
+
+DEAL RECORD — ONE BUYER, ONE SUPPLIER, ONE SUBSTRATE ORDER
+
+Buyer's demand forecast: 500 units.
+Supplier's ceiling: 800 units.
+Value to the buyer of each unit it needs: $100.
+Price per unit: $50.
+Supplier's cost per unit: $30.
+Walk-away value, either side: $0.
+Rule that turns two proposals into one quantity: no field.
+
+Run those two parties through four different rules and the joint value comes out at $35,000, $33,100, $28,825 and $21,350. The costs never changed. The parties never changed. Only the last line did.
+
+Three published standards now describe how agents find each other, authorize a payment and open a checkout. None of them has that line. It is the whole of this essay.
+
+## FINDING ONE: SAME PARTIES, FOUR DEALS.
+
+The instrument is [procurement-negotiation-lab](https://github.com/AthenaTheOwl/procurement-negotiation-lab). A buyer called Northstar needs substrate. A supplier called Cinder makes it. Their costs are fixed, their ceiling is fixed, and the only thing that varies between runs is the update rule that moves two proposals toward one.
+
+ADMM trades a price and a penalty for disagreement until both sides propose the same number. It converges at 500 units. Joint value $35,000: the buyer keeps $25,000, the supplier $10,000.
+
+Alternating best response has each side react to the other's last proposal. It stalls with the buyer at 500 and the supplier at 600, and books the midpoint, 550. Joint value $33,100: buyer $22,250, supplier $10,850.
+
+Consensus averaging moves everyone part of the way toward the mean. Joint value $28,825: buyer $16,062.50, supplier $12,762.50.
+
+A price on its own, adjusted until quantities meet, books $21,350: buyer $13,625, supplier $7,725.
+
+The rule decided how much value existed. It also decided who held it. Under averaging the supplier is $2,762.50 better off than under ADMM, and the buyer pays $8,937.50 for that gift.
+
+A supplier agent told to maximise its own outcome would vote for averaging. A buyer agent would refuse it. Neither preference appears anywhere in the format of the messages they exchange.
+
+[The coordination gap](/essays/the-coordination-gap/) made the case that rules can recover the value two private optimizers leave behind. This is the same lab asked a narrower question: what happens when nobody picks the rule at all.
+
+## FINDING TWO: SPLITTING THE DIFFERENCE PAYS THE ANCHOR.
+
+Averaging starts from each side's opening position and pulls both toward the mean of the two. The mean never moves. Round one and round eighty hold the same proposals, and the deal lands on the midpoint, 662.5 units.
+
+The buyer opens at its forecast. The supplier opens at the top of its range, because every unit it ships earns it $20 over cost before holding charges. So the midpoint is set by how far out the supplier can stand.
+
+Raise the supplier's ceiling and change nothing else. Demand is still 500. The buyer's costs are untouched.
+
+At a ceiling of 800, averaging leaves the buyer $16,062.50. At 1,200 it leaves $5,062.50. At 1,400 the buyer is at minus $437.50, below its walk-away value. At 1,600 it is at minus $5,937.50. Over the same sweep the supplier climbs from $12,762.50 to $19,562.50, and the joint value falls from $28,825 to $13,625.
+
+ADMM, across the same sweep, settles at 500 units and $35,000 every time. The buyer keeps $25,000 at every ceiling.
+
+Labour arbitration met this rule long before agents did. In 1983 Max Bazerman and Henry Farber tested [how arbitrators decide](https://www.nber.org/papers/w1183), starting from the critique that a split-the-difference arbitrator invites extreme offers, the critique that "has led to the adoption of final-offer arbitration." They found real arbitrators lean on the facts of the case more as the offers spread apart, and still concluded that "the parties can manipulate the outcome to some extent by manipulating their offers."
+
+An averaging agent has no facts to lean on. It is the naive arbitrator the critique imagined, with no limit on how far out the anchor can sit.
+
+·   ·
+
+Every working market has a rule for turning two numbers into one.
+
+A street stall has haggling. An exchange has an order book. A public tender has sealed bids and a closing date.
+
+Both sides know the rule before the first offer. That knowledge is most of what makes the first offer mean anything.
+
+## FINDING THREE: A PRICE ALONE NEVER SETTLES A LUMPY DEAL.
+
+The textbook fix for disagreement is a price. Let it rise when the buyer asks for more than the supplier offers, let it fall when the buyer asks for less, and wait.
+
+In the lab it never stops. From the second round to the eightieth the record holds exactly two states. The buyer asks for everything and the supplier offers nothing; the price jumps; the buyer asks for nothing and the supplier offers everything; the price falls back. Seventy-nine rounds, two positions.
+
+The cause is the shape of the values. At any given price each side's payoff is built from straight lines in quantity, so the best reply jumps to an extreme. A price steers a party whose preferences curve. Against a lumpy deal it overshoots in both directions forever.
+
+The lab books the midpoint of the two extremes, 412.5 units, and both parties come out worse than under any other rule in Finding One.
+
+An agent that can only post a price and read back a quantity is running this rule whether anyone named it or not.
+
+## FINDING FOUR: THE STANDARDS DEFINE THE ENVELOPE, NOT THE RULE.
+
+The [A2A specification](https://a2a-protocol.org/latest/specification/), at version 1.0, defines Tasks, Messages, Parts, Artifacts and the Agent Card. Its goals include letting agents "Negotiate interaction modalities (text, files, structured data)." It describes agents that collaborate "without needing to share their internal thoughts, plans, or tool implementations." The words price and payment do not appear in the published page.
+
+The [AP2 specification](https://ap2-protocol.org/ap2/specification/), at version 0.2, defines two mandates, a Checkout Mandate and a Payment Mandate, that bind a payment to a checkout the merchant has signed. The merchant is responsible for "the integrity of the inventory, pricing, and any merchant discounts." On how the shopping agent decides what goes into the mandates: "The exact details of how this is achieved is outside of the scope of this specification."
+
+The [Agentic Commerce Protocol](https://www.agenticcommerce.dev/docs/concepts/architecture), at API version 2026-01-30, gives sellers the job of "Calculating prices including discounts, taxes, and shipping." Its [capability negotiation](https://www.agenticcommerce.dev/docs/concepts/capability-negotiation) exists "so agents and sellers can discover what each supports and agree on a common set of features for a checkout." When a buyer abandons a session, the [checkout reference](https://www.agenticcommerce.dev/docs/reference/checkout) has room for "A generated summary of the specific objection or negotiation gap."
+
+There is a field for the negotiation that failed. There is no field for the rule that would have settled it.
+
+Two of the three use the word negotiate. Neither means the price.
+
+Each of them is right to leave the deal out of the envelope. Small protocols get adopted. The consequence is that the rule lives in whatever code sits on either side of the wire, and two agents can exchange perfectly valid messages while running different rules.
+
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) works the same seam from the receipt side. Its receipt has eight required fields: identities, a hash of the action, a link to the prior receipt, a timestamp and a signature. It proves an instruction was received, and in what order. It cannot say by which rule the number inside was reached, because nothing upstream wrote that down.
+
+## FINDING FIVE: THE DEFAULT IN THE WILD IS "ACCEPT THE FIRST OFFER."
+
+When the rule is left blank, agents supply one. [Magentic Marketplace](https://arxiv.org/abs/2510.25779), an open-source simulated two-sided market posted in October 2025, set assistant agents buying on behalf of consumers against service agents selling for competing businesses. Its abstract reports that "all models exhibit severe first-proposal bias, creating 10-30x advantages for response speed over quality."
+
+Accepting the first proposal is a mechanism. It is a race, and it pays latency.
+
+Averaging pays whoever anchors furthest out. First-proposal pays whoever answers first. Price-only pays nobody. Each is a settlement rule with a winner built in, and none of them was chosen by the parties who live with the result.
+
+A rule nobody chose is still a rule. The fastest seller would have chosen this one.
+
+## FINDING SIX: TRUTH-TELLING COMES FROM THE PAYMENT RULE.
+
+The rule that makes an honest bid safe is a payment rule. In [power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) each winner pays its critical value, the lowest bid that still wins: harbor_cloud bids $86 per megawatt-hour and pays $85.44. Shading the bid buys nothing, so the bid can be the truth. [Curtailability is the asset](/essays/curtailability-is-the-asset/) has the rest of that auction.
+
+No envelope standard carries that computation. A mandate can prove a payment was authorized. It cannot prove the amount was set by a rule that made lying pointless.
+
+·   ·
+
+A letter can be sealed, stamped, signed and delivered perfectly.
+
+None of that tells you whether the offer inside was fair, or how it was reached.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that the layering is deliberate. Protocols stay small so they get adopted, and settlement is application logic.
+
+Agreed. That is the finding with the sign reversed. The standards made a sound choice, and the cost of the choice is that someone else has to write the rule, and nobody has said who.
+
+**Objection:** The merchant writes it. Retail checkout has a posted price.
+
+**Reply:** It does, and a posted price is a mechanism: take it or leave it, seller sets the number. It works for a catalog. It stops working when both sides run agents, the quantity is open, and the deal is lumpy.
+
+The second explanation was that the lab is a toy: one product, two parties, synthetic costs.
+
+True. The dollar figures are synthetic. The ordering is the claim. A rule that pays the anchor pays the anchor wherever it runs, and a price-only rule can cycle on any deal whose values are built from straight lines.
+
+The third explanation was that the fix is a standard negotiation protocol.
+
+A single standard rule would be wrong for most deals. [From mechanism to mechanism design](/essays/from-mechanism-to-mechanism-design/) argued that the right rule changes by category and by season. What an envelope can carry is a declaration: the name of the settlement rule, its version, and the payment rule beside it, known to both agents before the first offer and recorded on the receipt afterward.
+
+**Objection:** Nobody will fill in the field.
+
+**Reply:** Then the default fills it in. Finding Five says what the default is.
+
+The fourth explanation was the inversion, and a protocol engineer would make it: agents are general reasoners, so give two capable agents a shared channel and they will find the efficient deal on their own. A declared rule is paperwork.
+
+The case has evidence. The same Magentic paper found that frontier models "can approach optimal welfare."
+
+**Objection:** Then leave the field blank.
+
+**Reply:** The sentence continues: "but only under ideal search conditions."
+
+The evidence that settles it is a sweep. Run the same pair of agents over the same envelope with the rule left implicit, raise one side's ceiling step by step, and watch the other side's take. If it holds steady the way ADMM's does in Finding Two, the agents found the rule themselves and the inversion wins. If it slides toward the anchor, or toward whoever spoke first, the rule was there all along, unwritten. The failure mode sits beside the claim and softens it: a declared rule can be gamed too, and the declaration buys the right to audit it, which is less than a guarantee.
+
+## THE RULE GOES IN THE ENVELOPE
+
+[procurement-negotiation-lab](https://github.com/AthenaTheOwl/procurement-negotiation-lab) holds the four rules and the sweep, and any of the figures above can be re-run from it. [negotiation-mechanism-replay](https://github.com/AthenaTheOwl/negotiation-mechanism-replay) reads a negotiation after it ends and reports what leaked and which stall the leak made rational, which is the residue an unwritten rule leaves. [agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) is the receipt with no slot for the rule. [power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) is the payment rule that makes an honest bid safe.
+
+Name the rule before the first offer.
+
+If you do not, the fastest agent names it for you.
+
+·   ·
+
+DEAL RECORD — REMAINING FIELDS
+
+Message format: standardized.
+Payment authorization: standardized.
+Checkout session: standardized.
+Settlement rule: unstated.
+Payment rule: unstated.
+Rule applied when unstated: the first proposal, or the midpoint of the two anchors.
+Joint value on one order in the lab, by rule: $21,350 to $35,000.
+
+The record ends there. The quantity, for now, is whatever the last agent to speak said.
+
+---
+
+Sources: A2A Protocol Specification, version 1.0 (https://a2a-protocol.org/latest/specification/); Agent Payments Protocol (AP2) specification, v0.2 (https://ap2-protocol.org/ap2/specification/); Agentic Commerce Protocol, Architecture (https://www.agenticcommerce.dev/docs/concepts/architecture), Capability negotiation (https://www.agenticcommerce.dev/docs/concepts/capability-negotiation) and Checkout reference (https://www.agenticcommerce.dev/docs/reference/checkout); Magentic Marketplace: An Open-Source Environment for Studying Agentic Markets, arXiv 2510.25779 (https://arxiv.org/abs/2510.25779); Max H. Bazerman and Henry S. Farber, "Arbitrator Decision Making: When Are Final Offers Important?", NBER Working Paper 1183, 1983 (https://www.nber.org/papers/w1183).
