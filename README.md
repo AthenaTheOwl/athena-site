@@ -1,6 +1,6 @@
 # athena-site
 
-Sixty-six public repositories do not fit in a row of GitHub pins. This site gives them a front door: 24 curated entry points for the strongest work, a complete `/labs` catalog, and a `/factory` view backed by the portfolio's checked-in control-plane evidence.
+Sixty-eight public repositories do not fit in a row of GitHub pins. This site gives them a front door: 24 curated entry points for the strongest work, a complete `/labs` catalog, and a `/factory` view backed by the portfolio's checked-in control-plane evidence.
 
 The home page also embeds two working systems. `procurement-negotiation-lab` turns mechanism-design choices into an interactive negotiation, while `chip-supply-chain-map` makes the semiconductor graph inspectable without opening a notebook.
 
@@ -9,7 +9,7 @@ The home page also embeds two working systems. `procurement-negotiation-lab` tur
 ## What is here
 
 - `/` - selected work, current writing, and the two embedded applications.
-- `/labs` - all 66 public repositories, grouped by domain and labeled by maturity. Live-demo links appear only after the deployment is verified.
+- `/labs` - all 68 public repositories, grouped by domain and labeled by maturity. Live-demo links appear only after the deployment is verified.
 - `/factory` - a static snapshot of specs, requirements, decisions, roles, validators, and recent control-plane events across the active portfolio.
 - `/essays` - long-form writing on AI product systems, mechanism design, semiconductors, and delivery control.
 - `/pmt`, `/ai-systems`, and `/writer-engineer` - narrower routes through the same body of work.
