@@ -1,0 +1,178 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The approval covers these bytes"
+description: "An approved one-line note had one word changed after the verdict and the queue refused to publish it, a refusal car makers have kept on paper for decades: six findings on approval as a property of exact bytes, the change notices manufacturing requires, and the record that has to live outside the supplier's reach."
+date: "2026-10-20"
+readingTime: "10 min read"
+---
+
+APPROVAL RECORD — ONE NOTE, ONE QUEUE
+
+Candidate: a one-line note. "ERCOT large-load queue grew in Q3."
+Digest at submission: c963117a6c9d…
+Verdict: approve, by a named human.
+Change after the verdict: "grew" became "doubled".
+Digest at publication: b6b84c9a2451…
+Publication: refused. "candidate changed since submission; resubmit it for review"
+Status after the refusal: approved.
+
+The record still says approved. The queue would not ship it.
+
+Both are correct, and a supplier quality engineer would recognise the pair. A part can hold a signed approval and still be refused at the dock, because the approval covered the part as made on the day someone looked.
+
+## FINDING ONE: A CORRECTED SOURCE REVOKES THE APPROVAL.
+
+[ai-supply-chain-copilot-prd](https://github.com/AthenaTheOwl/ai-supply-chain-copilot-prd) opens on a planner paged at 2 a.m. Northstar has moved the ship date for 600 CTRL-7782 controller boards out by five days. The contract manufacturer has 36 hours of buffer. The copilot recommends a split recovery: ask Northstar for a same-day plan and reserve 300 boards from an alternate supplier, pending approval by the sourcing lead.
+
+Under the recommendation sits one line: "Evidence revision 1. Approval applies to this revision only."
+
+Approve and stage, and the receipt reads "approval token bound to EXC-2026-0417-2281, evidence revision 1; no live system was called." Then press **Simulate corrected evidence**. The supplier-portal snippet now carries a correction. The receipt disappears. The staging button goes back to "Approval required" and greys out. The panel says "Evidence changed. Review and approve again before staging."
+
+The recommendation text did not change by a character. The thing it stood on did.
+
+The smoke test runs that sequence and reapproves at revision 2. On main and on the review branch, it passes two of two. The trust model adds the rule people forget: "Switching exceptions cannot transfer approval."
+
+Manufacturing reached the same rule from the other direction. The [supplier change-notification form](https://www.accuridecorp.com/sites/default/files/inline-files/Form-P100-Product-Process-Change-Notification1.pdf) one maker publishes lists its reasons for change against Table 3.1 of the [AIAG PPAP manual](https://www.aiag.org/training-and-resources/manuals/details/PPAP-4), fourth edition, and two of them change nothing on the drawing: "Change of supplier for parts, non-equivalent materials, or services" and "Bulk Materials: New source of raw material from new or existing supplier."
+
+Same drawing. New source. The customer has to be told, and can ask for a new submission.
+
+## FINDING TWO: ONE WORD VOIDS THE APPROVAL.
+
+The record at the top came from [review-queue](https://github.com/AthenaTheOwl/review-queue), which stands between an agent's candidates and anything that ships. On submission it stores `candidate_sha256`, computed from the same bytes it used to build the reviewer's diff. On publication it reads the candidate once, checks that digest, and writes those bytes. A changed byte stops it with exit code 2, and the record stays approved, which is the honest state: someone did approve something.
+
+Then "grew" went back in.
+
+The publish went through. The approval came back the moment the bytes did, because it had never belonged to the file, or to the hour, or to the reviewer's mood. It belonged to c963117a6c9d…
+
+The harder case is the reviewer's own edit. On the branch where this is being finished, `claude/codex-review-2026-10-19` at commit 9c13872, an edit verdict is an approval of the edited text (spec R-RQ-007). The record keeps the submitted digest and adds `approved_sha256` for the edited bytes. Run there, it holds:
+
+EDIT VERDICT — BRANCH TIP
+
+Edit that does not apply to the reviewed text: refused at the verdict; record stays pending.
+Clean edit, appending "per one screenshot": approved; publication writes the edited line.
+Source file changed after the edit: refused, "candidate changed since submission".
+Edit text altered inside the record after the verdict: refused, "edited candidate does not match approved_sha256".
+Tests on the branch: 102 passed.
+
+The plain-approval refusal holds on main as well; the edit pin is described here as it stands on the branch.
+
+·   ·
+
+A notary's stamp on page four does not cover a page five added on Tuesday.
+
+Nobody thinks the notary was careless. The stamp was always about the pages in front of it.
+
+## FINDING THREE: THE PART NUMBER INCLUDES THE PROCESS.
+
+The PPAP triggers read like a list of AI deployment changes written decades early. Each reason on the same form sits beside its match in an agent stack.
+
+CHANGE NOTICE, TRANSLATED
+
+"Use of other construction or material": a different model snapshot.
+"New or modified tools": a changed tool definition or a rebuilt retrieval index.
+"upgrade or rearrangement of existing tooling or equipment": a reordered harness, a new compaction step.
+"tooling and equipment transferred to a different plant site": the same model served from another platform.
+"Change of supplier for parts, non-equivalent materials, or services": a different model vendor behind the router.
+"Change in test/inspection method-new technique (no effect on acceptance criteria)": a new judge model grading the same rubric.
+
+The last is the subtle one: same acceptance criteria, new instrument, and manufacturing still counts it as a change.
+
+The provider's half is handled. Anthropic's [models overview](https://platform.claude.com/docs/en/models/overview) says "Every Claude model ID is a pinned snapshot, including the dateless IDs used from the 4.6 generation on." The caller's half is not. The same page lists a default effort per model, `medium` for one and `high` for another, and adds: "Set effort explicitly to use a different level." A team that never sets it inherits a process parameter it never wrote down.
+
+[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) treats that parameter as part of the part number. Its README says "The same model at a different effort setting is a different release", and the code stores each setting under its own release id, `<release>-effort-<setting>`. On one route its effort curve reads:
+
+EFFORT CURVE — ONE ROUTE, SYNTHETIC FIXTURES
+
+Low: hold. Quality −0.037, cost −55.2 percent, judge 33 percent.
+Medium: swap. Quality +0.053, cost −10.5 percent, judge 83 percent.
+High: split traffic at 25 percent. Quality +0.083, cost +114.8 percent, judge 83 percent.
+
+The low and high rows are synthetic variants of a recorded run, and the README says so. The mechanism stands anyway: three settings, three verdicts, one model name. [The effort dial is a price](/essays/the-effort-dial-is-a-price/) made the commercial case; this is the quality-control one. An approval that names the model and omits the setting approved a family of parts.
+
+## FINDING FOUR: A PASS IS HISTORY, NOT PERMISSION.
+
+One trigger on the PPAP list involves no change at all: "Product produced after the tooling has been inactive for volume production for twelve months or more."
+
+Nothing was redesigned or moved. A year of disuse is enough to put the part back in front of the customer, because the evidence came from a process that has since sat in a corner.
+
+[proof-gate-runner](https://github.com/AthenaTheOwl/proof-gate-runner) keeps a note on what a green gate means. A reusable receipt needs "the command and arguments, exit status, source revision or content digest, rule version, environment, and raw output location." It sorts evidence into three states: a pass for its recorded inputs, unknown applicability after a change, and a fresh observation after a rerun. And one line carries the rule: "Do not label a receipt as applying to a later revision solely because its command string is unchanged."
+
+The exercise it describes takes a minute. A clean three-line fixture passes both gates with zero findings. Change "holds up under load" to "is robust under load", run the identical command, and the result is one finding, `voice_lint::banlist` at line 3, and a failing gate. The first report named the gates and the result, and carried no digest of what it scanned: the note leaves the full receipt to whoever integrates the runner.
+
+[eval-forge](https://github.com/AthenaTheOwl/eval-forge) catches the quieter version, where the evidence shrinks instead of changing. Drop the export-control refusal case from its demo report and gate the remainder against the full baseline. Four of four pass. Score 1.00. Verdict: blocked, exit 1, with the line "`refusal_export_control` was not evaluated." Its decision record sets the limit as well: the gate "does not prove that a case's text, dataset, model, or environment stayed equivalent. Pin those artifacts separately when making a release decision."
+
+A clean score over a smaller exam is a different exam.
+
+## FINDING FIVE: THE SUPPLIER CANNOT HOLD THE ONLY COPY.
+
+Every refusal above depends on a stored digest, kept in a file somebody can write.
+
+review-queue says so: the digest "does not authenticate the reviewer, verify a provenance URI, or replace access controls on queue files." Anyone who can rewrite a record can rewrite `approved_sha256` to match. The copilot's trust model says the same of its gate: "production authorization still requires server-side binding, authenticated approvers, and an audit record."
+
+A chain kept by the party it describes has the same weakness. In [trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec), change one policy decision in a five-event ledger from "allow" to "deny" and recompute every hash, and the validator passes it. Only a head digest kept somewhere else disagrees.
+
+Manufacturing settled custody long ago. The supplier submits and the customer approves. The notification form goes to the buyer or quality engineer, and the customer's business unit "will respond back with an acknowledgment." The copy that ends an argument sits with the party that did not make the part. [Provenance is a market](/essays/provenance-is-a-market/) argued that a signature proves the chain; custody decides whose chain counts.
+
+·   ·
+
+A bank keeps the signature card. The account holder does not.
+
+Nobody at the counter compares a cheque against a card the customer brought along.
+
+## FINDING SIX: NOTICE IS A DUTY, AND YOUR OWN STACK HAS NO NOTICE AT ALL.
+
+Electronics made notice an obligation with a vocabulary. JEDEC's PCN data guideline, [JEP30-S100A.01](https://www.jedec.org/sites/default/files/JEP30-S100A.01.pdf), maps its structure to J-STD-046, the customer-notification standard, and defines the line: "A major change is a change that may affect the form, fit, or function of the product or adversely affect the quality or reliability of the product." Then: "Customers must be notified of major changes, whereas notification of minor changes may or may not occur depending on supplier and customer/authorized distributor written agreed requirements." A notice can be Advanced, Initial, Intermediate, Revision, Final or Rescinded, and each PCN should carry its own tracking number.
+
+Automotive writes the same duty into its quality-system standard. IATF 16949 has a clause titled "Control of changes – supplemental", 8.5.6.1, and the AIAG [lists it](https://blog.aiag.org/core-tools-and-iatf-169492016-overview) among the sections that reference the core tools.
+
+Model vendors publish the discontinuance half: a retirement date, "Not sooner than" a given day in 2027.
+
+Now the buyer's side. A prompt edit, a rebuilt index, a new tool schema, an effort flag set by one engineer on a Thursday. Each is a process change in the PPAP sense, and nobody issues a notice for any of them: supplier and customer are the same team, and the duty has nowhere to land.
+
+That is where the digest earns its place. A check at the moment of use is a change notice you send yourself, and it cannot be skipped by someone in a hurry, because the publish fails until the bytes match.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+*The first explanation was that byte-exact approval is too strict for text.*
+
+**Objection:** A comma should not need a second reviewer.
+
+**Reply:** Then classify the comma before the change. The electronics standard does exactly that: minor changes travel on terms the two parties agreed in writing. What neither allows is the author of the change deciding alone, afterwards.
+
+*The second explanation was the inversion, and a manufacturing engineer would make it.* PPAP works because changing a mould is slow and expensive, so changes are rare and each one is worth a submission. Software changes hourly. Import the discipline and every team drowns in re-review, and the reviewers start approving without looking, which is worse than no gate.
+
+The case is strong. Review is the scarce input, and a trigger list that fires on every commit spends it all on noise.
+
+**Objection:** Then drop the digest.
+
+**Reply:** Keep the digest and narrow the trigger.
+
+The automotive industry has already started porting the discipline to software. The AIAG's software approval manual, [CQI-34](https://www.aiag.org/training-and-resources/manuals/details/CQI-34), describes itself as "Modeled after the highly successful Production Part Approval Process (PPAP)." The evidence that settles it for a given team is a count: re-reviews per week against changes that reached users. If re-reviews swamp the queue, the trigger list is too broad and needs classifying. If changes ship that nobody looked at, it is too narrow. The failure mode sits beside the claim: a digest check costs nothing and a second look costs a person's afternoon, so the list of what forces the second look is the whole design.
+
+## THE NOTICE YOU SEND YOURSELF
+
+Manufacturing has the half that agent tooling lacks: a written list of what counts as a change, a duty to say so, and a customer who keeps the approved copy. Agent tooling has the half that manufacturing does on paper: a check at the moment of use that costs nothing, never tires, and refuses to ship bytes nobody saw.
+
+The repositories above each hold one piece of the second half. The first half is still to be written.
+
+Write the trigger list.
+
+Check the digest at the dock.
+
+·   ·
+
+APPROVAL RECORD — REMAINING FIELDS
+
+Covers: c963117a6c9d…, and nothing else.
+Changed after the verdict: one word.
+Notice sent: none needed. The queue refused at publication.
+Original bytes restored: published.
+Next review: the next time the digest changes.
+
+The note shipped as it was approved. It said "grew".
+
+---
+
+Sources: AIAG, PPAP-4 Production Part Approval Process (https://www.aiag.org/training-and-resources/manuals/details/PPAP-4); Accuride Corporation, Product/Process Change Notification form, reasons for change per Table 3.1 of the AIAG PPAP manual, fourth edition (https://www.accuridecorp.com/sites/default/files/inline-files/Form-P100-Product-Process-Change-Notification1.pdf); AIAG, Core Tools and IATF 16949:2016 Overview (https://blog.aiag.org/core-tools-and-iatf-169492016-overview); AIAG, CQI-34 Software Assurance Approval Process (https://www.aiag.org/training-and-resources/manuals/details/CQI-34); JEDEC, JEP30-S100A.01, Part Model SupplyChain Guidelines for Electronic-Device Packages, October 2024 (https://www.jedec.org/sites/default/files/JEP30-S100A.01.pdf); Anthropic, Models overview (https://platform.claude.com/docs/en/models/overview).
