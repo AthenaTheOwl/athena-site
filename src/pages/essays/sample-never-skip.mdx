@@ -1,0 +1,175 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Sample, never skip"
+description: "After a human approves twenty agent drafts in a row, the obvious next step is to stop looking; a 1943 plan for continuous production says how far to step back, and why never to zero. Five findings on clearance numbers, sampling fractions and an outgoing-quality guarantee."
+date: "2026-10-20"
+readingTime: "10 min read"
+---
+
+CALIBRATION RECORD — ONE RECORD TYPE, HUMAN GATE
+
+Rows required before the gate may open: 20.
+Approve-unchanged rate required: 95 percent.
+Target must support rollback: yes.
+Follow-on decision record naming the rate and the rollback path: yes.
+Rows recorded so far, per type: 1.
+Review after the gate opens:
+
+That last field is this essay.
+
+Every team with a person approving agent output reaches the same afternoon. The drafts have been fine for weeks. Someone asks when the gate can come down.
+
+The question has an answer older than the computer. In 1943, H. F. Dodge published [A Sampling Inspection Plan for Continuous Production](https://doi.org/10.1214/aoms/1177731420) in the Annals of Mathematical Statistics. It answers "when can we stop inspecting" with a different verb. You never stop. You step back to a fraction, and you come forward again the moment the fraction finds something.
+
+## FINDING ONE: THE THRESHOLD WAS WRITTEN BEFORE THE DATA.
+
+[review-queue](https://github.com/AthenaTheOwl/review-queue) is a human gate for agent candidates. Each lands as a typed record and waits for a named reviewer to approve, edit or reject it. Its founding decision record, DEC-RQ-001, makes the human gate the default and does not implement auto-promote at all. It writes down, in advance, the four conditions under which a record type could later skip the gate: at least twenty rows, an approve-unchanged rate of at least 95 percent, a target that supports rollback, and a follow-on decision record naming all of it.
+
+The ledger holds two scoring runs. One is a `memory-update` row, approved unchanged. One is a `skill` row, approved only after an edit. One row per type.
+
+Writing the rule before the rows arrive is the discipline. A threshold chosen after a good month is a description of the month.
+
+Dodge's plan has the same shape: two numbers picked from a table before the first unit comes down the line. What remains open is the follow-on record. DEC-RQ-001 names the conditions for opening the gate and leaves the review after it blank. Every number below is a way to fill that blank.
+
+## FINDING TWO: TWENTY CLEAN ROWS BOUND LESS THAN THEY SEEM.
+
+Twenty approvals out of twenty feels like proof. As a measurement of how often bad drafts arrive, it is loose.
+
+WHAT A CLEAN RUN RULES OUT, EXACT BINOMIAL, ONE-SIDED 95 PERCENT
+
+20 approved of 20: the bad-draft rate could still be as high as 13.9 percent.
+19 approved of 20, which meets a 95 percent rule: as high as 21.6 percent.
+Clean rows needed to push that bound under 5 percent: 59.
+
+So the twenty-row rule is a sound place to start looking less, and a weak reason to stop looking. A process that ships one bad draft in eight can produce twenty clean ones in a row about one time in fourteen. Somebody's record type will be that one.
+
+·   ·
+
+A conductor does not check every ticket on a long train.
+
+He checks enough of them, in no particular order, that nobody on board knows which carriage is next.
+
+The fare dodgers are counted by the tickets he does check. The ones he skips are covered by the ones he might have.
+
+## FINDING THREE: A CLEARANCE NUMBER STARTS THE SAMPLING. IT DOES NOT END THE REVIEW.
+
+Dodge's plan, now called CSP-1, has two numbers and two rules. The [1981 military standard](https://everyspec.com/MIL-STD/MIL-STD-1100-1299/MIL-STD-1235B_25929/) that tabulated it, MIL-STD-1235B, prints the whole procedure in one figure. Inspect every unit. "When i consecutive units are found free of the defects concerned," release the screening crew and inspect a fraction f of the units, "selected in random manner." When the sampling inspector finds a defect, go back to inspecting everything.
+
+The number i is the clearance number, and it plays the part of the twenty rows. The clearance buys a lower sampling rate, never a zero one. In return the plan gives a ceiling: however bad the incoming drafts are, the long-run share that ships unseen has a maximum, the average outgoing quality limit. I recomputed it from Dodge's formula for four plans.
+
+WORST-CASE SHARE OF BAD DRAFTS SHIPPED UNSEEN, CSP-1
+
+20 clean in a row, then one draft in 10: 5.23 percent.
+20 clean in a row, then one in 5: 3.44 percent.
+59 clean in a row, then one in 10: 1.83 percent.
+10 clean in a row, then one in 10: 9.95 percent.
+
+The worst case for the first plan arrives when about 9.7 percent of drafts are bad, and there the plan still sends 46 percent of drafts to the reviewer, because it keeps falling back to full review. When the agent is good, it steps back on its own. At one bad draft in a hundred, the reviewer reads 12 percent of the drafts and 0.88 percent of the output ships bad.
+
+The published table agrees. In Table 2-A of the standard, a sampling rate of one in ten carries a clearance number of 22 in the 4.94 percent column and 57 in the 1.90 percent column. Dodge's formula gives 4.78 and 1.90 for those two plans. At short clearance numbers the table is more cautious than the formula: the ten-row plan, 9.95 percent by the formula, is filed under 11.46.
+
+One caution. A 95 percent rate over twenty rows tolerates one bad row anywhere; a clearance number tolerates none and restarts the count. Reading DEC-RQ-001 as i = 20 and f = 0.1 is a translation, not a match.
+
+## FINDING FOUR: THE REVERT IS THE PLAN.
+
+Most of CSP-1's protection lives in its return rule. One defect found while sampling, and the line is back to full inspection until another i units come through clean.
+
+The standard adds two more ways back. Sampling is only allowed while production is homogeneous, meaning the process has not been altered by "innovation" or "retooling," among other things. And a production stop of more than three operating days sends the line back to full inspection.
+
+For an agent, the retooling is easy to name: a new model, a rewritten system prompt, a new tool. The clean count belonged to the old process.
+
+[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) fails any model-swap record that lacks a `revert_threshold:` block written before the swap goes live: a quality drop of 0.03, a cost rise of 20 percent, a p95 regression of 250 milliseconds.
+
+review-queue's methodology has the second reflex. Its third trigger for reopening its own rules: if a record type was auto-promoted and "the resulting candidates produced visible damage," the threshold is tightened and the historical rows are re-scored against the new rule.
+
+Both are reverts. CSP-1 adds the sensor that fires them: a running sample, so the first sign of damage comes from someone looking, not someone complaining.
+
+The standard also keeps a class of defect out of sampling altogether: for critical defects, the supplier may be required to inspect every unit. DEC-RQ-001 draws the same line. A target qualifies for auto-promote only if it supports rollback: a file in a versioned repository does, and a published post does not.
+
+A draft you cannot take back is a critical defect waiting to happen. Its sampling rate is one.
+
+·   ·
+
+Zero is the one sampling fraction that cannot detect its own failure.
+
+Every other fraction, however small, eventually finds the defect and turns the full review back on.
+
+## FINDING FIVE: THE GUARANTEE ASSUMES THE INSPECTOR SEES THE DEFECT.
+
+Every number in Finding Three assumes that a reviewer who looks at a bad draft catches it.
+
+Relax that, and the ceiling stops being a ceiling. I extended the formula so the reviewer catches each bad draft with a fixed probability, misses independently, and the plan switches only on the defects the reviewer finds.
+
+TWENTY CLEAN, THEN ONE IN TEN, IMPERFECT REVIEWER
+
+Reviewer catches every bad draft: peak 5.23 percent shipped bad, falling toward zero as the agent gets worse.
+Reviewer misses one bad draft in ten: peak 6.36 percent, near 12 percent bad incoming.
+Same reviewer, half of all drafts bad: 5.00 percent ships.
+Same reviewer, nearly every draft bad: close to 10 percent ships.
+
+The last two lines matter most. With a perfect reviewer, a terrible agent ships almost nothing, because the plan never leaves full review. With a fallible one, full review leaks at the reviewer's miss rate, and no clearance number fixes that.
+
+The 1981 standard inspected the inspectors. While the screening crew checks every unit, a checking inspector samples the units the crew has already passed, at frequency f or more often. If the checker finds a defect the crew missed, the crew restarts its count of clean units, the consumer is notified, and a second miss lets the consumer suspend acceptance.
+
+An agent pipeline has the same layer to build, and three pieces of it exist already.
+
+review-queue's methodology drops any verdict that arrives less than ten seconds after the candidate: "That is either a robot or a reviewer hitting the approve key by reflex."
+
+[proof-gate-runner](https://github.com/AthenaTheOwl/proof-gate-runner) states the fatigue case in its first paragraph: a typed gate fails a pull request on a banlist word, and "the reviewer on their fifth AI-authored PR of the day would have read past it." That is a claim from its README, not a measurement, and it is the claim a checking inspector exists to test.
+
+[judge-kappa](https://github.com/AthenaTheOwl/judge-kappa) measures the other kind of reviewer. Its worked example is a judge that agrees with human labels 70 percent of the time, which corrects for chance to a kappa of 0.40 and fails its gate. [The ruler fails its own gate](/essays/the-ruler-fails-its-own-gate/) runs the same arithmetic on human experts and finds nobody had qualified them either.
+
+The rule is the standard's rule. Sample the reviewers too, and treat a miss found by the checker the way you treat a defect found by the sampler.
+
+## THE EXPLANATIONS AFTERWARD
+
+*The first explanation was cost.*
+
+**Objection:** If the drafts are good, a reviewer reading one in ten is reading nine in ten too many.
+
+**Reply:** At one bad draft in a hundred, the plan reads about 12 percent of drafts. That is the price of knowing the rate is still one in a hundred. A gate set to zero saves the 12 percent and stops measuring the thing the saving depends on.
+
+*The second explanation was that agent output is no production line.*
+
+**Objection:** Dodge assumed a process in statistical control. An agent drifts with every model update, every prompt edit, every new kind of input.
+
+**Reply:** Retooling resets the count, which covers the visible changes. For the invisible drift, Gerald Lieberman's [1953 note](https://doi.org/10.1214/aoms/1177728988) in the same journal proved that the Dodge procedure, "without the assumption of control, guarantees an AOQL, although different from that specified by Dodge." The ceiling moves. It does not vanish.
+
+*The third explanation was the inversion, and an operator would make it without strain.*
+
+The 95 percent rule plus a rollback path is enough. A sampled gate is a slower human gate that nobody will ever turn off. Open the gate, watch the downstream signals, roll back when they fire. An earlier essay here argued for [checking everything when the check is cheap](/essays/the-verifier-is-the-whole-problem/); a human check is expensive, so check nothing and rely on the revert.
+
+The case is real for loud failures. A record type whose bad output breaks a build within the hour needs no human sampler; the downstream signal is the sampler.
+
+**Objection:** Then open the gate for those types.
+
+**Reply:** Yes, for those. DEC-RQ-001 names the other kind in its own context section: the failure it exists to catch is "silent-bad candidates that pass without notice." A rollback fires when someone notices. For a silent failure, the sample is how anyone notices.
+
+The evidence that settles it, per record type, is time to detection: how long a bad draft took to surface downstream, against how long a one-in-ten sample would have taken. Where downstream wins, set f low and lean on the revert. Where the sample wins, keep it. The failure mode sits beside the test: a type nobody samples produces no evidence about its silent failures, so take the measurement before the sampling stops.
+
+## TWENTY, THEN ONE IN TEN
+
+The gate in review-queue does the slow work well: it writes its threshold before its data and refuses to open on one row. CSP-1 supplies what comes after the threshold is met. It keeps a reviewer on the line, says how much can slip past them, and puts the full gate back on its own. [pass^k, not pass@1](/essays/pass-k-not-pass-at-1/) called its metric the column that says how many people an agent needs watching it. This is the schedule for those people.
+
+Step back after twenty.
+
+Never step back to zero.
+
+·   ·
+
+CALIBRATION RECORD — REMAINING FIELDS
+
+Clean rows in a row before sampling: 20.
+Sampling fraction after: one in ten, drawn at random.
+Worst-case share shipped unseen: 5.23 percent, if the reviewer sees what they read.
+Return to full review: at the first bad draft found.
+Return also on: a new model, a new prompt, a long pause.
+Reviewers sampled: at the same rate or more often.
+Targets that cannot roll back: every unit.
+Sampling fraction never set to: zero.
+
+The record ends there. The gate, for now, stays closed, and a person reads every draft.
+
+---
+
+Sources: H. F. Dodge, "A Sampling Inspection Plan for Continuous Production," Annals of Mathematical Statistics 14(3), 1943 (https://doi.org/10.1214/aoms/1177731420); MIL-STD-1235B, Single- and Multi-Level Continuous Sampling Procedures and Tables for Inspection by Attributes, 10 December 1981, Section 2 and Table 2-A (https://everyspec.com/MIL-STD/MIL-STD-1100-1299/MIL-STD-1235B_25929/); G. J. Lieberman, "A Note on Dodge's Continuous Inspection Plan," Annals of Mathematical Statistics 24(3), 1953 (https://doi.org/10.1214/aoms/1177728988); review-queue (https://github.com/AthenaTheOwl/review-queue); modelswap-replay (https://github.com/AthenaTheOwl/modelswap-replay); proof-gate-runner (https://github.com/AthenaTheOwl/proof-gate-runner); judge-kappa (https://github.com/AthenaTheOwl/judge-kappa).
