@@ -1,0 +1,168 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The ruler fails its own gate"
+description: "The result that made model judges respectable, GPT-4 agreeing with human experts more often than the experts agree with each other, shrinks to almost nothing once chance is removed and reverses across the rest of the public data: six findings on the judge as a gauge, the human reference nobody qualified, and the factory discipline written for this exact measurement problem."
+date: "2026-10-20"
+readingTime: "9 min read"
+---
+
+GAUGE STUDY — LLM JUDGE, MT-BENCH, FIRST TURN, EXPERT JUDGES
+
+Instrument: GPT-4, pairwise, each pair judged in both orders.
+Reference: expert human votes, annotators "mostly graduate students."
+Comparisons, ties excluded: 859 between GPT-4 and an expert, 479 between two experts.
+Raw agreement, GPT-4 with an expert: 84.6 percent.
+Raw agreement, expert with expert: 81.0 percent.
+Reading in the paper: "even higher than the agreement among humans."
+Agreement beyond chance: no field.
+
+The paper is the 2023 study by Zheng and colleagues that introduced MT-Bench, and that sentence is a large part of why a model grading a model became an accepted way to run an evaluation. The votes behind it are public. Recounted from the public file, the slice above matches the paper's table to the vote: 859 and 479 comparisons, 85 and 81 percent once rounded.
+
+The missing field is the subject of this essay. An evaluation is a measurement system, and manufacturing wrote the rules for qualifying one decades ago.
+
+## FINDING ONE: THE HEADLINE REPRODUCES. THEN IT FAILS THE GATE.
+
+The dataset on Hugging Face holds 2,400 GPT-4 verdicts and 3,355 human votes from 65 judges: 58 experts and 7 of the paper's authors. The votes land on 1,814 of the GPT-4 verdicts, so one GPT-4 verdict is counted once for every human who voted on the same item.
+
+Those files go through [judge-kappa](https://github.com/AthenaTheOwl/judge-kappa), which gates a judge on Cohen's kappa: agreement after subtracting what two raters would reach by chance, given how often each uses each label.
+
+GPT-4 AGAINST THE HUMAN VOTE
+
+The paper's slice, ties excluded: kappa 0.476, n = 859.
+The paper's slice, ties included: kappa 0.379, n = 1,343.
+The whole file, ties excluded: raw 85.6 percent, kappa 0.446, n = 2,129.
+The whole file, ties included: raw 66.2 percent, kappa 0.358, n = 3,355.
+Gate: 0.6.
+Verdict, every run: not fit to grade.
+
+The paper's random baseline for the no-tie setup is 50 percent, the coin. The coin is the wrong baseline. Given the label mix the two raters use on the paper's slice, independent guessing would agree 70.7 percent of the time. GPT-4's 84.6 sits 13.9 points above chance. Against the coin, it reads as 34.6.
+
+## FINDING TWO: REMOVE CHANCE AND THE LEAD SHRINKS, THEN REVERSES.
+
+The paper set GPT-4 against humans beside humans against humans. Run the second half through the same tool. There are two honest ways to pair the judges on an item, every pair or the first two to vote, and they give different numbers, so both are printed.
+
+TIES EXCLUDED, KAPPA
+
+Paper's slice. GPT-4 against an expert: 0.476. Expert against expert: 0.458 every pair, 0.419 first two.
+Second turn, experts. GPT-4: 0.351. Expert against expert: 0.463 every pair, 0.475 first two.
+Whole file, both turns, all 65 judges. GPT-4: 0.446. Human against human: 0.491 every pair, 0.513 first two.
+
+On the slice the paper's sentence describes, a lead of 3.6 points of raw agreement becomes a lead of 0.018 in kappa against every pair of experts, the pairing that reproduces the paper's vote count. It survives, barely.
+
+On the second turn, GPT-4 still leads on raw agreement, 84.6 percent against 81.9, and trails on kappa under both pairing rules.
+
+Across the whole public file, GPT-4 has the highest raw agreement, 85.6 percent against 82.7 and 85.1, and the lowest kappa under every rule. Ties included, the order holds: 0.358 for GPT-4, 0.389 and 0.409 for the humans.
+
+Raw agreement ranked GPT-4 first on every slice in the table. Chance correction kept it narrowly ahead on one and put the humans ahead on the others.
+
+## FINDING THREE: THE REFERENCE WAS NEVER QUALIFIED.
+
+Across every slice and pairing rule above, human against human kappa runs from 0.35 to 0.52. Feed two humans to judge-kappa as if one were the judge and the other the gold set, and it prints the verdict it printed for GPT-4. Not fit to grade.
+
+The ruler fails its own gate.
+
+Factories have a name for this check. An attribute agreement study scores inspectors against each other and against a master before anyone trusts their pass and fail calls. The usual benchmark comes from the Automotive Industry Action Group's measurement systems manual, which Minitab's documentation summarises as "a kappa value of at least 0.75 indicates good agreement," with "larger kappa values, such as 0.90," preferred. No pairing of these judges reaches 0.6.
+
+One expert is a sample of the reference. A panel is the reference.
+
+Across the whole file there are 400 items with three or more judges. Hold out one judge at a time and score that judge against the majority of the rest, wherever the rest have one. Across 1,033 such comparisons, ties included, the held-out human scores a kappa of 0.55 against the panel. GPT-4, scored against the same majorities, scores 0.47.
+
+The paper's appendix makes the same move. It adds a "human-majority" judge, and against that majority, first turn, ties excluded, a single expert agrees 90 percent of the time and GPT-4 85. The authors note there that agreement among humans "could be a lower estimation." The headline travelled. The appendix table did not.
+
+·   ·
+
+A machinist checks a micrometer against a gauge block.
+
+The gauge block arrives with a certificate. Nobody calibrates one micrometer against another and calls the pair accurate because they agree.
+
+## FINDING FOUR: POSITION IS A REPEATABILITY FAILURE.
+
+The paper names the bias and gives the protocol: "call a judge twice by swapping the order of two answers and only declare a win when an answer is preferred in both orders. If the results are inconsistent after swapping, we can call it a tie."
+
+In the public file, 380 of the 2,400 GPT-4 verdicts carry the label "tie (inconsistent)." That is 15.8 percent of the judge's calls changing when nothing changed but the order of presentation. judge-kappa's default ceiling for the position-flip rate is 10 percent.
+
+In gauge language that is repeatability: the same part, the same gauge, the part set down the other way round, and a different reading. A factory records it as equipment variation and fixes the fixture.
+
+The protocol does something quieter. It files the failure as a tie. With ties included, those verdicts count as agreement whenever a human also called a tie. With ties excluded, the setup behind the 85 percent, they leave the denominator. The judge's least repeatable calls are absent from its best number.
+
+## FINDING FIVE: RAW AGREEMENT MOSTLY REPORTS THE LABEL MIX.
+
+GPT-4's verdicts in the file: 1,610 for the second answer, 190 for the first, 220 ties, 380 inconsistent.
+
+The skew is mostly the file's ordering. The file usually lists the stronger model second. In 13 of the 15 model pairs, the human judges also preferred the model in the second slot, and across all votes they picked it 2,039 times to 536.
+
+When both raters say B most of the time, they agree most of the time, whether or not either one is reading the answers. This is the case kappa was built for. The textbook fixture in judge-kappa has a judge at 70 percent raw agreement and a kappa of 0.40, and the tool's decision record names the limit: a judge that always answers the majority label "can match 90 percent of a 90/10 gold set while carrying no information."
+
+A raw agreement figure printed without the label mix beside it is a description of the dataset.
+
+## FINDING SIX: FITNESS DEPENDS ON THE MARGIN.
+
+A judge can pass every agreement check and still be unfit for the decision in front of it.
+
+judge-kappa's pairwise fixture is twenty synthetic items and five runs of the same judge. Its three standard checks pass: kappa against gold 0.833, test-retest kappa 0.913, position flips 0.05. Six of the twenty items change label in at least one run, and the rate of A verdicts moves by 0.100 between the furthest-apart runs. Put the score 0.02 from its gate threshold and the tool fails the judge, because a judge that wanders by ten points between runs cannot tell a two-point change from its own noise.
+
+Manufacturing reached the same rule long ago. A gauge's own variation is scored as a share of the spread it has to resolve, the tolerance or the process. Under 10 percent the measurement system is acceptable. Between 10 and 30 it is "acceptable depending on the application." Over 30 it is "unacceptable and should be improved." A gauge is never fit in general. It is fit for a tolerance.
+
+The paper carries its own version, in plain sight. Agreement between GPT-4 and humans "progressively increases in line with the performance disparity of the model pairs," from 70 percent "to nearly 100%." The judge is a good instrument for telling a weak model from a strong one. A leaderboard is mostly made of neighbours.
+
+·   ·
+
+Every leaderboard is a gauge study nobody ran.
+
+The rows are parts, the judge is the gauge, and the gap between first and second place is the tolerance. The study would say whether the gauge can see that gap. The leaderboard publishes the ranking first.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that the paper knew. Its appendix flags the human-to-human figure as a likely underestimate and adds the majority judge for that reason.
+
+True, and to its credit. The appendix is where the human lead lives. The abstract carried the other sentence, and the abstract is what travelled into a field's habits.
+
+The second explanation was the kappa paradox. When labels are heavily skewed, kappa punishes high agreement, and these labels are skewed.
+
+Also true, and the reason the label mix belongs beside the kappa every time. Both raters face the same items with the same skew, so the paradox cannot by itself explain the gap between them. Across the whole file, Scott's pi, which pools the two label mixes instead of using each rater's own, gives the same order with ties excluded: 0.44 for GPT-4, 0.49 for every pair of humans.
+
+**Objection:** On the paper's own slice, GPT-4 still leads.
+
+**Reply:** By 0.018. A lead of 3.6 points became one of two hundredths, and the raw number was the one that did the ranking.
+
+The third explanation was that the tool's gates are arbitrary. The 0.6 kappa gate and the 10 percent flip ceiling are defaults. The five-run floor is an observed lower bound, by the tool's own admission. This dataset carries GPT-4's swap disagreements only as a label, so the swap check here is a count, and the tool's own swapped-order run was never possible on it.
+
+All correct. Change the defaults and the verdicts can change. The comparison does not move with them: no human pairing and no GPT-4 slice comes near the 0.75 the factory calls good.
+
+The fourth explanation was the inversion, and it can be made without strain. A judge at 0.45 standing beside humans at 0.49, at a small fraction of the cost and with none of the scheduling, is close enough to replace one expert. On that reading, this essay has measured a rounding error.
+
+**Objection:** Close enough is the whole case for the judge.
+
+**Reply:** Close enough for which margin?
+
+The evidence that settles it is Finding Six, run on the leaderboard itself. Re-run the judge five times, take its detection floor, and set it beside the gap between each pair of adjacent models. Where the gap clears the floor, the inversion wins and the judge should grade. Where it does not, the ranking is the judge's noise, and a single human was never fit to settle it either. A panel was.
+
+## THE GAUGE BEFORE THE GRADE
+
+[judge-kappa](https://github.com/AthenaTheOwl/judge-kappa) is the attribute agreement study in one command: kappa against gold, kappa against itself, flips on swap, a detection floor from repeated runs, and one exit code. It calls no model. It reads verdicts already saved, which means it can be pointed at a 2023 paper's public data as easily as at a judge built this morning.
+
+[eval-forge](https://github.com/AthenaTheOwl/eval-forge) and [LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) are the gates downstream: checks with thresholds, judge prompts, reports that block a merge. A threshold means only as much as the instrument that feeds it, and the gauge study is the step that qualifies the instrument before anyone trusts the threshold.
+
+[The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) argued the ruler is the product. [Environments are the product](/essays/environments-are-the-product/) said the verifier needs a verifier. This is the verifier's verifier, run on the data that started the practice.
+
+Qualify the judge.
+
+Then qualify the humans you qualified it against.
+
+·   ·
+
+GAUGE STUDY — REMAINING FIELDS
+
+Agreement beyond chance, judge: 0.476 on the paper's slice, 0.446 across the file.
+Agreement beyond chance, reference: 0.35 to 0.52, depending on slice and pairing.
+Agreement the factory calls good: 0.75.
+Verdicts changed by the order of presentation: 380 of 2,400.
+Tolerance the judge must resolve: write it down before the ranking.
+
+The study ends there. The reference, for the record, was never asked to pass it.
+
+---
+
+Sources: lmsys/mt_bench_human_judgments (https://huggingface.co/datasets/lmsys/mt_bench_human_judgments); Zheng et al., "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena," section 3.4, section 4.2, Figure 2, Table 5, Appendix D.3 and Table 13 (https://arxiv.org/abs/2306.05685); Minitab, "What is kappa?", citing AIAG, Measurement Systems Analysis Reference Manual, 4th edition, 2010 (https://support.minitab.com/en-us/minitab/help-and-how-to/quality-and-process-improvement/measurement-system-analysis/supporting-topics/attribute-agreement-analysis/kappa-statistics-and-kendall-s-coefficients/); Minitab Blog, "More on How to Interpret Gage R&R Output," citing the AIAG guidelines (https://blog.minitab.com/en/quality-data-analysis-and-statistics/how-to-interpret-gage-output-part-2); judge-kappa (https://github.com/AthenaTheOwl/judge-kappa).
