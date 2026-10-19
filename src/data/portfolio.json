@@ -658,5 +658,25 @@
     "live": null,
     "deploy_target": "streamlit",
     "demo_cmd": "python wtw.py validate"
+  },
+  {
+    "name": "agent-key-inventory",
+    "domain": "agent-runtime",
+    "maturity": "lab",
+    "hook": "offline inventory of declared agent authority across MCP configuration and scoped credentials, with secret-safe reports and fixture-backed checks.",
+    "github": "https://github.com/AthenaTheOwl/agent-key-inventory",
+    "live": null,
+    "deploy_target": "none",
+    "demo_cmd": "agent-key-inventory --help"
+  },
+  {
+    "name": "judge-kappa",
+    "domain": "agent-runtime",
+    "maturity": "lab",
+    "hook": "checks a judge against a labelled gold set using chance-corrected agreement, position swaps and repeated judgments. a small evaluation tool with one exit code.",
+    "github": "https://github.com/AthenaTheOwl/judge-kappa",
+    "live": null,
+    "deploy_target": "none",
+    "demo_cmd": "judge-kappa --help"
   }
 ]
