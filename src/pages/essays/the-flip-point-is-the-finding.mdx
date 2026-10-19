@@ -1,0 +1,181 @@
+---
+layout: ../../layouts/Essay.astro
+title: "The flip point is the finding"
+description: "A site choice, a constraint ranking and an auction price each rest on one input that reverses them if it moves far enough, and almost nobody prints it. Six findings on switching values, the clinical-trial index that counts patients instead of p-values, and why a flip point inside the noise means nothing."
+date: "2026-10-20"
+readingTime: "9 min read"
+---
+
+VERDICT SHEET — THREE MODELS, AS SHIPPED
+
+Siting, toy benchmark: ercot-west, expected cost 9.474. Runner-up: pjm-west, 9.596.
+Announced site: az-campus, 9.686. Regret: 2.2 percent.
+Binding constraint, curated weights: skilled-trades labor, 33 percent. Runner-up: water rights, 24 percent.
+Power auction, notional: northstar_compute 500 MW, harbor_cloud 500 MW, at a curtailment weight of 10.
+Input that would reverse each verdict, and by how much: no field.
+
+Every line on that sheet is a verdict. None of them says what it would take to change it.
+
+That missing line is the subject of this essay. It takes an afternoon to compute, and once it is printed, the meeting argues about something else.
+
+## FINDING ONE: THE VERDICT IS ONE NUMBER FROM ITS OPPOSITE.
+
+[robust-siting-lab](https://github.com/AthenaTheOwl/robust-siting-lab) ranks three candidate data-centre sites by expected cost: capex plus three risk scores, each multiplied by a hand-set weight. On the toy benchmark it ships, capex counts 1.0, grid delay 2.4, water shortfall 1.8 and silicon delay 1.3. ercot-west wins at 9.474. pjm-west is 1.3 percent behind.
+
+A switching value is the smallest change in one input that reverses the verdict, with everything else held fixed. For a weighted sum it is one line of algebra per weight.
+
+SWITCHING VALUES — TOY BENCHMARK, ONE WEIGHT AT A TIME
+
+Grid delay: up 39 percent, from 2.4 to 3.34, and pjm-west wins.
+Capex: below 0.756, a fall of 24.4 percent, and pjm-west wins. Up to 2.06, and az-campus wins.
+Water shortfall: up 85 percent, and pjm-west wins. Down 62 percent, and az-campus wins.
+Silicon delay: up more than ninefold, to 11.9, and az-campus wins.
+
+Read the list as a description of the decision. Silicon delay barely matters; it takes a ninefold change to move anything. Capex can flip the answer in either direction. The grid weight is the cheapest place to lose the argument.
+
+The model's output was a site name.
+
+The switching values are four sentences about what you would have to believe.
+
+## FINDING TWO: A REGRET IS A BELIEF YOU CAN NAME.
+
+The repo's headline number is the regret on the announced site: az-campus costs 0.212 more than the optimum, or 2.2 percent. [Queue position is the asset](/essays/queue-position-is-the-asset/) quoted it. A regret says the announcement was wrong by the model's lights. The flip points say what the announcer would have needed to believe for it to be right.
+
+On the same arithmetic, az-campus comes out cheapest only if one of these holds:
+
+Water shortfall counts for 38 percent of its stated weight, or less.
+Capex counts for 2.06 times its stated weight, or more.
+Silicon delay counts for 9.15 times its stated weight, or more.
+All three risk weights, scaled together, count for 0.485 of their stated values, or less.
+
+No grid-delay weight rescues it. az-campus has the worst grid score of the three, so zeroing that weight still leaves it behind.
+
+"The announcement carries 2.2 percent regret" is a score. "The announcement is right if water risk counts for under two fifths of what the model says, or risk in general for under half" is a claim a site committee can hold an argument about, with someone in the room who knows the aquifer.
+
+The idea is old. In 1980, Pauker and Kassirer wrote the clinical decision as [two threshold probabilities](https://doi.org/10.1056/NEJM198005153022003): below the first, withhold treatment; above the second, treat without testing; between them, test. The physician's probability estimate mattered only by where it sat against the thresholds.
+
+## FINDING THREE: A FAIR PRICE IS A FLIP POINT.
+
+[power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) runs a sealed-bid auction for a notional one-gigawatt reactor among AI buyers who will not show each other their load shapes; [Curtailability is the asset](/essays/curtailability-is-the-asset/) describes the setting. Each allocation is scored on bid revenue plus how flat the combined load is.
+
+In the three-bidder baseline, mesa_ai bids $88 per megawatt-hour, notional, and wins two 250-megawatt tranches. The repo's decision record, DEC-PPF-003, sets what it pays with a switching value. Each winner pays its critical value: the lowest bid at which it would still win what it won, with every other input fixed.
+
+For mesa_ai's two tranches those bids are 85.67 and 85.99. It pays the average, 85.83. northstar_compute bids 92 and pays 85.99.
+
+The rule has a pedigree: the score is bid revenue plus a term that depends only on the allocation, so this is the Clarke-pivot VCG payment, and [Myerson's 1981 result](https://www.jstor.org/stable/3689266) is why charging the critical value makes bidding your true price a dominant strategy, for the price dimension at least.
+
+The test that pins the rule does not trust the payment code. It lowers the bid until the tranche goes, by bisection, and checks that the payment equals the point where it went.
+
+·   ·
+
+An English auction ends when the second-last bidder drops out.
+
+The winner pays about where the room stopped believing.
+
+Nobody calls that a sensitivity analysis. Everybody calls it the price.
+
+## FINDING FOUR: A NOTIONAL WEIGHT MUST PUBLISH ITS SWEEP.
+
+The auction has a curtailment variant. harbor_cloud bids the lowest price, $86, but agrees to shed 30 percent of its load in four evening stress hours. The score adds a weight times the curtailable megawatts. The shipped weight is 10, and at 10 harbor_cloud takes 500 megawatts and mesa_ai takes nothing.
+
+Sweep the weight and the result moves twice. harbor_cloud wins its first 250-megawatt tranche at a weight of 6.95 and all 500 at 9.31. The shipped weight sits about 7 percent above the point where the allocation reverses.
+
+The repo's mechanism note puts it plainly: "The weight is a notional number and decides the auction on its own, so the sweep is part of the result." It prints the table. Its rows step from 8 to 10; bisecting between them puts the full switch at 9.31.
+
+The sweep turns up something no single run would show. At a weight of zero the credit is worth nothing, and the payments still move: mesa_ai pays 85.56 instead of 85.83, northstar_compute 86.05 instead of 85.99. harbor_cloud loses either way, and its promise to shed load changes the counterfactual allocations that set everyone else's price.
+
+A flip point depends on who else is in the room, including the people who lose.
+
+## FINDING FIVE: MEDICINE COUNTS IT IN PATIENTS.
+
+In 2014, [Walsh and colleagues](https://doi.org/10.1016/j.jclinepi.2013.10.019) took 399 randomized trials from high-impact journals, each reporting a p-value under 0.05 on a yes-or-no or time-to-event outcome. In the arm with fewer events, they switched patients from no-event to event, one at a time, until the p-value rose past 0.05. They called the count the Fragility Index.
+
+FRAGILITY INDEX — 399 TRIALS
+
+Median: 8 patients. Range: 0 to 109.
+Trials with an index of 3 or less: a quarter.
+Trials where the index was smaller than the number of patients lost to follow-up: 53 percent.
+
+In more than half the trials, the patients whose outcomes nobody recorded outnumbered the patients it would take to undo the result.
+
+It is the siting sweep again. Hold everything, push one input until the verdict flips, and report the distance in a unit the reader can judge. A p-value is a probability. The index is a head count, and it can sit on the same page as the dropout count.
+
+[binding-constraint](https://github.com/AthenaTheOwl/binding-constraint) makes a one-line second example. It names skilled-trades labor as the factor most likely to bind TSMC's Arizona fab plan, at 33 percent on curated weights, with water rights second at 24. Holding the other four factors fixed, the labor weight would have to fall 27.3 percent for water to take the top. Water would have to rise 37.5 percent to get there on its own. The repo's own October method note asks for exactly this number: "Record the smallest relative weight change that changes the modal factor. A close contest should carry that switch threshold beside the modal label."
+
+## FINDING SIX: A FLIP POINT INSIDE THE NOISE IS A COIN TOSS.
+
+A switching value is a distance, and a distance means nothing without a ruler. If the input wobbles further on its own than the distance to the flip, the verdict is chance.
+
+[judge-kappa](https://github.com/AthenaTheOwl/judge-kappa) measures that wobble for model judges. Its five-run example asks one pairwise judge the same twenty questions five times. Six of the twenty items change label in at least one run, and the share of "A" verdicts moves by as much as 0.10 between runs. Decision record DEC-JK-002 turns that into a gate: a score sitting 0.02 from its threshold fails, because 0.02 is inside the judge's own noise.
+
+The same judge agrees with the human labels at a kappa of 0.833 and with itself at 0.913. It passes both checks and is still unfit to decide a contest that close. [The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) makes the general case for the thing doing the scoring.
+
+Every switching value is half of a comparison. The other half is how far the input moves when nobody touches it. A fragility index smaller than the dropout count, in more than half the trials. A gate margin of 0.02 against a floor of 0.10. A grid weight that flips the site at plus 39 percent, if nobody can say whether it belongs nearer 2.4 or 3.4.
+
+·   ·
+
+A thermostat has a setpoint and a deadband.
+
+Without the deadband, the furnace clicks on and off all night around one number.
+
+The deadband is the noise, written down beside the threshold.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that one-at-a-time sweeps miss interactions, and real weights move together.
+
+Correct. A single-input sweep can understate how close a verdict sits to its edge. For a weighted sum the joint version is no harder: scaling all three siting risk weights together gives the 0.485 in Finding Two. The rule is to print the smallest flip point you can compute, and to say which inputs moved.
+
+The second explanation was that a flip point computed on a toy fixture is a toy.
+
+Also correct about the figures. The siting inputs are a toy benchmark, the auction is notional, and the constraint weights are curated. The method carries over to real data, and these figures do not.
+
+**Objection:** Then why print toy flip points at all?
+
+**Reply:** Because a toy verdict printed without one gets quoted as a real one. The 2.2 percent has already been quoted on this site.
+
+The third explanation came from medicine. A 2017 commentary asked in its title whether the Fragility Index was ["a P-value in sheep's clothing"](https://doi.org/10.1093/eurheartj/ehw495).
+
+Granted in part: a smaller p-value generally takes more flipped patients to undo. What the index adds is the unit. A count of patients can be set beside the count of patients lost, and a p-value cannot.
+
+A limitation belongs here as well. The curtailment weight in Finding Four prices a promise to shed load, and the mechanism's own v0 notes say nothing yet meters or penalizes the shed. A flip point on an unmetered input measures how much the auction believes a pledge.
+
+**Objection:** Then the flip point is only as good as the input it moves.
+
+**Reply:** Yes. It tells you which input to go and measure first.
+
+The fourth explanation was the inversion, and anyone who has chaired a siting committee would make it. Publishing the flip point hands every losing party the exact number to lobby for. A meeting needs a recommendation, and a printed threshold is an invitation to relitigate the one weight closest to its edge.
+
+The case is strong.
+
+**Objection:** Then keep the flip points internal.
+
+**Reply:** The lobbying happens either way. Without the numbers, nobody knows which weight it is aimed at.
+
+The evidence that settles it is a comparison of decisions made with and without the flip points printed. If the argument converges faster on the input with the smallest switching value, and the decisions hold up better when that input is later observed, printing wins. If meetings that see the thresholds run longer and decide no better, the inversion wins. The failure mode sits beside the claim: a flip point turns a disagreement about a model into a disagreement about one number, and a single number is easier to capture than a model.
+
+## WHAT HOLDS UNLESS
+
+[robust-siting-lab](https://github.com/AthenaTheOwl/robust-siting-lab), [power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge), [binding-constraint](https://github.com/AthenaTheOwl/binding-constraint) and [judge-kappa](https://github.com/AthenaTheOwl/judge-kappa) each produce a verdict. Each verdict has a number that reverses it, and every number in this essay came from rerunning the shipped data.
+
+"Our model says X" ends a conversation.
+
+"X holds unless you believe Y" starts the right one.
+
+·   ·
+
+VERDICT SHEET — REMAINING FIELDS
+
+Siting: ercot-west, unless grid delay counts 39 percent more or capex 24.4 percent less.
+Announced site: right if water risk counts under two fifths as much, or all risk under half.
+Constraint: labor, unless its weight falls 27.3 percent.
+Auction: harbor_cloud's 500 MW, unless the curtailment weight is below 9.31.
+Noise around each input: measured for the judge. Not yet for the rest.
+
+The verdicts were always one number from their opposites. Now the number is on the sheet.
+
+---
+
+Sources: Walsh et al., "The statistical significance of randomized controlled trial results is frequently fragile: a case for a Fragility Index," J Clin Epidemiol 2014;67(6):622-628 (https://doi.org/10.1016/j.jclinepi.2013.10.019); Pauker and Kassirer, "The threshold approach to clinical decision making," N Engl J Med 1980;302(20):1109-1117 (https://doi.org/10.1056/NEJM198005153022003); Carter, McKie and Storlie, "The Fragility Index: a P-value in sheep's clothing?," Eur Heart J 2017;38(5):346-348 (https://doi.org/10.1093/eurheartj/ehw495); Myerson, "Optimal Auction Design," Mathematics of Operations Research 1981;6(1):58-73 (https://www.jstor.org/stable/3689266); robust-siting-lab (https://github.com/AthenaTheOwl/robust-siting-lab); power-ppa-forge (https://github.com/AthenaTheOwl/power-ppa-forge); binding-constraint (https://github.com/AthenaTheOwl/binding-constraint); judge-kappa (https://github.com/AthenaTheOwl/judge-kappa).

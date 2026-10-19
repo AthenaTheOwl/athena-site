@@ -1,0 +1,152 @@
+---
+layout: ../../layouts/Essay.astro
+title: "Known good is a price"
+description: "A chip buyer can pay the supplier to test its dies or buy the wafers untested and sort them itself, and the gap between those two prices is what verification costs. Five findings on known-good-die economics, AI support sold at $0.99 an outcome, and who gets to define good."
+date: "2026-10-20"
+readingTime: "9 min read"
+---
+
+PURCHASE ORDER — ONE QUARTER OF DIES, TWO SUPPLIERS
+
+Supplier A, untested wafer: $20,000.
+Supplier A, tested wafer: $22,500.
+Supplier B, untested wafer: $15,000.
+Supplier B, tested wafer: $15,750.
+Buyer's own sort, per untested wafer: $2,000 to test, $80 to ship, $5 of engineering, and a $300,000 probe card for every 1,200 or 1,500 wafers.
+Test program used by the supplier: no field.
+
+Those are the default prices in a wafer-sourcing model I keep. The tested wafer is the old semiconductor product called known good die: the supplier probes the dies before they ship, and the buyer pays extra not to.
+
+The gap between the two prices on each line is what the market charges for verification. The empty field is the part the buyer cannot see.
+
+## FINDING ONE: VERIFICATION HAS A MARKET PRICE.
+
+Supplier B charges $750 more for a tested wafer. Sorting that wafer yourself costs $2,085 in test, transport and engineering, plus $250 of probe card, plus $131.25 of extra downstream handling, less $656.25 the buyer recovers by selling partially good dies. Net, $1,810. The supplier's test is cheaper than the buyer's.
+
+Supplier A charges $2,500 more. Sorting A's wafer yourself nets out at $1,655. The supplier's test costs more than the buyer's.
+
+So the same buyer, on the same day, buys B tested and A untested. Divided by good dies per wafer, the four options rank cleanly: B tested at $22.34 a die, B untested at $23.84, A untested at $24.55, A tested at $25.51.
+
+Nobody buys verification at any price. They buy it below the cost of doing it themselves.
+
+## FINDING TWO: BUY TESTED UNTIL THE TESTED LINE RUNS OUT.
+
+I re-ran the model's deterministic solver, `solve_nominal`, at three demand levels.
+
+At 10 million good dies it buys 14,185 tested wafers from B and nothing else.
+
+At 30 million it fills B's tested line, all 30,000 wafers of it, about 21.15 million dies. Then it buys 12,553 untested B wafers and eleven probe cards to sort them. Nominal profit: $156.3 million.
+
+At 50 million it uses all four channels: 9,224 tested wafers from A, 30,000 tested from B, 7,500 untested from A, 20,000 untested from B. The most expensive form of verification is bought last, when nothing else is left.
+
+That is a capacity story. Known good die is a product with a factory behind it, and the factory has a ceiling.
+
+Now the admission the model owes. The column for the tested price is commented "includes yield guarantee." The Monte Carlo simulator in the same repository draws one yield factor per supplier and applies it to tested and untested wafers alike. A bad yield quarter costs the buyer the same good dies either way. The model prices the test. It does not model the transfer of yield risk from buyer to seller, which is half of what a real known-good-die premium buys. Every premium in this essay is therefore the price of the sort alone, and the real ones should be higher.
+
+·   ·
+
+A per-token bill is a wafer buy.
+
+You pay for every die the model produced, good or bad, and run your own sort.
+
+A per-outcome bill is known good die. Someone else ran the sort, and you never saw the test program.
+
+## FINDING THREE: WHOEVER WRITES THE TEST DEFINES GOOD.
+
+Intercom sells its support agent, Fin, at "$0.99 per outcome," on its [pricing page](https://www.intercom.com/pricing) as read on 19 October 2026. Its help article on [Fin outcomes](https://www.intercom.com/help/en/articles/8205718-fin-ai-agent-outcomes) defines the main one. A resolution is counted when, after Fin's last answer, "the customer either confirms the answer was satisfactory (confirmed resolution)" or "exits the conversation without requesting further assistance (assumed resolution)." If the customer comes back to the same conversation for more help, the charge is deducted.
+
+Zendesk sells the same kind of agent and drew the line somewhere else. Its [May 2026 announcement](https://support.zendesk.com/hc/en-us/articles/10677925692698-Announcing-changes-to-AI-agent-reporting) splits the outcomes. A contained resolution: "A meaningful request is handled by the AI agent, without human involvement or follow-up." A verified resolution has "additional signals confirming the outcome was complete and satisfactory." Then: "You will continue to be billed only for Verified resolutions," and "Contained resolutions do not consume automated resolutions."
+
+Same event. A customer reads the answer and leaves. One vendor bills it. The other does not.
+
+Neither definition is dishonest. Both are published. They are two test programs, and each one sets the price of good.
+
+The chip industry put this in a standard long before anyone sold an agent. JEDEC's procurement standard for known good die, [JESD49B.01](https://online.standard.no/en/jedec-jesd49b01-2), says the parts "are intended to be equivalent to or better than comparable packaged parts," and leaves the specific performance, quality and reliability requirements to negotiation between supplier and user. The supplier then has to carry out and show the screening that was agreed.
+
+The chip buyer negotiates the test. The AI buyer gets a help article.
+
+[Pay at the point of value](/essays/pay-at-the-point-of-value/) ended on the meter: whoever counts the uses sets the price. This is the step before the count. A meter tallies units. The test decides which units are allowed onto the tally, and a scrupulously honest meter will count a loose definition perfectly.
+
+## FINDING FOUR: COUNT THE ESCAPES THE VENDOR'S TEST MISSES.
+
+In semiconductor test, an escape is a bad part that passed. Buyers of known good die do not rely on the supplier's yield report alone. They count failures at their own assembly line and send them back.
+
+An outcome-priced agent needs the same count, and the trace usually already holds the evidence. [trace-to-eval-harness](https://github.com/AthenaTheOwl/trace-to-eval-harness) has a `false-success` audit that sorts every tool error in a trace into three classes: repaired by a later call, ignored, or carried forward into a claim of success. It also flags a success claim that made a write call and recorded no effect.
+
+I ran it on the committed fixtures. Four traces, three tool errors: one repaired, one ignored, one carried into the answer "all tests pass" after the test run had failed. A fourth trace updated a ticket, got "ok" back, said "task complete," and left no recorded change. Two of four flagged.
+
+The fixtures are synthetic, built to hold one of each case, so two of four is a test of the classifier and says nothing about any vendor's escape rate. The shape is the point to carry. Both flagged traces end in a confident sentence. A rule that bills on the confident sentence bills both.
+
+Intercom's deduction rule is an escape count of one kind. By its own wording it catches the customer who returns to the same conversation. A customer who gives up and phones instead never comes back to the chat.
+
+If the vendor's test is a model, the buyer can check it the same way. [judge-kappa](https://github.com/AthenaTheOwl/judge-kappa) ships the textbook case: a judge that agrees with human labels 70 percent of the time, which is a kappa of 0.40 once chance agreement is removed. The tool fails it against a 0.6 bar. Zendesk's announcement says it "evaluates automated interactions to distinguish between outcome types" and does not say how.
+
+## FINDING FIVE: TEST BEFORE YOU STACK.
+
+Known good die mattered most when dies stopped going into their own packages and started going into stacks. One dead die now scraps every good one bonded to it.
+
+Semiconductor Engineering's [May 2026 piece on HBM test](https://semiengineering.com/hbm-shifts-testing-left-to-preserve-ai-chip-yield/) puts the stacks at twelve dies, up from two a decade ago, with sixteen expected soon. "The path to known-good stacks begins with known-good dies (KGDs)." Vernon Rodgers of Aehr Test Systems said of the logic die at the base of the stack: "if it's bad, 16 dies get thrown away." The same piece notes that stacking itself creates defects, and that a twelve-high stack can take from 3 to 12 test insertions, depending on the assembly house.
+
+The arithmetic is short, and these are my numbers, not the article's. If each of twelve dies is good 99 percent of the time, a stack is good 88.6 percent of the time. At 95 percent per die, 54.0 percent.
+
+An agent workflow is a stack. Each step is a die bonded to the last, and a single silent failure halfway down spoils the steps above it. The fixture in [LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) shows the first symptom. Run three times, its summary table reads "100.0% pass rate" and PASS. One line below, pass^3 is 50 percent: one of its two cases went pass, fail, pass. It is a two-case mock, deliberately flaky, and it is enough to show that a per-attempt grade and a per-stack grade are different instruments. [pass^k, not pass@1](/essays/pass-k-not-pass-at-1/) made the reliability case. The procurement version is shorter: buy the dies tested before you bond them.
+
+·   ·
+
+A fab does not ship a wafer stamped "good."
+
+It ships a bin map, a test program revision and a lot number.
+
+The stamp is only worth what the buyer can trace back to them.
+
+## THE EXPLANATIONS AFTERWARD
+
+Each finding has a way out. Each gets a hearing.
+
+The first explanation was that outcome pricing is a discount with better branding, and buyers should simply take it.
+
+Sometimes it is. Finding One says when: the premium is worth paying while it sits below the cost of running your own sort. For a support team with no evaluation staff, the vendor's sort is almost certainly cheaper than building one. The mistake is paying the premium without knowing what your own sort would cost.
+
+The second explanation was that buyers cannot read a test program anyway.
+
+Chip buyers cannot read every test vector either. They negotiate the specification, sample incoming lots and count returns. The AI version of all three is available today: read the published definition, sample billed outcomes against your own judgment, count the escapes.
+
+**Objection:** Sampling defeats the purpose of buying the outcome.
+
+**Reply:** Sampling is what keeps the outcome worth buying.
+
+The third explanation was the inversion, and a vendor would make it well. Per-outcome pricing already moves the risk to the seller. A customer who asks for more help is not billed as a resolution under either definition. Under a per-token contract the buyer paid for that failure in full. On that reading, the loose definition is a fair price for a vendor who now eats every loud failure.
+
+The case is strong for loud failures, and Finding Three does not dispute it. It adds one line to read: Intercom also counts as an outcome a workflow Fin completes, "including handoffs."
+
+**Objection:** Then take the deal.
+
+**Reply:** For the failures that make a sound.
+
+The evidence that settles it is the quiet ones. Take a sample of billed outcomes and check each against what the customer did next. If the billed outcomes hold up, the vendor's test is a fair sort and the inversion wins. If a share of them turn out to be customers who left and phoned, the premium was paying for silence. Finding Two applies in the meantime: the risk the buyer believes it moved may still sit with the buyer, as it does in my own model.
+
+## THE BUYER'S SORT
+
+[semiconductor-e2e-manufacturing-optimization](https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization) holds the four-channel model and the results quoted above. Its prices are defaults derived from the project report it reproduces, not quotes from any fab. Its tested and untested wafers share one yield distribution, so it prices the sort and leaves the guarantee out, and Finding Two is where that is said.
+
+[trace-to-eval-harness](https://github.com/AthenaTheOwl/trace-to-eval-harness), [judge-kappa](https://github.com/AthenaTheOwl/judge-kappa) and [LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) are the buyer's incoming inspection: the escape count, the check on the grader, and the stack test.
+
+Pay for good when it costs less than your own sort.
+
+Read the definition of good before you pay.
+
+·   ·
+
+PURCHASE ORDER — REMAINING FIELDS
+
+Definition of good: the vendor's published one, read and dated.
+Who checks it: the buyer, on a sample of billed outcomes.
+Escapes counted: the ones that come back, and the ones that phone.
+Yield risk: with the seller, if the contract says so; with the buyer, if it is silent.
+Test program used by the supplier: still no field.
+
+The premium buys someone else's sort. It is only as good as the test.
+
+---
+
+Sources: Intercom, pricing (https://www.intercom.com/pricing), read 19 October 2026; Intercom Help, "Fin AI Agent outcomes" (https://www.intercom.com/help/en/articles/8205718-fin-ai-agent-outcomes); Zendesk, "Announcing changes to AI agent reporting," announced 14 May 2026 (https://support.zendesk.com/hc/en-us/articles/10677925692698-Announcing-changes-to-AI-agent-reporting); JEDEC JESD49B.01, "Procurement Standard for Semiconductor Die Products Including Known Good Die (KGD)," November 2023, abstract via Standard Norge (https://online.standard.no/en/jedec-jesd49b01-2); Semiconductor Engineering, "HBM Shifts Testing Left To Preserve AI Chip Yield," 12 May 2026 (https://semiengineering.com/hbm-shifts-testing-left-to-preserve-ai-chip-yield/); semiconductor-e2e-manufacturing-optimization (https://github.com/AthenaTheOwl/semiconductor-e2e-manufacturing-optimization); trace-to-eval-harness (https://github.com/AthenaTheOwl/trace-to-eval-harness); judge-kappa (https://github.com/AthenaTheOwl/judge-kappa); LLM-evaluation-framework (https://github.com/AthenaTheOwl/LLM-evaluation-framework).
