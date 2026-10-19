@@ -1,0 +1,208 @@
+---
+layout: ../../layouts/Essay.astro
+title: "A second vendor is not a second supply chain"
+description: "In one autumn a single AI lab signed for accelerators from three vendors, and in a public supplier graph the current platforms of the first two share twenty-six of their twenty-seven upstream suppliers. Seven findings on diversity that stops at the logo, second sources that share a first source, one film under three substrate makers, and the only party that can see the overlap."
+date: "2026-10-20"
+readingTime: "10 min read"
+---
+
+SUPPLY AGREEMENTS — ONE BUYER, AUTUMN 2025
+
+22 September: NVIDIA. Letter of intent, at least 10 gigawatts. First gigawatt in the second half of 2026, on Vera Rubin.
+6 October: AMD. Definitive agreement, 6 gigawatts. First gigawatt in the second half of 2026, on the MI450.
+13 October: Broadcom. 10 gigawatts of accelerators designed by the buyer. Racks from the second half of 2026, complete by the end of 2029.
+Accelerator vendors: three.
+Foundries named in the three releases: none.
+Memory suppliers named: none.
+Substrate makers named: none.
+Upstream suppliers the vendors have in common: no field.
+
+At least twenty-six gigawatts, three logos, and not one name from the tier that makes the parts.
+
+The buyer diversified the tier it signs contracts with. This essay is about the tiers it did not sign with, where the concentration went.
+
+## FINDING ONE: VENDOR DIVERSITY STOPS AT THE LOGO.
+
+[chip-supply-chain-map](https://github.com/AthenaTheOwl/chip-supply-chain-map) is a public graph of the industry: 87 nodes, 205 edges and 113 sources, curated by hand from filings and product pages. It does not hold Vera Rubin or the MI450 yet. It holds the generation before them: one node for NVIDIA's GB200 platform and one for AMD's Instinct MI300X, MI325X and MI355X family.
+
+Walk each node upstream. Follow every supplies, manufactures, packages and licenses edge from customer back to supplier, turn the procurement edges round so they point the same way, and keep going until nothing new appears.
+
+UPSTREAM, AS THE MAP RECORDS IT
+
+GB200: 27 nodes.
+Instinct: 26 nodes.
+In both: 26.
+GB200 only: Shinko, a package-substrate maker.
+Instinct only: none.
+
+Every node under the AMD platform also sits under the NVIDIA platform. The twenty-six in common are one foundry, two HBM makers, one memory packager, two substrate makers, two design-software vendors, ten tool makers and eight material suppliers. Ten of them are in Japan.
+
+Step up to the company nodes, which carry every product line, and the picture barely moves. NVIDIA has 31 upstream nodes, AMD has 28, and 27 are shared.
+
+The 2026 parts are not in the map, so the reporting has to stand in. TrendForce, relaying Economic Daily News, reported this month that AMD began MI450 production in the second half of 2026 "using TSMC's 2nm node and CoWoS." Same foundry, same packaging technology as the root of both nodes in the graph.
+
+Three logos.
+
+One tier down, the map finds the same names.
+
+## FINDING TWO: EVERY SECOND SOURCE THE MAP CAN SEE SHARES A FIRST SOURCE.
+
+The map carries its own definition of an alternative. Its methodology says: "Alternatives are counted from companies with the same type and subtype. More public alternatives lower the score."
+
+Apply that rule to the direct suppliers of every node. There are 27 places where a node buys the same kind of thing from two or more companies. In 18 of them, the alternatives share a direct supplier of their own.
+
+The other nine carry a caveat. Each of them includes at least one alternative whose own suppliers the map does not record, and 35 of the 87 nodes have no recorded supplier at all. Where the map knows the suppliers of every alternative in a group, the count is 18 of 18.
+
+The textbook second source is a second foundry. TSMC and Samsung Foundry share nine direct suppliers: ASML, Applied Materials, KLA, Tokyo Electron, Lasertec, Edwards Vacuum, Entegris, JSR and Shin-Etsu. Micron and Samsung's memory business, the paired HBM sources under both the NVIDIA and AMD company nodes, share ASML and Lam Research.
+
+A second source is a second answer to the question "who else makes this?" It says nothing about who makes what they make.
+
+·   ·
+
+Two wells drilled into the same aquifer are two wells.
+
+In a drought they are one well with two pumps.
+
+The deed lists two. The geology lists one.
+
+## FINDING THREE: THREE SUBSTRATE MAKERS, ONE FILM.
+
+The substrate tier is where [The chip supply chain](/essays/the-chip-supply-chain/) found the quiet chokepoint: a short list of makers, slow to qualify. The map records three of them under the accelerators. Ibiden and Unimicron supply both platforms. Shinko supplies GB200.
+
+All three take their build-up film from Ajinomoto, a company better known for seasoning. TrendForce, citing Nikkei through TechNews, put it plainly in April 2025: "Ajinomoto holds more than 95% of the global market share for ABF materials used in GPU and CPU substrates."
+
+Go back to Finding One. The only node that separates the two platforms is Shinko, and Shinko buys its film from the same supplier as the other two. The one point of difference collapses a tier further down.
+
+Count substrate makers and you get three. Count film suppliers and you get one.
+
+## FINDING FOUR: A DIFFERENT FOUNDRY STILL KEEPS TEN SHARED NODES.
+
+The obvious escape is a vendor that builds somewhere else. The map has one. Of its seven accelerator product nodes, six have recorded suppliers, and five of those are built at TSMC. The sixth, Tenstorrent's chiplets, is recorded on Samsung's SF4X process.
+
+TEN NODES UNDER EVERY MAPPED ACCELERATOR
+
+Tools: ASML, Applied Materials, KLA, Tokyo Electron, Lasertec, Edwards Vacuum.
+Materials: Entegris, JSR, Shin-Etsu, Hoya.
+Accelerators with recorded suppliers that avoid all ten: none.
+
+Those ten are the whole of Samsung Foundry's recorded upstream, and every one of them also sits under TSMC.
+
+Moving to the other foundry changed the logo on the wafer.
+
+It changed none of the recorded tier beneath it.
+
+## FINDING FIVE: IT HAS HAPPENED ONE TIER DOWN BEFORE.
+
+On 31 March 2012 a fire and explosion destroyed Evonik's cyclododecatriene plant at Marl, in Germany. Cyclododecatriene is the feedstock for nylon 12, which car makers use mostly in fuel and brake-line connectors.
+
+The car makers had more than one resin supplier. Plastics Technology laid out what sat beneath them: of the four nylon 12 makers, "only Evonik was back-integrated into the key feedstock cyclododecatriene (CDT)," and "the other three nylon 12 suppliers buy CDT from Evonik, BASF, or Invista." Four suppliers on the purchase order. Three feedstock sources beneath them, and one of those on fire.
+
+The same report said the global shortage was "expected to last through the remainder of this year."
+
+The industry's answer arrived in weeks. In early May the Automotive Industry Action Group issued "a standardized procedure to streamline materials suppliers' efforts," aimed at customer approval of a material switch "within a three-to-four week period."
+
+That is the part worth keeping. The barrier to a second source in fuel-line resin turned out to be partly a policy, written by the buyers and rewritable inside a month once the buyers agreed to rewrite it together.
+
+Physics set the feedstock. Paperwork set the queue to switch.
+
+## FINDING SIX: A WARM SECONDARY, NOT A LISTED ONE.
+
+[procurement-pattern-library](https://github.com/AthenaTheOwl/procurement-pattern-library) files dual sourcing as a canonical pattern and lists its anti-patterns. Two of them are this essay in a line each.
+
+The first is a "dual source" that turns out to be "a primary plus a stale, never-exercised secondary." The pattern's verdict: "The secondary fails on first use because it was never load-tested."
+
+The second: "Splitting volume 50/50 between two suppliers when the failure mode is correlated (both depend on the same upstream)."
+
+Its software form is a fallback model, and the pattern names the same trap there: "both models share an upstream like a single cloud region." The cloud supplied an example a year ago. AWS's post-event summary says a DynamoDB disruption in its Northern Virginia region "started at 11:48 PM PDT on October 19 and ended at 2:20 PM PDT on October 20," with the root cause "a latent race condition in the DynamoDB DNS management system." The summary lists new EC2 instance launches, Lambda invocations and Fargate task launches among the services hit. A customer who spread work across three compute products in one region had, for those hours, spread it across one database's DNS.
+
+A secondary that has never carried load is a name on a list.
+
+A secondary that shares the primary's upstream is the primary with a different invoice.
+
+## FINDING SEVEN: ONLY SOMEONE WHO SEES BOTH LISTS CAN SEE THE OVERLAP.
+
+The map is an outside view, curated from what companies publish. The real exposure sits in lists nobody publishes: a vendor's bill of materials, a buyer's register of single-source parts. Each owner can walk its own list. Nobody can walk the intersection.
+
+[multitier-psi](https://github.com/AthenaTheOwl/multitier-psi) is built for that gap. Two manufacturers each map their suppliers to shared canonical identifiers, walk two and three tiers down to build their single-source sets, and run a private set intersection that returns only the overlap.
+
+INTERSECTION, COMMITTED FIXTURES
+
+Party A, single-source suppliers: 4.
+Party B, single-source suppliers: 2.
+Returned by the intersection: 1, a substrate maker in Taiwan.
+Returned about the other four: nothing.
+
+The fixtures are synthetic. The shape is the one in Finding Three.
+
+Two buyers can learn whether they bought the same chokepoint, and nothing else about each other.
+
+·   ·
+
+Every procurement register has a column for the supplier.
+
+Almost none has a column for the supplier's supplier.
+
+The overlap lives in the column nobody fills in.
+
+## THE EXPLANATIONS AFTERWARD
+
+The findings have their exits. Each gets its due.
+
+The first explanation was that the graph is hand-curated, so the overlap is an artefact of who drew it.
+
+Partly. The counts here are from the map's main branch at commit b0e1522. The map's own limitations page says its edges "represent public ecosystem dependencies, known strategic relationships, and common industry flows. They should not be read as complete purchase-order evidence." A missing edge can hide a difference as easily as it hides a shared node.
+
+The second explanation was that one of those edges is wrong.
+
+It may be. The map gives the AMD family node SK hynix and Micron for HBM, sourced to AMD's product page, which names no memory supplier. In June 2025 Micron announced its 12-high HBM3E for the MI350 series, and Digitimes reported that AMD confirmed Samsung and Micron for the MI350X and MI355X. Rerun the walk with SK hynix replaced by Samsung under the AMD node.
+
+**Objection:** Then the headline falls.
+
+**Reply:** From 26 shared to 24. The AMD node has 25 upstream nodes, the NVIDIA node 27, and 24 sit under both.
+
+The third explanation was that a shared node is not shared capacity. ASML sells separate machines to separate fabs, and a fire in one fab does not stop the scanners in the other.
+
+Correct for a failure inside one customer's fab. The shared node carries the events that hit the supplier itself: an export rule, an earthquake, a fire at one film plant. Marl was one plant.
+
+The fourth explanation was the inversion, and a procurement lead would make it: nobody signed with a second vendor to buy a second supply chain. The second contract buys price competition, roadmap options and a credible walk-away. Measured that way, three vendors did their job.
+
+The case is strong, and it is most of the thesis.
+
+**Objection:** Then nothing was mis-sold.
+
+**Reply:** Nothing was mis-sold. It was mis-filed.
+
+The evidence that settles it is how the second contract is booked. If it sits in the negotiating file, the inversion wins. If it sits in the resilience plan as a hedge against a substrate, film or foundry event, it hedges against a tier it shares with the first. The failure mode sits beside the reply: walking the graph is cheap, and a buyer who never walks it cannot tell which file the contract belongs in.
+
+The fifth explanation was that private intersection leaks when the universe is small. The repo's threat model says so itself: "a party with a small guessed supplier dictionary can test hypotheses across repeated sessions." The public map names 87 nodes, so a determined counterparty starts with much of the dictionary already written.
+
+**Objection:** Then the privacy is decorative.
+
+**Reply:** For the public names, yes. The protocol protects which names are on a list, and the value is in the private tier, the plants and lines no public graph records.
+
+## THE GRAPH AND THE LIST
+
+[chip-supply-chain-map](https://github.com/AthenaTheOwl/chip-supply-chain-map) is the outside view, and every count in Findings One to Four comes from walking it. [fab-risk-radar](https://github.com/AthenaTheOwl/fab-risk-radar) scores the tier-two and tier-three nodes, starting with ABF substrate. [multitier-psi](https://github.com/AthenaTheOwl/multitier-psi) is the inside view two buyers can share without sharing it. [modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) replays recorded traffic against a candidate model before anyone switches, which is the load test a stale secondary never gets.
+
+The contracts themselves are the subject of [The compute purchase agreement](/essays/the-compute-purchase-agreement/). The memory tier under them is [Memory is the new chokepoint](/essays/memory-is-the-new-chokepoint/).
+
+Sign with as many vendors as the price competition is worth.
+
+Then walk the graph down and count again.
+
+·   ·
+
+SUPPLY AGREEMENTS — REMAINING FIELDS
+
+Upstream nodes the two current platforms share, as mapped: 26, out of 27 and 26.
+With the HBM suppliers AMD confirmed for the MI355X: 24, out of 27 and 25.
+Companies supplying film to all three mapped substrate makers: one.
+Foundry for the MI450, as reported: TSMC.
+Foundries named in the three releases: still none.
+Overlap between two buyers' private lists: visible to neither, unless they run the intersection.
+
+The agreements end there. The film, as ever, comes from one company.
+
+---
+
+Sources: NVIDIA, "OpenAI and NVIDIA Announce Strategic Partnership to Deploy 10 Gigawatts of NVIDIA Systems," 22 September 2025 (https://investor.nvidia.com/news/press-release-details/2025/OpenAI-and-NVIDIA-Announce-Strategic-Partnership-to-Deploy-10-Gigawatts-of-NVIDIA-Systems/); AMD, "AMD and OpenAI Announce Strategic Partnership to Deploy 6 Gigawatts of AMD GPUs," 6 October 2025 (https://ir.amd.com/news-events/press-releases/detail/1260/amd-and-openai-announce-strategic-partnership-to-deploy-6-gigawatts-of-amd-gpus); Broadcom, "OpenAI and Broadcom announce strategic collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators," 13 October 2025 (https://investors.broadcom.com/news-releases/news-release-details/openai-and-broadcom-announce-strategic-collaboration-deploy-10); TrendForce on AMD's MI450 production at TSMC, 6 October 2026 (https://trendforce.com/news/2026/10/06/news-amds-lisa-su-visits-tsmc-ai-supply-chain-partners-as-company-locks-in-capacity-3-5-years-ahead); TrendForce on Ajinomoto's ABF capacity and share, 1 April 2025 (https://www.trendforce.com/news/2025/04/01/news-japanese-firm-ajinomoto-to-invest-jpy-25-billion-by-2030-to-expand-abf-production-for-advanced-packaging/); Micron, "Micron HBM Designed into Leading AMD AI Platform," 12 June 2025 (https://www.nasdaq.com/press-release/micron-hbm-designed-leading-amd-ai-platform-2025-06-12); Digitimes on AMD's MI350X and MI355X HBM suppliers (https://apps.digitimes.com/news/a20250613VL205/amd-samsung-micron-nvidia-chips.html); Plastics Technology, "Flurry of Industry Activity Aims to Bridge Nylon 12 Shortage," 30 May 2012 (https://www.ptonline.com/articles/flurry-of-industry-activity-aims-to-bridge-nylon-12-shortage); AWS, "Summary of the Amazon DynamoDB Service Disruption in the Northern Virginia (US-EAST-1) Region" (https://aws.amazon.com/message/101925/); chip-supply-chain-map methodology and known limitations (https://github.com/AthenaTheOwl/chip-supply-chain-map); procurement-pattern-library, dual-source pattern (https://github.com/AthenaTheOwl/procurement-pattern-library).
