@@ -1,4 +1,4 @@
-# Portfolio health — 2026-10-12
+# Portfolio health — 2026-10-19
 
 ## Deploys
 
@@ -17,30 +17,30 @@
 | athena-site | https://athena-site-six.vercel.app | `Portfolio doors`, `entry points` | PASS |
 | chip-supply-chain-map | https://chip-supply-chain-map.vercel.app | `chip-supply-chain-map` | PASS |
 | supplier-risk-rag-agent | https://supplier-risk-rag-agent.streamlit.app | `streamlit` | PASS |
-| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W40` | PASS |
+| ai-field-brief | https://ai-field-brief.vercel.app | `ai-field-brief`, `2026-W42` | PASS |
 
 ## File freshness
 
 | Repo | Path | Age (days) | Threshold | Status |
 |---|---|---|---|---|
-| chip-supply-chain-map | src/data/nodes.csv | 140 | 180 | ✅ |
-| supplier-risk-rag-agent | reports/baseline_eval_report.html | 71 | 90 | ✅ |
-| ai-field-brief | briefs/INDEX.md | 9 | 14 | ✅ |
+| chip-supply-chain-map | src/data/nodes.csv | 146 | 180 | ✅ |
+| supplier-risk-rag-agent | reports/baseline_eval_report.html | 78 | 90 | ✅ |
+| ai-field-brief | briefs/INDEX.md | 0 | 14 | ✅ |
 
 ## Stale active repos (threshold: 90d)
 
 | Repo | Last commit (days ago) | Status |
 |---|---|---|
 | athena-site | 0 | ✅ |
-| chip-supply-chain-map | 9 | ✅ |
-| supplier-risk-rag-agent | 9 | ✅ |
-| ai-field-brief | 9 | ✅ |
+| chip-supply-chain-map | 0 | ✅ |
+| supplier-risk-rag-agent | 0 | ✅ |
+| ai-field-brief | 0 | ✅ |
 | procurement-negotiation-lab | 0 | ✅ |
-| ai-supply-chain-copilot-prd | 21 | ✅ |
-| mcp-security-lab | 9 | ✅ |
-| trace-to-eval-harness | 9 | ✅ |
-| sports-prediction-os | 37 | ✅ |
-| LLM-evaluation-framework | 19 | ✅ |
+| ai-supply-chain-copilot-prd | 0 | ✅ |
+| mcp-security-lab | 0 | ✅ |
+| trace-to-eval-harness | 0 | ✅ |
+| sports-prediction-os | 0 | ✅ |
+| LLM-evaluation-framework | 0 | ✅ |
 
 ## Starforge cluster forks
 

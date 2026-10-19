@@ -1,11 +1,12 @@
 # DEC dependency graph — supplier-risk-rag-agent
 
-- Total DECs: **33**
-- Amendment chains: **1**
+- Total DECs: **35**
+- Amendment chains: **2**
 - Deepest chain depth (edges): **8**
 
 ## Chains
 
+- DEC-EVL-006-eval-runner-emits-conformant-run-evidence -> DEC-EVL-007-eval-runner-run-evidence-cross-checks -> DEC-EVL-008-eval-replay-command -> DEC-EVL-009-supplier-risk-rag-agent-portable-repo-uri-migration -> DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain -> DEC-EVL-015-scheduled-replay-freshness-commit
 - DEC-EVL-006-eval-runner-emits-conformant-run-evidence -> DEC-EVL-007-eval-runner-run-evidence-cross-checks -> DEC-EVL-008-eval-replay-command -> DEC-EVL-009-supplier-risk-rag-agent-portable-repo-uri-migration -> DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain -> DEC-EVL-011-supplier-risk-replay-determinism-test -> DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite -> DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite -> DEC-EVL-014-systems-thinking-discipline-adoption
 
 ## DECs
@@ -18,6 +19,7 @@
 | `DEC-CIT-002-citations-carry-filing-level-identifiers` | approved | — | 2026-05-24 |
 | `DEC-CIT-003-verifier-accepts-search-result-and-document-chunk-shapes` | approved | — | 2026-05-24 |
 | `DEC-CIT-004-deterministic-investor-rollup-over-verified-evidence` | approved | — | 2026-05-25 |
+| `DEC-CIT-005-live-evidence-order-only` | approved | — | 2026-10-19 |
 | `DEC-DEP-001-byok-streamlit-no-committed-keys` | approved | — | 2026-05-24 |
 | `DEC-DEP-002-missing-key-falls-back-to-deterministic-retrieval` | approved | — | 2026-05-24 |
 | `DEC-DEP-003-streamlit-local-env-gate-for-dotenv-loading` | approved | — | 2026-05-24 |
@@ -35,6 +37,7 @@
 | `DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite` | approved | DEC-EVL-011-supplier-risk-replay-determinism-test | 2026-05-29 |
 | `DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite` | approved | DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite | 2026-05-29 |
 | `DEC-EVL-014-systems-thinking-discipline-adoption` | approved | DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite | 2026-05-29 |
+| `DEC-EVL-015-scheduled-replay-freshness-commit` | approved | DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain | 2026-10-12 |
 | `DEC-ING-001-edgar-refresh-generated-corpus-artifacts` | approved | — | 2026-05-25 |
 | `DEC-LLM-001-provider-abstraction-default-anthropic` | approved | — | 2026-05-24 |
 | `DEC-LLM-002-keys-flow-via-explicit-keys-object-no-env-reads` | approved | — | 2026-05-24 |

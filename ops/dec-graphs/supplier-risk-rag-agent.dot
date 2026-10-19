@@ -6,6 +6,7 @@ digraph dec_chains_supplier_risk_rag_agent {
   "DEC-CIT-002-citations-carry-filing-level-identifiers" [shape=box, style=solid];
   "DEC-CIT-003-verifier-accepts-search-result-and-document-chunk-shapes" [shape=box, style=solid];
   "DEC-CIT-004-deterministic-investor-rollup-over-verified-evidence" [shape=box, style=solid];
+  "DEC-CIT-005-live-evidence-order-only" [shape=box, style=solid];
   "DEC-DEP-001-byok-streamlit-no-committed-keys" [shape=box, style=solid];
   "DEC-DEP-002-missing-key-falls-back-to-deterministic-retrieval" [shape=box, style=solid];
   "DEC-DEP-003-streamlit-local-env-gate-for-dotenv-loading" [shape=box, style=solid];
@@ -23,6 +24,7 @@ digraph dec_chains_supplier_risk_rag_agent {
   "DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite" [shape=box, style=solid];
   "DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite" [shape=box, style=solid];
   "DEC-EVL-014-systems-thinking-discipline-adoption" [shape=box, style=solid];
+  "DEC-EVL-015-scheduled-replay-freshness-commit" [shape=box, style=solid];
   "DEC-ING-001-edgar-refresh-generated-corpus-artifacts" [shape=box, style=solid];
   "DEC-LLM-001-provider-abstraction-default-anthropic" [shape=box, style=solid];
   "DEC-LLM-002-keys-flow-via-explicit-keys-object-no-env-reads" [shape=box, style=solid];
@@ -41,4 +43,5 @@ digraph dec_chains_supplier_risk_rag_agent {
   "DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite" -> "DEC-EVL-011-supplier-risk-replay-determinism-test" [label="amends"];
   "DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite" -> "DEC-EVL-012-edgar-refresh-and-adversarial-refusal-suite" [label="amends"];
   "DEC-EVL-014-systems-thinking-discipline-adoption" -> "DEC-EVL-013-supplier-risk-rag-agent-chaos-test-suite" [label="amends"];
+  "DEC-EVL-015-scheduled-replay-freshness-commit" -> "DEC-EVL-010-supplier-risk-rag-agent-ci-enforces-run-evidence-chain" [label="amends"];
 }

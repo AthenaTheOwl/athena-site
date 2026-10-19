@@ -1,11 +1,12 @@
 # DEC dependency graph — procurement-negotiation-lab
 
-- Total DECs: **43**
-- Amendment chains: **2**
+- Total DECs: **44**
+- Amendment chains: **3**
 - Deepest chain depth (edges): **8**
 
 ## Chains
 
+- DEC-FACTORY-007-factory-emits-conformant-run-evidence -> DEC-FACTORY-008-factory-run-evidence-cross-checks -> DEC-FACTORY-009-factory-replay-command -> DEC-FACTORY-010-procurement-lab-portable-repo-uri-migration -> DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain -> DEC-FACTORY-020-scheduled-replay-freshness-commit
 - DEC-FACTORY-007-factory-emits-conformant-run-evidence -> DEC-FACTORY-008-factory-run-evidence-cross-checks -> DEC-FACTORY-009-factory-replay-command -> DEC-FACTORY-010-procurement-lab-portable-repo-uri-migration -> DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain -> DEC-FACTORY-012-procurement-negotiation-lab-replay-determinism-test -> DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix -> DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite -> DEC-FACTORY-015-systems-thinking-discipline-adoption
 - DEC-NASH-001-weighted-nash-mechanism-parameters -> DEC-NASH-002-bounded-leakage-protocol-and-report -> DEC-MPC-001-mpc-mechanism-path-and-contract
 
@@ -30,6 +31,7 @@
 | `DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite` | approved | DEC-FACTORY-013-factory-thread-id-capture-and-timestamp-fix | 2026-05-29 |
 | `DEC-FACTORY-015-systems-thinking-discipline-adoption` | approved | DEC-FACTORY-014-procurement-negotiation-lab-chaos-test-suite | 2026-05-29 |
 | `DEC-FACTORY-019-active-mvp-contract` | approved | — | 2026-06-21 |
+| `DEC-FACTORY-020-scheduled-replay-freshness-commit` | approved | DEC-FACTORY-011-procurement-negotiation-lab-ci-enforces-run-evidence-chain | 2026-10-12 |
 | `DEC-FACTORY-016-metrics-ledger` | approved | — | 2026-06-21 |
 | `DEC-FACTORY-018-multi-phase-pilot-before-scale-up` | approved | — | 2026-06-20 |
 | `DEC-LAB-005-visible-so-what-before-controls` | approved | — | 2026-05-24 |

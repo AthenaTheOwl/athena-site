@@ -1,11 +1,12 @@
 # DEC dependency graph — chip-supply-chain-map
 
-- Total DECs: **19**
-- Amendment chains: **1**
+- Total DECs: **20**
+- Amendment chains: **2**
 - Deepest chain depth (edges): **8**
 
 ## Chains
 
+- DEC-FIN-003-watchlist-export-emits-conformant-run-evidence -> DEC-FIN-004-watchlist-export-run-evidence-cross-checks -> DEC-FIN-005-watchlist-replay-command -> DEC-FIN-006-watchlist-export-portable-repo-uri-migration -> DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain -> DEC-FIN-012-scheduled-replay-freshness-commit
 - DEC-FIN-003-watchlist-export-emits-conformant-run-evidence -> DEC-FIN-004-watchlist-export-run-evidence-cross-checks -> DEC-FIN-005-watchlist-replay-command -> DEC-FIN-006-watchlist-export-portable-repo-uri-migration -> DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain -> DEC-FIN-008-chip-map-dedicated-determinism-fixture -> DEC-FIN-009-additional-scenarios -> DEC-FIN-010-chip-supply-chain-map-chaos-test-suite -> DEC-FIN-011-systems-thinking-discipline-adoption
 
 ## DECs
@@ -24,6 +25,7 @@
 | `DEC-FIN-009-additional-scenarios` | approved | DEC-FIN-008-chip-map-dedicated-determinism-fixture | 2026-05-29 |
 | `DEC-FIN-010-chip-supply-chain-map-chaos-test-suite` | approved | DEC-FIN-009-additional-scenarios | 2026-05-29 |
 | `DEC-FIN-011-systems-thinking-discipline-adoption` | approved | DEC-FIN-010-chip-supply-chain-map-chaos-test-suite | 2026-05-29 |
+| `DEC-FIN-012-scheduled-replay-freshness-commit` | approved | DEC-FIN-007-chip-supply-chain-map-ci-enforces-run-evidence-chain | 2026-10-12 |
 | `DEC-MAP-001-cytoscape-over-react-flow-for-50-200-nodes` | approved | — | 2026-05-24 |
 | `DEC-MAP-002-fcose-layout-for-supply-chain-shape` | approved | — | 2026-05-24 |
 | `DEC-MAP-003-chokepoint-score-heuristic` | approved | — | 2026-05-24 |

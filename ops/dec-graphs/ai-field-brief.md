@@ -1,6 +1,6 @@
 # DEC dependency graph — ai-field-brief
 
-- Total DECs: **70**
+- Total DECs: **71**
 - Amendment chains: **3**
 - Deepest chain depth (edges): **6**
 
@@ -62,6 +62,7 @@
 | `DEC-PUB-011-ai-field-brief-chaos-test-suite` | approved | DEC-PUB-010-brief-timestamp-microsecond-fix | 2026-05-29 |
 | `DEC-PUB-012-action-surface-taxonomy-v2` | approved | — | 2026-09-04 |
 | `DEC-PUB-013-brief-top-signal-conformance-gate` | approved | — | 2026-09-04 |
+| `DEC-PUB-014-cadence-coverage-gaps` | approved | — | 2026-10-18 |
 | `DEC-SRC-001-source-registry-table-per-workspace` | approved | — | 2026-05-24 |
 | `DEC-SRC-002-tenant-scoped-source-crud-helpers` | approved | — | 2026-05-24 |
 | `DEC-SRC-003-connector-contract-pure-inputs` | approved | — | 2026-05-24 |

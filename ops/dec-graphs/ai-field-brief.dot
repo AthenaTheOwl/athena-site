@@ -48,6 +48,7 @@ digraph dec_chains_ai_field_brief {
   "DEC-PUB-011-ai-field-brief-chaos-test-suite" [shape=box, style=solid];
   "DEC-PUB-012-action-surface-taxonomy-v2" [shape=box, style=solid];
   "DEC-PUB-013-brief-top-signal-conformance-gate" [shape=box, style=solid];
+  "DEC-PUB-014-cadence-coverage-gaps" [shape=box, style=solid];
   "DEC-SRC-001-source-registry-table-per-workspace" [shape=box, style=solid];
   "DEC-SRC-002-tenant-scoped-source-crud-helpers" [shape=box, style=solid];
   "DEC-SRC-003-connector-contract-pure-inputs" [shape=box, style=solid];
