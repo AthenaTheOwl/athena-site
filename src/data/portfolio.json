@@ -623,7 +623,7 @@
     "name": "fab-risk-radar",
     "domain": "semis",
     "maturity": "active",
-    "hook": "scores 90-day disruption probability for tier-2/tier-3 semiconductor nodes (abf substrate, advanced-packaging osats) with three evidence items per score, rendering a monthly report. for semis procurement, resilience leads, and defense primes.",
+    "hook": "ranks tier-2/tier-3 semiconductor nodes (abf substrate, advanced-packaging osats) by an additive 90-day disruption rubric score (not a calibrated probability), with three public evidence items per score; one dated screen (2026-06) so far. for semis procurement, resilience leads, and defense primes.",
     "github": "https://github.com/AthenaTheOwl/fab-risk-radar",
     "live": null,
     "deploy_target": "streamlit",

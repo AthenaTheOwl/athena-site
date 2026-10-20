@@ -8916,11 +8916,11 @@
       ]
     },
     {
-      "id": "c7de3155ede7",
+      "id": "84fe8bbef910",
       "locator": "[12]",
       "order": 140,
       "path": "src/data/doors.json",
-      "snippet": "Door 13: supplier-risk-rag-agent. Status active. URL https://github.com/AthenaTheOwl/supplier-risk-rag-agent. Hook: supplier-risk RAG agent with receipts. SEC filings in, cited answers out. retrieval, citation faithfulness, abstention, and regression evals wired into CI.. For builder: fork the citation-shape schema and abstention rules. For domain: ask a supplier-risk question; check the cited passages. For leads: RAG built around receipts, not vibes. For science: four-suite eval discipline gates every PR.",
+      "snippet": "Door 13: supplier-risk-rag-agent. Status active. URL https://github.com/AthenaTheOwl/supplier-risk-rag-agent. Hook: supplier-risk RAG agent with receipts. SEC filings in, cited answers out. retrieval, citation faithfulness, abstention, and regression evals wired into CI.. For builder: fork the citation-shape schema and abstention rules. For domain: ask a supplier-risk question; check the cited passages. For leads: RAG built around receipts, not vibes. For science: five-suite eval discipline gates every PR.",
       "title": "Portfolio door 13: supplier-risk-rag-agent",
       "tokens": [
         "12",
@@ -8955,10 +8955,10 @@
         "faithfulness",
         "filing",
         "filings",
+        "five",
+        "five-suite",
         "for",
         "fork",
-        "four",
-        "four-suite",
         "gate",
         "gates",
         "github",
@@ -10082,7 +10082,7 @@
   "generated_at": "2026-08-02T06:22:37.658553Z",
   "schema_version": 1,
   "source": "scripts/factory_qa_index.py",
-  "source_hash": "f35195bc5fbb6860a72761b15f5286907838d43c3efb8f3d504faeb633ba0117",
+  "source_hash": "05d2525052dd1701a01d4eb4d2d5dd675616292f43cfa3e536e11b458e473609",
   "sources": [
     "src/data/factory-snapshot.json",
     "ops/portfolio-manifest.yml",
