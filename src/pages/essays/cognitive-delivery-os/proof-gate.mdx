@@ -23,20 +23,20 @@ Two newer gates are landing across the portfolio in 2026: `validate_roles.py`, `
 
 ## A concrete example
 
-Supplier-risk-rag-agent's CI runs five gates on every PR:
+Supplier-risk-rag-agent's CI runs its gates on every PR, split across three workflows:
 
 ```yaml
-# .github/workflows/ci.yml (excerpt)
-- name: voice lint
+# .github/workflows/gates.yml (excerpt)
+- name: voice_lint
   run: python scripts/voice_lint.py
-- name: spec check
+- name: spec_check
   run: python scripts/spec_check.py
-- name: validate decisions
+- name: validate_decisions
   run: python scripts/validate_decisions.py
-- name: tests
-  run: pytest tests/
-- name: citation-faithfulness eval
-  run: python scripts/run_eval.py --suite citation_faithfulness
+# .github/workflows/tests.yml (excerpt)
+- run: uv run pytest --cov=src --cov-fail-under=70
+# .github/workflows/evals.yml (excerpt)
+- run: uv run python -m src.evals.runner --suite all
 ```
 
 The eval gate is the load-bearing one for that repo. SEC filings in, cited answers out — the product promise depends on receipts, so the gate measures the receipts. A change that drops citation faithfulness below the threshold fails the gate, and the gate fails the merge.
