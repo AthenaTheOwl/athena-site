@@ -116,7 +116,7 @@ Both deals in this essay are already scored against that test. Cloudflare's retu
 
 ## THE CITATION GATE
 
-[puc-docket-rag](https://github.com/AthenaTheOwl/puc-docket-rag) is a retrieval system for utility regulatory filings, not a payment system, but it builds the check a usage meter needs. Every rule it extracts must carry a page-and-line citation that points at a passage the retrieval step returned. A rule whose citation is not in the retrieved set is dropped.
+[puc-docket-rag](https://github.com/AthenaTheOwl/puc-docket-rag) is a retrieval system for utility regulatory filings, not a payment system, but it builds the check a usage meter needs. Every rule it extracts must carry a page-and-line citation that points at a passage the retrieval step returned. A rule whose citation is not in the retrieved set is dropped. That proves the passage exists. Whether the passage supports the rule is a second check, and the repo has it planned, not built.
 
 Its demonstration makes the point in one line. Of two rules pulled from a filing, one cites page 1, lines 1 to 23. The other cites a chunk identifier of forty zeros that exists nowhere in the document, and it is thrown out.
 

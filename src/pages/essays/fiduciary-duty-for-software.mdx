@@ -124,7 +124,7 @@ The evidence that settles it is whether the chain of delegation can be recorded 
 
 Two repositories on this site build the object every theory asked for.
 
-[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) is the receipt per hop. When one organisation's agent instructs another's to commit a purchase order, the receipt names the receiver and the sender, the action's canonical hash and the previous receipt's hash, a timestamp, and an ed25519 signature. Because each receipt chains to the last, the order cannot be reshuffled after the fact. It carries none of the business payload, so an auditor can replay the chain without seeing what was bought.
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) is the receipt per hop. When one organisation's agent instructs another's to commit a purchase order, the receipt names the receiver and the sender, the action's canonical hash and the previous receipt's ID, a timestamp, and an ed25519 signature. Because each receipt chains to the last, the order cannot be reshuffled after the fact. It carries none of the business payload, so an auditor can replay the chain without seeing what was bought.
 
 [trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is the log behind it: every event content-addressed by its sha256 and linked to the one before, so an edited payload or a dropped event breaks the chain where anyone can see it.
 
