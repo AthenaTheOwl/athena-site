@@ -125,7 +125,7 @@
     "url": "https://github.com/AthenaTheOwl/supplier-risk-rag-agent",
     "hook": "supplier-risk RAG agent with receipts. SEC filings in, cited answers out. retrieval, citation faithfulness, abstention, and regression evals wired into CI.",
     "for": {
-      "science": "four-suite eval discipline gates every PR",
+      "science": "five-suite eval discipline gates every PR",
       "domain": "ask a supplier-risk question; check the cited passages",
       "builder": "fork the citation-shape schema and abstention rules",
       "leads": "RAG built around receipts, not vibes"

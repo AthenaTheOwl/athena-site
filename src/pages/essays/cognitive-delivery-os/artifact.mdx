@@ -49,7 +49,7 @@ Two reasons. First, the audit script can ask honest questions: "which specs have
 |---|---|---|
 | `patch` | a diff produced by a subagent | `.worktrees/*/patches/` |
 | `pr` | a GitHub pull request | URL in the record |
-| `eval_report` | a four-suite RAG eval | `reports/` |
+| `eval_report` | a five-suite RAG eval | `reports/` |
 | `postmortem` | a write-up of an incident | `postmortems/` |
 
 Each one has a record under `artifacts/`. Each record points at the spec and the requirement it serves. Each record carries a `produced_by` that names a role from the role registry, so the audit can answer "which roles produced which artifacts this week."
