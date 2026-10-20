@@ -44,7 +44,7 @@ Then "grew" went back in.
 
 The publish went through. The approval came back the moment the bytes did, because it had never belonged to the file, or to the hour, or to the reviewer's mood. It belonged to c963117a6c9d…
 
-The harder case is the reviewer's own edit. On the branch where this is being finished, `claude/codex-review-2026-10-19` at commit 9c13872, an edit verdict is an approval of the edited text (spec R-RQ-007). The record keeps the submitted digest and adds `approved_sha256` for the edited bytes. Run there, it holds:
+The harder case is the reviewer's own edit. On the branch where this is being finished, `claude/codex-review-2026-10-19` at commit fd8d1e0, an edit verdict is an approval of the edited text (spec R-RQ-007). The record keeps the submitted digest and adds `approved_sha256` for the edited bytes. Run there, it holds:
 
 EDIT VERDICT — BRANCH TIP
 
@@ -52,7 +52,7 @@ Edit that does not apply to the reviewed text: refused at the verdict; record st
 Clean edit, appending "per one screenshot": approved; publication writes the edited line.
 Source file changed after the edit: refused, "candidate changed since submission".
 Edit text altered inside the record after the verdict: refused, "edited candidate does not match approved_sha256".
-Tests on the branch: 102 passed.
+Tests on the branch: 131 passed.
 
 The plain-approval refusal holds on main as well; the edit pin is described here as it stands on the branch.
 
@@ -81,13 +81,13 @@ The provider's half is handled. Anthropic's [models overview](https://platform.c
 
 [modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) treats that parameter as part of the part number. Its README says "The same model at a different effort setting is a different release", and the code stores each setting under its own release id, `<release>-effort-<setting>`. On one route its effort curve reads:
 
-EFFORT CURVE — ONE ROUTE, SYNTHETIC FIXTURES
+EFFORT CURVE — ONE ROUTE, SYNTHETIC FIXTURES, MINIMUM SAMPLE LOWERED TO SIX
 
 Low: hold. Quality −0.037, cost −55.2 percent, judge 33 percent.
 Medium: swap. Quality +0.053, cost −10.5 percent, judge 83 percent.
 High: split traffic at 25 percent. Quality +0.083, cost +114.8 percent, judge 83 percent.
 
-The low and high rows are synthetic variants of a recorded run, and the README says so. The mechanism stands anyway: three settings, three verdicts, one model name. [The effort dial is a price](/essays/the-effort-dial-is-a-price/) made the commercial case; this is the quality-control one. An approval that names the model and omits the setting approved a family of parts.
+The low and high rows are synthetic variants of a recorded run, and the README says so. As shipped, all three defer, because each rests on the same six requests and the route is designed to sample seventy; the rows above are the curve with that minimum lowered to six. The mechanism stands anyway: three settings, three verdicts, one model name. [The effort dial is a price](/essays/the-effort-dial-is-a-price/) made the commercial case; this is the quality-control one. An approval that names the model and omits the setting approved a family of parts.
 
 ## FINDING FOUR: A PASS IS HISTORY, NOT PERMISSION.
 

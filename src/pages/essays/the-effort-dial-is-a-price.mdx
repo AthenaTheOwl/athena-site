@@ -116,7 +116,7 @@ The evidence that settles it is simple to collect. For a sample of real requests
 
 ## THE CURVE ON YOUR OWN TRAFFIC
 
-[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) draws that curve. It replays a route's recorded requests at each effort setting, scores quality, cost and latency against the incumbent, and names the cheapest setting that clears the route's own revert thresholds: the quality drop, cost rise and latency regression that would undo the change. The published run uses synthetic variants of the recorded candidate for the low and high settings, so it shows the mechanism and not a measurement. The test on real traffic is the same one: on these requests, what do we lose, what do we save, and at what point do we turn it back up.
+[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) draws that curve. It replays a route's recorded requests at each effort setting, scores quality, cost and latency against the incumbent, and names the cheapest setting that clears the route's own revert thresholds: the quality drop, cost rise and latency regression that would undo the change. The published run uses synthetic variants of the recorded candidate for the low and high settings, so it shows the mechanism and not a measurement. It also names no setting: every one rests on the same six requests, short of the seventy the route is designed to sample, so each defers. The test on real traffic is the same one: on these requests, what do we lose, what do we save, and at what point do we turn it back up.
 
 Let the buyer turn the dial.
 

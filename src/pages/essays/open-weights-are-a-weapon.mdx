@@ -118,7 +118,7 @@ The evidence that settles it is where each releasing lab's revenue comes from a 
 
 ## THE EQUIVALENCE TEST, PER ROUTE
 
-[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) is the equivalence test a buyer runs because nobody else will. It replays recorded production requests for a route against a candidate model, scores quality, cost and latency against the incumbent, and writes a decision record. Its demonstration replays six customer-support requests, finds the candidate wins five and loses one, and stamps the verdict: swap.
+[modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) is the equivalence test a buyer runs because nobody else will. It replays recorded production requests for a route against a candidate model, scores quality, cost and latency against the incumbent, and writes a decision record. Its demonstration replays six customer-support requests, finds the candidate wins five and loses one, and stamps the verdict: defer. Six requests is short of the seventy the route is designed to sample, and five wins in six is compatible with a coin.
 
 The part that matters is the revert rule it writes beside the verdict before the swap ships: the quality drop, the cost increase and the latency regression that will pull the change back, and the date someone has to look again. A regulator does that for generic drugs. For models, each buyer has to do it route by route.
 
