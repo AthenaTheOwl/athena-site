@@ -42,7 +42,7 @@ The record at the top came from [review-queue](https://github.com/AthenaTheOwl/r
 
 Then "grew" went back in.
 
-The publish went through. The approval came back the moment the bytes did, because it had never belonged to the file, or to the hour, or to the reviewer's mood. It belonged to c963117a6c9d…
+The publish went through. The byte check passed again the moment the bytes did, because it had never belonged to the file, or to the hour, or to the reviewer's mood. It belonged to c963117a6c9d… That match establishes content identity, not that the evidence or authorization is still current.
 
 The harder case is the reviewer's own edit. On the branch where this is being finished, `claude/codex-review-2026-10-19` at commit fd8d1e0, an edit verdict is an approval of the edited text (spec R-RQ-007). The record keeps the submitted digest and adds `approved_sha256` for the edited bytes. Run there, it holds:
 
@@ -77,7 +77,7 @@ CHANGE NOTICE, TRANSLATED
 
 The last is the subtle one: same acceptance criteria, new instrument, and manufacturing still counts it as a change.
 
-The provider's half is handled. Anthropic's [models overview](https://platform.claude.com/docs/en/models/overview) says "Every Claude model ID is a pinned snapshot, including the dateless IDs used from the 4.6 generation on." The caller's half is not. The same page lists a default effort per model, `medium` for one and `high` for another, and adds: "Set effort explicitly to use a different level." A team that never sets it inherits a process parameter it never wrote down.
+The provider documents a snapshot contract. Anthropic's [models overview](https://platform.claude.com/docs/en/models/overview) says "Every Claude model ID is a pinned snapshot, including the dateless IDs used from the 4.6 generation on." The caller's half is not. The same page lists a default effort per model, `medium` for one and `high` for another, and adds: "Set effort explicitly to use a different level." A team that never sets it inherits a process parameter it never wrote down.
 
 [modelswap-replay](https://github.com/AthenaTheOwl/modelswap-replay) treats that parameter as part of the part number. Its README says "The same model at a different effort setting is a different release", and the code stores each setting under its own release id, `<release>-effort-<setting>`. On one route its effort curve reads:
 
@@ -127,7 +127,7 @@ Automotive writes the same duty into its quality-system standard. IATF 16949 has
 
 Model vendors publish the discontinuance half: a retirement date, "Not sooner than" a given day in 2027.
 
-Now the buyer's side. A prompt edit, a rebuilt index, a new tool schema, an effort flag set by one engineer on a Thursday. Each is a process change in the PPAP sense, and nobody issues a notice for any of them: supplier and customer are the same team, and the duty has nowhere to land.
+Now the buyer's side. A prompt edit, a rebuilt index, a new tool schema, an effort flag set by one engineer on a Thursday. Each is a process change in the PPAP sense, and an internal process may issue no notice for any of them: supplier and customer are the same team, and the duty has nowhere to land.
 
 That is where the digest earns its place. A check at the moment of use is a change notice you send yourself, and it cannot be skipped by someone in a hurry, because the publish fails until the bytes match.
 
@@ -149,11 +149,11 @@ The case is strong. Review is the scarce input, and a trigger list that fires on
 
 **Reply:** Keep the digest and narrow the trigger.
 
-The automotive industry has already started porting the discipline to software. The AIAG's software approval manual, [CQI-34](https://www.aiag.org/training-and-resources/manuals/details/CQI-34), describes itself as "Modeled after the highly successful Production Part Approval Process (PPAP)." The evidence that settles it for a given team is a count: re-reviews per week against changes that reached users. If re-reviews swamp the queue, the trigger list is too broad and needs classifying. If changes ship that nobody looked at, it is too narrow. The failure mode sits beside the claim: a digest check costs nothing and a second look costs a person's afternoon, so the list of what forces the second look is the whole design.
+The automotive industry has already started porting the discipline to software. The AIAG's software approval manual, [CQI-34](https://www.aiag.org/training-and-resources/manuals/details/CQI-34), describes itself as "Modeled after the highly successful Production Part Approval Process (PPAP)." The evidence that settles it for a given team is a count: review time and delay, set beside escaped changes that mattered under a risk classification agreed in advance. Compare that record before and after narrowing the triggers. A busy queue alone cannot establish over-review; an unreviewed low-risk change may be exactly what the policy permits. The failure mode sits beside the claim: a digest comparison is cheap and a second look spends review time, so the list of what forces the second look is the whole design.
 
 ## THE NOTICE YOU SEND YOURSELF
 
-Manufacturing has the half that agent tooling lacks: a written list of what counts as a change, a duty to say so, and a customer who keeps the approved copy. Agent tooling has the half that manufacturing does on paper: a check at the moment of use that costs nothing, never tires, and refuses to ship bytes nobody saw.
+Manufacturing has the half that agent tooling lacks: a written list of what counts as a change, a duty to say so, and a customer who keeps the approved copy. Agent tooling has the half that manufacturing does on paper: a cheap check at the moment of use that refuses bytes different from the approved version, provided the digest and enforcement path stay protected.
 
 The repositories above each hold one piece of the second half. The first half is still to be written.
 
@@ -169,7 +169,7 @@ Covers: c963117a6c9d…, and nothing else.
 Changed after the verdict: one word.
 Notice sent: none needed. The queue refused at publication.
 Original bytes restored: published.
-Next review: the next time the digest changes.
+Next review: changed approved content, changed evidence, or expired authorization, under the trigger policy.
 
 The note shipped as it was approved. It said "grew".
 

@@ -26,13 +26,13 @@ Game Oracle, an industry research platform, read the mandatory AI disclosure sta
 
 The study's author hedged honestly: "due to the unmeasured effects of marketing, skill, resources, and experience, our results could still be biased." And then did not hedge: "for many developers the effect of using AI is currently a net negative."
 
-That is a market putting a price on a process attribute, separately from how good the product is. Organic food and fair-trade coffee have been priced the same way for decades. The difference is that nobody can inspect a file the way they can inspect a farm.
+That is an association between a disclosed process attribute and a sales proxy. The study cannot fully separate the label from product quality or the teams that choose to disclose. Organic food and fair-trade coffee have been priced the same way for decades. The difference is that nobody can inspect a file the way they can inspect a farm.
 
 ## FINDING TWO: A SELF-REPORTED LABEL IS PRICED BEFORE IT IS CHECKED.
 
 Steam's disclosure is a statement the developer writes. Kotaku notes that several developers did not disclose AI use on Steam "until they've been caught."
 
-So the 53 percent is a penalty on the honest. A studio that discloses pays it. A studio that hides pays nothing until someone finds out, and the ones who are found out apologise and promise to remove the assets, as the developers of Crimson Desert did.
+The 53 percent describes the disclosed group in this study. It does not estimate the causal cost of honesty: undisclosed use can remain in the comparison group, and the groups may differ before the label. Discovery still carries a reputational cost, as the developers of Crimson Desert found when they apologised and promised to remove the assets.
 
 A label that is self-reported and never enforced turns into noise, and a market built on noise does not clear. If every studio calls its work "AI-assisted, human-directed," the phrase carries no information at all.
 
@@ -102,13 +102,13 @@ The timing fits the argument. Nothing yet shows that marking is what made those 
 
 On 8 September OpenAI published a proof that the Navier–Stokes equations can develop a singularity in finite time, one of the Millennium Prize Problems. Its agents reached the result "about 88 hours after the first agents were launched", in a group of "on the order of 10,000 concurrent agents." Then: "Lean formalization and verification took an additional 17 hours." The company published both the write-up and the formal proof, and said it does "not intend to claim the Millennium Prize" for the result.
 
-Correctness was settled by a machine in under a day. Quanta noted the one step that still needs a person: guaranteeing "that the statement being shown to be true in Lean is logically equivalent to what mathematicians set out to prove."
+The formal statement was checked by a machine in under a day, according to the account. Quanta noted the one step that still needs a person: guaranteeing "that the statement being shown to be true in Lean is logically equivalent to what mathematicians set out to prove."
 
 Priority was another matter. OpenAI's post says its effort began on 1 September "after hearing a rumor" connected to Tristan Buckmaster of NYU and Levent Alpöge of Anthropic, who announced related results twelve hours earlier. To show its agents had not used their work, OpenAI offered its own investigation: Buckmaster's prompts to its coding tool over the preceding two months "could not have influenced the system in any way, including through training."
 
 There is no checker for that sentence. There is a company's statement about its own logs.
 
-That is where the market is. Checking whether a proof holds has become cheap, and seventeen hours was the whole bill. Establishing where it came from, what it saw and who got there first is still done on trust, and trust is the thing that became scarce.
+That is where the market is. The proof had a formal checker. Priority needed a different receipt: what the model saw, and when.
 
 ## THE EXPLANATIONS AFTERWARD
 
@@ -116,7 +116,7 @@ Every finding has a weaker cause available. Each gets a hearing.
 
 The first explanation was that the disclosure penalty is a quality penalty in disguise.
 
-The study cannot rule it out, and says so. Games that use AI may be cheaper, rushed or made by less experienced teams, and players may be punishing that. The authors' own reading splits the effect: roughly neutral for low-budget beginners, harmful for "potential hits from experienced teams" through what they call an "AI stigma." Either way, the label moved sales, which is all a market needs.
+The study cannot rule it out, and says so. Games that use AI may be cheaper, rushed or made by less experienced teams, and players may be punishing that. The authors' own reading splits the effect: roughly neutral for low-budget beginners, harmful for "potential hits from experienced teams" through what they call an "AI stigma." The association gives buyers a reason to investigate the process claim. It does not by itself show that changing the label would change sales.
 
 The second explanation was that audiences will stop caring once AI output is good enough.
 
@@ -124,7 +124,7 @@ Possibly. But the money in this essay comes from rights holders who want use cou
 
 The third explanation was that watermarks will always be broken, so provenance will fail.
 
-Watermarks alone will. The standards do not rely on them alone. C2PA treats the watermark as a pointer back to a signed record, not as the proof. The signature is the proof, and forging it means stealing a key, which no amount of model training does.
+Watermarks alone will. The standards do not rely on them alone. C2PA treats the watermark as a pointer back to a signed record, not as the proof. The signature binds the record to the signing key. That protects a different claim from a watermark. It cannot make a dishonest assertion true, or protect a record signed with a compromised key.
 
 **Objection:** Then the unsigned are suspect.
 
@@ -144,7 +144,7 @@ The evidence that settles it is how the signing is governed. A provenance market
 
 [agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) is a provenance record for what agents do, not for pictures. When one organisation's agent tells another's to commit a purchase order, the receipt is eight fields of JSON and an ed25519 signature over the action's canonical hash, chained to the receipt before it. "Flip one hex digit of the action hash and the ed25519 signature stops verifying."
 
-It is deliberately narrow in the way this essay argues provenance should be. The receipt carries none of the business payload. A regulator can replay it and learn that the action happened, and in what order, without seeing what was bought. It proves the chain. Whether the purchase was wise is somebody else's problem.
+It is deliberately narrow in the way this essay argues provenance should be. The receipt carries none of the business payload. An auditor can verify who signed the recorded action hashes and their declared order without seeing what was bought. Confirming that the action happened still needs the execution record. The signature proves an attestation, within its custody and key assumptions. Whether the purchase was wise is somebody else's problem.
 
 Sign the chain.
 
@@ -155,7 +155,7 @@ Do not mistake it for the scene.
 PROVENANCE RECORD — REMAINING FIELDS
 
 Signed at capture: yes, by the camera, before anyone has an opinion.
-What the signature attests: who captured it, when, and every edit since.
+What the signature binds: the recorded capture and edit assertions, as far as that record extends.
 What it does not attest: that the scene is true.
 Missing credential: read as unknown, not as guilty.
 

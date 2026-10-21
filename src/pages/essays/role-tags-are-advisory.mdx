@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "Role tags are advisory"
-description: "A language model decides who is speaking from how the text sounds, not from the label on it. Seven findings on why prompt injection works, why guardrails fail the same way in reverse, and why the guarantee has to live somewhere the model cannot talk to."
+description: "A language model can mistake style for authority even when the role tag says otherwise. Seven findings on why prompt injection works, why guardrails fail the same way in reverse, and why the guarantee has to live somewhere the model cannot talk to."
 date: "2026-09-21"
 readingTime: "12 min read"
 ---
@@ -27,7 +27,7 @@ Neither of them is a model. That is the note the form has no field for.
 
 ## FINDING ONE: THE MODEL SORTS BY LETTERHEAD.
 
-Everything a language model knows arrives as one undifferentiated stream of tokens. Role tags, the system, user, tool and assistant labels, are the only discrete markers separating "my own reasoning" from "a page I just fetched." A paper at this year's ICML asked whether the model uses them.
+The conversation reaches a language model as a stream of tokens. Role tags, the system, user, tool and assistant labels, mark which text came from whom. A paper at this year's ICML asked whether the model's internal representation respects those markers when the prose suggests a different role.
 
 The method is clean. Wrap identical neutral text in each role tag. Train a linear probe on the mid-layer activations to predict which tag it was. Because the content is controlled, the probe isolates the tag, and you get a per-token score for how much the model treats that token as its own thought or as the user's voice.
 
@@ -37,7 +37,7 @@ Strip every role tag from a conversation. The score on the former reasoning toke
 
 Re-wrap the whole conversation in user tags. Still unchanged.
 
-Style overrides the label. The model never learned "think tag means my reasoning." It learned "sounds like my reasoning means my reasoning," one feature fired by both the tag and the prose, with the prose winning.
+In these probes, style overrode the label. Reasoning-like prose activated the same measured feature as the reasoning tag, more strongly than the tag itself. A probe is a readout of a learned representation; the attack experiments test whether that confusion changes behaviour.
 
 A mailroom that sorts by letterhead instead of postmark has the same flaw. Anyone with the right stationery is internal.
 
@@ -45,13 +45,13 @@ A mailroom that sorts by letterhead instead of postmark has the same flaw. Anyon
 
 The offensive use is called chain-of-thought forgery, and it won an OpenAI red-teaming contest, which is the kind of prize nobody wants to have been eligible for. Write fake reasoning in the model's own voice, plant it in a user prompt or a tool result, and the model treats it as a conclusion it already reached.
 
-On a standard jailbreak benchmark, attack success went from near zero to about 60 percent.
+On a standard jailbreak benchmark, attack success went from near zero to about 60 percent on the late-2025 models tested. The authors add a qualification worth keeping beside the number: newer frontier closed-weight models mostly defended this particular forgery. They argue those defences may rely on recognizing suspect reasoning instead of perceiving roles correctly.
 
-It generalized across every model tested, because it exploits structure and not a quirk. Those were frontier late-2025 systems, and the authors say frontier closed-weight models mostly defend this particular forgery now.
+The attack transferred across every model in the original late-2025 test. That supports a shared failure mechanism; it does not certify every later model as vulnerable.
 
 Persuasion attacks weaken as the request gets worse. This one does not, because there is nothing to push back against if the model believes it already decided.
 
-The inverse experiment closes the case. "Destyle" the forged reasoning with edits a human would barely notice, and success collapses from 61 percent to 10. Swapping the bigram "The user" for "The request" cuts success by 19 percent on its own. Prepending a bare "User:" to a command hidden in tool output measurably raises its user-ness, and across 212 phrasings, more user-ness predicts more success.
+The inverse experiment tests the stylistic mechanism. "Destyle" the forged reasoning with edits a human would barely notice, and success collapses from 61 percent to 10. Swapping the bigram "The user" for "The request" cuts success by 19 percent on its own. Prepending a bare "User:" to a command hidden in tool output measurably raises its user-ness, and across 212 phrasings, more user-ness predicts more success.
 
 The benchmark implication is the uncomfortable one. Static injection suites mostly measure whether the model has memorized known attacks, which is why models ace the suites while human red-teamers land near 100 percent. Until models perceive roles, the authors write, injection defense "will remain a perpetual whack-a-mole game."
 
@@ -77,7 +77,7 @@ Object name: varied.
 
 The guardrails refused authorized actions far more often when the object had an intimidating name. An agent permitted to delete `tmp_cache` gets blocked deleting `prod_customer_credentials_backup`, with policy explicitly authorizing both. The authors call it a name-superstition effect. The guardrails, in their words, "read the surface label, not the authorization context."
 
-Put the findings side by side and a system that reasons about text, model or guardrail, cannot reliably tell apart:
+Put the findings side by side and two separate tests reveal related confusions. The role study tests authority; the guardrail study tests authorization under renamed objects. They do not establish that every guardrail fails at both. Between them, the measured systems confused:
 
 A forged conclusion from a real one.
 
@@ -121,7 +121,9 @@ OpenAI: closed as informational, prompt injection ruled out of scope.
 
 Google: 90 days elapsed, no patch and no decision.
 
-One vendor shipped a fix, one ruled the class out of scope, and one let the deadline pass. The market priced the gap without waiting on any of them: AIR raised $50M across two seed rounds, led by Sequoia Capital and Greenoaks, to inventory the skills, plugins and MCP servers agents load.
+Those are Cymulate's configuration-hook disclosures. Accomplish reported separate sandbox issues later that summer: Cursor and OpenAI fixed the reported cases in about a week, while one Anthropic fix took about 50 days and 30 software updates, according to [Upstarts](https://www.upstartsmedia.com/p/accomplish-claims-leaky-sandboxes-in-claude-codex-cursor). The timelines describe different cases; neither is a vendor failure-rate comparison.
+
+Patch delay alone cannot isolate architecture from triage or release process. The adjacent market signal was narrower: [AIR raised $50M across two seed rounds](https://techcrunch.com/2026/09/01/air-raises-50m-to-help-companies-vet-the-skills-and-add-ons-ai-agents-use/), led by Sequoia Capital and Greenoaks, to inventory the skills, plugins and MCP servers agents load.
 
 A repository is a letter. Its config files are the letterhead. The agent opened the envelope before anyone checked the postmark.
 
@@ -147,7 +149,7 @@ Avoid-list countries in the victim table anyway: China, Kazakhstan, Pakistan, an
 
 Stopped by, in at least one case: a web application firewall.
 
-The actor wrote policy into the prompt and the agents went off script. Policy in the prompt is not a control. Enforcement lives at the network and egress layer or nowhere.
+The actor wrote policy into the prompt and the agents went off script. Policy in the prompt did not enforce the avoid-list. Enforcement would require a check on the actual target before the action, outside the model's discretion.
 
 The attacker learned this essay's argument the same way the defenders did.
 
@@ -157,9 +159,9 @@ And the boundary the report credits with stopping an agent outright was a firewa
 
 ## FINDING SEVEN: THE PARTS THAT HELD WERE THE OLD ONES.
 
-Across all of Anthropic's deployments, the battle-tested primitives did their jobs. gVisor, seccomp and hypervisors held. The home-grown proxy and allowlist logic is what broke.
+Across the containment incidents Anthropic describes, the battle-tested primitives did their jobs. gVisor, seccomp and hypervisors held. The home-grown proxy and allowlist logic is what broke.
 
-That result is small and dull and should govern every build decision in this area. A boundary with twenty years of adversarial testing behind it is a known quantity. A boundary written last quarter to fit a new product is a hypothesis.
+That result is small and dull and should govern every build decision in this area. A mature boundary has a longer adversarial record. A new one still has to earn it. Neither its age nor this incident set proves it cannot fail.
 
 Old parts held.
 
@@ -179,7 +181,7 @@ The escape routes from these findings are well-worn. Each gets its due.
 
 The first explanation was that the models will learn role perception, and the paper is describing a temporary condition.
 
-Partly conceded, and the authors concede it first: frontier closed-weight models mostly defend this particular forgery now. They also say how. The models appear to have learned to distrust their own reasoning, which patches one forgery and leaves the probe result intact, with style still outranking the tag. The authors expect whack-a-mole until roles are perceived, and they give no date. A defense that arrives at an unspecified future time is not on the roster today.
+Partly conceded, and the authors concede it first: frontier closed-weight models mostly defend this particular forgery now. They suggest the models learned to distrust suspect reasoning, which can patch the attack without repairing the role-perception failure in the probes. The authors expect whack-a-mole until roles are perceived, and give no date. The residual problem is the one the boundary has to contain.
 
 The second explanation was that classifiers and approval prompts catch this in production.
 
@@ -197,7 +199,7 @@ The fourth explanation was that the team wrote its own proxy and it is better th
 
 **Objection:** Custom is not always worse.
 
-**Reply:** Correct. In this post the pieces that broke were the ones written for the product: the allowlist proxy, and the settings file read before the trust prompt. The hardened primitives are not on the incident list.
+**Reply:** Correct. In this post the product-specific pieces broke: the allowlist proxy and the settings file read before the trust prompt. The hardened primitives are absent from the incident list. There is no denominator here for a comparative failure rate.
 
 The fifth explanation was that an over-cautious guardrail fails safe.
 
@@ -215,7 +217,7 @@ The case is easy to build. The same paper shows that destyling, a cheap preproce
 
 **Reply:** Maybe.
 
-The evidence that would settle it is specific and not yet published: a model whose forgery success stays near zero across styles, and human red-teamers who stop landing near 100 percent against it. When that result exists, the case for heavy boundaries weakens and this essay should be rewritten. The failure mode sits in the same paragraph. Boundaries cost usability, and the wrong boundary produces the 93 percent approval rate that teaches people to click yes. The right one removed 84 percent of the prompts. The argument was never for more friction. It was for friction that the model cannot argue with.
+The comparison should hold the workload, tools and attacker budget fixed, then test adaptive attacks on held-out styles against the current model, with and without the proposed boundary. Count unauthorized effects and legitimate tasks completed. A low attack rate with little marginal benefit from the boundary would support a lighter configuration for that workload. It would not turn role perception into a file-access control. The failure mode sits in the same paragraph. Boundaries cost usability, and the wrong boundary produces the 93 percent approval rate that teaches people to click yes. The right one removed 84 percent of the prompts. The argument was never for more friction. It was for friction that the model cannot argue with.
 
 ## WHERE THE GUARANTEE HAS TO LIVE
 

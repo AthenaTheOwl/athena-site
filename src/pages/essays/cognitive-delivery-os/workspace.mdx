@@ -6,38 +6,33 @@ date: "2026-05-24"
 readingTime: "4 min read"
 ---
 
-A workspace is the isolated copy of the tree an agent gets to edit. The mess stays in the workspace; the parent decides whether to keep the result. Two mechanisms carry the discipline: the Agent tool's worktree primitive and a per-repo factory script that prepares the worktree for the role about to enter it.
+A workspace gives a task its own checkout to edit. The parent can review its diff before integrating it. Git worktrees provide that separation without a workspace service.
+
+They isolate file changes. They do not isolate the network, operating-system user or credentials.
 
 ## The worktree primitive
 
-Git worktrees let one repository check out multiple branches into different directories at the same time. A subagent gets its own working copy, makes its changes, returns its result, and the parent reviews the diff against `main`. The factory script handles the housekeeping: branch creation, dependency install, environment-variable setup, and a clean-up hook that removes the worktree if the subagent fails.
+Git lets one repository have several working directories on separate branches. Assigning a branch and directory per task reduces accidental edit collisions. Integration still needs review and conflict handling; a branch is not a lock on every resource the task can reach.
 
-The Agent tool exposes the primitive as `EnterWorktree` / `ExitWorktree`. The parent agent calls `EnterWorktree`, the subagent runs in the new working directory, the parent calls `ExitWorktree` to either merge the branch into the parent's working tree or discard it. No long-running workspace service. No reservation table. No allocation deadlock.
+Tool-specific worktree controls vary. The portable contract is the checkout, base revision and resulting diff, not a promise that exiting an agent tool automatically merges or safely discards its work.
 
-## What the factory script does
+## What the factory does
 
-Each product repo ships `scripts/factory.sh` (or `factory.ps1`). The script reads the role id and the spec id from arguments and prepares the worktree:
+Procurement-negotiation-lab implements its helper in `scripts/factory/worktree.py`. `create_worktree` returns a path, task branch and base branch. The branch is `factory/<task-id>`; the checkout is a sibling named `<repo>-task-<task-id>`.
 
-```bash
-# scripts/factory.sh role=engineering.implementation spec=specs/0010-control-plane/
-#
-#   1. Create a worktree at .worktrees/<role>-<spec_id_slug>-<short_sha>/
-#   2. Install dependencies in that worktree (npm install, pip install -r requirements.txt)
-#   3. Copy .env.local from the parent (never .env.production)
-#   4. Write a workspace manifest at .worktrees/<dir>/WORKSPACE.md so the
-#      subagent reads the role, spec, and gates it must honor
-#   5. Print the worktree path so the parent can hand it to the subagent
-```
-
-The manifest is the load-bearing artifact. The subagent reads `WORKSPACE.md` first, then the spec, then the requirements file, then starts the work. The parent doesn't have to remember to brief the subagent because the manifest already did.
+The helper can reuse a registered worktree. It does not install dependencies, copy environment files or write a `WORKSPACE.md` manifest. Those would be separate setup choices. Naming a helper `factory` does not make every desirable step appear inside it.
 
 ## A concrete example
 
-Procurement-negotiation-lab's `scripts/factory.sh` accepts `--role engineering.implementation --spec specs/0001-lab-engine/` and produces a worktree at `.worktrees/eng-impl-lab-engine-a3f7c1d/`. Inside, `WORKSPACE.md` names the role file, the spec ledger, the policies that apply, and the gates that have to pass before the worktree's branch can be merged. The subagent's first action is to read that manifest; the second is to read the requirement it was asked to resolve.
+The factory pipeline resolves the worktree before running workers. Its documented flow is plan, implement, gates, review, then commit and optional publication, with configured human checkpoints. Artifacts and task state identify what happened when a run pauses.
+
+Dry-run and stub output are useful for testing the orchestration. They are not evidence that an agent completed the requested product change. The record needs to say which worker ran.
 
 ## Why no workspace-manager service
 
-A workspace-manager service is what you build when the worktree count justifies one. Until then, the worktree directory is the manifest, the branch is the lock, and the parent process is the scheduler. A solo builder who pre-builds a workspace daemon for traffic they don't have is a solo builder who's stopped shipping the actual product.
+A directory and branch can be enough while tasks are few and the parent can track ownership. Add a manager when allocation, recovery or cleanup becomes a measured failure source. A daemon is one possible response; it is not an admission threshold set by headcount.
+
+Keep secrets and privileged services outside the task's reach unless the work needs them. Preserve needed changes before cleanup. A second checkout prevents one class of collision, and that is a useful claim without promoting it to a sandbox.
 
 ## See also
 

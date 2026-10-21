@@ -16,13 +16,13 @@ Date by which a new large load can expect power: no field.
 
 The missing field is the reason the largest users of the grid have started leaving it. Interconnection queues are measured in years. Build times for on-site generation are measured in months.
 
-The arbitrage is temporal, not technical.
+The arbitrage is temporal. Here, islanding means dedicated supply. The island may still need a backup wire.
 
 ## FINDING ONE: A WORSE PLANT NOW BEATS A BETTER GRID LATER.
 
 When a shared resource has a multi-year queue, privately provisioning a worse version of it is rational if time-to-revenue dominates efficiency. That is the whole mechanism, and it does not care about the resource.
 
-The deals came in every fuel. Gas turbines at the data-centre fence line, with the grid as backup. In July 2026 the reactor startup Aalo Atomics and the AI-infrastructure firm Crusoe announced a 10-megawatt microreactor at Idaho National Laboratory powering a modular data centre in 2027, with 50-megawatt pods at Crusoe sites by the end of 2029. In September, Google signed 396 megawatts of geothermal out of Fervo's Cape Station in Utah, delivery from 2028, for a data centre that does not exist yet. Co-locate generation with load and a multi-year queue becomes a controllable siting problem.
+The deals came in every fuel. Gas turbines at the data-centre fence line, with the grid as backup. In July 2026 the reactor startup Aalo Atomics and the AI-infrastructure firm Crusoe announced a 10-megawatt microreactor at Idaho National Laboratory powering a modular data centre in 2027, with 50-megawatt pods at Crusoe sites by the end of 2029. In September, Google signed 396 megawatts of geothermal out of Fervo's Cape Station in Utah, delivery from 2028, for a data centre that does not exist yet. Co-location can replace some queue exposure with a siting and generation project. Its permits, fuel supply and delivery schedule remain constraints.
 
 The name for it is islanding. When a shared utility congests, the largest users defect to dedicated supply and internalise the cost, and the pattern has cousins everywhere the commons is slow: private 5G against carrier spectrum, on-premises inference against congested API tiers, captive water and cooling.
 
@@ -56,7 +56,7 @@ Vertically integrate past the permissioned intermediary and you also inherit the
 
 The nuclear version has a date attached. In September 2024, Oracle's chairman told investors the company was designing a gigawatt-scale data centre powered by three small modular reactors, and that "building permits for the three SMRs have already been secured." The report added that he "did not elaborate on the location for the data center or any construction" timeline.
 
-The permits were real. The calendar was the thing being bought, and a first-of-a-kind reactor is the least predictable calendar in energy. If it takes as long to build as the grid connection would have taken to arrive, the skip-the-queue advantage evaporates and the island has paid a premium for the same wait.
+The permits were reported by the chairman; the account did not independently establish their scope. The calendar was the thing being offered, and a first-of-a-kind reactor is the least predictable calendar in energy. If it takes as long to build as the grid connection would have taken to arrive, the skip-the-queue advantage evaporates and the island has paid a premium for the same wait.
 
 An island has to run its own lighthouse.
 
@@ -76,7 +76,7 @@ On Wednesday 16 September, the House passed a bill directing state utility regul
 
 A near-unanimous vote on a bill that only asks states to consider something is a signal, and the signal is aimed at the states already legislating. More than 300 data-centre bills were filed across thirty-plus legislatures in the first six weeks of 2026. New York, South Dakota and Oklahoma filed moratorium bills. Virginia, Georgia and Oklahoma moved to cut the credits that brought the campuses in.
 
-The arbitrage exists because the queue is mispriced, and queues get repriced politically. Every bypass is a bet that the repricing arrives after the plant is paid off. The asset has political duration, not legal duration: a rule change can void it, and rule changes arrive once the arbitrage is visible enough to embarrass someone.
+The arbitrage exists because the queue is mispriced, and queues get repriced politically. A bypass financed for its schedule advantage is a bet that the repricing arrives after the plant is paid off. The asset has political duration, not legal duration: a rule change can void it, and rule changes arrive once the arbitrage is visible enough to embarrass someone.
 
 ## FINDING SIX: ISLANDING ENTRENCHES WHOEVER CAN AFFORD AN ISLAND.
 
@@ -124,7 +124,7 @@ The third explanation was that federal permitting policy explicitly encourages o
 
 Federal policy encourages it. Ratepayers vote in states, and the House vote says Congress has noticed which electorate matters. The two are not the same, and the one with the utility commission is the one that sets the rate.
 
-The fourth explanation was the inversion, and it is the grid operator's view: islanding is a temporary distortion that reform is about to remove. If FERC's large-load rules give flexible loads interconnection studies in sixty days, the queue stops being the binding constraint for anyone willing to curtail, and the islands built to escape it become stranded, expensive, and fuelled by gas.
+The fourth explanation was the inversion, and it is the grid operator's view: islanding is a temporary distortion that reform is about to remove. Faster interconnection studies could remove part of the delay for flexible loads. Completing a study is not completing an interconnection: upgrades, equipment and permission to energise can remain outstanding. A dedicated plant loses its schedule advantage only when the shared alternative can deliver usable power sooner.
 
 That outcome is plausible, and the docket is asking exactly that question.
 
@@ -132,11 +132,11 @@ That outcome is plausible, and the docket is asking exactly that question.
 
 **Reply:** Temporarily.
 
-The evidence that settles it is the outcome of the large-load rulemaking and the first compliance filings under it. If flexible loads do move through studies in months, the bypass premium collapses for everyone who can curtail, and islanding survives only for loads that cannot, which is a much smaller market. If the reform stalls or the studies stay slow, the islands win the decade. The failure mode sits in the same sentence: an island financed on the assumption that the queue stays broken is a stranded asset the day the queue is fixed, and shared infrastructure usually wins on cost once the congestion clears.
+The evidence that settles it is the outcome of the large-load rulemaking and the first compliance filings under it. Compare the date usable grid power arrives with the dedicated plant's actual operating date and full costs. Faster studies favour the shared option only if downstream construction follows. If a private plant reaches useful operation earlier, count the revenue earned in that interval against its financing, fuel and backup costs. The failure mode sits in the same sentence: an island financed on the assumption that the queue stays broken can lose its scarcity premium when the grid alternative arrives, and shared infrastructure usually wins on cost once the congestion clears.
 
 ## THE FORM, THE WIRE, AND THE ISLAND
 
-[grid-silicon](https://github.com/AthenaTheOwl/grid-silicon) scores the gap that makes islanding rational: a data centre announced at 1,200 megawatts with 120 energised and 1,080 living on a form. The form is the queue. The island is what a buyer builds when the form stops being an estimate and becomes a calendar.
+[grid-silicon](https://github.com/AthenaTheOwl/grid-silicon) illustrates the gap in a fixture: a sample data centre announced at 1,200 megawatts with 120 energised and 1,080 living on a form. Those figures exercise the scorer; they are not a measured campus. The form is the queue. The island is what a buyer builds when the form stops being an estimate and becomes a calendar.
 
 [robust-siting-lab](https://github.com/AthenaTheOwl/robust-siting-lab) is the siting problem the queue turns into, once a buyer has decided to carry its own supply: three candidate sites scored on expected cost under uncertainty, because a private plant does not get to be wrong about where it stands.
 

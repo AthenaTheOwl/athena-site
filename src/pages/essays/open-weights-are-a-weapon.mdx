@@ -36,7 +36,7 @@ The piece is careful about what those platforms miss: they "leave out sessions h
 
 That is the traffic that matters for this argument. Hugging Face's chief executive, Clem Delangue, described companies "using many different models, many of which are customized for their specific use case," and said half of the Fortune 500 use Hugging Face to deploy private and open models.
 
-The market has split. Closed models sell as the premium tier. Open weights carry the volume.
+These platforms show meaningful adoption of open weights. They do not establish a majority of worldwide inference: the unobserved lab-hosted traffic remains outside the count.
 
 ## FINDING THREE: THE PRICE GAP IS THE WEAPON.
 
@@ -52,7 +52,7 @@ A pharmacy shelf holds the brand and three generics.
 
 The pharmacist fills the prescription with any of them, because a regulator measured the four and found them the same.
 
-Nobody has measured the models.
+The shelf has measurements. It lacks a common substitution decision for this prescription.
 
 ## FINDING FOUR: A GENERIC NEEDS AN EQUIVALENCE TEST.
 
@@ -82,9 +82,9 @@ If open weights commoditise a rival's product by giving your own away, distillat
 
 The defensive research is real. DOGe fine-tunes only a model's final layer so that its outputs "are accurate and useful for legitimate users, yet are designed to be misleading for distillation." In its experiments, students trained on those outputs showed "catastrophically reduced performance" while the teacher kept its own.
 
-The catch is in the phrase "legitimate users." A provider cannot see intent. Every defence against extraction is a small, deliberate change to what paying customers receive, and a defence strong enough to stop a determined copier is strong enough to be noticed by an honest one.
+The catch is in the phrase "legitimate users." A provider cannot see intent. This defence changes the outputs from which both customers and students learn. Whether honest users lose quality is an empirical question: the paper reports preserving teacher performance on its tests. A broader claim needs customer tasks and adaptive attackers in the same evaluation.
 
-A closed model can protect itself from being copied only by becoming slightly worse at being used.
+The defence has to keep two scorecards.
 
 ## THE EXPLANATIONS AFTERWARD
 
@@ -100,7 +100,7 @@ Some of it, perhaps. The market TechCrunch describes has already split into tier
 
 The third explanation was that sanctions and lawsuits will stop distillation.
 
-They may stop particular companies. They cannot inspect the output of every API call, and the technical defences degrade the product for everyone who is not copying. What remains is deterrence by example, which works on firms within reach of the sanctions and not on the rest.
+They may stop particular companies. They cannot inspect the output of every API call, and the effect of technical defences on honest users still has to be measured. What remains is deterrence by example, which works on firms within reach of the sanctions and not on the rest.
 
 **Objection:** Then stop serving outputs that can be copied.
 
@@ -114,7 +114,7 @@ The case is strong, and Finding Five concedes most of it: value lands with whoev
 
 **Reply:** Unless they own the shelf.
 
-The evidence that settles it is where each releasing lab's revenue comes from a year after release. If it comes from serving, hardware or distribution the lab controls, the release was a weapon. If the lab's revenue falls and its rivals' serving revenue rises, it was a gift.
+The evidence that settles it is where each releasing lab's revenue comes from a year after release. Compare the release with the lab's stated objective and a plausible path without release. Serving or distribution revenue alone would not establish that publishing weights caused it. A useful comparison tracks adoption and retained margin, with the cost of training and serving beside them. The weapon thesis loses force if the releaser cannot capture a benefit that exceeds those costs.
 
 ## THE EQUIVALENCE TEST, PER ROUTE
 

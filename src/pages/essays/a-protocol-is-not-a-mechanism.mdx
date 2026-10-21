@@ -32,7 +32,7 @@ Consensus averaging moves everyone part of the way toward the mean. Joint value 
 
 A price on its own, adjusted until quantities meet, books $21,350: buyer $13,625, supplier $7,725.
 
-The rule decided how much value existed. It also decided who held it. Under averaging the supplier is $2,762.50 better off than under ADMM, and the buyer pays $8,937.50 for that gift.
+The rule changed how much of the available joint value the run recovered. It also decided who held it. Under averaging the supplier is $2,762.50 better off than under ADMM, and the buyer pays $8,937.50 for that gift.
 
 A supplier agent told to maximise its own outcome would vote for averaging. A buyer agent would refuse it. Neither preference appears anywhere in the format of the messages they exchange.
 
@@ -46,13 +46,13 @@ The buyer opens at its forecast. The supplier opens at the top of its range, bec
 
 Raise the supplier's ceiling and change nothing else. Demand is still 500. The buyer's costs are untouched.
 
-At a ceiling of 800, averaging leaves the buyer $16,062.50. At 1,200 it leaves $5,062.50. At 1,400 the buyer is at minus $437.50, below its walk-away value. At 1,600 it is at minus $5,937.50. Over the same sweep the supplier climbs from $12,762.50 to $19,562.50, and the joint value falls from $28,825 to $13,625.
+At a ceiling of 800, averaging leaves the buyer $16,062.50. At 1,200 it leaves $5,062.50. At 1,400 the buyer is at minus $437.50, below its walk-away value. At 1,600 it is at minus $5,937.50. Those are the lab's booked midpoints, not evidence a buyer with a walk-away option would accept them. Over the same sweep the supplier climbs from $12,762.50 to $19,562.50, and the joint value falls from $28,825 to $13,625.
 
 ADMM, across the same sweep, settles at 500 units and $35,000 every time. The buyer keeps $25,000 at every ceiling.
 
 Labour arbitration met this rule long before agents did. In 1983 Max Bazerman and Henry Farber tested [how arbitrators decide](https://www.nber.org/papers/w1183), starting from the critique that a split-the-difference arbitrator invites extreme offers, the critique that "has led to the adoption of final-offer arbitration." They found real arbitrators lean on the facts of the case more as the offers spread apart, and still concluded that "the parties can manipulate the outcome to some extent by manipulating their offers."
 
-An averaging agent has no facts to lean on. It is the naive arbitrator the critique imagined, with no limit on how far out the anchor can sit.
+This averaging update does not consult the payoff facts. It is the naive arbitrator the critique imagined, with no limit on how far out the anchor can sit.
 
 ·   ·
 
@@ -62,17 +62,17 @@ A street stall has haggling. An exchange has an order book. A public tender has 
 
 Both sides know the rule before the first offer. That knowledge is most of what makes the first offer mean anything.
 
-## FINDING THREE: A PRICE ALONE NEVER SETTLES A LUMPY DEAL.
+## FINDING THREE: THIS PRICE UPDATE CYCLES ON A LUMPY DEAL.
 
 The textbook fix for disagreement is a price. Let it rise when the buyer asks for more than the supplier offers, let it fall when the buyer asks for less, and wait.
 
 In the lab it never stops. From the second round to the eightieth the record holds exactly two states. The buyer asks for everything and the supplier offers nothing; the price jumps; the buyer asks for nothing and the supplier offers everything; the price falls back. Seventy-nine rounds, two positions.
 
-The cause is the shape of the values. At any given price each side's payoff is built from straight lines in quantity, so the best reply jumps to an extreme. A price steers a party whose preferences curve. Against a lumpy deal it overshoots in both directions forever.
+The cause is the shape of the values. At any given price each side's payoff is built from straight lines in quantity, so the best reply jumps to an extreme. With this step size and these best replies, the update overshoots in both directions throughout the run. Piecewise-linear payoffs do not make every price-based mechanism fail; the update and stopping rule matter.
 
 The lab books the midpoint of the two extremes, 412.5 units, and both parties come out worse than under any other rule in Finding One.
 
-An agent that can only post a price and read back a quantity is running this rule whether anyone named it or not.
+An interface that posts prices and reads quantities still needs someone to choose the update and stopping rules. The interface has not chosen them safely on its own.
 
 ## FINDING FOUR: THE STANDARDS DEFINE THE ENVELOPE, NOT THE RULE.
 
@@ -88,23 +88,23 @@ Two of the three use the word negotiate. Neither means the price.
 
 Each of them is right to leave the deal out of the envelope. Small protocols get adopted. The consequence is that the rule lives in whatever code sits on either side of the wire, and two agents can exchange perfectly valid messages while running different rules.
 
-[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) works the same seam from the receipt side. Its receipt has eight required fields: identities, a hash of the action, a link to the prior receipt, a timestamp and a signature. It proves an instruction was received, and in what order. It cannot say by which rule the number inside was reached, because nothing upstream wrote that down.
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) works the same seam from the receipt side. Its receipt has eight required fields: identities, a hash of the action, a link to the prior receipt, a timestamp and a signature. It attests that a signer recorded receipt of an instruction, in a verifiable chain. Its force depends on the signer and custody; it does not prove execution. It cannot say by which rule the number inside was reached, because nothing upstream wrote that down.
 
-## FINDING FIVE: THE DEFAULT IN THE WILD IS "ACCEPT THE FIRST OFFER."
+## FINDING FIVE: THE SIMULATED MARKET PAID THE FIRST OFFER.
 
 When the rule is left blank, agents supply one. [Magentic Marketplace](https://arxiv.org/abs/2510.25779), an open-source simulated two-sided market posted in October 2025, set assistant agents buying on behalf of consumers against service agents selling for competing businesses. Its abstract reports that "all models exhibit severe first-proposal bias, creating 10-30x advantages for response speed over quality."
 
 Accepting the first proposal is a mechanism. It is a race, and it pays latency.
 
-Averaging pays whoever anchors furthest out. First-proposal pays whoever answers first. Price-only pays nobody. Each is a settlement rule with a winner built in, and none of them was chosen by the parties who live with the result.
+Averaging pays whoever anchors furthest out. First-proposal pays whoever answers first. This price-only run leaves the most joint value unrecovered. Each is a settlement rule with a winner built in, and none of them was chosen by the parties who live with the result.
 
 A rule nobody chose is still a rule. The fastest seller would have chosen this one.
 
 ## FINDING SIX: TRUTH-TELLING COMES FROM THE PAYMENT RULE.
 
-The rule that makes an honest bid safe is a payment rule. In [power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) each winner pays its critical value, the lowest bid that still wins: harbor_cloud bids $86 per megawatt-hour and pays $85.44. Shading the bid buys nothing, so the bid can be the truth. [Curtailability is the asset](/essays/curtailability-is-the-asset/) has the rest of that auction.
+The rule that makes an honest bid safe is a payment rule. In [power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) each winner pays its critical value, the lowest bid that still wins: harbor_cloud bids $86 per megawatt-hour and pays $85.44. Under the repo's monotone allocation and critical-payment assumptions, lowering a winning bid cannot lower the payment for the same allocation. The claim concerns the price dimension, with the other reported inputs fixed; it does not make a load shape or a curtailment pledge truthful. [Curtailability is the asset](/essays/curtailability-is-the-asset/) has the rest of that auction.
 
-No envelope standard carries that computation. A mandate can prove a payment was authorized. It cannot prove the amount was set by a rule that made lying pointless.
+No envelope standard carries that computation. A mandate can establish payment authorization. It cannot establish the incentive properties of the rule that set the amount.
 
 ·   ·
 
@@ -122,11 +122,11 @@ Agreed. That is the finding with the sign reversed. The standards made a sound c
 
 **Objection:** The merchant writes it. Retail checkout has a posted price.
 
-**Reply:** It does, and a posted price is a mechanism: take it or leave it, seller sets the number. It works for a catalog. It stops working when both sides run agents, the quantity is open, and the deal is lumpy.
+**Reply:** It does, and a posted price is a mechanism: take it or leave it, seller sets the number. It works for a catalog. It leaves quantity and commitment terms unresolved when those remain open. Two agents can still accept a posted-price contract; they need a rule for the terms it leaves open.
 
 The second explanation was that the lab is a toy: one product, two parties, synthetic costs.
 
-True. The dollar figures are synthetic. The ordering is the claim. A rule that pays the anchor pays the anchor wherever it runs, and a price-only rule can cycle on any deal whose values are built from straight lines.
+True. The dollar figures are synthetic. The ordering is a result for these costs and updates, not a universal ranking of mechanisms. The portable failure modes are dependence on opening anchors and cycling under a chosen price step. Different costs, outside options or update rules can change the ordering.
 
 The third explanation was that the fix is a standard negotiation protocol.
 
@@ -144,7 +144,7 @@ The case has evidence. The same Magentic paper found that frontier models "can a
 
 **Reply:** The sentence continues: "but only under ideal search conditions."
 
-The evidence that settles it is a sweep. Run the same pair of agents over the same envelope with the rule left implicit, raise one side's ceiling step by step, and watch the other side's take. If it holds steady the way ADMM's does in Finding Two, the agents found the rule themselves and the inversion wins. If it slides toward the anchor, or toward whoever spoke first, the rule was there all along, unwritten. The failure mode sits beside the claim and softens it: a declared rule can be gamed too, and the declaration buys the right to audit it, which is less than a guarantee.
+The evidence that settles it is a sweep. Run the same pair of agents over the same envelope with the rule left implicit, raise one side's ceiling step by step, and watch the other side's take. Compare realized joint surplus, each party's participation constraint and the named-rule baseline across that sweep and varied response order. A steady buyer payoff alone could hide a failed deal or lost supplier value. If implicit negotiation preserves those outcomes at comparable cost, the inversion wins for this setup. If it slides toward the anchor, or toward whoever spoke first, the rule was there all along, unwritten. The failure mode sits beside the claim and softens it: a declared rule can be gamed too, and the declaration buys the right to audit it, which is less than a guarantee.
 
 ## THE RULE GOES IN THE ENVELOPE
 

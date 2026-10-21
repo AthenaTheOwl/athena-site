@@ -17,7 +17,7 @@ Knowledge lost: no such field.
 
 A team from Stanford, SambaNova and Berkeley let a model maintain its own accumulated context, rewriting the whole of it at each adaptation step, and one rewrite erased everything the system had learned and then some. They named the failure context collapse and were careful to say it belongs to no particular method: it is "a fundamental risk of end-to-end context rewriting with LLMs," in which accumulated knowledge "can be abruptly erased instead of preserved."
 
-Every production agent does a version of this on a schedule. Accumulate tokens until some fraction of the window is crossed, summarize everything so far into a note, continue from the note.
+Many long-running agents compact on a schedule. Accumulate tokens until some fraction of the window is crossed, summarize everything so far into a note, continue from the note.
 
 The trigger is a number.
 
@@ -41,7 +41,7 @@ Truncation, for all its crudeness, keeps the recent action-observation continuit
 
 Picture a bookkeeper whose ledger fills. She copies the closing balances onto a fresh page and burns the old one. The balances are right. What she has lost is whether the last entry was a debit she had already posted or one she was about to, and the fresh page cannot tell her.
 
-## FINDING TWO: FOUR OF EVERY TEN ANSWERS IT CHANGES, IT CHANGES FROM RIGHT TO WRONG.
+## FINDING TWO: FORTY PERCENT OF THE ANSWER CHANGES WENT BACKWARD.
 
 A Johns Hopkins and Apple team logged what happens to the answer across twelve fixed-interval summarization calls on a competition-math benchmark.
 
@@ -49,7 +49,7 @@ Wrong to correct: 1,486.
 
 Correct to wrong: 1,009.
 
-Compaction was a net gain that was also, in 40 percent of the answers it changed, replacing a correct intermediate result with a wrong one. An oracle that skipped summarization only when the current answer was already correct, same schedule otherwise, reached 52.9 percent against 41.4 for fixed-interval and 38.9 for no compaction. Eleven and a half points of headroom, available purely from better timing, from an oracle that decides only whether, not when.
+Of the answer changes counted in those two rows, about 40 percent went from correct to wrong. That denominator excludes calls that left correctness unchanged; it is not the failure rate of all compaction calls. Compaction was a net gain that still destroyed correct intermediate results. An oracle that skipped summarization only when the current answer was already correct, same schedule otherwise, reached 52.9 percent against 41.4 for fixed-interval and 38.9 for no compaction. Eleven and a half points of headroom, available purely from better timing, from an oracle that decides only whether, not when.
 
 Their fix, SelfCompact, moves the decision from the scaffold into the model, and it has exactly two pieces: a compaction tool the model can call like any other, and a rubric saying fire when a sub-task has resolved or the trajectory is converging, hold when mid-derivation or stuck. Neither works alone. Open-weight models given the tool without the rubric call it reflexively at useless moments or never; the rubric without the tool cannot act. Together, with no fine-tuning, it beat no-compaction by up to 18.1 points on math and 5 to 9 on agentic search, and it was cheaper than doing nothing despite the extra probe call, because after a summary every later token attends to something short. Per-question cost on one search benchmark fell 67 percent.
 
@@ -57,7 +57,7 @@ Knowing how to compress a trajectory is a generation skill, and frontier models 
 
 Knowing when compressing is safe is a self-monitoring skill, and unprompted models do not.
 
-A paragraph of guidance closes the gap. The right trigger for forgetting is semantic, not numeric.
+The tool and the rubric narrowed the gap in these evaluations. Task state belongs in the trigger; a token counter alone cannot see it.
 
 ## FINDING THREE: THE KNOB IS NOT CONNECTED TO ANYTHING.
 
@@ -69,7 +69,7 @@ At 16k: 12.7 percent.
 
 At 96k: 3.1 percent.
 
-Switching the instruction from concise to maximally detailed barely moves the curve. Their explanation is a trained length prior: models learned on document-summary corpora where the reference summary runs half a page, and they revert to that regardless of source length. A 500-token summary of a 96k-token context keeps under 1 percent of it, and no prompt engineering fixes that. The effect held across four backbones, dense and mixture-of-experts, reasoning and not. Ten compaction calls on an identical snapshot produced summaries whose length varied by 21.5 to 42.0 percent, so some of the run-to-run wobble in benchmark numbers is the model receiving a different context.
+Switching the instruction from concise to maximally detailed barely moves the curve. Their explanation is a trained length prior: models learned on document-summary corpora where the reference summary runs half a page, and they revert to that regardless of source length. A 500-token summary of a 96k-token context keeps under 1 percent of it, under the prompting variants they tested. The effect held across four backbones, dense and mixture-of-experts, reasoning and not. Ten compaction calls on an identical snapshot produced summaries whose length varied by 21.5 to 42.0 percent, so some of the run-to-run wobble in benchmark numbers is the model receiving a different context.
 
 The context-collapse authors had named the same pull from the other direction the previous autumn. They called it brevity bias: "the tendency of optimization to collapse toward short, generic prompts," which drops domain insight in exchange for a concise summary.
 
@@ -97,7 +97,7 @@ Below 25 percent retained: executable protocols fragile across the board.
 
 The curve is flat and then falls off a cliff between half and a third, and the failures do not look like worse reasoning. They surface as tool-execution and action-parsing errors, malformed calls from an agent whose protocol specification got clipped, which an answer-quality judge will not see. Reliability also varied across control contexts, so a compressor that is safe on your support prompt may be unsafe on your finance one.
 
-There is a cheaper answer. A static system prompt is exactly what prompt caching is for, and caching the full block is strictly better than compressing it, at no cost in reliability.
+There is a cheaper answer. A static system prompt is a candidate for prompt caching. Where prefix reuse is supported and the full block fits, caching can cut its processing cost without deleting protocol text. It does not recover context capacity; a cached token still occupies the window.
 
 Compress the part that changes.
 
@@ -105,7 +105,7 @@ Cache the part that does not.
 
 ## FINDING FIVE: SELECTION LOSES TO GENERATION, AND BOTH LOSE TO A DATA STRUCTURE.
 
-Context compaction now has a formal treatment, as two games: a selector that keeps a subset of existing history items under a token budget, and a generator that may write any bounded message. Selection is strictly weaker, needing on the order of log n more budget for the same error on some query families. An agent that compacts by keeping the most relevant messages verbatim is structurally behind one that writes a new artifact in denser form. Drop-the-oldest-and-keep-the-tagged is the selection game, and no relevance scorer closes the gap.
+Context compaction now has a formal treatment, as two games: a selector that keeps a subset of existing history items under a token budget, and a generator that may write any bounded message. Selection is strictly weaker, needing on the order of log n more budget for the same error on some query families. On those query families, keeping verbatim history items has a budget disadvantage against an encoder allowed to write a denser artifact. That is a separation between formal capabilities, not a guarantee that a particular model writes a better summary. Drop-the-oldest-and-keep-the-tagged remains in the selection game.
 
 The case study should make builders uncomfortable. The authors probed a vendor's compaction endpoint on simple set-membership queries over 15,000 items, was item X in the history, and found error rates near random, worse than a Bloom filter of the same size. They read it as evidence that a language model is an inefficient encoder for some query classes, and that the question "have I already visited this URL / tried this fix / seen this file" belongs in a set, a Bloom filter, or a SQLite table in the working directory.
 
@@ -131,7 +131,7 @@ SWE-bench Verified, 30B model: 56.0 percent, 5.5 points over the same model comp
 
 SWE-bench Verified, 106B model: 66.8 percent, up 7.0.
 
-A 64k context trained with compaction: matched or beat 128k trained without it.
+A 64k context trained with compaction: competitive with 128k trained without it.
 
 Swapping only the summarizing agent, everything else held fixed: 6.5 points.
 
@@ -145,7 +145,7 @@ In September OpenAI's Agents API let developers "build and run cloud agents with
 
 That is a reasonable product and a large transfer of judgment. Everything above says the timing and the method of compaction decide what the agent still knows, and a managed loop makes both decisions on the vendor's schedule, tuned for the vendor's average customer.
 
-A policy written for everyone cannot tell apart:
+A shared policy still needs a way to distinguish:
 
 A resolved sub-task from a derivation half done.
 
@@ -185,11 +185,11 @@ Yes. Its authors say so, and the probe only pays for itself where the serving st
 
 The third explanation was that the theory paper's set-membership probe is a worst case chosen to make a point.
 
-It is a case picked because the optimal budget for set membership is known, so the gap could be measured against a bound instead of a judge. An agent that keeps its "have I seen this" list in a summary will still, eventually, answer that question at chance.
+The case was chosen because the optimal budget for set membership is known, so the gap could be measured against a bound instead of a judge. That is a reason to test the query class directly instead of assuming prose preserved it. It does not establish that every summary eventually falls to chance.
 
 The fourth explanation was that better models will summarize better.
 
-The length prior is a property of the training corpus, not of scale; it held across four backbones from 8 billion to 120 billion parameters, dense and mixture-of-experts, reasoning and not. The knob may get connected eventually. It is not connected now.
+The authors attribute the length prior to training; their cross-model result does not isolate the training corpus as its cause. The observed pattern held across four backbones from 8 billion to 120 billion parameters, dense and mixture-of-experts, reasoning and not. The knob may get connected eventually. It is not connected now.
 
 The fifth explanation was that a managed API will do this better than a small team can.
 
@@ -203,15 +203,15 @@ The case is not strained. Windows keep growing. Caching makes a large static pre
 
 **Reply:** Not yet.
 
-The evidence that would settle it is specific: measure, on your own long-running tasks, how often a compaction event precedes a repeated action or a missed stop, and whether that rate falls as the window grows. If it falls toward zero, the inversion wins and this essay is a period piece. The failure mode sits in the same paragraph. Long windows degrade before they fill, which is why harnesses compact in the first place, and the 64k context trained with compaction that kept pace with 128k trained without it says horizon can be bought with training as well as with tokens. The constraint may dissolve. It has not dissolved in any of the numbers above.
+Run the same long tasks under a larger uncompressed window, the current threshold and a task-state trigger, holding the model and tools fixed. Compare completed tasks, repeated actions, missed stops, latency and cost. A failure after compaction is only a sequence; the matched runs test whether compaction caused the difference. If the larger window removes the errors at an acceptable cost, the inversion wins for that workload. The failure mode sits in the same paragraph. Long windows can degrade before they fill, and the 64k context trained with compaction that kept pace with 128k trained without it says horizon can be bought with training as well as tokens. The constraint may dissolve. It has not dissolved in any of the numbers above.
 
 ## KEEP THE LEDGER
 
 The context-collapse team's architectural answer was to stop rewriting. Represent accumulated context as itemized entries, each with an identifier and counters for how often it helped or harmed. Have the model emit compact deltas. Let "lightweight, non-LLM logic" do the merging, so past knowledge is structurally preserved instead of trusted to survive a rewrite.
 
-Never let a model rewrite an accumulated artifact wholesale. Append and edit in place.
+For an accumulated record whose entries must survive, let the model propose deltas and preserve the prior versions. A disposable summary can be rewritten. The record is what needs protection.
 
-That rule is a schema, and [trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is one. Its validator reads four committed ledgers, one clean and three each carrying a planted defect, an event type off the vocabulary, a sequence number that skips, a payload edited after its hash was taken, and catches all three by name. A summary produced at a compaction boundary can sit beside such a ledger as a view. It cannot replace it, because the ledger's sequence numbers are exactly the position the summary loses, and its hashes are exactly the guarantee that nothing was rewritten on the way to the fresh page.
+That rule is a schema, and [trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is one. Its validator reads four committed ledgers, one clean and three each carrying a planted defect, an event type off the vocabulary, a sequence number that skips, a payload edited after its hash was taken, and catches all three by name. A summary produced at a compaction boundary can sit beside such a ledger as a view. It cannot replace it, because the ledger's sequence numbers are exactly the position the summary loses, and its hashes expose edits against the chain it validates. A separately retained head or protected writer is still needed to catch someone replacing the entire chain.
 
 Compact when the work has a boundary, not when the counter says so.
 
@@ -225,7 +225,7 @@ It has never known what was in it.
 
 CONTEXT EVENT — REMAINING FIELDS
 
-Decision made by: a token counter, or on a managed API, someone else's token counter.
+Decision made by: a threshold or a task-state policy. On a managed API: inspect the contract.
 Position in task after the event: see summary. Summary does not say.
 Actions repeated since the event: not logged.
 Signature:

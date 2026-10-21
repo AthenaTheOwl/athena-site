@@ -11,7 +11,7 @@ RECOVERY RECORD — MANAGED AGENT, AFTER A HARNESS CRASH
 Harness: gone. Replacement: started with `wake(sessionId)`.
 Container: gone. Replacement: provisioned on the next tool call that needs one.
 Session log: intact. Resume point: the last event.
-Model's memory of the work so far: none. It never had any.
+Durable task record inside the model: none. The next call needs it supplied again.
 Credentials reachable from the sandbox: none, by design.
 Lost in the crash: nothing the log recorded.
 Recorded by the log but wrong: no field.
@@ -22,7 +22,7 @@ The design began with an anecdote about a model's nerves.
 
 ## FINDING ONE: EVERY HARNESS COMPONENT HAS AN EXPIRY DATE.
 
-Claude Sonnet 4.5, the post says, "would wrap up tasks prematurely as it sensed its context limit approaching—a behavior sometimes called 'context anxiety.'" The engineers added context resets to the harness. Then they ran the same harness on Opus 4.5.
+Claude Sonnet 4.5, the post says, would wrap up tasks prematurely as its context limit approached. The engineers called the behaviour context anxiety. The engineers added context resets to the harness. Then they ran the same harness on Opus 4.5.
 
 "The behavior was gone."
 
@@ -46,9 +46,9 @@ The harness leaves the container and calls it like any other tool: `execute(name
 
 Then the harness becomes cattle too. Because the session log lives outside it, a crashed harness reboots with `wake(sessionId)`, pulls the log with `getSession(id)`, resumes from the last event, and writes back with `emitEvent(id, event)`.
 
-Nothing in the loop is precious. The log is precious. That is the entire allocation of preciousness, and it is correct.
+Nothing in the loop is precious. The log is precious. For replayable work, that is the allocation the architecture makes. A remote action completed just before a crash also needs reconciliation; a durable event log alone cannot guarantee it happens only once.
 
-The latency result fell out for free. Containers are provisioned lazily through a tool call, so a session that never touches the sandbox no longer pays container setup, and inference starts as soon as the orchestration layer pulls pending events.
+The same redesign also reduced reported latency. Containers are provisioned lazily through a tool call, so a session that never touches the sandbox no longer pays container setup, and inference starts as soon as the orchestration layer pulls pending events.
 
 p50 time-to-first-token: down roughly 60 percent.
 
@@ -64,13 +64,13 @@ The separation is deliberate. The session guarantees only durability and interro
 
 Read beside the August compaction papers, this is the structural answer. If the raw trajectory is still addressable, a lossy summary is a view, not a replacement, and an agent that has lost its place can go look.
 
-A watch officer who comes on duty reads the log. The outgoing officer's account of the night is useful; the log is what decides when the two disagree.
+A watch officer coming on duty can read the log as well as hear the handover. The summary points at the open problem; the log lets her check what happened before it.
 
 ·   ·
 
 Any team that has had two writers on one document has invented the session object without naming it.
 
-The fix is always the same. Stop editing the shared folder. Keep a log with parent edges instead, so every revision is an event someone can rewind to.
+A versioned record makes each revision an event someone can rewind to. It solves a different problem from a shared folder: who changed which version, and what came before it.
 
 Nobody calls it a session object. It is one.
 
@@ -84,7 +84,7 @@ For Git, the repository access token is used to clone during sandbox initialisat
 
 For custom tools, OAuth tokens sit in a vault behind a proxy that the model calls with a session-scoped token.
 
-"The harness is never made aware of any credentials." It cannot leak what it was never told, which is a security property and also a description of a good clerk.
+"The harness is never made aware of any credentials." Keeping the underlying credentials out of generated code closes one theft route. The session can still exercise its allowed operations, so the proxy must check those too. The clerk has no key; the desk still has a service window.
 
 ## FINDING FIVE: THE CPU, THE RAM, THE DISK.
 
@@ -96,11 +96,11 @@ A 2026 review offers one word for all of it. Externalization: moving state and c
 
 In September, OpenAI's Agents API opened the Codex harness as a service "fully managed by OpenAI." OpenAI handles the orchestration, the long-running sessions and the context management; the developer controls the agent's capabilities and brings or picks the sandbox.
 
-Once the harness is free, the defensible surface moves outward, to proprietary tools and environments, to verifiers, and to the data that agents generate while they run.
+Once the harness is available as a managed service, the defensible surface moves outward, to proprietary tools and environments, to verifiers, and to the data that agents generate while they run.
 
 That last item is the session log.
 
-The design that makes the log the one precious object in the system also makes it the one valuable object in the market. A team that runs its agents on a hosted session has placed the durable record of every trajectory, every tool call and every recovered crash with the party that also sells the model, the harness and the compaction policy.
+The design that makes the log the one precious object in the system also makes it a valuable object in the market. Tools, environments and verifier data can be valuable alongside it. A team that runs its agents on a hosted session has placed the durable record of every trajectory, every tool call and every recovered crash with the party that also sells the model, the harness and the compaction policy.
 
 That can be a fine trade. It should be made on purpose.
 
@@ -142,7 +142,7 @@ Also true. It argues a vector store alone cannot hold conversational state and a
 
 **Objection:** So the answer to compaction is to keep everything.
 
-**Reply:** The answer is to keep everything somewhere the window is not, and let the window be a view.
+**Reply:** Keep the authorized record outside the window, under a retention policy, and let the window be a view. Durability is no instruction to retain personal or secret data forever.
 
 **Objection:** Views go stale.
 
@@ -160,11 +160,11 @@ The case is easy to build. Windows keep growing, caching makes a long prefix che
 
 **Reply:** Until the process dies.
 
-The evidence that settles it is the crash test the post was built around. Kill the process in the middle of a long task. If the agent resumes from where it was without an external record, the window was the session and this essay is wrong. It will not, because a context window is process memory, and process memory is the thing a crash takes. The failure mode sits beside the claim: an external log nobody reads is storage with no benefit. The log earns its place only if the model can interrogate it, which is why the interface in Finding Three matters more than the storage behind it.
+The rival design can win without making memory survive magic. Persist the full transcript as a checkpoint and replay it into a large window; compare that simpler design with an interrogable event log. Use the same tasks and crash points, including a crash around a remote write. Measure recovery correctness, duplicate effects, elapsed time and cost. If checkpoint replay matches at lower cost, the richer session interface has not earned its place. The context window is input to a model call, not the client process that crashed; either design needs a persisted record somewhere. The failure mode sits beside the claim: an external log nobody reads is storage with no benefit. The log earns its place only if the model can interrogate it, which is why the interface in Finding Three matters more than the storage behind it.
 
 ## A LOG WITHOUT A VENDOR
 
-[trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is the session object with the platform removed. An append-only ledger with an event vocabulary, sequence numbers that may not skip, and payloads hashed at write time; a validator that reads four committed ledgers and catches the three planted defects by name. It guarantees ordering and tamper-evidence, and lists storage and replay as gaps v0.1 does not close: the ledgers are files you write yourself. Policy lives elsewhere, which is the division of labour the Managed Agents post argues for. The ledger does not have opinions, and it does not have a landlord.
+[trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is the session object with the platform removed. An append-only ledger with an event vocabulary, sequence numbers that may not skip, and payloads hashed at write time; a validator that reads four committed ledgers and catches the three planted defects by name. It defines a record shape and checks its local integrity; storage and a query interface still have to be supplied. That is narrower than a hosted session service, but it can supply the record contract beneath one. Policy lives elsewhere. The ledger does not have opinions, and it does not have a landlord.
 
 Keep the record outside the loop.
 

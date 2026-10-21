@@ -19,6 +19,8 @@ The line is accurate. It is also two words standing in for a trace pipeline, a f
 
 This is the rest of the line.
 
+Here, the harness means the tools, state and control flow around the model. Improving it changes how the model's work is selected, checked and carried forward. Whether those changes earn their cost depends on the workload; a benchmark gain is a reason to run that comparison on your own tasks.
+
 ## FINDING ONE: THE UNIT OF WORK MOVED FROM THE PROMPT TO THE LOOP.
 
 Addy Osmani named the shift in June: loop engineering. The unit of work is no longer the prompt but the loop, a small system that finds work, hands it to agents, checks the results, records state, and decides what happens next, on a schedule, without you. Boris Cherny put it in the first person: "I don't prompt Claude anymore. I have loops running that prompt Claude... My job is to write loops."
@@ -65,13 +67,13 @@ Knobs turned: three. System prompt, tools, middleware around the model and tool 
 
 Weights changed: none.
 
-The engine was a loop, packaged as a skill. Fetch the traces from the last eval run. Spawn parallel error-analysis agents over the failures. Have one agent synthesize the findings into proposed harness changes. Apply the targeted ones. Re-run. They compare it to boosting, each pass aimed at the previous run's mistakes, and they offer a human the apply step and stop short of requiring one, because a change that fixes one task will break three others and report success.
+The engine was a loop, packaged as a skill. Fetch the traces from the last eval run. Spawn parallel error-analysis agents over the failures. Have one agent synthesize the findings into proposed harness changes. Apply the targeted ones. Re-run. They compare it to boosting, each pass aimed at the previous run's mistakes. A human can review the proposed changes at the apply step; the authors call that helpful, not required. Their stated risk is overfitting: a change tailored to one task can regress another.
 
 The fixes that moved the number are all reusable, and the first one is embarrassing. The most common failure in the traces was an agent writing a solution, re-reading its own code, declaring it fine, and stopping. So they added a checkpoint that intercepts the agent before it exits and tells it to verify against the task spec.
 
 Verify against the spec, not against your own code.
 
-That is the essay in nine words. The rest is supporting documentation.
+Writing the solution and checking it are separate steps. The checkpoint makes the second one harder to skip.
 
 The second fix mapped the directory tree and available tooling at startup and injected it, because agents discovering their own environment get it wrong in ways that are expensive to watch. The same fix injects time-budget warnings, because agents are terrible at time estimation, a trait they share with everyone who has ever given one. The third counted edits per file and, after N edits to the same one, suggested reconsidering. The traces had shown agents producing ten or more small variations of the same broken fix.
 
@@ -151,7 +153,7 @@ Tokens consumed: down sixfold.
 
 Weights changed: none.
 
-The outer loop nearly tripled measured capability and cut token consumption sixfold. Read as strategy, the release is a commoditize-your-complement move. When weights converge, differentiation migrates to context management, decomposition, tool-call discipline, retry policy and verification. An efficient scaffold in every developer's hands lowers token demand per unit of work, which relieves the vendor's own inference constraint, and leaves the remaining edge on the one thing it still controls: a model post-trained for its own tool-use loop.
+OpenSourceForU reported that the harness change nearly tripled the benchmark score and cut token consumption sixfold. Those are reported figures, not an independent replication here. Read as strategy, the release is a commoditize-your-complement move. When weights converge, differentiation migrates to context management, decomposition, tool-call discipline, retry policy and verification. An efficient scaffold in every developer's hands lowers token demand per unit of work, which relieves the vendor's own inference constraint, and leaves the remaining edge on the one thing it still controls: a model post-trained for its own tool-use loop.
 
 Giving away the stock harness is a statement about where the vendor thinks the margin is not. It is also the clearest possible notice to everyone else that the stock harness is now the floor. What sits above the floor is the loop that ran against your traces, and nobody can open-source that for you.
 
@@ -209,13 +211,13 @@ It does. Osmani names it. The remedy in all three posts is the same and unglamor
 
 The fifth explanation was the inversion, and it can be built without strain: the harness is a commodity and this essay has the title backwards.
 
-The case writes itself from the same sources. OpenAI gave its harness away under Apache-2.0. DeepSeek released one under MIT. What would confirm scaffold commoditization is a stock harness that matches a hill-climbed one on the same model and the same tasks, after which the moat sits in tool-use post-training and nowhere else. Trivedy expects models to absorb planning and self-verification. On that reading the model is the product, the harness is packaging, and a small shop should take the free one and spend its time elsewhere.
+The case writes itself from the same sources. OpenAI gave its harness away under Apache-2.0. DeepSeek released one under MIT. A second release has already happened; counting releases cannot settle whether adapting the scaffold adds value. Trivedy expects models to absorb planning and self-verification. On that reading a small shop should take the free harness, spend its time elsewhere, and let the model supplier absorb the engineering bill.
 
 **Objection:** Then the harness is packaging.
 
 **Reply:** Sometimes.
 
-For single-turn structured extraction, most of this is overhead, and Trivedy says so first. Harness work pays when the agent runs long, uses many tools, or operates in an environment you control. The evidence that settles the rest is cheap to collect: take the stock harness, unmodified, and a hill-climbed one, same model, and run both against eval cases drawn from your own failures. If the stock one matches, this essay is wrong for your workload and you should stop reading it. The failure mode sits in the same experiment: a loop hill-climbed against a public benchmark instead of your traces produces a jig cut for someone else's part, and it will look like the inversion winning when it is the test being wrong.
+For single-turn structured extraction, most of this is overhead, and Trivedy says so first. Harness work has the clearest case when the agent runs long, uses many tools, or operates in an environment you control. Compare the unmodified stock harness with an adapted one, holding the model, tool permissions and task budget fixed. Use failures to build the adaptation, then judge both on a separate set of representative tasks. Count accepted outcomes, extra side effects, latency and cost. If the stock version matches within the tolerance chosen before the run, the custom work has earned no advantage on that workload. If the adapted version improves only on the failures used to build it, the jig has memorised its inspection sheet.
 
 The sixth explanation was that converging designs mean the harness is solved.
 

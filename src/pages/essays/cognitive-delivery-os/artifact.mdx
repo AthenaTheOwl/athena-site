@@ -6,53 +6,55 @@ date: "2026-05-24"
 readingTime: "4 min read"
 ---
 
-An artifact is anything an agent or a human makes that should outlive the run that made it. A patch is an artifact. A PR is an artifact. An eval report is an artifact. A release-notes file is an artifact. The schema that governs them lives at `ops/schemas/artifact.schema.json`.
+An artifact is something made during a run that should outlive the run: a patch, a review, an eval report, a screenshot. Its record identifies the output and the work that produced it. The shared contract is `ops/schemas/artifact.schema.json`.
+
+A file can survive without that record. What becomes harder is finding out what the file was evidence for.
 
 ## What the record carries
 
-Every artifact record names six things:
+The schema requires eight fields:
 
-- `artifact_id` — a stable id the rest of the portfolio can point at.
-- `artifact_type` — patch, pr, eval_report, screenshot, release_notes, postmortem.
-- `artifact_path` — a URL or repo-relative path the reader can open.
-- `spec_id` — the spec the artifact serves.
-- `requirement_id` — the requirement the artifact resolves (or empty if cross-cutting).
-- `produced_by` — the role or human that made it.
+- `id` and `type`: the stable identifier and artifact category.
+- `spec_id`: the spec the output serves.
+- `produced_by` and `run_id`: the producer and the run.
+- `status`: proposed, accepted, superseded or rejected.
+- `summary`: what the output is.
+- `evidence`: typed references supporting it.
 
-The provenance fields are what keep the record useful a year later. An eval report that doesn't say which spec it was measuring is a number without a question. The schema rejects records that drop the provenance.
+A path belongs in an evidence reference. `artifact_path` and `requirement_id` are not fields in this schema. Requirement-level traceability has to be supplied through the surrounding spec and decision records.
 
 ## A concrete example
 
-`supplier-risk-rag-agent/reports/baseline_eval_report.html` is an artifact. Its record says:
+`supplier-risk-rag-agent/reports/baseline_eval_report.html` is a checked-in report. The following is an illustrative record in the shared format, not a claim that this exact metadata file accompanied that report:
 
 ```json
 {
-  "artifact_id": "art-srra-eval-baseline-2026-W18",
-  "artifact_type": "eval_report",
-  "artifact_path": "reports/baseline_eval_report.html",
-  "spec_id": "specs/0004-citation-faithfulness-eval/",
-  "requirement_id": "R-SRRA-0004-2",
+  "id": "example-baseline-report",
+  "type": "eval_report",
+  "spec_id": "specs/0004-evals/",
   "produced_by": "science.eval-runner",
-  "produced_at": "2026-05-03T14:22:11Z"
+  "run_id": "example-baseline-run",
+  "status": "proposed",
+  "summary": "Baseline report awaiting review.",
+  "evidence": [
+    {"kind": "report", "ref": "reports/baseline_eval_report.html"}
+  ]
 }
 ```
 
-The report itself sits in `reports/`. The record sits in `artifacts/` and points at the report. The audit walks both directories and complains if the report exists without a record or the record exists without a report.
+The example shows the joins the record permits. It supplies no new eval result. A schema check can reject missing fields; checking that the referenced report exists and supports the summary is another operation.
 
-## Why typed records instead of "just files"
+## Why typed records
 
-Two reasons. First, the audit script can ask honest questions: "which specs have no eval reports?" or "which decisions ship without a postmortem?" — questions that need a typed answer, not a directory listing. Second, the dream loop needs typed inputs. A dream candidate that proposes "promote this pattern into a skill" has to point at the artifacts that show the pattern recurring; an untyped artifact is one the dream loop can't cite.
+A directory listing answers which files are present. Typed records let a consumer ask which outputs belong to a spec, which remain proposed and which run incurred their cost.
 
-## The four common types
+The type does not authenticate the producer. The reference does not pin the bytes unless it names a revision or digest. If the report changes after review, an unchanged path is still the same path. It is a different piece of evidence.
 
-| Type | Example | Where it lands |
-|---|---|---|
-| `patch` | a diff produced by a subagent | `.worktrees/*/patches/` |
-| `pr` | a GitHub pull request | URL in the record |
-| `eval_report` | a five-suite RAG eval | `reports/` |
-| `postmortem` | a write-up of an incident | `postmortems/` |
+## The common types
 
-Each one has a record under `artifacts/`. Each record points at the spec and the requirement it serves. Each record carries a `produced_by` that names a role from the role registry, so the audit can answer "which roles produced which artifacts this week."
+The schema includes `patch`, `pr`, `eval_report` and `postmortem`, alongside reviews, traces and other outputs. Use the type that lets the next consumer interpret the record. Store the content where that repo's workflow expects it, and make the reference resolvable.
+
+The durable unit is the output plus enough provenance to inspect it. A folder named `artifacts` is optional. The question it answers is not.
 
 ## See also
 

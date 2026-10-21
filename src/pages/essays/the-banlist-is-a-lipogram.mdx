@@ -18,7 +18,7 @@ Edition number: no field.
 
 That is the voice gate in [ai-field-brief](https://github.com/AthenaTheOwl/ai-field-brief), a weekly brief drafted with agents in the loop. Its style guide opens with the reason it was written down at all. The voice used to live in the prompt, and in the guide's words, that pattern "let it drift." An instruction in a prompt is advisory, which [Role tags are advisory](/essays/role-tags-are-advisory/) argued about a different kind of label.
 
-A style guide you can read drifts. A constraint you can run holds, for as long as everyone runs the same one.
+A style guide can drift in application. A runnable constraint makes its specified violations repeatable, for as long as everyone runs the same version over the same scope.
 
 The last line of the record is the subject of this essay.
 
@@ -123,7 +123,7 @@ The brief's guide agrees, near its end: the script catches the structural patter
 
 The second explanation was that banning words breeds euphemism. Writers route around the list with synonyms, and the prose gets worse in a new direction.
 
-Some of that happens. It is the reason the gate bans shapes, and the reason STE prints the approved word beside every rejected one. A synonym slips past a word list. A reversal built from new words still trips the pattern.
+Some of that happens. It is the reason the gate bans shapes, and the reason STE prints the approved word beside every rejected one. A synonym slips past a word list. A reversal built from new words can still trip the pattern if it stays inside the regex's vocabulary and span. A new cadence can pass. The gate measures its rules, not the whole voice.
 
 **Objection:** A model will learn to pass the gate and write badly anyway.
 
@@ -131,7 +131,7 @@ Some of that happens. It is the reason the gate bans shapes, and the reason STE 
 
 The third explanation was the inversion, and a tools engineer would make it gladly. Prose linting is solved. Vale describes itself as "a command-line tool that brings code-like linting to prose," keeps its rules in style files apart from the engine, and lists teams at large companies among its users. A hand-rolled regex file per repository is the cost of ignoring it.
 
-The case is strong. The engine is a commodity, and nothing in this essay depends on whose engine runs the check. What the inversion leaves alone is the edition. A style file is still a rulebook somebody wrote, and a rulebook needs an issue number for the same reason the deck's dictionary does. As [The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) put it for a different loop, everything that goes wrong goes wrong in the thing that scores the work.
+The case is strong. The engine is a commodity, and nothing in this essay depends on whose engine runs the check. What the inversion leaves alone is the edition. A style file is still a rulebook somebody wrote, and a rulebook needs an issue number for the same reason the deck's dictionary does. As [The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) put it for a different loop, an improving output score is only useful if the scorer still measures the work.
 
 **Objection:** Then version the banlist like a dependency.
 
@@ -141,7 +141,7 @@ The case is strong. The engine is a commodity, and nothing in this essay depends
 
 Write the style as a constraint you can run. Ban shapes as well as words. Calibrate the ear with before-and-after pairs from your own drafts. Pin the edition with a hash. Share one floor, and let each publisher raise it. Then enforce it like a test: one hit, red.
 
-Oulipo showed that a constraint produces prose. Aerospace showed that it keeps a reader safe. Both wrote down which edition they meant.
+Oulipo showed that a constraint produces prose. Aerospace made controlled language part of a safety discipline; a word list alone does not establish a safety outcome. Both wrote down which edition they meant.
 
 ·   ·
 

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "What you are obliged to forget"
-description: "Storing agent memory is a solved engineering problem. Governing it is not. Six findings on why four research groups reframed the same nuisance as a governance problem in one year, why a stored fact is not a supported one, and why the law asks for remembering and forgetting at once."
+description: "An agent can store a memory long before it can govern one. Six findings on why four research groups reframed the same nuisance as a governance problem in one year, why a stored fact is not a supported one, and why the law asks for remembering and forgetting at once."
 date: "2026-09-22"
 readingTime: "11 min read"
 ---
@@ -15,11 +15,11 @@ Released under typed provenance with a resolver: 0 of 19. False rejections: none
 Scope: hand-authored cases. No live model, no end-to-end system.
 Field recording where each memory came from: absent under flat rules, present and shallow under source-tag comparison.
 
-The first policy had no field for where a memory came from. The second had a tag that did not track root provenance, temporal validity or supersession history. Between them they blocked one case in nineteen.
+The first policy had no provenance field. The second had a source tag that did not track root provenance, temporal validity or supersession history. Between them they blocked one unsafe case in nineteen.
 
-A tag that cannot be traced to a root is where this essay starts. Poison an agent's memory once and you have poisoned every future session.
+A tag that cannot be traced to a root is where this essay starts. A poisoned entry can return in future sessions until rejected, corrected or removed.
 
-It was the frontier of agent memory research by June. Storing and retrieving memory had become a solved engineering problem, with a survey mapping the design space and long-horizon architectures keeping agents coherent across long tasks. The unsolved part was governance. Once an agent writes to its own persistent store, the store becomes a source of silent drift, errors compounding across sessions as the agent learns from its own mistakes, and a genuine attack surface, because an injection that lands in memory is reloaded every time the agent starts.
+It was the frontier of agent memory research by June. Storage and retrieval already had many engineering implementations, with a survey mapping the design space and long-horizon architectures keeping agents coherent across long tasks. The unsolved part was governance. Once an agent writes to its own persistent store, the store becomes a source of silent drift, errors compounding across sessions as the agent learns from its own mistakes, and a genuine attack surface, because an injection that lands in memory is reloaded every time the agent starts.
 
 The practical rule was to treat writes to long-term memory with the same suspicion as any other untrusted input.
 
@@ -33,11 +33,11 @@ The third of those turns out to be the one with a century of prior art.
 
 ## FINDING ONE: THE QUESTION WAS NEVER WHAT TO STORE.
 
-Records management and legal-hold regimes have one governing question, and it was never what to keep: it is what you are obliged to forget. The transfer to agents is direct. Bounded, policy-governed forgetting becomes a first-class operation with an audit trail, instead of an emergent side effect of a context limit.
+Records management asks both what must be kept and what must be destroyed. A legal hold can suspend destruction; a retention policy must account for both. The transfer to agents is direct. Bounded, policy-governed forgetting becomes a first-class operation with an audit trail, instead of an emergent side effect of a context limit.
 
 A records office does not lose files. It destroys them, on a date, with a signature, and the signature outlives the file.
 
-The signal that this is a category and not a paper is convergence. At least four independent groups reframed the same engineering nuisance the same way in 2026: one on experience reuse and retrieval competition, one on budget-curated forgetting on device, one exposing unified memory management as agent tool calls, one on a stability-and-safety governance framework. When four groups independently reframe the same nuisance as a governance primitive, a product category is forming. Memory infrastructure now sits roughly where vector databases sat in 2022, which is either a compliment or a warning depending on how the vector database business went for you.
+The signal that this is a category and not a paper is convergence. At least four independent groups reframed the same engineering nuisance the same way in 2026: one on experience reuse and retrieval competition, one on budget-curated forgetting on device, one exposing unified memory management as agent tool calls, one on a stability-and-safety governance framework. That convergence supports treating governance as a separate design problem. Whether it sustains a product category is a market hypothesis. Memory infrastructure now sits roughly where vector databases sat in 2022, which is either a compliment or a warning depending on how the vector database business went for you.
 
 ## FINDING TWO: A STORED FACT IS NOT A SUPPORTED ONE.
 
@@ -47,7 +47,7 @@ The attack follows directly. A prompt injection absorbed in session one returns 
 
 The authors' construction keeps what a flat store throws away. Each stored assertion carries its origin, its dependency lineage, its epistemic role, its validity window and its disclosure scope as separate fields. A resolver answers queries with evidential status, conflict flags, staleness indicators and a decision witness instead of raw content, and a mediator checks candidate outputs against evidence, time and disclosure policies before anything is released.
 
-The costs sit beside the result. Twenty-four hand-authored cases validate the resolver's logic, not a live system with real models and retrieval. The idea itself costs nothing to adopt: never store a bare fact, store the fact, where it came from, and what would invalidate it.
+The costs sit beside the result. Twenty-four hand-authored cases validate the resolver's logic, not a live system with real models and retrieval. The minimum design is easy to state: store the assertion, where it came from, and what would invalidate it. Keeping those fields accurate, resolving dependencies and enforcing release policy are engineering costs; the small conformance suite does not measure them.
 
 A memory without a source is a rumour with a timestamp.
 
@@ -57,7 +57,7 @@ One study found that under a limited context window, old and new experiences com
 
 Two results say how to write the policy.
 
-MemArbiter sorted an agent's history into five functional memory banks with demand-weighted salience and hit 92.5 percent on ALFWorld at a 750-token budget, 25.4 points above the strongest baseline. The portable mechanism: retrieval failure is usually a presentation problem, not an access problem. The right information is available and still fails to change the decision. Type memory by function: goal, task state, constraint, episodic, reference. That beats flat retrieval and flat recency.
+MemArbiter sorted an agent's history into five functional memory banks with demand-weighted salience and hit 92.5 percent on ALFWorld at a 750-token budget, 25.4 points above the strongest baseline. The portable mechanism: in these tasks, information could be available and still fail to change a decision because of how it was presented. The banks are goal, task state, constraint, episodic and reference. This arrangement beat the flat-retrieval and recency baselines in the reported setting.
 
 MemCon modelled memory operations as a Markov decision process and learned when, what, and how much to retrieve, treating retention and retrieval as sequential decisions under a cost budget instead of fixed heuristics. Agent workloads made bad retention policy legible and expensive; a token bill is an unusually direct loss function. The failure mode comes in the same breath: the framing assumes a stationary environment, regimes shift, and a learned policy that silently degrades is worse than a dumb heuristic you understand.
 
@@ -83,11 +83,11 @@ Output: a new, separate store. Duplicates merged. Stale or contradicted entries 
 
 The input store: "never modified, so you can review the output and discard it if you don't like the result."
 
-The output is a candidate. You inspect it and either attach it to future sessions in place of the original or discard it, which makes curation a reviewable, revertible operation instead of an irreversible in-place mutation. Blue-green deployment, for memory. The job's own session is "archived (not deleted) when the dream reaches a terminal state, so the transcript remains available afterward," and the docs are explicit that the optional instructions field steers a synthesis pass, not an editor: a directive to change sentence X to Y "generally produce[s] no change."
+The output is a candidate. You inspect it and either attach it to future sessions in place of the original or discard it, which makes curation a reviewable, revertible operation instead of an irreversible in-place mutation. Blue-green deployment, for memory. The job's own session is "archived (not deleted) when the dream reaches a terminal state, so the transcript remains available afterward," and the docs are explicit that the optional instructions field steers a synthesis pass, not an editor: directives targeting individual lines "generally produce no change."
 
 The same docs note, about archiving a finished dream, that there is no unarchive.
 
-The records office would approve.
+Archiving preserves a transcript. It is not a deletion policy.
 
 ## FINDING FIVE: THE POISONED ENTRY IS A PERSISTENCE MECHANISM.
 
@@ -109,7 +109,7 @@ A stale entry from a planted one with an old date.
 
 Keep the review gate.
 
-## FINDING SIX: THE LAW ASKS FOR BOTH, AND EACH TEXT DEFERS TO THE OTHER.
+## FINDING SIX: RETENTION AND ERASURE BOTH NEED A BASIS.
 
 Europe has written down both halves of the obligation.
 
@@ -121,9 +121,9 @@ Obliged to remember: at least six months.
 
 Obliged to forget: without undue delay.
 
-The erasure article exempts processing necessary "for compliance with a legal obligation." The retention article yields to data-protection law. Each text hands the question to the other, and an agent's memory store, which is a log and a profile at once, sits in the handoff.
+The erasure article exempts processing necessary "for compliance with a legal obligation." The retention article is expressly subject to other applicable law, including data-protection law. Those qualifications narrow the apparent collision. A memory entry may be personal data, a required log record, both, or neither; a memory store is not automatically an AI Act log.
 
-Which one governs a given entry is a question for counsel, and this essay declines to adjudicate it. The engineering conclusion does not wait for the answer. A store that cannot say where each entry came from, when it was written, and on what basis it is kept cannot comply with either obligation, let alone decide between them. The scope matters too: the AI Act's logging duties attach to high-risk systems, and most agents are not classified that way. The erasure right attaches to personal data, and most agent memory contains some.
+Which one governs a given entry is a question for counsel, and this essay declines to adjudicate it. The engineering conclusion does not wait for the answer. A store that cannot say where each entry came from, when it was written, and on what basis it is kept cannot comply with either obligation, let alone decide between them. The scope matters too: the AI Act's logging duties attach to high-risk systems, and most agents are not classified that way. The erasure right concerns personal data and has conditions and exceptions. The entry and its purpose have to be classified before either quoted deadline can be applied.
 
 ·   ·
 
@@ -137,7 +137,7 @@ The findings have their exits. Each gets its due.
 
 The first explanation was that this is compliance work, and compliance work waits.
 
-The retrieval-competition result says otherwise. When old and new experiences compete for the same window, the forgetting policy is the learning policy. A team that defers the governance question has already made a governance decision, and it is "whatever the context limit does."
+The retrieval-competition result says otherwise. When old and new experiences compete for the same window, the forgetting policy is the learning policy. A team that defers the governance question has already made a governance decision, and it is whatever survives the context limit.
 
 The second explanation was to log everything and sort it out later.
 
@@ -145,7 +145,7 @@ Logging is necessary and is not provenance. The agent rewrites its own store; a 
 
 The third explanation was that the model can curate its own memory.
 
-It can propose. One reported compression step took an 18,282-token context down to 122 tokens and dropped task accuracy from 66.7 percent to 57.1 percent, worse than passing no context at all. Dreams leaves its inputs alone and hands back a separate store.
+It can propose. One reported compression step took an 18,282-token context down to 122 tokens and dropped task accuracy from 66.7 percent to 57.1 percent, below the pre-adaptation baseline. Dreams leaves its input store untouched and returns a reviewable candidate. The docs describe that safeguard; they do not attribute it to the context-collapse experiment.
 
 **Objection:** Forgetting is a loss.
 
@@ -159,7 +159,7 @@ The fourth explanation was that a product category forming is a reason to wait f
 
 Four groups converging is a reason to adopt the primitive. Which vendor's version survives is a separate bet, and the primitive, bounded forgetting with a signature, needs no vendor at all.
 
-The fifth explanation was the inversion, and it deserves a straight answer: do not give agents persistent memory at all. Stateless agents cannot be poisoned across sessions, owe nobody an erasure, and never compete old experience against new.
+The fifth explanation was the inversion, and it deserves a straight answer: do not give agents persistent memory at all. Without an agent memory store, poisoning cannot persist through that store and old entries cannot compete there. Request logs, mounted files and upstream systems can still retain data and carry obligations.
 
 The case is strong. Every persistence surface in Finding Five is an attack surface that a stateless design simply does not have. The governance burden in Finding Six falls mostly on stores that exist. The release log at the top shows how badly flat memory behaves when it does exist.
 
@@ -167,7 +167,7 @@ The case is strong. Every persistence surface in Finding Five is an attack surfa
 
 **Reply:** For some tasks, yes.
 
-The evidence that settles it is task-specific and cheap: run the recurring tasks you care about with and without the memory store, and compare success, cost and the number of times a user has to repeat themselves. Typed memory reached 92.5 percent at a 750-token budget in one benchmark, which says memory helps when it is shaped; your tasks may differ. If the stateless version matches, delete the store and the obligations with it. The failure mode belongs in the same paragraph: a stateless agent moves the memory burden onto the user, who re-explains the same constraint every session, and a user who tires of repeating a constraint starts dropping it.
+The evidence that settles it is task-specific and cheap: run the recurring tasks you care about with and without the memory store, and compare success, cost and the number of times a user has to repeat themselves. Typed memory reached 92.5 percent at a 750-token budget in one benchmark, which says memory helps when it is shaped; your tasks may differ. If the stateless version matches, retire the store under its retention and deletion policy. Removing one store does not erase obligations on copies elsewhere. The failure mode belongs in the same paragraph: a stateless agent moves the memory burden onto the user, who re-explains the same constraint every session, and a user who tires of repeating a constraint starts dropping it.
 
 ## THE CLI PROPOSES. THE GATE IS A HUMAN.
 
@@ -184,7 +184,7 @@ Forget on a schedule you wrote down.
 MEMORY RELEASE LOG — REMAINING FIELDS
 
 Source of each entry: required. Previously: optional.
-Basis for keeping it: legal obligation, consent, or habit. Habit is not on the list.
+Basis for keeping it: recorded under the applicable policy and law. Habit is insufficient.
 Date of destruction: scheduled. Certificate: filed.
 Signature:
 

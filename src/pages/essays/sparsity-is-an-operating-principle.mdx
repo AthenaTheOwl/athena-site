@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "Sparsity is an operating principle"
-description: "The largest open model of the summer wakes under two percent of itself for each word it writes. Seven findings on paying for what you use instead of what you own, where the bill moves when you do, why the router becomes the product, what breaks when the experts are people, and the record every sparse system owes of what it left asleep."
+description: "Moonshot reports 896 experts and sixteen selected per token, with memory paid for the whole pool. Seven findings on paying for what you use instead of what you own, where the bill moves when you do, why the router becomes the product, what breaks when the experts are people, and the record every sparse system owes of what it left asleep."
 date: "2026-09-22"
 readingTime: "10 min read"
 ---
@@ -14,7 +14,7 @@ Awake for any one token: 16, "roughly 1.8% of the pool."
 Cost of keeping the other experts ready: paid in memory, every hour, whether they are called or not.
 Cases where the router skipped an expert that would have changed the answer: no field.
 
-That is Moonshot's Kimi K3, the largest open-weight model released this summer. It owns an enormous amount of capacity and spends almost none of it on any single step.
+Those are Moonshot's reported Kimi K3 architecture figures. The expert-selection ratio is not the share of all model parameters active per token: other components still run. The launch report also says independent verification awaits public weights.
 
 The missing line is the one every sparse system owes and almost none keeps.
 
@@ -54,7 +54,7 @@ The economics depend on memory being dear and storage being cheap. If that ratio
 
 ## FINDING FOUR: THE ROUTER IS THE PRODUCT.
 
-In every sparse system, one small component decides what the large one does. In the 2017 design it is a gating network. In Edge0 it is the prerouter. It is always the cheapest part of the system and the one whose mistakes cost the most.
+In every sparse system, one small component decides what the large one does. In the 2017 design it is a gating network. In Edge0 it is the prerouter. Its direct computation can be small beside the experts it selects. Its errors can still erase the saving. Neither cost relationship is guaranteed by sparsity alone.
 
 The same is true outside models. A specialist network is worth what its triage is worth. An underwriting team that reviews every claim identically is a dense model. One that routes the plain claims to a fast path and the strange ones to its best people is a sparse one, and its quality lives almost entirely in the routing rule.
 
@@ -88,7 +88,7 @@ The honest caveats are in the paper. ARC is a narrow, exactly verifiable puzzle 
 
 Every saving in this essay comes from not looking at something. That is the point, and it is also the failure mode. A router tuned on a benchmark degrades when the inputs change, and it degrades silently. It does not raise an error. It quietly stops escalating the cases that most needed escalating.
 
-A dense system that fails usually fails loudly, because it looked at everything and got something wrong in plain view. A sparse system that fails has usually looked away, and the evidence of the failure is in the part it never opened.
+A sparse system creates an extra blind spot: the unused path leaves no output to inspect. Dense systems can fail silently too. The difference to audit is whether the skipped path would have improved the decision.
 
 So every sparse system needs an audit path for what it chose not to look at: a record of what the router skipped, and a sample of skipped cases run the expensive way to see whether skipping them was right.
 
@@ -98,11 +98,11 @@ Each finding has a narrower reading. Each gets its hearing.
 
 The first explanation was that sparsity is a cost trick for neural networks and nothing more general.
 
-The 2017 paper framed it as capacity, not cost: a thousand times more capability for about the same compute per example. The organisational version is older than any network. What is new is that routing is now a learned function that can be measured, instead of a manager's habit that cannot.
+The 2017 paper framed it as capacity, not cost: a much larger parameter capacity without a proportional increase in computation. Capacity is not itself measured capability. The organisational version is older than any network. What is new is that routing is now a learned function that can be measured, instead of a manager's habit that cannot.
 
 The second explanation was that cheaper hardware will bring dense designs back.
 
-For some systems it will. Streaming experts off storage earns its keep only while a gigabyte of RAM costs more than a gigabyte of SSD and the prerouter can hide the fetch; cheaper memory removes the fetch, not the gate. What a price change cannot touch is the arithmetic of breadth: 896 experts held, 16 awake per token. Cheaper hardware lowers both bills and leaves that count where it was. A system that can hold a thousand specialists and call four will always be able to know more per unit of work than one that must call all of them.
+For some systems it will. Streaming experts off storage depends on memory prices, fetch bandwidth and whether the prerouter can hide the wait. More available experts creates an opportunity for useful capacity per unit of computation. Realising it still depends on what the experts learned, how the gate selects them and the full memory and communication bill.
 
 The third explanation was that latent reasoning will replace chain-of-thought, since it is so much cheaper.
 
@@ -120,7 +120,7 @@ Finding Seven concedes the mechanism. What it disputes is the conclusion that th
 
 **Reply:** That is the audit.
 
-The evidence that settles it is the skip-regret rate: take a random sample of cases, run them densely, and count how often the full answer differs from the sparse one. If the rate is low and stable, the sparsity is earning its savings. If it climbs when the inputs change, the router is failing quietly and the savings are a loan.
+The evidence that settles it is the skip-regret rate: take a random sample of cases, run them densely, and count how often the full answer differs from the sparse one. A changed answer is a disagreement, not yet regret. Grade both paths against the task outcome, include the dense path's errors, and compare quality with total memory, routing and audit costs. Savings survive when the sparse path meets the required quality at a lower full cost. Rising harmful omissions after input drift would count against it.
 
 ## THE BUDGET OF UNCERTAINTY
 
@@ -130,7 +130,7 @@ No repository on this site routes experts. The nearest ones apply the same idea 
 
 That is sparsity applied to the adversary. The design assumes that bad luck, like computation, arrives in a few places at a time, and it prices the hedge accordingly. Its two-stage variant adds the other half of the principle: commit to the wafers first, then decide the rest after yield is observed, when there is something to route on.
 
-[world-food-program-robust-simulator](https://github.com/AthenaTheOwl/world-food-program-robust-simulator) runs that second half on a harder problem. It plans food relief for 77,000 people under price spikes, route closures and budget cuts, in a scenario based on a Syria food-assistance exercise. The nominal plan costs $31,046 a day. The plan protected to 95 percent costs $35,565. The two-stage plan, which pairs contracts with flexibility and settles part of the decision after prices are seen, costs $28,201, less than either. The $28,201 bundles two effects: the discount on the contracts and the value of deciding later. The repo now prices them apart on the same twenty price draws. Deciding later is worth $1,465 a day without the discount and $437 with it; the discount alone is worth $1,956 to the static plan. Most of the headline saving is the contract, not the patience.
+[world-food-program-robust-simulator](https://github.com/AthenaTheOwl/world-food-program-robust-simulator) runs that second half on a harder problem. Its modelled scenario plans food relief for 77,000 people under price spikes, route closures and budget cuts, based on a Syria food-assistance exercise. These figures are simulator results under its assumptions, not the cost of an observed relief operation. The nominal plan costs $31,046 a day. The plan protected to 95 percent costs $35,565. The two-stage plan, which pairs contracts with flexibility and settles part of the decision after prices are seen, costs $28,201, less than either. The $28,201 includes a contract discount as well as the value of deciding later. The repo now prices them apart on the same twenty price draws, with no routes closed. These cells use sampled prices; they cannot be subtracted directly from the nominal-price invoice above. Deciding later is worth $1,465 a day without the discount and $437 with it; the discount alone is worth $1,956 to the static plan. The contract and the patience overlap. The same saving cannot be filed twice.
 
 [Robust-Facility-Location](https://github.com/AthenaTheOwl/Robust-Facility-Location) asks the same question of warehouses. It solves a facility network four ways, stress-tests each plan against Monte Carlo demand, and lets the reader watch how the cost of protection changes as Γ, the budget of inputs allowed to go wrong together, grows.
 

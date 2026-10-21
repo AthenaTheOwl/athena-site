@@ -140,7 +140,9 @@ the human are doing this in parallel for ai-field-brief and one other repo.
 
 1. **Add the spec ledger.** Create
    `specs/NNNN-cognitive-delivery-control-plane/` with `requirements.md`,
-   `plan.md`, and `tests-and-evals.md`. Number it with whatever the repo's
+   `design.md`, `tasks.md`, `acceptance.md`, `research.md`, and
+   `traceability.md`, as required by the current product-repo spec gates.
+   Number it with whatever the repo's
    next free NNNN is.
 2. **Add `.agents/AGENTS.md`.** A single file the human and the agents
    read first. It points at the spec ledger, the decisions directory, the
@@ -174,8 +176,9 @@ volume forces them:
 - **An OPA daemon.** `policy.schema.json` is OPA-shaped on purpose so a
   small Python evaluator inside each repo can read the rules. A daemon
   arrives the day the policy volume justifies one, not before.
-- **A separate event-log database.** Events land as JSONL files inside
-  each repo's `events/` directory; the portfolio audit walks the files.
+- **A separate event-log database.** Factory events land in
+  `ops/event-ledger/*.jsonl`, with run summaries in `ops/run-records/*.json`;
+  the portfolio audit reads the repo's declared evidence paths.
   A database arrives the day the join queries justify it.
 - **A workspace-manager service.** The Agent tool's worktree isolation
   plus per-repo factory scripts handle workspace setup. No long-running

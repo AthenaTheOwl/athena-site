@@ -6,49 +6,46 @@ date: "2026-05-24"
 readingTime: "4 min read"
 ---
 
-A guild is a cluster of roles that share a discipline. The portfolio names twelve: control, product, research, design, engineering, science, security, operations, domain, learning, documentation, commercial. Each repo's `.agents/roles/*.yaml` files declare which roles that repo runs, what tools each role can call, and which policies each role must honor.
+A guild is a cluster of roles that share a discipline. The portfolio names twelve: control, product, research, design, engineering, science, security, operations, domain, learning, documentation, commercial. Each repo declares its roles under `.agents/roles/<id>/role.yaml`.
+
+The file describes the job. It does not, by existing, take a tool away from the runtime.
 
 ## The role file
 
-A role is a YAML record. The contract lives in `ops/schemas/role.schema.json`. A minimal role looks like:
+The contract lives in `ops/schemas/role.schema.json`. Its required fields are `id`, `guild`, `mission`, `inputs`, `outputs`, `allowed_tools`, `forbidden_actions`, `required_gates`, `escalation` and `permissions`. The permissions object separates reading, writing, tests, approval, deployment and memory promotion.
+
+This is an excerpt from ai-field-brief's checked-in `science.proof-gate-runner` role, not a complete role record:
 
 ```yaml
-id: engineering.implementation
-guild: engineering
-description: |
-  Writes the patch that resolves the requirement. Reads the spec,
-  applies the change, runs the local gates, opens the PR.
-tools:
-  - repo.apply_patch
-  - repo.run_tests
-  - repo.open_pr
-policies:
-  - branch.protected_main
-  - cost.budget_warn_at_5usd
+id: science.proof-gate-runner
+guild: science
+allowed_tools:
+  - repo.read
+  - gates.run_voice_lint
+  - gates.run_spec_check
+forbidden_actions:
+  - write_code
+  - apply_patch
+  - merge_pr
 ```
 
-The schema enforces that `id` matches `^[a-z][a-z0-9_-]*\.[a-z][a-z0-9_-]*$` (guild dot slug), that every tool listed under `tools` exists in `.agents/tools/`, and that every policy listed under `policies` exists in `.agents/policies/`. The validator is `scripts/validate_roles.py` in each product repo; it fetches `role.schema.json` from athena-site at a pinned ref and walks the local `.agents/roles/` directory.
+The schema validates the shape of those declarations. A tool id matching a pattern is not proof that the tool exists, and a forbidden action written in YAML is not a sandbox boundary. The runtime and policy checks have to enforce the declaration at use.
 
 ## The minimum-viable six
 
-A product repo ships six roles on day one:
+The initial operating model names six jobs: `control.coordinator`, `product.spec-writer`, `engineering.implementation`, `engineering.code-reviewer`, `science.proof-gate-runner` and `learning.dream-orchestrator`.
 
-- `control.coordinator` — the role that owns the workflow state.
-- `product.spec-writer` — the role that opens and closes specs.
-- `engineering.implementation` — the role that writes the patch.
-- `engineering.code-reviewer` — the role that reviews the patch before merge.
-- `science.proof-gate-runner` — the role that runs the gates and reports the failures.
-- `learning.dream-orchestrator` — the role that runs the weekly dream job.
-
-Ai-field-brief ships all six. The rest of the 50-role aspiration (a designer, a release driver, a domain expert per repo) lands one role at a time, only when a workflow names the need and a working example can ship alongside.
+These are jobs, not a requirement to run six agents at once. One worker can take several roles in sequence, provided approval and review boundaries remain explicit. Add a role when a workflow has a job for it and an example can show what completion means.
 
 ## A concrete example
 
-`ai-field-brief/.agents/roles/science.proof-gate-runner/role.yaml` declares the role that runs the proof gates on every PR: `voice_lint`, `spec_check`, and the validators for decisions, schemas, the registry, roles, tools and policies. Its `allowed_tools` list names exactly those nine gate scripts plus `repo.read` and `tests.run`; its `forbidden_actions` list rules out `write_code`, `apply_patch`, `merge_pr` and `approve_change`, so the role's failure mode is a report, not a fix. A gate script that crashes escalates to `control.coordinator`; schema drift escalates to `product.spec-writer`.
+The full proof-gate role lists the gate scripts and test runner it may call, forbids code changes and approvals, and routes a crashed gate to `control.coordinator` or schema drift to `product.spec-writer`. Its output is a test report and a log. The role reports the failure; another role owns the fix.
 
-## Why "guild" instead of "team"
+`ai-field-brief/scripts/validate_roles.py` validates the role files against the shared schema. Its fetch URL follows athena-site's `main`, with a local cache fallback. That is shared distribution, not a pinned schema edition. Reproducible validation needs the schema revision recorded beside the result.
 
-A team is a roster. A guild is a discipline — the science guild on supplier-risk-rag-agent shares its eval methodology with the science guild on ai-field-brief, even though no human sits on both. The shared methodology lives in the schemas and the shared validators. The discipline travels; the roster doesn't have to.
+## Why guild instead of team
+
+A team is a roster. A guild is a discipline that can travel across repositories through contracts and examples. The test is whether the same role produces a usable report in both places. A matching name alone has passed only the filing check.
 
 ## See also
 

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "The best fit was fed the answer"
-description: "A 2022 system-dynamics thesis modelled Bitcoin as two machines: one that mines and one that trades. The mining side calibrated honestly at 0.90. The trading side scored 0.998 because it was given the price. Seven findings on what the model found, where it pinned itself to the walls, and the case that there was nothing there to find."
+description: "A 2022 system-dynamics thesis modelled Bitcoin as two machines: one that mines and one that trades. The mining side fitted hash rate at 0.90. The trading side scored 0.998 while taking price as an input. Seven findings on what those fits establish, what the model never tested, and how to test it."
 date: "2026-09-23"
 readingTime: "9 min read"
 ---
@@ -21,6 +21,8 @@ The last field is the one the model could not fill, and the thesis says so on pa
 
 This is the note the form has no field for.
 
+Calibration asks how well chosen parameters reproduce the history used to choose them. An independent test asks what the model gets right when that history stops supplying the answer. The difference determines what either score can claim.
+
 ## FINDING ONE: THE BEST FIT WAS FED THE ANSWER.
 
 The market side matched Bitcoin's price history almost exactly, with an R-squared of 0.998. The same paragraph that reports the number takes it apart: "The main reason for this almost exact matching is that the model is using the price data as input to the calibration as well." The fit was to the day-to-day changes in price, "as opposed to price itself," which "hints at the absence of a structure driving the price itself in the model."
@@ -35,9 +37,9 @@ It was set to a day the run never reached.
 
 The production side was calibrated the hard way. Difficulty and hash rate ran on the model's own equations. The price, fees and energy and hardware costs were fed in from data, which is how partial model testing isolates one sector, and the optimizer adjusted thirteen constants until the simulated network hash rate tracked the recorded one. The result was an R-squared of 0.902, which the thesis called "sufficient to capture its behavior."
 
-The calibration report in the repository adds the cost. Across 4,865 days, the residuals correlate at 0.91 from one day to the next. The misses do not scatter around the line. They arrive in long runs, the model early or late for months at a time.
+The calibration report in the repository adds the cost. Across 4,865 days, the residuals correlate at 0.91 from one day to the next. Adjacent errors tend to move together; the misses do not scatter independently around the line. That correlation alone does not identify their cause or the duration of a particular miss.
 
-The optimizer was given a range for each constant, never a value. On energy prices and hardware life, it came back where outside estimates already were.
+The optimizer was given a range for each constant, never a fixed value. Its agreement with outside estimates for energy prices and hardware life is a plausibility check, with the residual pattern beside it. It does not establish that the causal structure is uniquely right or that the model predicts beyond the period fitted.
 
 CALIBRATED, PRODUCTION SIDE
 
@@ -72,7 +74,7 @@ The protocol does not read the news. It waited for the next difficulty checkpoin
 
 ## FINDING FOUR: THE MARKET HALF PINNED ITSELF TO THE WALLS.
 
-A calibration searches for each constant inside a range the modeller sets. When the best value lands on the edge, the optimizer is saying one of two things: the answer lies outside the box, or the term does nothing and the floor was as close to switching it off as the box allowed. On the production side, two of thirteen constants finished on an edge. On the market side, fourteen of forty-three did.
+A calibration searches for each constant inside a range the modeller sets. A fitted value on an edge is a reason to inspect the bound, the parameter and the structure. It can reflect a restrictive range or a parameter the data cannot pin down; the boundary alone does not diagnose which. On the production side, two of thirteen constants finished on an edge. On the market side, fourteen of forty-three did.
 
 AT THE EDGE OF THE SEARCH, MARKET SIDE
 
@@ -85,7 +87,7 @@ At a ceiling: three.
 
 The first line is the finding. The thesis reported it plainly: "price is almost insensitive to the demand-supply balance. This merits further investigation."
 
-A market-clearing model concluded that the price did not much care whether the market cleared.
+That is the fitted coefficient's value. It is a finding about this calibration, with the price still supplied by data.
 
 The optimizer was asked where the answer was.
 
@@ -151,7 +153,7 @@ Each finding has a cheaper reading. Each one gets a hearing.
 
 The first explanation was that system dynamics is the wrong tool for a speculative market. It works in aggregates, stocks and average delays, and a market of traders reacting to each other is the textbook case for modelling individuals.
 
-The market side's failure is consistent with that. The same method, on the same data, in the same model, also calibrated the production side to 0.902 with constants that match outside estimates for energy prices and hardware life. The method did not fail everywhere. It failed in one place and told the modeller which one, which is most of what a model is for.
+The market side's failure is consistent with that. The same method, on the same data, in the same model, also fitted the production side at 0.902 with constants near outside estimates for energy prices and hardware life. That gives a narrower comparison: one sector reproduced its target without taking that target as an input.
 
 The second explanation was that the 0.998 is a vanity number and should not have been reported.
 
@@ -163,11 +165,13 @@ It was reported with its own autopsy attached, in the same paragraph.
 
 The third explanation was that the pinned constants mean the search ranges were too narrow, and a wider box would have found reasonable values.
 
-Partly correct, and the thesis says it first about the production side: "There is possibly a case to relax some of these limits further to see if a better fit is obtainable." Relaxing the price sensitivity cannot rescue the market structure, though. It sat at 0.001 in a range that ran up to 4. A wider box lets it fall to zero, and a price that ignores supply and demand entirely is a stronger version of the finding.
+Partly correct, and the thesis says it first about the production side: "There is possibly a case to relax some of these limits further to see if a better fit is obtainable." The price sensitivity sat at 0.001 in a range that ran up to 4. Extending its lower bound would allow the fitted mechanism to contribute still less. Whether that improves the fit, and whether a different combination of parameters works, needs another run. Moving the fence is an experiment, not an explanation of the result already filed.
 
 The fourth explanation was the inversion, and a market sceptic would make it without strain. There was no structure to find. Bitcoin's price over those years was attention and momentum, reflexive and mostly speculative, and the model found exactly that: a price indifferent to supply and demand, entrants demanding several times their money a year, and a trading class that stayed about two and a half weeks. On that reading the pinned parameters are the answer, and adding a cost-of-production loop would be the modeller inventing the fundamentals the market lacked. Makarov and Schoar's picture of a market dominated by exchange trading supports it.
 
-The model already contains the test that settles it. Move the price switch from day 10,000 to a day inside the run, let the market-clearing structure carry the price from there, and compare the path it draws with the recorded one, once without the cost-of-production loop and once with it. If neither version tracks, the sceptic wins and the missing structure was never there. If the cost loop tracks where the plain version drifts, the structure existed and the data had been standing in for it. The failure mode is judging it in-sample: with forty-three constants to tune, almost any loop can be made to fit the history it was tuned on.
+The model contains a switch for a better test. Choose a calibration period and a later evaluation period before fitting. Keep the later prices out of the fitting inputs and freeze the parameters before evaluation. At the start of that later period, switch to the model-generated price and compare the recorded path with two versions: the market-clearing model alone and the same model with the proposed cost-of-production loop. Give both the same starting conditions and decide how to score them before running either.
+
+If neither tracks, both tested accounts have failed; the result cannot establish that the market has no structure. If the added loop improves performance on the held-out period, it earns support for further testing. That improvement still would not uniquely identify the cause of Bitcoin's price. The failure mode is letting the later prices leak back into parameter choices, directly or through repeated revisions until the test period has become another calibration period.
 
 **Objection:** Then the thesis never tested its central claim.
 
@@ -185,9 +189,9 @@ Anyone rerunning it supplies their own drive D.
 
 [MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin](https://github.com/AthenaTheOwl/MIT-SDM-Thesis-on-System-Dynamics-Modeling-of-Bitcoin) holds the Vensim model as submitted, the data-pull script, both calibration runs with their reports (902,137 simulations on the market side, 139,723 on the production side), and a small Streamlit viewer for reading the model's behaviour without Vensim.
 
-The supply side fit because someone had written it down.
+The supply side fitted the history.
 
-The price fit because I had.
+The price side was still reading it.
 
 ·   ·
 

@@ -18,13 +18,13 @@ Tested as a routing algorithm: no field.
 
 The skill that teaches an agent to write skills is the longest one in the set, which is the most honest number on the card.
 
-Every major platform adopted this pattern inside a few weeks, on the strength of it seeming right. The first controlled study arrived in July.
+The format spread across agent platforms before controlled evidence for this use was available. The first controlled study arrived in July.
 
 It is right. It is also narrower than it looks, and the untested field is where the narrowness lives.
 
 ## FINDING ONE: THE INDEX COSTS LESS THAN ONE ENTRY.
 
-The problem the pattern solves is measurable. Best practice caps an agent at fewer than about twenty tools, with accuracy degrading past ten. Connect a handful of MCP servers without managing what loads and you reach ninety-plus tool definitions and 50,000 tokens of JSON schema before the model reasons about anything.
+The problem is context cost. The practitioner account recommends a small active tool set; it supplies no universal accuracy threshold at ten or twenty tools. Connect a handful of MCP servers without managing what loads and you reach ninety-plus tool definitions and 50,000 tokens of JSON schema before the model reasons about anything.
 
 The Agent Skills format is trivial, a markdown file with YAML frontmatter, and its whole value is the loading discipline it makes separable.
 
@@ -58,7 +58,7 @@ Under Pi, the same.
 
 Codex gained nothing, because it already performed entity-based retrieval unprompted.
 
-If you benchmark progressive disclosure inside a weak harness you will conclude it is a revelation, and you will be measuring your harness. If your agent already greps competently, a description index is dead weight in the prompt. You cannot read someone else's number and infer your own; the number is a property of the scaffold, not of the pattern.
+If you benchmark progressive disclosure inside a weak harness you will conclude it is a revelation, and you will be measuring your harness. If your agent already locates the passages, a description index may add cost without improving the answer. You cannot read someone else's number and infer your own; the number is a property of the scaffold, not of the pattern.
 
 ## FINDING THREE: THE REGIME FLIPS AT LIBRARY SCALE.
 
@@ -72,19 +72,17 @@ Flat disclosure at twenty books: 0.46.
 
 Per-question cost as the corpus grows: rising, while accuracy falls.
 
-The agent cannot find the right book by grepping when there are twenty of them. Scaling the corpus is strictly worse on both axes unless disclosure carries it. The pattern's real job is buying context headroom once the corpus is too large to navigate by reading. It does not make the agent smarter about any individual document.
+In this English open-QA setting, raw navigation became less reliable as the corpus grew. Flat disclosure slowed the loss; it did not erase it. The paper's Chinese open-QA results were neutral or negative for the flat pack, so twenty books is no general limit on grep. The pattern's real job is buying context headroom once the corpus is too large to navigate by reading. It does not make the agent smarter about any individual document.
 
-## FINDING FOUR: ONE LEVEL IS ENOUGH.
+## FINDING FOUR: THE EXTRA LEVEL CAME WITH EXTRA METADATA.
 
 The routing tree had two levels.
 
 On the multiple-choice set, under one harness and one model, accuracy went from 0.9126 to 0.6398.
 
-In every other cell the second level never beat the first.
+That was English multiple choice under Pi with gpt-5.4-mini, not an average across the study. The documents, agent and questions stayed fixed, but two design choices moved together: an extra routing level and per-chunk descriptions moved into always-loaded context. The extra metadata is a plausible mechanism for the loss; this comparison does not isolate depth from metadata placement.
 
-Nothing else changed in that cell. The same documents, the same agent, the same questions; one more layer of table-of-contents between the agent and the text, and more than a quarter of the accuracy went missing. The mechanism, once measured, is not mysterious: at every node the agent loads every child's description, so a deep tree means it is continuously reading routing metadata it will not use, and the metadata competes with the content for attention.
-
-The natural instinct when building a skills pack is to nest: a router that picks a domain, which picks a sub-index, which picks passages. The study says stop at one. A wrong route at level two is unrecoverable in a way a wrong retrieval at level one is not, because the agent gets a plausible-looking sub-index and never learns the right one existed.
+The natural instinct when building a skills pack is to nest: a router that picks a domain, which picks a sub-index, which picks passages. One level is the safer starting point in the main comparison. It is not a theorem about every tree: the appendix reports some large-corpus open-QA cells where the deeper pack leads. A wrong route is costly when the interface offers no reason to backtrack, not inherently unrecoverable.
 
 The authors' summary is the sentence to keep.
 
@@ -140,7 +138,7 @@ No agent could have found that sentence by reading the code. It is the line that
 
 The unloading side has no controlled study behind it. The failure is still easy to describe: a naive implementation discards a skill's context immediately after use and reloads it minutes later when the next related task arrives, churning tokens and latency.
 
-The recommended fix is ordinary cache discipline. Keep recently used skills resident, keep the frequently activated ones warm, and accept the context cost as the price of not thrashing. The crossover point is unpublished, so the residency window is a number you guess and then tune.
+The candidate fix is ordinary cache discipline: keep recently or frequently used material warm when reuse is likely. That spends context to avoid reloads. Neither controlled study above measured a skill-unloading policy, so this is an engineering proposal. Its crossover point remains to be measured.
 
 A catalogue that returns every book the moment the reader closes it is not saving shelf space.
 
@@ -166,7 +164,7 @@ Everyone did say so, and until July that was the entire evidence base. The contr
 
 The second explanation was that context files are where a team writes down what it learned the hard way, so a null result on them must be measuring something else.
 
-Partly right, and the paper agrees with the half that is right. The instructions were followed; the hard-won rule is exactly the content that works. What failed was everything around it: the overview, the directory tour, the generated summary of code the agent could read directly. The null result is about the padding.
+Partly right, and the paper agrees with the half that is right. The instructions were followed; the hard-won rule is exactly the content that works. What failed was everything around it: the overview, the directory tour, the generated summary of code the agent could read directly. The traces support removing redundancy, but the study did not establish that every useful rule improves success or that padding explains the entire null. When the authors removed the other documentation, generated context files helped. Their value depended on what the repository already supplied.
 
 **Objection:** So the pattern is a retrieval trick with a file format.
 
@@ -174,11 +172,11 @@ Partly right, and the paper agrees with the half that is right. The instructions
 
 **Objection:** Then when do I skip it.
 
-**Reply:** Five tools and one workflow. A static system prompt is faster and cannot mis-route.
+**Reply:** For a small, stable workflow, try the static instructions first. They avoid a discovery step; the model can still misinterpret them.
 
 The third explanation was that one-level disclosure is a limitation of today's models and a smarter router will fix depth.
 
-Possibly. The failure mechanism is context saturation, not routing stupidity; the child descriptions are loaded at every node whether or not the router is clever. A smarter router reads the same metadata. The fix for depth is width.
+Possibly. In the tested hierarchy, child descriptions were always loaded. A different metadata policy could change that cost. Hold the descriptions and their loading schedule fixed before blaming the extra routing step; otherwise two variables have signed the same incident report.
 
 The fourth explanation was the inversion, and it deserves its full weight: progressive disclosure is a crutch for weak harnesses and small windows, and both are going away.
 
@@ -188,7 +186,7 @@ The case is not strained. The harness that already greps for the entities a ques
 
 **Reply:** At your scale, maybe.
 
-The evidence that settles it is local and cheap: run your own corpus, at its real size, inside the harness you ship, with and without a one-level index. If there is no gain, delete the index and the maintenance with it. The failure mode sits in the same sentence: the answer depends on corpus size, and the study's flip happened between one book and twenty. A gain measured at today's size can appear or vanish as the corpus grows, so measure at the size you expect to have in a year, not the size you have now.
+The evidence that settles it is local and cheap: compare raw access, flat disclosure and the proposed hierarchy on held-out questions over the same corpus, model and token budget. Count answer quality, routing misses, latency and total tokens, including metadata and index construction. If there is no gain, delete the index and the maintenance with it. The failure mode sits in the same sentence: the answer depends on corpus size, and the study's clearest flip was English open QA between one book and twenty, with other task and language results differing. A gain measured at today's size can appear or vanish as the corpus grows, so measure at the size you expect to have in a year, not the size you have now.
 
 ## A CATALOGUE THAT WAITS
 
