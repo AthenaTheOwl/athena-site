@@ -6,61 +6,37 @@ date: "2026-05-24"
 readingTime: "5 min read"
 ---
 
-A dream is an offline-cognition run that consolidates memory, clusters failures, simulates adversarial inputs, and proposes promotion candidates: memory updates, generated tests, skill patches, backlog items. Each candidate carries evidence and a `human_review_required: true` flag by default. The contract is `ops/schemas/dream-output.schema.json`. Dream outputs land in each repo's `dreams/<YYYY-W##>/` directory.
+A dream is an offline run that reads prior work and proposes changes: memory updates, tests, skill patches or backlog items. The shared contract is `ops/schemas/dream-output.schema.json`. Outputs belong under `dreams/<week>/`.
+
+The output is a candidate. Frequency is not promotion authority.
 
 ## What a dream run does
 
-A dream job runs once a week (typical cron: Sunday 03:00 UTC). It reads the last seven days of runs, postmortems, eval reports, and decisions from a scoped set of repos. It then operates in one or more declared modes:
+The schema names seven modes: memory consolidation, failure clustering, adversarial simulation, skill extraction, golden-test generation, prompt patch generation and architecture drift detection. The run records its scope, lookback period, sources, report path and candidates.
 
-- `memory_consolidation` — find recurring lessons across run records and propose a memory-file edit.
-- `failure_clustering` — group failed gates and failed evals into clusters that share a root cause.
-- `adversarial_simulation` — generate inputs that would have broken the change had they been in the test set.
-- `skill_extraction` — propose packaging a repeated pattern as a `.agents/skills/<id>/SKILL.md`.
-- `golden_test_generation` — generate a test that pins behavior that recurred enough to deserve pinning.
-- `prompt_patch_generation` — propose a system-prompt edit grounded in an observed regression.
-- `architecture_drift_detection` — flag patterns that don't fit the current architectural contracts.
+Each candidate carries evidence and an explicit `human_review_required` flag. The schema gives that boolean a default of true; it does not require its value to be true. A promotion gate has to enforce the human-review policy separately. A default in a schema is not a reviewer's signature.
 
-Each mode produces typed candidates. Each candidate names the evidence (run ids, eval reports, traces) that justifies it. Each candidate ships with `human_review_required: true` so nothing graduates without a reviewer's eyes on it.
+Weekly is a useful cadence for the operating model. A directory from one week proves an output exists, not that a scheduler ran every week or that every mode ran.
 
 ## A concrete example
 
-Procurement-negotiation-lab's `dreams/2026-W21/` contains the report from the week of May 18-24. The report names three candidates: a memory update that captures a recurring lesson about how players misunderstand α clipping in level 6, a golden-test generation that pins the behavior of the VCG-transfer calculation at the corner case the spec missed, and a skill patch that proposes adding a "show me the math" affordance to the engine's pedagogy pass.
+Procurement-negotiation-lab's `dreams/2026-W21/report.md` records five candidates: three memory updates and two regression-test proposals. It reports no extracted skill, because the pattern had not met its recurrence bar.
 
-The candidate file looks like:
+One candidate, `memory-002-factory-worktree-isolation-as-convention.md`, points at the factory's worktree implementation and decisions. It proposes using one branch per multi-step task, while preserving an exception for small edits because a second checkout has a cost. The candidate's frontmatter records human review and its promotion status. Those are observable records; they do not establish that the convention prevents every collision.
 
-```yaml
-target_kind: memory_update
-target: .agents/memory/level-6-pitfalls.md
-patch: |
-  Players who set α=0 expect zero clipping. The math is correct; the
-  UX implies that "zero" means "no constraint." Surface a one-line
-  caption when α≤0.01 that names the implication explicitly.
-evidence:
-  - kind: run
-    ref: events/run-2026-05-19-007.jsonl
-  - kind: postmortem
-    ref: postmortems/2026-05-19-alpha-clip-confusion.md
-human_review_required: true
-```
+The report also lists modes it skipped and conditions for reopening them. That is useful output. A run need not invent a lesson to fill each mode.
 
-(The discriminator field is `target_kind`. Earlier files used `kind`; the validators in product repos tolerate both during the transition. The canonical form is `target_kind`.)
+## Why an offline job
 
-## Why "dream" instead of "retrospective"
+The online request pays for every extra second. An offline job can spend more time comparing traces, but still needs a budget. Moving a long pass to Sunday does not make its tokens free.
 
-A retrospective is a meeting. A dream is a script. The retrospective produces meeting notes; the dream produces typed candidates a reviewer can accept, modify, or reject one at a time. The retrospective happens once and decays; the dream happens every week and the dream loop's own evidence accumulates.
+Keep the input record, write the proposed change separately and preserve the evidence for accepting or rejecting it. A recurring mistake can become a test; a recurring false assertion can become a more confidently filed false assertion. Consolidation needs the provenance it is tempted to compress.
 
-The name has a second weight: dreams are offline, batched, and tolerant of slow expensive reasoning. The online runtime is constrained by p95 latency and per-call cost; the dream loop is constrained by the cron window. A dream can run a 100k-token consolidation pass over a week of logs because the user isn't waiting on it.
+## What to audit
 
-## What the audit asks
+Count scheduled runs that completed, candidates generated, candidates reviewed and candidates promoted. Keep those denominators separate. A report with five candidates and no reviews is a queue, not five improvements.
 
-Three of the four product repos under athena-site (ai-field-brief, procurement-lab, supplier-risk-rag-agent) have a `dreams/2026-W21/` folder. The portfolio audit walks the dream directories and asks:
-
-- Which repos ran a dream this week and which skipped?
-- How many candidates did the dream produce, and what fraction got reviewed?
-- How many candidates promoted into memory, tests, or skills?
-- Which candidates sat in the queue more than 14 days without review?
-
-The first three answers feed `ops/portfolio-health.md`. The fourth files a backlog item against the repo's `learning.dream-orchestrator` role.
+After promotion, measure whether the candidate changed the failures it named. Otherwise the loop has measured its own productivity in new files.
 
 ## See also
 

@@ -20,7 +20,7 @@ That last field is this essay.
 
 A comparison between two policies is a subtraction, and a subtraction carries two noise terms. Give the policies different days and the noise of both days lands in the answer. Give them the same days and most of it cancels, because a hard day is hard for both.
 
-Simulation people call this common random numbers. Stout and Goldie's [tutorial](https://pmc.ncbi.nlm.nih.gov/articles/PMC2761656/) describes it as "synchronized random numbers across model runs to induce correlation in model output thereby making differences easier to distinguish." Model evaluators call it a paired comparison. It is one subtraction under two names.
+Simulation people call this common random numbers. Stout and Goldie's [tutorial](https://pmc.ncbi.nlm.nih.gov/articles/PMC2761656/) describes it as "synchronized random numbers across model runs to induce correlation in model output thereby making differences easier to distinguish." Model evaluators pair results on the same questions. Both exploit covariance in a subtraction, though matching questions alone does not synchronize the models' generation randomness.
 
 ## FINDING ONE: THE WORLD IS LOUDER THAN THE POLICY.
 
@@ -44,8 +44,10 @@ PAIRED AGAINST UNPAIRED, SAME THIRTY DAYS
 
 Standard error of the 23 km gap, paired: 10 km.
 Standard error, if the days had been independent: 24 km.
-Days needed to put 23 km 1.96 standard errors from zero, paired: 23.
-Days per policy needed on separate worlds: 127.
+Approximate days to put the observed 23 km gap 1.96 standard errors from zero, paired: 23.
+Approximate days per policy for that precision on separate worlds: 127.
+
+These are plug-in precision calculations using the observed variance, not sample sizes for a test with a specified power. A powered test needs a target effect, error rate and desired power chosen in advance.
 
 None of that cost an extra run. The scenario bank hands each seed to both solvers, so the comparison was paired the moment it ran.
 
@@ -76,9 +78,9 @@ The 23 km was a lucky draw. Its own paired interval, 3.2 to 42.8 km in the batch
 
 I replayed the thirty-day experiment twenty thousand times from that pool. Paired, the estimates scattered with a standard deviation of 9.6 km and landed on the wrong side of zero 29 percent of the time. Unpaired, they scattered by 28.0 and landed wrong 43 percent of the time.
 
-Pairing cut the scatter to about a third. It did not make thirty days enough to see five kilometres. At a gap of 5.4 km that takes 395 paired days, or 3,167 days per policy on separate worlds.
+Pairing cut the scatter to about a third. It did not make thirty days enough to see five kilometres. At a gap of 5.4 km the same plug-in precision calculation gives 395 paired days, or 3,167 days per policy on separate worlds. Those figures are not a guarantee of detecting that effect.
 
-What three hundred days do settle is the finding the thirty had right: the batch dispatcher assigns about one more order in forty, and drives no more than a kilometre further a day to do it.
+The three-hundred-day sample supports the finding the thirty had right: the batch dispatcher assigns about one more order in forty. Its distance interval runs from 11.6 km less to 0.8 km more; that is an uncertainty interval under this simulation, not a bound on every future day.
 
 ·   ·
 
@@ -104,7 +106,7 @@ Realized cost gap, one unpaired run: $292, standard error $54.
 
 Near neighbours share almost all their noise, and the comparisons that matter most are usually between near neighbours.
 
-It also splits the premium. The 95 percent plan states a cost of $35,565 against $31,046, a premium of $4,518. The realized gap on the same draws is $200. The other 96 percent is budget held against prices that, on average, did not arrive, and on 36 percent of draws the cautious plan was the cheaper one. A decision costs $200. A reserve costs the rest, and only the paired run can say which is which to the nearest $8.
+It also splits the premium. The 95 percent plan states a cost of $35,565 against $31,046, a premium of $4,518. The realized gap on the same draws is $200. The other 96 percent is budget held against prices that, on average, did not arrive, and on 36 percent of draws the cautious plan was the cheaper one. The observed mean cost premium is $200; the larger stated budget allows for adverse prices. The paired comparison estimates that mean gap with an $8 standard error. It does not identify a separate cash reserve the buyer necessarily pays.
 
 ## FINDING SIX: PAIRING BUYS NOTHING WHEN ONE SIDE IS FLAT.
 
@@ -140,7 +142,7 @@ It is. Simulation courses have taught common random numbers for decades, and Sto
 
 **Objection:** Tie the two arms to the same randomness and one bad draw biases both.
 
-**Reply:** It biases both the same way, which is what the subtraction removes. The real hazard is a synchronization the world does not have. Stout and Goldie warn that where little evidence supports a shared cause, "synchronizing random numbers is not desired and could lead to incorrect conclusions."
+**Reply:** A random hard draw adds noise, not systematic bias. Its effects cancel only to the extent the two policies respond alike. A misspecified scenario generator can bias both arms and survive the subtraction. The real hazard is a synchronization the world does not have. Stout and Goldie warn that where little evidence supports a shared cause, "synchronizing random numbers is not desired and could lead to incorrect conclusions."
 
 **Objection:** And when the arms consume randomness differently?
 
@@ -154,11 +156,11 @@ Pairing narrows the error bar, and a narrow error bar on thirty days invites a c
 
 **Reply:** It was the vague one. Its interval was wide enough to hold the truth and also a 25 km gap the other way. The paired interval held the truth too, at a third of the width. Both were honest. Only one was useful.
 
-The evidence that settles it is what gets printed. A point estimate from either method misleads. An interval from the paired method, with the correlation that produced it, does not. The failure mode sits beside the claim: 23 km was the point, and the interval said anywhere from 3 to 43.
+The evidence that settles it is what gets printed. A point estimate from either method misleads. A paired interval and its correlation expose the estimated sampling uncertainty. They do not protect against a misspecified world, selective reporting or an unrepresentative sample. The failure mode sits beside the claim: 23 km was the point, and the interval said anywhere from 3 to 43.
 
 ## SAME SEED, BOTH ARMS
 
-The method fits on a card. Give both arms the same draw: the same seed, the same questions, the same recorded requests. Report the difference, its paired standard error, the correlation, and the count of wins, ties and losses by unit. When the correlation is low or one side is flat, say that pairing bought nothing, and keep the per-unit table, because it still names the losses.
+The method fits on a card. Give both arms the same draw: the same seed, the same questions, the same recorded requests. Report the difference, its paired standard error, the correlation, and the count of wins, ties and losses by unit. Check the covariance: positive covariance can reduce variance, zero buys nothing, and negative covariance can make the difference noisier. When one side is nearly flat, say pairing bought little, and keep the per-unit table, because it still names the losses.
 
 [pass^k, not pass@1](/essays/pass-k-not-pass-at-1/) asked for the same task run k times. This asks for the same task run on both. [The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) said to suspect the eval before the agent. Check the draw first.
 
@@ -174,7 +176,7 @@ COMPARISON RECORD — REMAINING FIELDS
 
 Correlation printed beside the gap: 0.83.
 Paired standard error at thirty days: 10 km.
-Days needed at the thirty-day gap: 23 paired, 127 unpaired.
+Days for plug-in precision at the thirty-day gap: 23 paired, 127 unpaired. Test power: not specified.
 Gap after three hundred days: 5.4 km, interval −11.6 to +0.8.
 Finding that held: about one more order assigned in forty.
 Travel times: fixed. When they move, drawn once per seed.

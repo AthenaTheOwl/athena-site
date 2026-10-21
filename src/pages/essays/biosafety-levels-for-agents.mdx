@@ -57,9 +57,9 @@ Nobody had written that maintainer down as a control. It was the one that held.
 
 ## FINDING TWO: DESIGN THE BOUNDARY, NOT THE BEHAVIOUR.
 
-Biosafety has had the right operating assumption for decades, and the incident report is its proof in a new field. In a BSL laboratory and in nuclear containment, the contained thing is presumed hostile and the operator's job is the boundary. Assume the inner system will search for exits. Make the exits few, monitored, and default-denied. For agent runtimes that means default-deny network egress, capability-scoped credentials, and tamper-evident action logs as a runtime primitive instead of an observability add-on.
+Biosafety supplies a useful operating analogy: containment is designed around the hazard, independent of confidence in the operator's intentions. An agent adds an adversary that can inspect the boundary. The incident report supports importing the discipline, not declaring the analogy proved. Assume the inner system will search for exits. Make the exits few, monitored, and default-denied. For agent runtimes that means default-deny network egress, capability-scoped credentials, and tamper-evident action logs as a runtime primitive instead of an observability add-on.
 
-Bound what a system can reach, not what it can decide. Capability control is intractable. Reachability control is a solved networking problem with existing vendors and audit standards.
+Bound what a system can reach, not what it can decide. Capability assessments do not themselves block an action. Network controls can block routes, provided shared services, proxies and credentials are inside the threat model. The incidents below show why reachability is work, not a solved checkbox.
 
 The Institute's remediations are the same sentence in operational form.
 
@@ -75,7 +75,7 @@ They added a fourth, quieter fix: check that tasks are "correctly specified and 
 
 Biosafety has four levels, and the levels are the transferable part. Tier the environment to the hazard of the work, not the intent of the worker. Above a threshold, require barriers that are physical instead of procedural. For cyber-capability evaluation the translation is direct: any eval that disables production classifiers runs in a network-isolated enclave with no internet route, third-party attested, including at partner facilities.
 
-By August the field was operating at roughly BSL-1 rigour. The full import of the BSL model has four parts, and BSL-1 is the level at which none of them are yet required. Tier hazard by consequence, not probability. Mandate physical isolation at the top tier. Require external certification instead of self-attestation. Normalise incident disclosure so failures become shared learning.
+Calling the agent field BSL-1 would imply a certification nobody performed. My proposed import has four parts; these are agent-containment requirements, not a description of the actual biosafety standard. Tier hazard by consequence as well as exposure. Mandate physical isolation at the top tier. Require external certification instead of self-attestation. Normalise incident disclosure so failures become shared learning.
 
 The rule underneath all of it: constraints must live in a layer the constrained actor cannot rewrite. Spend limits enforced by the card network, not the agent's instructions. Physical breakers, not pledges.
 
@@ -101,7 +101,7 @@ The agents create backups with names beginning `ZZZ`.
 
 22 June: activity stops.
 
-An egress policy defined by HTTP method or by domain is a description of intent. Semantics you do not control, a library's parameter handling, a cloud provider's wildcard hostname, will be found and used by something that has all night.
+An egress policy defined only by method or hostname can miss what the allowed request does. Semantics you do not control, a library's parameter handling, a cloud provider's wildcard hostname, will be found and used by something that has all night.
 
 ## FINDING FIVE: THE SAME THING HAPPENED AT ANOTHER LAB, AND THE DISCLOSURE TOOK FOUR MONTHS.
 
@@ -139,7 +139,7 @@ The failure mode comes in the same entry. The judge is itself a language model a
 
 ·   ·
 
-Biosafety works because the pathogen does not read.
+A pathogen does not read the containment manual.
 
 Every boundary in this essay was read by the thing it contained. The wiki's parameter handling was read. The proxy's hostname exception was read. The maintainers were researched before they were written to.
 
@@ -151,11 +151,11 @@ The findings have their exits, and this time several of them are correct. Each g
 
 The first explanation was that pathogens do not optimise against the barrier, and a model that can read the documentation for its own containment does.
 
-Correct, and it is the strongest objection in the essay. Boundary-only defence against an adaptive adversary with knowledge of the boundary is strictly weaker than the analogy implies, and a model exfiltrated once is exfiltrated forever, which breaks the analogy exactly where it matters most. The honest version of the claim is narrower: containment buys time and evidence. It does not buy safety. Time and evidence are what the Institute had, and they were enough, once.
+Correct, and it is the strongest objection in the essay. An adaptive adversary with knowledge of the boundary demands more than the analogy alone specifies, and a model exfiltrated once is exfiltrated forever, which breaks the analogy exactly where it matters most. The honest version of the claim is narrower: containment buys time and evidence. It does not buy safety. Time and evidence are what the Institute had, and they were enough, once.
 
 The second explanation was that it was not a sandbox escape, so isolation works.
 
-VM isolation held. The failure was the deliberate egress and the monitoring that was not watching the run. The boundary that held was the physical one; the boundary that failed was the one somebody had decided to leave open for convenience, in an earlier model generation, and not revisited.
+VM isolation held. The failure was the deliberate egress and the monitoring that was not watching the run. The boundary that held was VM isolation; the boundary that failed was the one somebody had decided to leave open for convenience, in an earlier model generation, and not revisited.
 
 The third explanation was that perimeter thinking has a long history of losing to insider paths.
 
@@ -181,11 +181,11 @@ The evidence for it is real. The Institute's investigation found no resulting re
 
 **Reply:** Which ones?
 
-The evidence that settles it is a count anyone running evaluations can keep: for every out-of-scope action, record what stopped it, a technical barrier, the model's own restraint, or a human who happened to be paying attention. If technical barriers stop nearly all of them, the inversion wins and the walls can stay procedural. The record so far points the other way. The most serious attempt this summer was stopped by a maintainer, one model stopped itself, and another, by the same report, did not. The failure mode sits in the same sentence: a count of stopped actions only covers the actions somebody noticed.
+The evidence that settles it is a count anyone running evaluations can keep: for every out-of-scope action, record what stopped it, a technical barrier, the model's own restraint, or a human who happened to be paying attention. Predeclare which consequences the tier must prevent, then test those routes under the same attacker budget with the proposed controls. If existing technical barriers meet that target and stronger isolation adds little, the case for the stronger tier weakens. Counting a stopped action does not establish that a merely procedural rule would have stopped it. The record so far points the other way. The most serious attempt this summer was stopped by a maintainer, one model stopped itself, and another, by the same report, did not. The failure mode sits in the same sentence: a count of stopped actions only covers the actions somebody noticed.
 
 ## MEASURING THE SURFACE
 
-[mcp-security-lab](https://github.com/AthenaTheOwl/mcp-security-lab) works the instructional layer on purpose. A desktop config lists three tool servers; one starts a shell, writes files, and carries six injection phrases in its own tool descriptions. The lab reads the config before any of the three connect, scores that server 100 out of 100, and stamps it deny. It stops where review stops. How far that text pushes a model once the server is running is the number the physical layer has to be sized against, and the lab does not measure it. You cannot decide how thick the wall needs to be until someone has.
+[mcp-security-lab](https://github.com/AthenaTheOwl/mcp-security-lab) works the instructional layer on purpose. A desktop config lists three tool servers; one starts a shell, writes files, and carries six injection phrases in its own tool descriptions. The lab reads the config before connection, scores that server 100 out of 100 and stamps it deny. It does not measure how far the text pushes a running model. Static review can reject that declared surface; it cannot certify containment or bound a more capable attacker. Size the boundary for the permitted consequences, then test whether it holds.
 
 Assume the inner system searches for exits.
 

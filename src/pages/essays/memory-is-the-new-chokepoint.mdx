@@ -36,7 +36,7 @@ That is a strange sentence, and it is the correct one.
 
 A server memory module and an HBM stack start as the same kind of wafer.
 
-Whichever one pays more per wafer gets the next one.
+The revenue per wafer changes the incentive to allocate the next one. Existing contracts, yields and qualified production lines limit how quickly the fab can respond.
 
 The fab does not have a view on AI. It has a price list.
 
@@ -70,7 +70,7 @@ Compress the weights. Ternary weights map to minus one, zero and one, replacing 
 
 Page the weights. Keep the cold majority on cheap storage, predict the hot minority, and hide the fault latency, which is demand paging from operating systems pointed at mixture-of-experts inference. One implementation predicts the next layer's expert routing a token ahead and serves a 35-billion-parameter model inside three gibibytes of active memory, at twenty tokens a second. It works now because of a price ratio, not a breakthrough: supplier DRAM inventories that TrendForce calls "extremely low" made memory the priced resource and storage bandwidth the cheap one. The failure mode is the same ratio running backwards, because a DRAM glut collapses the advantage.
 
-Design for the constrained tier first. Quantisation-aware training builds the artifact around the cheapest deployment target's constraints instead of building the premium version and degrading it. Kimi K3 shipped 2.8 trillion parameters with MXFP4 weights and MXFP8 activations trained that way, so it is no longer a small-model compromise. The limit of the analogy is honest: it works because neural networks are massively overparameterised and noise-tolerant, and most physical systems have no equivalent slack.
+Design for the constrained tier first. Quantisation-aware training builds the artifact around the deployment target's constraints instead of building the premium version and degrading it. Moonshot says it applies this from supervised fine-tuning onward in its 2.8-trillion-parameter Kimi K3, with MXFP4 weights and MXFP8 activations. That establishes a producer-reported deployment at this scale; it does not isolate the technique's contribution to quality. The limit of the analogy is honest: neural networks can tolerate some numerical noise, and most physical systems have no equivalent slack.
 
 ## FINDING FIVE: THE TIERING IDEA IS OLDER THAN THE SHORTAGE.
 
@@ -98,7 +98,7 @@ It is, and part of the response is price, not steel: suppliers are expected to m
 
 The second explanation was that quantisation and paging make the shortage a non-event.
 
-They make it survivable at a quality cost nobody has measured on the workloads that matter. On mathematics and coding tasks, the ScaleQ-1.58 authors report that the prior best ternary method collapses outright under conventional calibration. The quality cost of storage-backed inference is not yet measured on long-horizon agentic tasks. Both techniques are hedges priced in a currency, model quality, that the buyer cannot see on the invoice.
+Compression and paging spend different things. Lower precision can change the computation and its answers. On mathematics and coding tasks, the ScaleQ-1.58 authors report that a prior ternary method collapses under their conventional calibration setting; that is a result about the tested method and setting. Moving unchanged weights between storage tiers primarily spends transfer time; timeouts and changed serving policies can then affect task success. Test answer quality and completion time separately on the buyer's workload. A memory saving is a number on only one of those scorecards.
 
 **Objection:** Then the techniques are a trap.
 
@@ -120,7 +120,7 @@ The case is real, and TrendForce's own analysis supports its first half.
 
 **Reply:** Until 2027.
 
-The evidence that settles it arrives with the 2027 HBM contracts and the conventional DRAM prices that follow them. If conventional contract prices fall back once HBM reprices, the crunch was mostly the lag, and the inversion wins for everyone who can wait a year. If conventional prices stay high while HBM's wafer share climbs toward 30 percent, the constraint is physical. The failure mode sits in the same sentence: the same release that describes the pricing lag also forecasts the crowding-out intensifying in 2027, so repricing HBM upward may pull more wafers away from conventional memory, not fewer.
+The evidence that settles it arrives with the 2027 HBM contracts and the conventional DRAM prices that follow them. Read contract prices beside wafer allocation, yields, output and inventories. A price decline alone cannot identify a resolved physical constraint; weaker demand could produce it too. Increasing conventional output after reallocation would support the pricing-lag account. Persistent shortages of usable output despite higher prices would favour the physical account. The failure mode sits in the same sentence: the same release that describes the pricing lag also forecasts the crowding-out intensifying in 2027, so repricing HBM upward may pull more wafers away from conventional memory, not fewer.
 
 ## THE MAP AND THE PLAN
 
@@ -139,10 +139,10 @@ WAFER ALLOCATION — REMAINING FIELDS
 HBM contract price for 2027: "multiples higher," expected.
 Conventional DRAM price after that: not yet known.
 Share of wafers for HBM at the end of 2027: about 30 percent.
-Which product gets the next wafer: whichever pays more.
+Which product gets the next wafer: revenue, yield, qualification and commitments all get a vote.
 
 The allocation ends there. The fab, as ever, has no opinion about AI.
 
 ---
 
-Sources: TrendForce, "Rapid Contract Price Surge Drives 1Q26 DRAM Industry Up 81% QoQ" (https://www.trendforce.com/presscenter/news/20260601-13070.html); TrendForce, "Tight DRAM Supply Gives Suppliers Greater Pricing Power in HBM" (https://www.trendforce.com/presscenter/news/20260602-13074.html); CAT-Q (https://arxiv.org/html/2606.26650v1); TWLA (https://arxiv.org/html/2606.13054v1); Sherry (https://arxiv.org/html/2601.07892v1); ScaleQ-1.58 (https://arxiv.org/html/2608.01078v1); Edge0 (https://arxiv.org/abs/2609.18063); Kimi K3 model card (https://huggingface.co/moonshotai/Kimi-K3); Ternary Bonsai 2 27B (https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf).
+Sources: TrendForce, "Rapid Contract Price Surge Drives 1Q26 DRAM Industry Up 81% QoQ" (https://www.trendforce.com/presscenter/news/20260601-13070.html); TrendForce, "Tight DRAM Supply Gives Suppliers Greater Pricing Power in HBM" (https://www.trendforce.com/presscenter/news/20260602-13074.html); CAT-Q (https://arxiv.org/html/2606.26650v1); TWLA (https://arxiv.org/html/2606.13054v1); Sherry (https://arxiv.org/html/2601.07892v1); ScaleQ-1.58 (https://arxiv.org/html/2608.01078v1); Edge0 (https://arxiv.org/abs/2609.18063); Moonshot's Kimi K3 technical blog (https://www.kimi.com/blog/kimi-k3); Kimi K3 model card (https://huggingface.co/moonshotai/Kimi-K3); Ternary Bonsai 2 27B (https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf).

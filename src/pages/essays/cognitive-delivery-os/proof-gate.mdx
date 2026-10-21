@@ -6,54 +6,39 @@ date: "2026-05-24"
 readingTime: "4 min read"
 ---
 
-A proof gate is a script that returns zero when the change is safe to merge and non-zero when it isn't. Every product repo runs its gates on every PR and on the weekly cron. A failing gate blocks the merge or files an issue — never a conversation, never a sign-off, never a slack thread.
+A proof gate is a script that returns zero when its stated checks pass and non-zero when they fail. It can block a merge when the workflow runs it and the repository requires that result. A weekly run can report drift after the merge; it cannot block a merge that already happened.
+
+The name is ambitious. The coverage has to be explicit.
 
 ## The current gate inventory
 
-Each product repo ships at least these:
+The product repos use voice lint, spec checks, decision and role validators, tests, evals and builds. The shared schemas define record shape. Each repo's workflow determines which scripts run and which results block release.
 
-- `scripts/voice_lint.py` — bans AI-speak, antithetical reversals, empty intensifiers.
-- `scripts/spec_check.py` — every `specs/NNNN-<slug>/` has the three required files and the requirements are numbered.
-- `scripts/validate_decisions.py` — every `decisions/DEC-*.md` matches `decision.schema.json`.
-- The repo's test suite — pytest, vitest, or whatever the language uses.
-- The repo's eval suite — for repos that ship retrieval, generation, or scoring.
-- The build — `npm run build`, `python -m build`, or the equivalent.
-
-Two newer gates are landing across the portfolio in 2026: `validate_roles.py`, `validate_tools.py`, `validate_policies.py` (one schema each from `ops/schemas/`), and `validate_skills.py` for repos that ship skills.
+Do not infer the whole inventory from a file named `gates.yml`. Evals and tests can have separate workflows; a script in `scripts/` can remain unwired.
 
 ## A concrete example
 
-Supplier-risk-rag-agent's CI runs its gates on every PR, split across three workflows:
+Supplier-risk-rag-agent separates its checks across workflows. `gates.yml` runs structural checks including `voice_lint`, `spec_check` and `validate_decisions`. `evals.yml` invokes:
 
 ```yaml
-# .github/workflows/gates.yml (excerpt)
-- name: voice_lint
-  run: python scripts/voice_lint.py
-- name: spec_check
-  run: python scripts/spec_check.py
-- name: validate_decisions
-  run: python scripts/validate_decisions.py
-# .github/workflows/tests.yml (excerpt)
-- run: uv run pytest --cov=src --cov-fail-under=70
-# .github/workflows/evals.yml (excerpt)
 - run: uv run python -m src.evals.runner --suite all
 ```
 
-The eval gate is the load-bearing one for that repo. SEC filings in, cited answers out — the product promise depends on receipts, so the gate measures the receipts. A change that drops citation faithfulness below the threshold fails the gate, and the gate fails the merge.
+The eval suite checks the product's cited-answer promise. A failing citation-faithfulness check is evidence against that revision under that dataset and threshold. It is not a proof that every cited answer the product will ever return is faithful.
 
 ## What makes a gate a gate
 
-Three properties:
+The check needs a declared scope, a repeatable command and an exit status the release path enforces. CI provides a place to run it; branch protection or the release workflow supplies the consequence.
 
-- It's a script — runnable from a shell, repeatable, hashable.
-- It returns a non-zero exit code on failure.
-- It runs in CI, not just on the author's laptop.
+A reusable result should name the input revision, rule version, environment and raw output. An unchanged command can return a different result after any of those change. Missing evidence means unknown applicability, not a remembered pass.
 
-A "lint" that only runs locally is a suggestion. A lint that runs in CI is a gate. The discipline lives in the distinction.
+## Why gates and reviews
 
-## Why gates instead of reviews
+A script catches the failures encoded in it. Human review asks whether the requirement, implementation and check are the right ones. Neither completes the other's job.
 
-A human review catches the things a script can't catch yet. A gate catches the things a script already can, every time, for every change. The two compose: the gate handles the structural failures (missing spec, broken decision, AI-speak in the prose) so the human review can focus on the semantic ones (is the requirement the right requirement, is the decision the right decision). A repo without gates makes the reviewer the gate. A reviewer-as-gate is a reviewer who never sleeps; that's how PR queues grow.
+Keep the gate definition outside the candidate's power to weaken it, or review changes to the gate as part of the change. An agent that fixes a failing score by deleting the test has produced a green receipt for a smaller question.
+
+The useful split is mechanical checking where it is reliable, review where judgment remains. A green row is permission under the declared policy. It is evidence within the declared scope.
 
 ## See also
 

@@ -18,7 +18,7 @@ Permissions per tool: not applicable. There are two tools, and each can do whate
 
 The last line is the one a manifest cannot show, because the permission has left the menu and moved into the key.
 
-Each of the two tools takes a single JavaScript function as its argument. The agent never sees the API. It queries it.
+Each of the two tools takes a single JavaScript function as its argument. The agent sees the API surface it asks to discover. It queries the specification instead of preloading it.
 
 Four sources this year arrived at versions of that sentence from four directions, and the convergence is the finding. Where the surface goes afterward is the part the manifest has no field for.
 
@@ -38,11 +38,11 @@ Selection accuracy, one model: 49 percent to 74.
 
 Another: 79.5 to 88.1.
 
-The accuracy moved in the right direction because a smaller candidate set is easier to choose from. Fewer options, fewer wrong options. The trade-off is the one retrieval always carries: if the matcher misses the one tool the task needs, the agent cannot recover, because it never saw it.
+The result is consistent with a smaller candidate set making selection easier. Search also changes which descriptions the agent sees; the figures alone do not separate those effects. The trade-off is the one retrieval always carries: if the matcher misses the tool the task needs, the agent must reformulate the search or use a fallback. Without either, the missing tool stays missing.
 
 Nobody reads the phone book before making a call.
 
-## FINDING TWO: INTERMEDIATE DATA SHOULD NEVER MEET THE MODEL.
+## FINDING TWO: COPYING DATA IS A JOB FOR THE ENVIRONMENT.
 
 The second tax is worse and less noticed. With direct tool calls, intermediate results pass through the model twice. Anthropic's worked example is the one to carry around: download a meeting transcript from Drive and attach it to a Salesforce lead. The first call returns the full transcript into context. The model must then write the entire transcript back out as an argument to the second call. For a two-hour meeting that is roughly 50,000 extra tokens, and with large documents the model is more likely to corrupt the data while copying it.
 
@@ -66,7 +66,7 @@ The model reads the part it needs. The rest never meets it, which is the entire 
 
 The prevailing design for coding agents was a set of atomic tools: read file, edit file, search, list directory. Philipp Schmid's argument is that this was a workaround for weak models, and that frontier models now compose shell pipelines well enough that the atomic tools are a net loss. They constrain the action space, consume context with descriptions, and force multi-turn round trips for what one command does.
 
-The design is not "give it bash and walk away." It is bash with the ergonomics that made atomic tools worth having, absorbed into the harness.
+The design puts bash inside a harness with the ergonomics that made atomic tools worth having.
 
 Truncate output, so a runaway command cannot blow the window.
 
@@ -90,7 +90,7 @@ The closing rule is the one almost nobody follows. Run the evals without the ski
 
 ## FINDING FIVE: THE PERMISSION MOVES FROM THE MENU TO THE KEY.
 
-Two generic tools lose per-tool authorization. "This agent may read DNS but never write firewall rules" is hard to enforce when the tools are `search` and `execute`.
+Two generic tools lose endpoint-level permissions as a visible property of the tool menu. The server can still enforce policy on each underlying operation. "This agent may read DNS but never write firewall rules" is hard to enforce when the tools are `search` and `execute`.
 
 Cloudflare's answer is to push the policy into the credential. Their server is OAuth 2.1 compliant and uses its OAuth provider "to downscope the token to selected permissions approved by the user when connecting. The agent only gets the capabilities the user explicitly granted."
 
@@ -100,7 +100,7 @@ A menu of fifty tools lets a reviewer read the permissions off the menu.
 
 Two tools and a scoped token put the permissions in the token.
 
-The guarantee did not get weaker. It moved, to a place that design reviews do not always look, and it belongs in the review, not the footnotes.
+The guarantee can survive the move if the server enforces the token's scope on every operation. It moved, to a place that design reviews do not always look, and it belongs in the review, not the footnotes.
 
 ## FINDING SIX: A SMALLER PROMPT IS NOT A SMALLER ATTACK SURFACE.
 
@@ -124,7 +124,7 @@ Copilot: no fix from Microsoft. GitHub says the attack does not reach its own ma
 
 Authority of the code once it ran: everything the developer who launched the agent could reach.
 
-The supply-chain comparison is exact. Classic attacks had to compromise a build system and wait for a release. Agent plugins compress that: the marketplace is the build system, the update channel is the deploy pipeline, and there is no release cycle, because plugins auto-update. Plugin authority has no middle setting. A plugin is installed and runs with everything the developer can reach, or it is not installed.
+The supply-chain analogy identifies the control that matters. A compromised build system can carry an attack through a release. An agent plugin update can shorten that path: the marketplace is the build system, the update channel is the deploy pipeline, and there is no release cycle, because plugins auto-update. The incident shows what happens when plugin code inherits the launching developer's authority without a narrower boundary.
 
 The surface taken out of the prompt did not disappear.
 
@@ -146,11 +146,11 @@ Correct on both counts. The tool-search and programmatic-calling figures are Ant
 
 The second explanation was that pinning plugins is enough.
 
-It was the control everybody relied on, and it never checked its own work. The agent checks out the pinned commit and never verifies the checkout landed there, so the pin reads as honored while the code is someone else's. In September it was falsified once, across four products. Every enterprise that deployed coding agents did so on an implicit assumption of marketplace integrity. That assumption is now a finding with a patch number.
+The reported pinning implementation checked out the requested commit without verifying the resulting checkout, so the pin could appear honored while different code ran. Deployments that trusted the update path without another boundary relied on its integrity. That assumption is now a finding with a patch number.
 
 The third explanation was that the sandbox is the real cost of the pattern.
 
-It is. Anthropic's own post says the infrastructure adds operational overhead and security considerations that direct tool calls avoid. Bash-first demands a serious sandbox. Code Mode runs generated code in a V8 isolate "with no file system, no environment variables to leak through prompt injection and external fetches disabled by default," which is the reason it is safer than handing the agent a shell. The sandbox was never an implementation detail; it is the price, and the whole price.
+It is. Anthropic's own post says the infrastructure adds operational overhead and security considerations that direct tool calls avoid. Bash-first demands a serious sandbox. Code Mode runs generated code in a V8 isolate "with no file system, no environment variables to leak through prompt injection and external fetches disabled by default," which is the reason it is safer than handing the agent a shell. The sandbox was never an implementation detail; it is part of the price. Credential scope, dependency trust and operation logs remain on the invoice.
 
 **Objection:** So the answer is fewer tools.
 
@@ -158,7 +158,7 @@ It is. Anthropic's own post says the infrastructure adds operational overhead an
 
 **Objection:** Weaker models cannot write code against a spec they discover at runtime.
 
-**Reply:** Correct, and none of the sources measures the gap. The mechanism is enough on its own: a discovered spec has to be read and compiled against, while a tool schema arrives pre-parsed. For five to fifteen tools you control, the schema tax is trivial and function calling is simpler to debug. Reach for code when the tool count is large, growing, or unknown.
+**Reply:** That is a real failure mode, and none of these sources measures its size against plain function calling. A small tool set may be simpler to debug and review through fixed schemas. The crossover depends on schema size, model competence and task shape; tool count alone does not set it. Reach for code when composition earns its operational cost.
 
 The fourth explanation was multimodal blindness. A shell command that renders an image still needs a separate channel to look at it, and browser automation stays a specialized tool.
 
@@ -170,9 +170,9 @@ The case builds without strain. Every tool call against a fixed schema can be lo
 
 **Objection:** Then keep the menu.
 
-**Reply:** Under fifteen items, yes.
+**Reply:** When the menu earns its cost, yes.
 
-Above that, the evidence settles the rest locally: on your own tools, measure tokens, task success and review time per task under function calling and under code execution. If function calling wins at your tool count, use it; the essay's own reply agrees below fifteen. The failure mode belongs in the same paragraph. The review burden moves from the schema to the generated code, and a team that adopts code execution without anyone reading the programs has made the sandbox its only reviewer.
+Above that, the evidence settles the rest locally: hold the task set, model, credentials and available operations fixed, and compare function calling with code execution. Measure task success, tokens, latency and review time, including failed programs. If function calling wins under the workload's requirements, use it. The failure mode belongs in the same paragraph. The review burden moves from the schema to the generated code, and a team that adopts code execution without reviewing the programs or enforcing policy below them has left the sandbox carrying more than a resource boundary should.
 
 ## THE SURFACE IS WHAT THE MODEL READS
 
@@ -188,7 +188,7 @@ TOOL MANIFEST — REMAINING FIELDS
 
 Scopes on the token: whatever the user approved at connect time, which the user may not remember.
 Plugin update channel: open. Pin: see patch notes.
-Reviewer of generated programs: the sandbox, unless someone is named.
+Reviewer of generated programs: named. Sandbox boundary: tested separately.
 Signature:
 
 The manifest ends there. The agent, holding two tools, can reach everything the key opens.

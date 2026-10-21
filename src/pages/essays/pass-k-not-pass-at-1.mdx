@@ -26,6 +26,8 @@ That is the failure the Thinkingbox authors saw most often when they ran 507 sta
 
 ## FINDING ONE: CAPABILITY IS ONE SUCCESS. RELIABILITY IS EVERY SUCCESS.
 
+pass@k asks whether at least one of k attempts succeeds. pass^k asks whether all k succeed, averaged across tasks. Report k beside the score: changing the number of attempts changes the question. Neither metric alone certifies that an agent is safe to deploy; the task mix, the failures' consequences and the deployed recovery paths still matter.
+
 The distinction has a precedent. On τ-bench's retail tasks, GPT-4o scored about 61 percent pass@1 and under 25 percent pass^8, which means that across eight runs the chance of at least one failure was near three in four. A Northern Kentucky team built a framework around that: benchmarks measure whether a system can succeed once, production requires that it succeed consistently across thousands of invocations, and the two diverge as tasks get longer.
 
 Their 23,392 episodes across four duration buckets found the decay is universal and faster than geometric. If each step failed independently you could predict the long-horizon rate from the short one. The observed rate is worse, because errors are positively correlated. Once an agent makes a bad tool call or forms a wrong hypothesis, it tends to persist.
@@ -88,7 +90,7 @@ A refund issued from a refund issued plus a cancelled subscription.
 
 A failed lookup from one the agent decided to remember as a success.
 
-The cheapest change is a single log line: for every tool error, record whether the trajectory repaired it, ignored it, or proceeded as if it had succeeded. That ratio is a leading indicator of production incidents, and it costs nothing to start counting.
+Start with an error ledger: for every tool error, record whether the trajectory repaired it, ignored it, or proceeded as if it had succeeded. The classification needs a check against the resulting state. A log of the agent's own account would reproduce the failure it is meant to count. Whether the ratio predicts production incidents is a further test.
 
 ·   ·
 
@@ -150,11 +152,11 @@ The reliability framework makes the same move with a graded degradation score: e
 
 ·   ·
 
-Every number above is a question about supervision.
+Every number above bears on supervision, but none is a staffing plan.
 
-A system that must be watched every time costs a person for every run. A system that must be watched some of the time costs a person for an unknown share of runs, and the share is unknown precisely because nobody ran it twenty times.
+A low repeat-run score means the first success is a poor basis for withdrawing review. Deciding how much review to keep also needs the cost of a failure, the chance of catching it before the side effect, and the time a reviewer spends on the case.
 
-pass^k is the column that says how many people.
+The score tells you where the supervision argument still owes evidence.
 
 ## THE EXPLANATIONS AFTERWARD
 
@@ -190,7 +192,7 @@ The fifth explanation was the inversion, which the essay owes: pass^k is the wro
 
 The case builds itself. Production agents run inside harnesses with retries, verifiers and human review. EvoCode's own authors call their fail-stop design a limitation, since real agents get to recover. A round failed for leaving stale code beside new code is closer to shipping than one that never implemented the requirement, and the binary cut prints them the same. On that reading, the bare-model pass^k is a lab number, and the number that matters is the pass rate of the whole system after its safety nets.
 
-That is correct as far as it goes, and it names its own test. Measure pass^k of the system you ship, retries and verifiers included, across k runs of the same task. If that number is high, the bare-model figure is irrelevant and this essay has been arguing with a straw column. The failure mode belongs in the same sentence: a retry on an irreversible action is not free. A retried refund is a second refund. The system-level pass^k only rescues you where the safety net runs before the side effect, not after it.
+That is correct as far as it goes, and it names its own test. Measure pass^k of the system you ship, retries and verifiers included, across k runs of the same task, with each run starting from the same backend state. State the acceptable rate and forbidden side effects before testing. A system that meets those conditions can justify deployment despite a weak bare-model score. The failure mode belongs beside that claim: a retried refund can issue a second refund unless the workflow prevents duplicate effects. Grade the final state after recovery, including extra effects; a tidy retry transcript earns no exemption.
 
 ## WHERE THE METRIC COMES FROM
 
@@ -204,11 +206,11 @@ The change these papers ask for is cheap to state. Run every eval task k times a
 
 [LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) already grades the way Thinkingbox does: forty-six cases in six suites, and a refund answer can pass its JSON shape and still fail the safety reviewer, because the runner keeps those failures separate instead of folding them into one score. It reports the repeated-run column now. `--repeat 3` prints pass@1, pass@3 and pass^3 side by side, and `--min-pass-hat-k 1.0` exits non-zero when any case fails on one attempt in three. The flaky refund case in its own fixture passes, fails, passes.
 
-[sports-prediction-os](https://github.com/AthenaTheOwl/sports-prediction-os) makes the same argument about football. Arsenal drew Liverpool 2-2, and the scoreline calls it even. Liverpool built 2.13 expected goals and Arsenal 1.49, which the repository sums up as "Same scoreline, different luck." A single result is one sample of a process. The project reads shot quality instead of the outcome, which is what pass^k does for an agent: it stops judging the run by the one result it happened to produce.
+The committed sample in [sports-prediction-os](https://github.com/AthenaTheOwl/sports-prediction-os) makes the same argument about football. It gives Arsenal and Liverpool a 2-2 draw, and the scoreline calls it even. These are sample values demonstrating the analysis, not a claim about an observed match. Liverpool built 2.13 expected goals and Arsenal 1.49, which the repository sums up as "Same scoreline, different luck." A single result is one sample of a process. The project reads shot quality instead of the outcome, which is what pass^k does for an agent: it stops judging the run by the one result it happened to produce.
 
 pass@1 tells you whether the thing can be done.
 
-pass^k tells you whether you can stop watching.
+pass^k tests how consistently it survives being asked again.
 
 ·   ·
 

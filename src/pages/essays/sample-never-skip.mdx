@@ -55,7 +55,7 @@ The fare dodgers are counted by the tickets he does check. The ones he skips are
 
 Dodge's plan, now called CSP-1, has two numbers and two rules. The [1981 military standard](https://everyspec.com/MIL-STD/MIL-STD-1100-1299/MIL-STD-1235B_25929/) that tabulated it, MIL-STD-1235B, prints the whole procedure in one figure. Inspect every unit. "When i consecutive units are found free of the defects concerned," release the screening crew and inspect a fraction f of the units, "selected in random manner." When the sampling inspector finds a defect, go back to inspecting everything.
 
-The number i is the clearance number, and it plays the part of the twenty rows. The clearance buys a lower sampling rate, never a zero one. In return the plan gives a ceiling: however bad the incoming drafts are, the long-run share that ships unseen has a maximum, the average outgoing quality limit. I recomputed it from Dodge's formula for four plans.
+The number i is the clearance number, and it plays the part of the twenty rows. The clearance buys a lower sampling rate, never a zero one. Under the classical model, the plan gives a ceiling on the long-run expected fraction of bad units shipped, the average outgoing quality limit. That assumes random inspection, an unchanging independent defect probability, perfect detection, and rectification of defects found before release. It is not a guarantee for each short batch or an arbitrary drifting agent. I recomputed it from Dodge's formula for four plans.
 
 WORST-CASE SHARE OF BAD DRAFTS SHIPPED UNSEEN, CSP-1
 
@@ -86,13 +86,13 @@ Both are reverts. CSP-1 adds the sensor that fires them: a running sample, so th
 
 The standard also keeps a class of defect out of sampling altogether: for critical defects, the supplier may be required to inspect every unit. DEC-RQ-001 draws the same line. A target qualifies for auto-promote only if it supports rollback: a file in a versioned repository does, and a published post does not.
 
-A draft you cannot take back is a critical defect waiting to happen. Its sampling rate is one.
+Irreversibility is a reason to demand stronger review, not a definition of a critical defect. Set that class by the consequence of a miss. For critical actions the design can require review of every unit; a rollback promise alone does not make the consequence small.
 
 ·   ·
 
 Zero is the one sampling fraction that cannot detect its own failure.
 
-Every other fraction, however small, eventually finds the defect and turns the full review back on.
+A positive random fraction can detect persistent defects and turn full review back on. How long it takes depends on the defect rate, sampling rate and detection quality; an isolated defect can still pass unseen.
 
 ## FINDING FIVE: THE GUARANTEE ASSUMES THE INSPECTOR SEES THE DEFECT.
 
@@ -133,11 +133,11 @@ The rule is the standard's rule. Sample the reviewers too, and treat a miss foun
 
 **Objection:** Dodge assumed a process in statistical control. An agent drifts with every model update, every prompt edit, every new kind of input.
 
-**Reply:** Retooling resets the count, which covers the visible changes. For the invisible drift, Gerald Lieberman's [1953 note](https://doi.org/10.1214/aoms/1177728988) in the same journal proved that the Dodge procedure, "without the assumption of control, guarantees an AOQL, although different from that specified by Dodge." The ceiling moves. It does not vanish.
+**Reply:** Retooling resets the count, which covers the visible changes. For the invisible drift, Gerald Lieberman's [1953 note](https://doi.org/10.1214/aoms/1177728988) in the same journal proved that the Dodge procedure, "without the assumption of control, guarantees an AOQL, although different from that specified by Dodge." That result supplies a different bound; it does not preserve the numerical ceilings in Finding Three. Correlated defects, short runs and changing task mix need their own analysis.
 
 *The third explanation was the inversion, and an operator would make it without strain.*
 
-The 95 percent rule plus a rollback path is enough. A sampled gate is a slower human gate that nobody will ever turn off. Open the gate, watch the downstream signals, roll back when they fire. An earlier essay here argued for [checking everything when the check is cheap](/essays/the-verifier-is-the-whole-problem/); a human check is expensive, so check nothing and rely on the revert.
+The 95 percent rule plus a rollback path is enough. A sampled gate is a slower human gate that nobody will ever turn off. Open the gate, watch the downstream signals, roll back when they fire. An earlier essay here argued for [checking everything when the check is cheap](/essays/the-verifier-is-the-whole-problem/); a human check is expensive, so rely on downstream detection where it provides sufficient coverage.
 
 The case is real for loud failures. A record type whose bad output breaks a build within the hour needs no human sampler; the downstream signal is the sampler.
 
@@ -145,13 +145,13 @@ The case is real for loud failures. A record type whose bad output breaks a buil
 
 **Reply:** Yes, for those. DEC-RQ-001 names the other kind in its own context section: the failure it exists to catch is "silent-bad candidates that pass without notice." A rollback fires when someone notices. For a silent failure, the sample is how anyone notices.
 
-The evidence that settles it, per record type, is time to detection: how long a bad draft took to surface downstream, against how long a one-in-ten sample would have taken. Where downstream wins, set f low and lean on the revert. Where the sample wins, keep it. The failure mode sits beside the test: a type nobody samples produces no evidence about its silent failures, so take the measurement before the sampling stops.
+The evidence that settles it, per record type, is time to detection: how long a bad draft took to surface downstream, against how long a one-in-ten sample would have taken. Measure both during an overlapping review period using the same defect definition, including cases with no downstream signal. Where downstream catches the relevant failures sooner at acceptable coverage, a lower human sampling rate may earn its cost. Where it misses them, keep the sample. The failure mode sits beside the test: a type nobody samples produces no evidence about its silent failures, so take the measurement before the sampling stops.
 
 ## TWENTY, THEN ONE IN TEN
 
-The gate in review-queue does the slow work well: it writes its threshold before its data and refuses to open on one row. CSP-1 supplies what comes after the threshold is met. It keeps a reviewer on the line, says how much can slip past them, and puts the full gate back on its own. [pass^k, not pass@1](/essays/pass-k-not-pass-at-1/) called its metric the column that says how many people an agent needs watching it. This is the schedule for those people.
+The gate in review-queue does the slow work well: it writes its threshold before its data and refuses to open on one row. CSP-1 supplies what comes after the threshold is met. It keeps a reviewer on the line, says how much can slip past them, and puts the full gate back on its own. [pass^k, not pass@1](/essays/pass-k-not-pass-at-1/) measured repeated success. That score alone cannot calculate review staffing. This is a candidate review schedule, conditional on the process and inspector assumptions above.
 
-Step back after twenty.
+Pick the clearance from the risk you can accept. Twenty is an illustration.
 
 Never step back to zero.
 

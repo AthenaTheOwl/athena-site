@@ -41,7 +41,7 @@ At 50 million it uses all four channels: 9,224 tested wafers from A, 30,000 test
 
 That is a capacity story. Known good die is a product with a factory behind it, and the factory has a ceiling.
 
-Now the admission the model owes. The column for the tested price is commented "includes yield guarantee." The Monte Carlo simulator in the same repository draws one yield factor per supplier and applies it to tested and untested wafers alike. A bad yield quarter costs the buyer the same good dies either way. The model prices the test. It does not model the transfer of yield risk from buyer to seller, which is half of what a real known-good-die premium buys. Every premium in this essay is therefore the price of the sort alone, and the real ones should be higher.
+Now the admission the model owes. The column for the tested price is commented "includes yield guarantee." The Monte Carlo simulator in the same repository draws one yield factor per supplier and applies it to tested and untested wafers alike. A bad yield quarter costs the buyer the same good dies either way. The model prices the test. It does not model the transfer of yield risk from buyer to seller, which is half of what a real known-good-die premium buys. The model captures the price of the sort without isolating a yield-risk transfer. It cannot establish how large a real guarantee premium would be.
 
 ·   ·
 
@@ -57,13 +57,13 @@ Intercom sells its support agent, Fin, at "$0.99 per outcome," on its [pricing p
 
 Zendesk sells the same kind of agent and drew the line somewhere else. Its [May 2026 announcement](https://support.zendesk.com/hc/en-us/articles/10677925692698-Announcing-changes-to-AI-agent-reporting) splits the outcomes. A contained resolution: "A meaningful request is handled by the AI agent, without human involvement or follow-up." A verified resolution has "additional signals confirming the outcome was complete and satisfactory." Then: "You will continue to be billed only for Verified resolutions," and "Contained resolutions do not consume automated resolutions."
 
-Same event. A customer reads the answer and leaves. One vendor bills it. The other does not.
+The same visible event, a customer leaving, is insufficient to infer the same bill. Intercom explicitly permits an assumed resolution. Zendesk requires additional verification signals; the announcement does not tell us how that particular conversation would be classified.
 
 Neither definition is dishonest. Both are published. They are two test programs, and each one sets the price of good.
 
 The chip industry put this in a standard long before anyone sold an agent. JEDEC's procurement standard for known good die, [JESD49B.01](https://online.standard.no/en/jedec-jesd49b01-2), says the parts "are intended to be equivalent to or better than comparable packaged parts," and leaves the specific performance, quality and reliability requirements to negotiation between supplier and user. The supplier then has to carry out and show the screening that was agreed.
 
-The chip buyer negotiates the test. The AI buyer gets a help article.
+The chip buyer negotiates the test. The posted AI offer supplies a help article; an enterprise buyer may still negotiate its contract.
 
 [Pay at the point of value](/essays/pay-at-the-point-of-value/) ended on the meter: whoever counts the uses sets the price. This is the step before the count. A meter tallies units. The test decides which units are allowed onto the tally, and a scrupulously honest meter will count a loose definition perfectly.
 
@@ -87,9 +87,9 @@ Known good die mattered most when dies stopped going into their own packages and
 
 Semiconductor Engineering's [May 2026 piece on HBM test](https://semiengineering.com/hbm-shifts-testing-left-to-preserve-ai-chip-yield/) puts the stacks at twelve dies, up from two a decade ago, with sixteen expected soon. "The path to known-good stacks begins with known-good dies (KGDs)." Vernon Rodgers of Aehr Test Systems said of the logic die at the base of the stack: "if it's bad, 16 dies get thrown away." The same piece notes that stacking itself creates defects, and that a twelve-high stack can take from 3 to 12 test insertions, depending on the assembly house.
 
-The arithmetic is short, and these are my numbers, not the article's. If each of twelve dies is good 99 percent of the time, a stack is good 88.6 percent of the time. At 95 percent per die, 54.0 percent.
+The arithmetic is short, and these are my numbers, not the article's. If the twelve dies fail independently and each is good 99 percent of the time, all twelve are good 88.6 percent of the time. At 95 percent per die, 54.0 percent. Shared defects and failures introduced by bonding require a different calculation.
 
-An agent workflow is a stack. Each step is a die bonded to the last, and a single silent failure halfway down spoils the steps above it. The fixture in [LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) shows the first symptom. Run three times, its summary table reads "100.0% pass rate" and PASS. One line below, pass^3 is 50 percent: one of its two cases went pass, fail, pass. It is a two-case mock, deliberately flaky, and it is enough to show that a per-attempt grade and a per-stack grade are different instruments. [pass^k, not pass@1](/essays/pass-k-not-pass-at-1/) made the reliability case. The procurement version is shorter: buy the dies tested before you bond them.
+An agent workflow is a stack. Each step is a die bonded to the last, and an undetected failure can spoil dependent steps above it. Retries, validation and independent branches change that exposure; multiplying per-step success rates assumes independence and that every step must succeed. The fixture in [LLM-evaluation-framework](https://github.com/AthenaTheOwl/LLM-evaluation-framework) shows the first symptom. Run three times, its summary table reads "100.0% pass rate" and PASS. One line below, pass^3 is 50 percent: one of its two cases went pass, fail, pass. It is a two-case mock, deliberately flaky, and it is enough to show that a per-attempt grade and a per-stack grade are different instruments. [pass^k, not pass@1](/essays/pass-k-not-pass-at-1/) made the reliability case. The procurement version is shorter: buy the dies tested before you bond them.
 
 ·   ·
 
@@ -105,7 +105,7 @@ Each finding has a way out. Each gets a hearing.
 
 The first explanation was that outcome pricing is a discount with better branding, and buyers should simply take it.
 
-Sometimes it is. Finding One says when: the premium is worth paying while it sits below the cost of running your own sort. For a support team with no evaluation staff, the vendor's sort is almost certainly cheaper than building one. The mistake is paying the premium without knowing what your own sort would cost.
+Sometimes it is. Finding One says when: the premium is worth paying while it sits below the cost of running your own sort. For a support team with no evaluation staff, the vendor's sort may cost less than building one. The price comparison still needs the same acceptance standard on both sides. The mistake is paying the premium without knowing what your own sort would cost.
 
 The second explanation was that buyers cannot read a test program anyway.
 
@@ -115,7 +115,7 @@ Chip buyers cannot read every test vector either. They negotiate the specificati
 
 **Reply:** Sampling is what keeps the outcome worth buying.
 
-The third explanation was the inversion, and a vendor would make it well. Per-outcome pricing already moves the risk to the seller. A customer who asks for more help is not billed as a resolution under either definition. Under a per-token contract the buyer paid for that failure in full. On that reading, the loose definition is a fair price for a vendor who now eats every loud failure.
+The third explanation was the inversion, and a vendor would make it well. Per-outcome pricing already moves the risk to the seller. Neither resolution definition simply bills every unanswered request, though workflows and handoffs can be separate billable outcomes. Under a per-token contract the buyer paid for that failure in full. On that reading, the loose definition is a fair price for a vendor who now eats every loud failure.
 
 The case is strong for loud failures, and Finding Three does not dispute it. It adds one line to read: Intercom also counts as an outcome a workflow Fin completes, "including handoffs."
 
@@ -123,7 +123,7 @@ The case is strong for loud failures, and Finding Three does not dispute it. It 
 
 **Reply:** For the failures that make a sound.
 
-The evidence that settles it is the quiet ones. Take a sample of billed outcomes and check each against what the customer did next. If the billed outcomes hold up, the vendor's test is a fair sort and the inversion wins. If a share of them turn out to be customers who left and phoned, the premium was paying for silence. Finding Two applies in the meantime: the risk the buyer believes it moved may still sit with the buyer, as it does in my own model.
+The evidence that settles it is the quiet ones. Choose a random sample of billed outcomes, fix the buyer's success rule before reviewing it, and follow later contacts across channels. Count unresolved cases and cases with no follow-up evidence separately; silence alone cannot verify the sort. If the billed outcomes hold up, the vendor's test is a fair sort and the inversion wins. If a share of them turn out to be customers who left and phoned, the premium was paying for silence. Finding Two applies in the meantime: the risk the buyer believes it moved may still sit with the buyer, as it does in my own model.
 
 ## THE BUYER'S SORT
 

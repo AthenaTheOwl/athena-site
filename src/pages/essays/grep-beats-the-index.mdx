@@ -46,7 +46,7 @@ The first failure is the card that never mentioned the postmark.
 
 The second is the clerk who hands you the card, once, and will not go to the basement.
 
-The flat-file harness fixes both by inverting the order of binding. The model sees the actual question first, then composes a retrieval plan for that question over the raw evidence: grep for candidates, read the relevant slice, follow up if what came back is insufficient. Schema commitment moves from a frozen build-time choice to a per-question runtime choice.
+The flat-file harness avoids the ingest loss in this comparison and lets the agent retry retrieval. It inverts the order of binding. The model sees the actual question first, then composes a retrieval plan for that question over the raw evidence: grep for candidates, read the relevant slice, follow up if what came back is insufficient. Schema commitment moves from a frozen build-time choice to a per-question runtime choice.
 
 Nothing is summarized until someone knows what they are looking for.
 
@@ -56,7 +56,7 @@ The oldest tool in this essay has no index at all.
 
 It reads the files, every time, from the top, and prints the lines that match. It builds nothing in advance and predicts nothing about the next question.
 
-It has no schema, so it has never thrown away the thing a later question needed. It is also the least sophisticated program in the essay, which has stopped being an embarrassing sentence.
+The harness kept the raw files, so a failed query did not delete what the next query might need. Grep itself supplies no retention guarantee. It is also the least sophisticated program in the essay, which has stopped being an embarrassing sentence.
 
 ## FINDING THREE: THE LARGEST LEVER WAS HOW MANY CANDIDATES YOU LET THROUGH.
 
@@ -78,7 +78,7 @@ It outperformed released search agents built on dense retrievers.
 
 The mechanism is the part to keep. Single-shot retrieval asks one embedding to bridge the gap between the user's vocabulary and the corpus's. An agent in a loop reads the first results, notices the words the corpus uses, and asks again with those. The agent is the query expansion. What the retriever has to supply in that regime is recall at depth and exact matching on the terms the model just learned, which is what BM25 was always good at.
 
-Depth becomes nearly free for the same reason. In a one-shot pipeline everything you retrieve goes into the prompt, so the depth is capped by the context budget. In a loop the agent browses titles and snippets cheaply and reads only what survives its own filter.
+Depth becomes cheaper in model context for the same reason. Search work, snippet tokens and latency still count. In a one-shot pipeline everything you retrieve goes into the prompt, so the depth is capped by the context budget. In a loop the agent browses titles and snippets cheaply and reads only what survives its own filter.
 
 The expensive retrieval model was never the ceiling.
 
@@ -128,7 +128,7 @@ The decisive ablation is the one that removes the layers and keeps the loop. Wit
 
 The loop alone was a tenfold bill for a worse answer.
 
-The layers were the saving.
+The layered interface was the saving in this ablation. It changed both what the agent could request and how much text each request returned; the experiment does not price those effects separately.
 
 The detail I would copy tomorrow is two lines long. Keep a set of chunk IDs the agent has already read. If it asks for one again, return the literal string "This chunk has been read before" and nothing else. Zero content tokens, and the agent goes looking somewhere new.
 
@@ -146,7 +146,7 @@ Grep within a file, server-side regex against parsed text, to isolate a serial n
 
 Read, to fetch the surrounding context when a top-k chunk cuts off mid-sentence.
 
-Semantic search demotes from "the retrieval system" to one tool among several, with deterministic navigation handling the cases embeddings structurally cannot.
+Semantic search demotes from "the retrieval system" to one tool among several, with deterministic navigation handling exact-match and boundary cases a top-k embedding result can miss.
 
 ## FINDING SEVEN: THE FAILURES THAT REMAIN ARE NOT RETRIEVAL FAILURES.
 
@@ -186,11 +186,11 @@ Long context is stronger and more cost-competitive than the memory literature as
 
 **Objection:** Nobody verifies the second part.
 
-**Reply:** Correct.
+**Reply:** That verification belongs before the build.
 
 The fourth explanation was that the vendor announcement is marketing.
 
-It is. It is also a vendor moving its product to the shape a paper found generalizes best, at about the same time, from the other direction. The convergence is the data. The press release is the packaging.
+It is. It is also a vendor moving its product to the shape a paper found generalizes best, at about the same time, from the other direction. The convergence is a product-design observation. It supplies no independent estimate of retrieval quality.
 
 The fifth explanation was that all of this depends on a strong model.
 
@@ -204,7 +204,7 @@ It is not a strained case. BM25 is weak wherever lexical overlap is absent: cros
 
 **Reply:** Where the words differ, yes.
 
-The evidence that settles it for any given team is the same experiment in every paper above, run on your own corpus: surfaced evidence recall, measured separately from accuracy, inside your harness, with your delivery mode, grep against vector. If vector wins there, it wins, and the failure mode belongs in the same sentence: the team that skips the measurement and adopts whichever side sounded smarter will be wrong in a way its benchmark cannot show it.
+Compare grep, vector and their combination on the same held-out questions, corpus snapshot, model and delivery interface. Give each the same retrieval and token budget; report surfaced evidence recall, answer accuracy, latency and total cost separately. If vector wins on the measure the workload requires, it wins, and the failure mode belongs in the same sentence: the team that skips the measurement and adopts whichever side sounded smarter will be wrong in a way its benchmark cannot show it.
 
 ## TWO REPOS WHERE THE CLERK HAS TO SHOW THE LETTER
 

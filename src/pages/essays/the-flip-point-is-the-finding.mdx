@@ -31,7 +31,7 @@ Capex: below 0.756, a fall of 24.4 percent, and pjm-west wins. Up to 2.06, and a
 Water shortfall: up 85 percent, and pjm-west wins. Down 62 percent, and az-campus wins.
 Silicon delay: up more than ninefold, to 11.9, and az-campus wins.
 
-Read the list as a description of the decision. Silicon delay barely matters; it takes a ninefold change to move anything. Capex can flip the answer in either direction. The grid weight is the cheapest place to lose the argument.
+Read the list as a description of the decision. Silicon delay barely matters; it takes a ninefold change to move anything. Capex can flip the answer in either direction. Of the risk weights, grid delay has the nearest upward percentage switch. Capex has a smaller downward switch; calling either cheaper needs a cost for changing that belief.
 
 The model's output was a site name.
 
@@ -94,23 +94,23 @@ FRAGILITY INDEX — 399 TRIALS
 
 Median: 8 patients. Range: 0 to 109.
 Trials with an index of 3 or less: a quarter.
-Trials where the index was smaller than the number of patients lost to follow-up: 53 percent.
+Among trials reporting loss to follow-up, index smaller than the number lost: 53 percent, or 162 of 306.
 
-In more than half the trials, the patients whose outcomes nobody recorded outnumbered the patients it would take to undo the result.
+In more than half of the trials that reported loss to follow-up, the missing count exceeded the index. That comparison does not say those missing patients had the particular outcomes, in the particular arm, needed to cross the significance threshold.
 
-It is the siting sweep again. Hold everything, push one input until the verdict flips, and report the distance in a unit the reader can judge. A p-value is a probability. The index is a head count, and it can sit on the same page as the dropout count.
+It is the siting sweep again. Hold everything, push one input until the verdict flips, and report the distance in a unit the reader can judge. A p-value describes data as extreme under a specified null model; it is not the probability the treatment claim is true. The index counts outcome flips needed to cross a significance cutoff under its chosen test, and it can sit on the same page as the dropout count.
 
 [binding-constraint](https://github.com/AthenaTheOwl/binding-constraint) makes a one-line second example. It names skilled-trades labor as the factor most likely to bind TSMC's Arizona fab plan, at 33 percent on curated weights, with water rights second at 24. Holding the other four factors fixed, the labor weight would have to fall 27.3 percent for water to take the top. Water would have to rise 37.5 percent to get there on its own. The repo's own October method note asks for exactly this number: "Record the smallest relative weight change that changes the modal factor. A close contest should carry that switch threshold beside the modal label."
 
-## FINDING SIX: A FLIP POINT INSIDE THE NOISE IS A COIN TOSS.
+## FINDING SIX: THE SWITCH NEEDS AN UNCERTAINTY SCALE.
 
-A switching value is a distance, and a distance means nothing without a ruler. If the input wobbles further on its own than the distance to the flip, the verdict is chance.
+A switching value is a distance, and a distance means nothing without a ruler. If plausible input variation crosses the switching value, the verdict is sensitive to that variation. Its probability of reversing depends on the distribution; it need not be a coin toss.
 
 [judge-kappa](https://github.com/AthenaTheOwl/judge-kappa) measures that wobble for model judges. Its five-run example asks one pairwise judge the same twenty questions five times. Six of the twenty items change label in at least one run, and the share of "A" verdicts moves by as much as 0.10 between runs. Decision record DEC-JK-002 turns that into a gate: a score sitting 0.02 from its threshold fails, because 0.02 is inside the judge's own noise.
 
 The same judge agrees with the human labels at a kappa of 0.833 and with itself at 0.913. It passes both checks and is still unfit to decide a contest that close. [The ruler fails its own gate](/essays/the-ruler-fails-its-own-gate/) runs the same gauge on a public benchmark's judge, and [The verifier is the whole problem](/essays/the-verifier-is-the-whole-problem/) makes the general case for the thing doing the scoring.
 
-Every switching value is half of a comparison. The other half is how far the input moves when nobody touches it. A fragility index smaller than the dropout count, in more than half the trials. A gate margin of 0.02 against a floor of 0.10. A grid weight that flips the site at plus 39 percent, if nobody can say whether it belongs nearer 2.4 or 3.4.
+Every switching value needs an uncertainty scale. For a sampled judge it may come from repeat runs; for a chosen policy weight it may be a defensible range of preferences, not random noise. A fragility index smaller than the dropout count, in more than half the trials. A gate margin of 0.02 against a floor of 0.10. A grid weight that flips the site at plus 39 percent, if nobody can say whether it belongs nearer 2.4 or 3.4.
 
 ·   ·
 
@@ -118,7 +118,7 @@ A thermostat has a setpoint and a deadband.
 
 Without the deadband, the furnace clicks on and off all night around one number.
 
-The deadband is the noise, written down beside the threshold.
+The deadband is a chosen tolerance around the threshold, informed by the noise and the cost of switching.
 
 ## THE EXPLANATIONS AFTERWARD
 
@@ -138,7 +138,7 @@ Also correct about the figures. The siting inputs are a toy benchmark, the aucti
 
 The third explanation came from medicine. A 2017 commentary asked in its title whether the Fragility Index was ["a P-value in sheep's clothing"](https://doi.org/10.1093/eurheartj/ehw495).
 
-Granted in part: a smaller p-value generally takes more flipped patients to undo. What the index adds is the unit. A count of patients can be set beside the count of patients lost, and a p-value cannot.
+Granted in part: a smaller p-value generally takes more flipped patients to undo. What the index adds is the unit. A count of outcome flips can be compared directly with a dropout count, provided the arm and outcome assumptions remain visible. Neither count alone establishes a treatment effect or its clinical importance.
 
 A limitation belongs here as well. The curtailment weight in Finding Four prices a promise to shed load, and the mechanism's own v0 notes say nothing yet meters or penalizes the shed. A flip point on an unmetered input measures how much the auction believes a pledge.
 

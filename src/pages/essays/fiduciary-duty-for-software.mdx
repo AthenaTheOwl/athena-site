@@ -24,7 +24,7 @@ The last line is the one the bill leaves to a court. The first court to fill it 
 
 The law already has a word for someone who has been "given the authority to act on behalf of another person or entity." In agency law, once a principal authorises an agent, the agent owes three duties: obedience, loyalty and care.
 
-An agent that books your travel, pays your invoices or answers your email from your account fits that description exactly, whatever its vendor calls it.
+Software that books your travel, pays your invoices or answers from your account performs the kind of delegated action the analogy concerns. That resemblance does not itself establish a legal fiduciary relationship; the draft proposes duties for its defined class of providers.
 
 The principle travels well beyond trusts. Where one party takes discretionary action for another and knows more than the other does, the law stops relying on the contract between them and imposes duties that cannot be signed away. Trustees, financial advisers and lawyers all work under that rule. The draft proposes that software acting in a user's accounts should too.
 
@@ -32,7 +32,7 @@ The principle travels well beyond trusts. Where one party takes discretionary ac
 
 The draft calls the agent a "custodial user agent": software "expressly authorized by a user to interact with a large online platform provider on that user's behalf." The duties in the frame above are its subsection (g), nearly word for word.
 
-The rest is machinery. Providers register with the Federal Trade Commission before their agents touch a platform's interface, and a registration may be evaluated by a recognised certification body. Platforms with more than 50,000,000 US customers in a month must give registered agents access on fair, reasonable and nondiscriminatory terms. A pattern of violations by any of a provider's agents "shall be attributable to the custodial user agent provider." And in fining a violation, the Commission "shall consider each individual user affected by a violation of this Act as an individual violation."
+The rest is proposed machinery. Under the draft, providers would register with the Federal Trade Commission before their agents touch a platform's interface, and a registration may be evaluated by a recognised certification body. Platforms with more than 50,000,000 US customers in a month must give registered agents access on fair, reasonable and nondiscriminatory terms. A pattern of violations by any of a provider's agents "shall be attributable to the custodial user agent provider." And in fining a violation, the Commission "shall consider each individual user affected by a violation of this Act as an individual violation."
 
 That last clause turns one bad release into as many violations as it has users.
 
@@ -64,7 +64,7 @@ This is product-safety logic. It says nothing about who the agent works for. It 
 
 On the same day, Senator Bernie Sanders and Representative Greg Casar announced the Ban Artificial Superintelligence Act, which "would permanently ban the development and deployment of superintelligent AI and temporarily pause advanced AI development until a federal regulator has established safety rules."
 
-Fiduciary law, product-safety law and prohibition are three incompatible answers to one question, and each picks different winners. Non-waivable duties favour large providers who can carry them. A standards regime favours whoever sells the logging and verification layer. A ban favours nobody currently building.
+Fiduciary duties, product-safety standards and prohibition take different positions on what may be deployed. Duties and standards could coexist; a prohibition would remove the covered activity. Each changes the market, and each picks different winners. Non-waivable duties favour large providers who can carry them. A standards regime favours whoever sells the logging and verification layer. A ban favours nobody currently building.
 
 ## FINDING SIX: ONE STATE HAS ALREADY CHOSEN AUDIT.
 
@@ -118,17 +118,17 @@ The draft sees part of this coming. Its delegation clause forbids passing a user
 
 **Reply:** And a signature.
 
-The evidence that settles it is whether the chain of delegation can be recorded cheaply. If each hop can carry a signed, ordered receipt of who authorised what, the fiduciary model survives composition. If it cannot, the analogy fails where the engineer said it would, and the standards theory wins by default because it never needed a principal in the first place.
+The evidence that settles it is whether the chain of delegation can be recorded cheaply. A useful test is whether each hop preserves the principal, the delegated scope and the right to revoke, and whether the records let an independent reviewer reconstruct them. Signed receipts could support that test. Cheap logging alone cannot settle legal responsibility, and a logging failure does not make another legislative theory win by default.
 
 ## THE RECEIPT PER HOP
 
 Two repositories on this site build the object every theory asked for.
 
-[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) is the receipt per hop. When one organisation's agent instructs another's to commit a purchase order, the receipt names the receiver and the sender, the action's canonical hash and the previous receipt's ID, a timestamp, and an ed25519 signature. Because each receipt chains to the last, the order cannot be reshuffled after the fact. It carries none of the business payload, so an auditor can replay the chain without seeing what was bought.
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) is the receipt per hop. When one organisation's agent instructs another's to commit a purchase order, the receipt names the receiver and the sender, the action's canonical hash and the previous receipt's ID, a timestamp, and an ed25519 signature. Checking a chain against a retained receipt can reveal a later change to its recorded order. That requires a trusted reference and custody of the signing keys; a self-consistent replacement history is a different threat. It carries none of the business payload, so an auditor can replay the chain without seeing what was bought.
 
 [trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is the log behind it: every event content-addressed by its sha256 and linked to the one before, so an edited payload or a dropped event breaks the chain where anyone can see it.
 
-Neither is a fiduciary. They are what a fiduciary would need to prove it was one.
+Neither is a fiduciary. Both can supply evidence about a process. A record of delegated authority still has to be compared with what the provider was required to do.
 
 Hold the discretion, owe the duty.
 

@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "Curtailability is the asset"
-description: "Capacity prices on America's largest grid rose elevenfold in two years, and the price paid to a load for agreeing not to run still has no line on the auction sheet. Six findings on a forty-year-old utility mechanism, the only thing that buys grid queue position without new steel, and the fraction of AI load that can honestly sell it."
+description: "Capacity prices on America's largest grid rose elevenfold in two years, and the price paid to a load for agreeing not to run still has no line on the auction sheet. Six findings on a forty-year-old utility mechanism, a way to seek grid access without waiting for new steel, and the fraction of AI load that can honestly sell it."
 date: "2026-09-22"
 readingTime: "8 min read"
 ---
@@ -44,17 +44,17 @@ The idea stopped being about the electricity bill once regulators began trading 
 
 In December 2025, FERC told PJM it "expects tailored service options for loads willing and able to curtail use of the transmission system." In the national large-load docket, FERC is asking whether large loads that "agree to be flexible and curtail usage should be able to move through interconnection studies faster," and whether those studies "could be completed within 60 days."
 
-PJM's own planning moved the same way. It proposed curtailment plans for data centres, and signalled that large loads without their own supply would be excluded from capacity planning from the 2029/30 delivery year.
+The distinction matters: the cited FERC material describes proposed terms and questions for rulemaking, not a promise that a flexible customer can connect on a particular date.
 
-Flexibility is the only lever that buys queue position without new steel in the ground.
+Flexibility is one proposed lever for changing access without first adding generating capacity. It still needs a tariff, a credible response and an interconnection the grid can support.
 
 Everything else in the queue is a transformer with a delivery date, or a turbine reserved for 2031.
 
-## FINDING THREE: TRAINING IS INTERRUPTIBLE. INFERENCE IS NOT.
+## FINDING THREE: THE DEADLINE DETERMINES WHAT CAN STOP.
 
 Training was long assumed to be must-run baseload. The clusters carry hours of deferrable work, and the constraint is coordination, not physics. Orchestration software that pauses or slows low-priority jobs on a grid signal has now run on real hardware, at a size Finding Five reports.
 
-Inference serves live users and cannot pause.
+Some inference can wait. Some training is expensive to interrupt. Put the workload's response time and restart cost on the contract.
 
 Splitting a fleet into interruptible and firm tiers turns a power bill into a two-sided position. That is the asset: not the megawatts, the tiering.
 
@@ -78,11 +78,11 @@ Frontier training runs are far less interruptible than the models assume. Checkp
 
 A four-hour curtailment can cost more in stalled cluster-hours and lost synchronisation than the capacity payment.
 
-A real-world demonstration of rapid load reduction and sustained curtailment ran on a 130-kilowatt GPU cluster. The claims are about gigawatts.
+The simulation in Finding Four leaves a field test to perform: can a real fleet deliver the promised response, for the promised duration, without breaching its service commitments? A modelled grid benefit does not establish that operating envelope.
 
 Customer service agreements already sold may make the flexibility legally unavailable regardless of technical capability.
 
-And the plainest arithmetic: GPU depreciation is relentless, and the option premium may simply be smaller than the utilisation foregone on an expensive accelerator, which is why this works for training and not for serving.
+And the plainest arithmetic: GPU depreciation is relentless, and the option premium may simply be smaller than the utilisation foregone on an expensive accelerator, which is why the workload's margin and deadline must be priced before its flexibility is sold.
 
 The idea and its caveat belong in the same paragraph every time. A curtailment thesis that drops the caveat is a sales deck.
 
@@ -106,7 +106,7 @@ The findings have their exits. Each gets its due.
 
 The first explanation was that market design lags. If grid operators do not create tariffs that pay for flexibility, the battery stays a cost centre.
 
-That was true in July and is the thing that changed. FERC's PJM order, its large-load docket and PJM's own curtailment rules are the tariff arriving. Market design lagged for years and then moved in one summer, because the alternative was ratepayer politics.
+That was true in July and is the thing that changed. FERC's PJM order and its large-load docket show service design moving. An order to develop terms and a question in a rulemaking are not themselves the final tariff a customer can contract against. Market design lagged for years and then moved in one summer, because the alternative was ratepayer politics.
 
 The second explanation was that "interruptible" is marketing.
 
@@ -114,7 +114,7 @@ Often. The flexibility may be thinner than the models assume, and service agreem
 
 **Objection:** Then flexibility is a training-only story.
 
-**Reply:** Today.
+**Reply:** Only if the workload permits it.
 
 Batch inference, fine-tuning and evaluation runs are more schedulable than training, and inference with quantisation fallbacks can shed some load at the cost of some quality. The line moves as the fleet does.
 
@@ -138,13 +138,13 @@ The evidence that settles it is a tranche-by-tranche comparison: for each block 
 
 ## THE FORM AND THE WIRE
 
-[grid-silicon](https://github.com/AthenaTheOwl/grid-silicon) starts from the gap this essay is about. A data centre is announced as 1,200 megawatts. One hundred twenty are energised. The other 1,080 live on a form, and the repo scores the difference. Curtailability is the price of moving a megawatt from the form to the wire without waiting for the transformer, and a scorer that cannot see the flexibility tier cannot see why two identical announcements energise at different speeds.
+[grid-silicon](https://github.com/AthenaTheOwl/grid-silicon) starts from the gap this essay is about. Its fixture describes a sample data centre announced as 1,200 megawatts. One hundred twenty are labelled energised. The other 1,080 live on a form, and the repo scores the difference. The example is a test of the method, not evidence of a real connection. Curtailability is the price of moving a megawatt from the form to the wire without waiting for the transformer, and a scorer that cannot see the flexibility tier cannot see why two identical announcements energise at different speeds.
 
 [power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) works the contract side: three hyperscalers want power off the same 1,000-megawatt reactor, and none will tell the others what it needs or what it would pay. The auction clears megawatts and scores how flat the combined load shape is. When this essay was written it had no curtailability term. It has one now: a buyer can pledge to shed part of its load in the plant's stress hours, and a notional weight prices the pledge. Nothing yet meters whether the shed arrives, so the mechanism can price the right not to run but cannot yet check that it was delivered.
 
 Sell the right not to run.
 
-Do not sell it twice, and do not sell it on inference.
+Do not sell it twice. Name the workload that can stop.
 
 ·   ·
 

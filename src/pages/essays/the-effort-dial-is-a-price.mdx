@@ -24,7 +24,7 @@ The timing was not an accident. Fortune noted that customers had criticised the 
 
 Nine days earlier, Thinking Machines had shipped Inkling, an open-weights model with an effort setting that runs from 0.2 to 0.99. The launch post is frank about why: developers "care as much about efficiency" as about top-effort benchmark scores, and "Cost and latency are often binding constraints in real-world applications." Its own chart has the model matching a rival on an agentic coding benchmark "at roughly a third of the tokens."
 
-Anthropic's own effort parameter shipped with Opus 4.5 in November 2025, so the knob itself was eight months old. What July changed is its position in the pitch: the setting became the headline of a release and the answer to a billing complaint. How hard a model thinks is a line item the customer picks and pays for, request by request.
+Anthropic's own effort parameter shipped with Opus 4.5 in November 2025, so the knob itself was eight months old. What July changed is its position in the pitch: the setting became the headline of a release and the answer to a billing complaint. How hard a model thinks is a line item the customer picks and pays for, request by request. That is a budget control, not a guarantee that more effort buys a better answer on each task.
 
 ## FINDING TWO: NETWORKS DID THIS IN 1998.
 
@@ -46,7 +46,7 @@ The effort dial moves the knob. It does not move the knowledge.
 
 Much of professional work is still sold in packages: a standard review, an expedited review, a full audit. Those tiers are crude steps on what is in fact a continuous curve of effort against quality. A model's effort setting exposes the curve directly, and it can be priced because it can be measured per request.
 
-But a price list needs labels. A buyer choosing "medium" is choosing a point on a curve they have never seen, for a request whose difficulty they have not measured. The dial shows the price of each setting. It does not show what each setting buys on this kind of work.
+But a price list needs labels. A buyer choosing "medium" is choosing a point on a curve they have never seen, for a request whose difficulty they have not measured. The dial selects an effort policy. The realised bill also depends on the tokens produced, the model's pricing and any retries. It does not show what each setting buys on this kind of work.
 
 There is a second catch. When revenue rises with effort, the seller's incentive to make the model efficient at low effort gets weaker, because a buyer who needs to turn the dial up pays more.
 
@@ -72,7 +72,7 @@ Content delivery networks settled this long ago: serve the common request from t
 
 ## FINDING SEVEN: THE ROUTER IS WRONG WHERE IT MATTERS MOST.
 
-Every escalation rule, whether a buyer writes it or a model learns it, makes the same kind of mistake. Its errors are correlated with difficulty. The cases it wrongly marks as easy are the hard ones, because looking easy is what fooled it. One critical case sent down the cheap path can cost more than the savings on a thousand easy ones.
+Every escalation rule, whether a buyer writes it or a model learns it, makes the same kind of mistake. It can underestimate difficulty. The cases it wrongly marks as easy are the hard ones, because looking easy is what fooled it. One critical case sent down the cheap path can cost more than the savings on a thousand easy ones.
 
 That is why the saving on an average benchmark says little about the saving on a real workload. The average is dominated by the easy cases, where the dial works. The loss is concentrated in the hard ones, where it does not.
 
@@ -112,7 +112,7 @@ The recalibration is real, and the vendor documents it: Anthropic's effort guida
 
 **Reply:** On the buyer's work, not its benchmark.
 
-The evidence that settles it is simple to collect. For a sample of real requests, run each effort setting and record accuracy, cost and latency. If the curve is flat above some setting, everything above it is waste. If accuracy falls steeply below some setting on a class of request, that class needs an escalation rule. Inkling's launch post already draws this curve on public benchmarks. A buyer needs the same curve on their own traffic.
+The evidence that settles it is simple to collect. For a sample of real requests, run each effort setting and record accuracy, cost and latency. Estimate the curve with repeated trials, uncertainty and separate high-consequence task classes. A flat mean on a small sample does not establish that higher effort is waste. If lower effort loses required quality on a request class, that class needs a different default or an escalation rule that can recognise it before the irreversible action. Inkling's launch post already draws this curve on public benchmarks. A buyer needs the same curve on their own traffic.
 
 ## THE CURVE ON YOUR OWN TRAFFIC
 

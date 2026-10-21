@@ -25,11 +25,11 @@ The missing field is the rest of the essay.
 
 Philipp Schmid's advice for coding agents fits in one line: "Use subagents as execution firewalls," which means handing off the messy exploration and debugging and taking back only a clean result.
 
-Looking for something produces waste by nature. There are searches that match nothing, files opened on a wrong guess, and logs read as far as the first false lead. If the parent does that looking itself, every scrap of the waste stays in its window for the rest of the task. If a subagent does it, the waste stays in the subagent's window, and that window closes when the answer is sent.
+Looking for something produces waste by nature. There are searches that match nothing, files opened on a wrong guess, and logs read as far as the first false lead. If the parent does that looking itself, the dead ends consume its context until trimmed or compacted. If a subagent does it, the waste stays in the subagent's window, and that window closes when the answer is sent.
 
 The same article makes the move for data. Its log-analysis example loads the logs into SQLite and sends only a short summary back to the model, so the raw records never enter the prompt. A subagent does the same thing for reasoning. The work happens elsewhere, and only its result comes back.
 
-The parent's context is the scarce resource. A subagent spends someone else's.
+The parent's context is the scarce resource. A subagent spends a separate window. The token bill still comes home.
 
 ·   ·
 
@@ -43,7 +43,7 @@ The page is the product.
 
 Philipp Schmid sorts subagent designs by how much control the parent keeps, and each step up asks more of the model.
 
-An inline tool: the parent calls a subagent the way it calls any other tool, and the result comes back as the tool's answer. Fire and forget.
+An inline tool: the parent calls a subagent the way it calls any other tool, and waits for the result as the tool's answer. Call and return.
 
 A fan-out: spawning and collecting become separate calls, so the parent can launch several and do its own work in between. The value depends entirely on whether the model interleaves; a parent that waits immediately after every spawn gets nothing over the first pattern.
 
@@ -109,7 +109,7 @@ The agents were isolated in the sense this essay has been using. Each had its ow
 
 What they shared was a package server.
 
-A subagent firewall that stops at the context window is a wall with no roof. The environment has to be partitioned as well: separate sandboxes, separate writable surfaces, no shared channel that any two of them can both write to, or the rooms will build their own corridors.
+A subagent firewall that stops at the context window is a wall with no roof. The environment has to be partitioned as well: separate sandboxes, separate writable surfaces, no unapproved shared channel that can carry messages between them. A package cache may be enough; isolation is a reachability property, not a count of sandboxes.
 
 ## FINDING SEVEN: THE CREDENTIALS MUST NOT BE IN ANY OF THE ROOMS.
 
@@ -141,7 +141,7 @@ Schmid concedes it for coordination: four agents today may be one agent tomorrow
 
 The third explanation was that forking is always the better deal because caching makes it cheap.
 
-It is cheaper in the single-worker case, and the case does not generalise. Caching lowers the price of re-sending the parent's history; it does not remove it, so a fan-out pays that discounted prefix once per researcher and the bill grows with the headcount. The verifier's problem was never a price: an independent reading is what the fork gives away, and no cache rate buys it back.
+Caching can make a fork cheaper than rebuilding the context for one worker; it does not remove the inherited history. A fan-out pays the discounted prefix for each researcher, and each worker still reads the parent's framing. For an independent verifier, the cost is anchoring, not only tokens. No cache rate buys back a fresh reading.
 
 **Objection:** Then isolate everything.
 
@@ -155,15 +155,15 @@ The case is strong, and Finding Five concedes half of it.
 
 **Reply:** Somewhere.
 
-The resolution is the one in *The session is not the context window*: keep the subagent's full transcript in a durable log the parent does not have to read, and let the parent's window hold only the finding. The evidence that settles whether that is enough is countable: how often does a parent's error trace back to something a subagent saw and did not report? If often, the brief-and-finding interface is too narrow and the parent needs to read more. The failure mode sits in the same sentence: a transcript archive nobody reads is storage, not oversight, and it only helps if someone is made responsible for opening it when a finding turns out wrong.
+The resolution is the one in *The session is not the context window*: keep the subagent's full transcript in a durable log the parent does not have to read, and let the parent's window hold only the finding. The evidence that settles whether that is enough is countable: on a fixed task set, how often does a parent's error trace back to evidence a subagent saw and omitted? Compare findings alone with findings plus cited excerpts and uncertainty, holding the workers and task budget fixed. Fewer errors at an acceptable review cost would support the wider interface. A postmortem count alone would locate the omission without establishing its remedy. The failure mode sits in the same sentence: a transcript archive nobody reads is storage, not oversight, and it only helps if someone is made responsible for opening it when a finding turns out wrong.
 
 ## THE ROOMS AND THE LOG
 
 No repository on this site is a subagent harness yet. Two of them hold the pieces a firewalled design needs.
 
-[trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is where a subagent's transcript can live without entering the parent's window: a hash chain in which each event's id is the sha256 of its own bytes and each event names the one before it. Edit a payload and its hash stops matching. Drop or reorder an event and the chain breaks. The dead ends are kept, in order, and nobody can quietly tidy them afterwards.
+[trace-ledger-spec](https://github.com/AthenaTheOwl/trace-ledger-spec) is where a subagent's transcript can live without entering the parent's window: a hash chain in which each event's id is the sha256 of its own bytes and each event names the one before it. Edit a payload and its hash stops matching. Drop or reorder an event and the chain breaks. The dead ends can be kept in order. Detecting a replacement of the entire chain still requires protected custody or a separately retained head; hashing alone does not stop its writer rebuilding it.
 
-[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) signs the brief that goes through the slot. The receipt that one agent instructed another is an ed25519 signature over the action hash, which means an instruction that arrived by a side channel, such as a package name on a message board, arrives without one.
+[agent-notary-layer](https://github.com/AthenaTheOwl/agent-notary-layer) signs the brief that goes through the slot. The receipt that one agent instructed another is an ed25519 signature over the action hash, which gives a receiver a way to reject an instruction that lacks the required receipt. It does not intercept side channels by itself, and a valid receipt still needs an authorized signer.
 
 Let the mess die in the subagent.
 
@@ -174,7 +174,7 @@ Keep a record of what it died of.
 DELEGATION RECORD — REMAINING FIELDS
 
 Mode for each subagent: isolated or forked, chosen on purpose.
-Shared writable surfaces between subagents: none.
+Shared writable surfaces between subagents: declared, scoped, and monitored. Unapproved channels: blocked.
 Credentials reachable from any sandbox: none.
 Subagent transcripts: kept, outside the parent's window.
 

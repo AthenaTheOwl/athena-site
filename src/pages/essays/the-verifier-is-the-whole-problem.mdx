@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "The verifier is the whole problem"
-description: "Self-improvement loops are easy to build and productive at real scale. Eight findings on why everything that goes wrong with them goes wrong in the thing that scores the work, and why that thing is where the market went."
+description: "Self-improvement loops are easy to build and productive at real scale. Eight findings on why the thing that scores the work is a separate engineering problem, and why that thing is where the market went."
 date: "2026-09-22"
 readingTime: "12 min read"
 ---
@@ -16,19 +16,19 @@ Testing depth: superficial; edge cases not probed.
 Assessment of the evaluator, by its own vendor: "Out of the box, Claude is a poor QA agent."
 Who evaluates the evaluator: no field.
 
-Anthropic published that record about its own model, which is why it is worth trusting.
+Anthropic published that record about its own model. It is a vendor's worked example, with the failure left in.
 
 The missing field is the subject of this essay. Loops that improve an agent are easy to build and, this year, productive at real scale.
 
-Everything that goes wrong with them goes wrong in the thing that scores the work.
+A loop can improve the wrong thing for a long time if its scorer approves. The verifier is the part that decides whether improvement is progress.
 
-## FINDING ONE: THE LEAP CAME FROM THE CRITIC.
+## FINDING ONE: THE CRITIC GAVE THE GENERATOR A REASON TO LEAVE.
 
 By iteration nine the museum site was clean, polished, and entirely predictable. A dark landing page.
 
 On iteration ten the generator scrapped it and built a room: a three-dimensional gallery with a checkered floor in CSS perspective, artwork hung at free-form positions on the walls, and doorways instead of scrolling.
 
-Nothing about the generator changed between the two iterations. What changed was that a second agent, armed with a browser it could drive, had been scoring the pages against four explicit criteria and writing critiques back, and the generator had been told to refine the current direction if the scores were trending well or "pivot to an entirely different aesthetic" if not. The author called it "the kind of creative leap that I hadn't seen before" from single-pass generation.
+The generator model stayed fixed. Across the iterations a second agent, armed with a browser it could drive, had been scoring the pages against four explicit criteria and writing critiques back, and the generator had been told to refine the current direction if the scores were trending well or "pivot to an entirely different aesthetic" if not. The author called it "the kind of creative leap that I hadn't seen before" from single-pass generation.
 
 The generator supplied the room.
 
@@ -44,7 +44,7 @@ Self-improvement: the agent changes the system, its tools, skills, prompts and h
 
 Recursive self-improvement: the agent strengthens the evaluator too, without capturing it. Not demonstrated publicly.
 
-The reason for the third row is the crux in one line: once an agent controls the evaluator, the score stops being evidence. Reward hacking is the default behaviour of a system asked to raise a number. Nobody should be surprised by it, and the literature is full of people being surprised by it.
+The reason for the third row is the crux in one line: once an agent can change the evaluator without an independent check, a higher score stops being independent evidence of better work. Optimising an imperfect score creates an incentive to exploit its gaps. Nobody should be surprised by it, and the literature is full of people being surprised by it.
 
 The second row is where the results live.
 
@@ -56,9 +56,9 @@ An automated hill-climb on the Cline agent: one model from 69 of 89 Terminal Ben
 
 And in September, a paper ran auto-research loops over the harness itself across diverse environments. Four mechanisms survived selection, action execution, context compaction, observation handling and delegated reading, and on a 51-task benchmark the evolved harness matched its baseline while cutting recorded token traffic by 44.7 to 49.0 percent.
 
-Ten tasks for the price of lunch is a strong argument for putting a loop on any agent you maintain. Every one of these works for the same reason: the ruler was fixed and outside the agent's reach.
+Ten tasks for the price of lunch is a strong argument for putting a loop on any agent you maintain. Each of these uses a fixed ruler outside the agent's reach. That makes score changes inspectable; held-out tasks are still needed to distinguish transferable improvement from tuning to the ruler.
 
-## FINDING THREE: THE GENERATOR CANNOT GRADE ITSELF.
+## FINDING THREE: A SEPARATE CRITIC IS EASIER TO CORRECT.
 
 The record at the top is the mechanism. Agents are systematically generous toward output they produced, worst on subjective tasks with no binary test, and present on verifiable ones too.
 
@@ -84,9 +84,9 @@ One of the bugs the tuned evaluator caught was a route declared in the wrong ord
 
 No insight was required to find it. Only something that tried the call and was not the thing that built it.
 
-## FINDING FOUR: THE JUDGE IS WORSE THAN ITS NUMBER.
+## FINDING FOUR: AGREEMENT AND CHANCE-CORRECTED AGREEMENT ARE DIFFERENT NUMBERS.
 
-Most teams that separate the roles then validate the judge by agreement with a human gold set. The largest audit of judge validation to date says that number is inflated.
+Most teams that separate the roles then validate the judge by agreement with a human gold set. The largest audit of judge validation to date says raw agreement overstates discrimination beyond chance. It does not mean the raw fraction of matching verdicts was miscounted.
 
 TWENTY-ONE JUDGES, THREE BENCHMARKS, ROUGHLY 541,000 JUDGMENTS
 
@@ -102,7 +102,7 @@ Two findings change what to measure. Position bias spans two orders of magnitude
 
 ## FINDING FIVE: SUSPECT THE EVAL BEFORE THE AGENT.
 
-The other direction of error hides capability. When a frontier model scored 42 percent on a benchmark, the issues found were in the grader: a rigid check that penalized "96.12" against an expected "96.124991…", ambiguous specs, irreproducible stochastic tasks. The same model then scored 95, once the grader bugs were fixed and the scaffold was loosened. The post does not say how the fifty-three points divide between the two. The rule that follows is blunt: a zero at pass@100 with a frontier model is almost always a broken task. Grade the outcome, the reservation that exists in the database, not the transcript that says it was booked, and give each rubric dimension its own isolated judge with an explicit "unknown" so it cannot invent a verdict.
+The other direction of error hides capability. When a frontier model scored 42 percent on a benchmark, the fixes included the grader: a rigid check that penalized "96.12" against an expected "96.124991…", ambiguous specs, irreproducible stochastic tasks. After those repairs and a less constrained scaffold, the same model scored 95. The before-and-after does not separate the grader repair from the scaffold change. The vendor's diagnostic is narrower than a law: a zero at pass@100 with a frontier model is a reason to inspect the task and grader before blaming incapability. Grade the outcome, the reservation that exists in the database, not the transcript that says it was booked, and give each rubric dimension its own isolated judge with an explicit "unknown" so it cannot invent a verdict.
 
 A broken grader and a broken agent produce the same number.
 
@@ -122,13 +122,13 @@ The practical answer is to make the agent produce evidence, not a claim. Simon W
 
 The grader has to say that a success with no observable effect is a failure, because nobody else in the loop will.
 
-## FINDING SEVEN: THE BEST VERIFIER HERE DID NOT KNOW IT WAS GRADING.
+## FINDING SEVEN: THE INDEPENDENT CHECK DID NOT KNOW IT WAS GRADING.
 
 In September, a Stanford group published in Science a virtual pharmaceutical company staffed by AI agents in functional divisions: target discovery, molecule design, clinical development. Stanford's own description: "a biotech undertaking with 37,000 employees — and none of them are human." The agents proposed an antibody-drug conjugate against the protein B7-H3 "using information available before January 2025." Months later, in August 2025, "a private, well-established pharmaceutical company independently arrived at the same antibody-drug conjugate strategy," and that therapy went on to receive an FDA breakthrough therapy designation.
 
-The weight belongs on the confirmation. It matters more than any benchmark, because it is an out-of-sample test against a process, a real pharmaceutical discovery organisation, and not against a held-out dataset.
+The weight belongs on the confirmation. It is independent convergence with a real pharmaceutical discovery organisation, according to Stanford's account. That is a different check from scoring an answer against a benchmark; its force depends on the information cutoff and independence holding.
 
-That is the strongest verifier anywhere in this essay, and it has three properties nobody could design into a benchmark. It was not in the agents' write scope. It had not seen the agents' output. It had its own money on being right.
+That is a useful independent check in this essay, with three properties worth seeking in a benchmark too. It was not in the agents' write scope. It had not seen the agents' output. It had its own money on being right.
 
 The costs sit beside the claim. One design converging with one company's program is a single confirmation, not a hit rate, and convergence on a design is not evidence the drug works. The narrower reading is the more useful one: the system does the trial-and-literature synthesis a portfolio committee wishes it had time for, which is a claim about prior-setting, not about chemistry.
 
@@ -148,7 +148,7 @@ The implication runs both ways. A team that writes its own verifier is writing t
 
 Every loop in this essay is cheap. The loop is a for statement.
 
-What is expensive is knowing whether the thing it produced is any good, and that expense does not fall when the model improves. It moves, to the next task the model cannot yet do reliably alone.
+What is expensive is knowing whether the thing it produced is any good, and that expense need not fall when the model improves. It moves, to the next task the model cannot yet do reliably alone.
 
 ## THE EXPLANATIONS AFTERWARD
 
@@ -164,7 +164,7 @@ Correct, and this is the finding, not an objection to it. Strip what is no longe
 
 The third explanation was that the judge audit is all pairwise preference under one rubric, and most agent evals score single outputs against rubrics.
 
-True, and the authors flag it. The chance-correction point transfers regardless: an agreement number without a kappa beside it is a number about the label distribution, not about the judge.
+True, and the authors flag it. The chance-correction point transfers regardless: raw agreement needs its label distribution and a chance-corrected measure beside it. Kappa or an appropriate alternative adds a different question; it does not replace the observed match rate.
 
 **Objection:** Don't grade the path, then. Grade the outcome.
 
@@ -190,7 +190,7 @@ The evidence for it is in the same post. When the next model shipped, the evalua
 
 **Reply:** Which tasks?
 
-The evidence that settles it is a number most teams can collect this week: per task class, how often the evaluator's verdict changes the outcome, set against what the evaluator run costs. Where that catch rate falls below the cost, remove it; the post did exactly that. If catch rates fall toward zero across every class you run, the inversion wins. The failure mode belongs in the same paragraph: the catch rate is measured by the verifier you are thinking of removing, so a lenient verifier reports a low catch rate and argues for its own retirement. The audit has to come from outside it, a sample of production outcomes checked by someone who did not build either agent.
+The evidence that settles it is a number most teams can collect this week: per task class, how often the evaluator's verdict changes the outcome, set against what the evaluator run costs. Price the avoided failures, including their consequences, against the evaluator's cost and delay; where it no longer earns its cost, remove it; the post did exactly that. If catch rates fall toward zero across every class you run, the inversion wins. The failure mode belongs in the same paragraph: the catch rate is measured by the verifier you are thinking of removing, so a lenient verifier reports a low catch rate and argues for its own retirement. The audit has to come from outside it, a sample of production outcomes checked by someone who did not build either agent.
 
 ## THE ASSAY OFFICE
 
@@ -206,7 +206,7 @@ Neither is a model.
 
 Neither can be talked into leniency.
 
-Neither is in the agent's write scope, which is the one property the taxonomy says the ruler must have.
+To serve as independent gates, both must run from a version the agent cannot change. A checker committed in the same writable checkout is still within reach; repository placement alone supplies no boundary.
 
 Build the loop; it is cheap and it works.
 

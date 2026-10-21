@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Essay.astro
 title: "The compute purchase agreement"
-description: "A gigawatt of compute costs tens of billions and nobody funds that on spot demand, so the contract has to precede the concrete. Energy solved this with twenty-year offtake. Six findings on the industry that borrowed the structure for an asset that lasts three."
+description: "A gigawatt of compute costs tens of billions and nobody funds that on spot demand, so the contract has to precede the concrete. Energy solved this with twenty-year offtake. Six findings on the industry that borrowed the structure before establishing the collateral's earning life."
 date: "2026-09-22"
 readingTime: "9 min read"
 ---
@@ -13,10 +13,10 @@ Spot demand willing to fund it: none.
 Structure borrowed from energy: take-or-pay offtake, bankruptcy-remote vehicles, contracted cash flow as collateral.
 29 July, reported 10 August: data-centre bonds exempted from key securitisation rules.
 10 August: a chipmaker signs memorandums of understanding with six asset managers "to mobilize over $500 billion of third-party capital." Its release describes its compute as having the "longest life."
-Useful life of the collateral, on the displacement cycle: two to three years.
+Economic life of the collateral: depends on the work it can still sell.
 Tenor of the financing: no field.
 
-Nobody funds a gigawatt on spot demand, so the contract structure has to precede the concrete. The energy industry's financing toolkit is being borrowed, piece by piece, by an industry whose assets last a tenth as long.
+Nobody funds a gigawatt on spot demand, so the contract structure has to precede the concrete. The energy industry's financing toolkit is being borrowed, piece by piece, by an industry whose collateral can lose earning power before the contract ends.
 
 The structure is complete. The missing field is whether the asset can carry it.
 
@@ -66,17 +66,17 @@ The deployed figure is the sentence about money.
 
 ## FINDING FOUR: THE FORWARD CONTRACT DOES THE DUE DILIGENCE, IN PUBLIC.
 
-A credible, capital-rich buyer signing a forward purchase converts technology risk into schedule risk, and schedule risk is financeable at far lower cost. In August, an initial agreement for Anthropic to buy roughly $250 million of chips that will not ship until 2027 put Fractile, a British startup, into advanced talks to raise at a $6.5 billion valuation, "more than six times its price in May."
+A credible buyer signing a forward purchase can reduce uncertainty about demand. It does not remove technology risk: the contract still depends on the product meeting its delivery and performance conditions. In August, an initial agreement for Anthropic to buy roughly $250 million of chips that will not ship until 2027 put Fractile, a British startup, into advanced talks to raise at a $6.5 billion valuation, "more than six times its price in May."
 
-The contract did the work of a late-stage diligence process, in public. This is standard in energy and aerospace, launch contracts and power purchase agreements, and was almost absent in deep-tech hardware until labs acquired both the balance sheets and a strategic motive to diversify their suppliers.
+The reported agreement supplied evidence of a buyer's interest. It was not a substitute for examining the technology, the cancellation terms and the buyer's obligations. This is standard in energy and aerospace, launch contracts and power purchase agreements, and was almost absent in deep-tech hardware until labs acquired both the balance sheets and a strategic motive to diversify their suppliers.
 
 The failure mode is asymmetric. A commitment the buyer can walk away from cheaply costs the buyer little and costs the supplier's late-stage investors everything. A valuation built on one counterparty's option is fragile in exactly the way that option is valuable.
 
-## FINDING FIVE: THE TENOR THAT WORKS FOR REACTORS IS POISON FOR GPUs.
+## FINDING FIVE: THE CHIP STILL HAS TO PAY THE LOAN.
 
-The structure was designed for assets that last. The asset it now finances does not.
+The structure was designed for durable cash flows. The asset it now finances has to earn them.
 
-Compute depreciates on a cycle electricity does not have. The Chicago Booth analysis puts it plainly: GPUs "are being displaced every two or three years as faster ones are developed, and nobody yet knows what a used one is worth." A ten-year compute purchase agreement, were anyone to sign one, prices that displacement at zero, and the residual assumptions behind it are unvalidated across a full down-cycle. Toll roads do not get obsoleted by a firmware release.
+Compute depreciates on a cycle electricity does not have. The Chicago Booth analysis puts it plainly: GPUs "are being displaced every two or three years as faster ones are developed, and nobody yet knows what a used one is worth." A ten-year agreement has to price the change in earning power; its duration alone cannot tell us whether it does. Displacement from frontier training is not the end of useful inference work. The rental rate, utilisation and resale value determine what remains. Toll roads do not get obsoleted by a firmware release.
 
 You can be long the wrong megawatts.
 
@@ -88,7 +88,7 @@ The vendor's release says its compute offers the "longest life." The lender shou
 
 Take-or-pay migrated from energy to memory for a reason the memory makers can recite. Suppliers burned by earlier boom-bust cycles will not add capacity on spot-price optimism. The three big memory makers are now locking customers into supply agreements running as long as five years, some with take-or-pay provisions "requiring customers to pay for committed volumes even if they ultimately take fewer chips." Long supply agreements shift volume risk to the buyer in exchange for price certainty, which is what makes the capacity financeable at all.
 
-There is no forward market a mid-size buyer can use for either memory or firm power. Power has forward curves at the liquid hubs and no instrument at all for located, firm, long-duration supply, which is the only kind a data centre can take delivery of. Memory has none to begin with. A forward market would let a mid-size AI company hedge a quarter at a time instead of committing five years of volume, the way commodity buyers do. Until it exists, the contract is the hedge, and the contract is too long.
+Power has forward contracts and markets. The narrower problem here is whether a buyer can hedge its particular location, delivery shape and compute requirements at the tenor it needs. A hub-price hedge and a promise of usable supply at a particular site cover different risks. The financing contract must identify what the hedge leaves with the buyer.
 
 The supplier with the scars wrote the terms.
 
@@ -98,7 +98,7 @@ The buyer with the growth plan signed them.
 
 Every structure in this essay moves risk to someone who can hold it longer: a vehicle, a lease, an insurer, an infrastructure fund.
 
-None of them makes the asset last longer. It lasts about three years, whoever holds it.
+None of them makes the asset last longer. Its economic life still has to be measured against the work it can sell, whoever holds it.
 
 ## THE EXPLANATIONS AFTERWARD
 
@@ -110,11 +110,11 @@ Correct on the history. LNG terminals, pipelines and power plants were all finan
 
 The second explanation was that the contracts are doing a job nothing else can, because there is no forward market.
 
-Also correct, and it explains why the tenor is long. A supplier financing new capacity against one buyer's promise has no way to lay the risk off, so the promise has to cover the payback period of the fab or the plant. The tenor is set by the absence of a market, which makes it a fact about plumbing and not a view anybody holds about the asset. Build the market and the tenor falls on its own.
+The gap is a match between the hedge and the exposure. A power forward cannot guarantee a particular accelerator is installed at the required site. The contract needs to say which delivery risk remains with the buyer.
 
 **Objection:** So sign the contract or do not.
 
-**Reply:** Sign it for the tenor of the asset, not the tenor of the ambition. A reactor's is thirty years. A GPU's is three.
+**Reply:** Sign it against the asset's earning life. Stress-test a three-year decline in rentals before assuming a decade of cash flow. Three is a scenario to test, not an expiry date stamped on the chip.
 
 **Objection:** Nobody finances a plant on three-year offtake.
 
@@ -132,13 +132,13 @@ It is a coherent argument, and the demand for inference makes part of it plausib
 
 **Reply:** Show the curve.
 
-The evidence that settles it is observable and mostly unpublished: the rental rate and resale price of accelerators three and four years after delivery, through at least one period when new supply is abundant. If a three-year-old accelerator still earns most of its original rate, long tenors are defensible and the inversion wins. The failure mode belongs in the same sentence: no residual curve for this asset class has been tested through a down-cycle, and a curve drawn in a shortage describes the shortage.
+The evidence that settles it is observable and mostly unpublished: the rental rate and resale price of accelerators three and four years after delivery, through at least one period when new supply is abundant. Compare the older accelerator's net cash generation, after energy, maintenance and utilisation, with the debt service and residual value assumed at origination. Sustained coverage through abundant supply would support the longer-tenor case. A quoted rental rate alone cannot establish that coverage. The failure mode belongs in the same sentence: no residual curve for this asset class has been tested through a down-cycle, and a curve drawn in a shortage describes the shortage.
 
 ## THE CONTRACT AND THE 429
 
 [power-ppa-forge](https://github.com/AthenaTheOwl/power-ppa-forge) is the offtake problem before the contract exists. Three hyperscalers want power off the same 1,000-megawatt reactor, and none will tell the others how much it needs or what it would pay, which are the two facts a lender wants. The repo is a mechanism for allocating the plant without forcing disclosure, which is the thing a compute purchase agreement needs and a spreadsheet cannot do.
 
-[capital-build-reconciler](https://github.com/AthenaTheOwl/capital-build-reconciler) is the contract after the fact. You ask for tokens in one region and get a 429; the same region eats the only rate-limit hit of the month, half its calls bounced. The reconciler ranks regions by that refusal rate, with an interval beside it, and declines to pin the worst one on a foundry, packaging or memory pillar until independent evidence says which. The refusal rate is the series a residual-value modeller would want and nobody currently reports.
+[capital-build-reconciler](https://github.com/AthenaTheOwl/capital-build-reconciler) separates observed pressure from its cause. Its fixture records two calls in one region and one 429 response: half the calls in a small sample. A quota, a burst or service policy can cause that response. The logs cannot establish unavailable physical capacity or a breach of contract. A lender would need the delivery terms and sustained telemetry before calling the gap a shortfall. The reconciler ranks observed regional pressure with an interval beside it and keeps that observation separate from an attribution to a foundry, packaging or memory constraint.
 
 Sign for the life of the asset.
 
@@ -151,7 +151,7 @@ FINANCING TERM SHEET — REMAINING FIELDS
 Residual value in year three, modelled by the borrower: attached.
 Residual value in year three, modelled independently: not yet.
 Deployed cash against the $500 billion: to be reported.
-Tenor: longer than the asset.
+Tenor: still to be tested against the asset's cash generation.
 
 The term sheet ends there. The chips, per the release, have the longest life.
 

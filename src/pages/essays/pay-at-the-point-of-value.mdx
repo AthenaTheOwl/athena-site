@@ -28,11 +28,11 @@ Payment at the level of a single request has been proposed for as long as there 
 
 ## FINDING TWO: THE PAYER CHANGED.
 
-Programs do not mind deciding. An agent that needs one dataset, one simulation run or one article can pay for exactly that and move on. The new payer has no identity to verify, no credit history and no way to dispute a charge, and it does not need any of them for a request that costs a fraction of a cent.
+Programs can apply a spending policy repeatedly. An agent that needs one dataset, one simulation run or one article can pay for exactly that and move on. A wallet can settle a request without an account at that service. It still acts for someone with authority, a budget and possibly contractual obligations. Programmatic settlement does not settle those questions.
 
-That opens metering to units too small to write a contract around: one query against a licensed dataset, an hour of instrument time, a single satellite pass, one article out of a paywalled archive.
+That can make small individually priced requests practical where collection overhead once dominated: one query against a licensed dataset, an hour of instrument time, a single satellite pass, one article out of a paywalled archive.
 
-It also removes the protections that made card payments safe for people. There is no chargeback for a program. An agent stuck in a retry loop, or one that has been compromised, can spend a budget in minutes, and the whole design assumes the payer is honest and competent.
+It also removes the protections that made card payments safe for people. The documented wallet flow does not itself provide a card-style chargeback; a separate contract or dispute process would have to supply one. An agent stuck in a retry loop, or one that has been compromised, can spend a budget in minutes, and the whole design assumes the payer is honest and competent.
 
 ## FINDING THREE: FROM FETCH TO USE.
 
@@ -96,7 +96,7 @@ The contracts look similar. The unit is new. A licence for a corpus is priced be
 
 The third explanation was that attribution is unsolvable, because nobody can say which document changed a model's output.
 
-For training, that is close to true. For retrieval it is not: an answer that quotes or cites a passage has used it, and that use can be logged. The hard version of attribution can wait. The easy version is enough to pay on.
+For training, that is close to true. For retrieval it is not: the retrieval system can log which passage it supplied and what citation appeared. A citation alone does not establish that the passage caused or even supported the answer; that is another check. The hard version of attribution can wait. The easy version is enough to pay on.
 
 **Objection:** Then pay for citations.
 
@@ -110,7 +110,7 @@ Finding Seven concedes the mechanism. The dispute is over whether it can be fixe
 
 **Reply:** Or someone neither of them owns.
 
-The evidence that settles it is whether the usage records can be checked by the party being paid. If every billable use produces a record the payee can verify, that the cited passage exists and that the answer used it, the meter can be audited and the inversion loses. If the payee receives only a total, the payer's model is the price.
+The evidence that settles it is whether the usage records can be checked by the party being paid. Check the billed event against the passage and answer, then test completeness separately. Receipts for every reported use cannot reveal uses the payer omitted. Independent sampling or an agreed observation point is needed for that side of the meter. Verifiable events would improve the contract; they would not by themselves remove the platform's bargaining power.
 
 Both deals in this essay are already scored against that test. Cloudflare's returns the record; Bria's returns a share and a model. Nothing new had to be invented to tell them apart.
 
@@ -120,7 +120,7 @@ Both deals in this essay are already scored against that test. Cloudflare's retu
 
 Its demonstration makes the point in one line. Of two rules pulled from a filing, one cites page 1, lines 1 to 23. The other cites a chunk identifier of forty zeros that exists nowhere in the document, and it is thrown out.
 
-A billable use needs the same gate. The payee should be able to see the passage, confirm it exists, and confirm the answer drew on it. A charge that cannot point at a real passage should be dropped, just as that row was.
+A billable use needs that citation check as a starting point, plus a separate check that the record covers the use the contract prices. The payee should be able to see the passage, confirm it exists, and confirm the answer drew on it. A charge that cannot point at a real passage should be dropped, just as that row was.
 
 Charge when the value happens.
 
